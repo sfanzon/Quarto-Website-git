@@ -18,8 +18,10 @@ The generated files under `includes/` and `data/projects.generated.json` should
 not be edited manually. The `docs/` directory is generated deployment output.
 
 Directly referenced visual assets are stored under `assets/img/brand/`,
-`assets/img/profile/` and `assets/img/projects/`. The larger PDF library is
-maintained outside this lightweight repository snapshot.
+`assets/img/profile/` and `assets/img/projects/`. Directly referenced downloads
+are stored under `assets/pdf/`, grouped by journal, seminar, news, teaching and
+thesis purpose. Unlinked archive material is maintained outside this
+lightweight repository snapshot.
 
 ## Project pages
 

@@ -7,6 +7,8 @@ project:
   - news/*.md
   - projects/**/*.qmd
   - '!includes/*.qmd'
+  resources:
+  - assets/pdf/**
 website:
   title: Silvio Fanzon
   site-url: https://www.silviofanzon.com

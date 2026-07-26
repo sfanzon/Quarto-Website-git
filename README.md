@@ -33,9 +33,10 @@ quarto render
 
 The Quarto pre-render hook runs `scripts/build-content.py`, which rebuilds publication, project, teaching and news fragments from their structured sources.
 
-Only directly referenced visual assets are stored under `assets/`, grouped by
-brand, profile and project. The larger PDF library remains outside this
-lightweight repository snapshot.
+Only directly referenced assets are stored under `assets/`. Images are grouped
+by brand, profile and project, while downloadable files are grouped by journal,
+seminar, news, teaching and thesis purpose. Unlinked archive material remains
+outside this lightweight repository snapshot.
 
 ## Design principles
 
