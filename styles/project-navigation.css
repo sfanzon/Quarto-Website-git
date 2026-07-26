@@ -232,11 +232,11 @@ body.project-detail-page main.content h2 {
 
   .project-chapter-toggle {
     position: absolute;
-    top: .72rem;
-    right: -38px;
+    top: .85rem;
+    right: -34px;
     display: grid;
-    width: 38px;
-    height: 52px;
+    width: 34px;
+    height: 40px;
     place-items: center;
     padding: 0;
     border: 1px solid color-mix(
