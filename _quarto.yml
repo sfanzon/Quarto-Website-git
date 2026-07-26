@@ -9,6 +9,7 @@ project:
   - '!includes/*.qmd'
   resources:
   - assets/pdf/**
+  - listings.json
 website:
   title: Silvio Fanzon
   site-url: https://www.silviofanzon.com
@@ -29,11 +30,7 @@ website:
     - text: Expertise
       href: expertise.qmd
     - text: CV
-      menu:
-      - text: Industry résumé
-        href: Silvio_Fanzon_Industry_CV.pdf
-      - text: Academic CV
-        href: Silvio_Fanzon_Academic_CV.pdf
+      href: Silvio_Fanzon_Academic_CV.pdf
     - text: Publications
       href: publications.qmd
     - text: Teaching

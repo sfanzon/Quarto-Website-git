@@ -57,7 +57,7 @@
         <span class="news-title">Teaching Statistical Models in 2024/25</span>
         <span class="news-disclosure" aria-hidden="true"></span>
       </summary>
-      <div class="news-body"><p>I am teaching the module <a href="/teaching.html#2025-Statistical-Models">Statistical Models</a> at the University of Hull. This is a Year 2 module for the BSc in Mathematics 2024/25. Here are the module <a href="/blog/2025/Statistical-Models">Webpage</a> and <a href="https://www.silviofanzon.com/2025-Statistical-Models-Slides/">Slides</a></p></div>
+      <div class="news-body"><p>I am teaching the module <a href="/teaching.html#2025-Statistical-Models">Statistical Models</a> at the University of Hull. This is a Year 2 module for the BSc in Mathematics 2024/25. Here are the module <a href="https://www.silviofanzon.com/blog/2025/Statistical-Models">Webpage</a> and <a href="https://www.silviofanzon.com/2025-Statistical-Models-Slides/">Slides</a></p></div>
     </details><details class="news-item" id="news-2024-09-15" data-news-item>
       <summary>
         <time class="news-date" datetime="2024-09-15">Sep 2024</time>

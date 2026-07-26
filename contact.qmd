@@ -42,9 +42,6 @@ body-classes: standard-page contact-page
   </nav>
 
   <nav class="contact-profiles contact-documents" aria-label="Curriculum vitae">
-    <a href="/Silvio_Fanzon_Industry_CV.pdf">
-      <span>Industry résumé</span><small>Professional experience</small>
-    </a>
     <a href="/Silvio_Fanzon_Academic_CV.pdf">
       <span>Academic CV</span><small>Research and teaching</small>
     </a>

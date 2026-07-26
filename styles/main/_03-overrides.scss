@@ -465,6 +465,9 @@ body.home-page .home-hero {
   font-size: clamp(1.12rem, 1.55vw, 1.42rem) !important;
   line-height: 1.42 !important;
 }
+body.home-page .home-portrait {
+  object-position: center 24%;
+}
 @media (max-width: 767.98px) {
   .home-hero { gap: 1.35rem !important; }
   .home-portrait {
@@ -675,15 +678,8 @@ body.home-page .home-hero {
   }
 }
 
-/* Standalone News archive: use whitespace rather than separator rules. */
-.news-archive-item {
-  border-bottom: 0;
-}
-
-
-/* Year headings: mirror the restrained section-heading treatment of the original teaching page. */
-.teaching-year > h3,
-.news-year > h2 {
+/* Year headings: mirror the restrained section-heading treatment. */
+.teaching-year > h3 {
   margin: 0 0 1rem;
   padding: 0;
   border: 0;
@@ -696,14 +692,12 @@ body.home-page .home-hero {
 }
 
 /* Academic-year dividers: thin rule, then a quiet right-aligned year beneath it. */
-.teaching-year,
-.news-year {
+.teaching-year {
   border-top: 1px solid var(--global-divider-color);
   padding-top: .55rem;
 }
 
-.teaching-year > h3,
-.news-year > h2 {
+.teaching-year > h3 {
   margin: 0 0 1rem !important;
   padding: 0 !important;
   border: 0 !important;
@@ -717,8 +711,7 @@ body.home-page .home-hero {
 }
 
 /* The year divider itself supplies the opening rule. */
-.teaching-year .teaching-course-list,
-.news-year .news-year-list {
+.teaching-year .teaching-course-list {
   border-top: 0 !important;
 }
 
@@ -751,9 +744,8 @@ body.home-page .home-hero {
   box-shadow: none;
 }
 
-/* Larger year labels on Teaching and News. */
-.teaching-year > h3,
-.news-year > h2 {
+/* Larger Teaching year labels. */
+.teaching-year > h3 {
   font-size: 1.1rem !important;
   line-height: 1.3 !important;
 }
@@ -826,7 +818,6 @@ body.quarto-dark {
   margin-bottom: clamp(2rem, 4vw, 3.4rem);
 }
 
-.expertise-preview-header .eyebrow,
 .expertise-hero .eyebrow,
 .expertise-footer-cta .eyebrow {
   margin: 0 0 .65rem;
@@ -1293,11 +1284,6 @@ body.home-page .home-bio-copy .home-summary {
   margin-top: 1rem !important;
 }
 
-body.home-page .home-about-link {
-  display: inline-block;
-  margin-top: 1.1rem;
-}
-
 @media (max-width: 767.98px) {
   body.home-page .home-name {
     font-size: clamp(1.9rem, 9.2vw, 2.65rem) !important;
@@ -1314,7 +1300,7 @@ body.home-page .home-hero { position: relative; }
 .home-scroll-cue {
   position: absolute;
   left: 50%;
-  bottom: .75rem;
+  bottom: 2rem;
   z-index: 3;
   display: inline-flex;
   flex-direction: column;
@@ -1352,7 +1338,7 @@ body.home-page .home-hero { position: relative; }
   .home-scroll-cue {
     position: static;
     grid-column: 1 / -1;
-    margin: .35rem auto 0;
+    margin: 0 auto;
     transform: none;
   }
 }
@@ -1361,7 +1347,7 @@ body.home-page .home-hero { position: relative; }
    MUTED BLUE SECONDARY ACCENT + SMALLER PUBLICATION TITLES
    ============================================================ */
 :root {
-  --global-blue-accent: #55778a;
+  --global-blue-accent: #3f6678;
   --global-blue-accent-deep: #466b7a;
   --global-blue-accent-soft: #dce6e8;
 }
@@ -1425,52 +1411,6 @@ html[data-bs-theme="dark"] .home-hero::after {
   line-height: 1.38 !important;
   font-weight: 600 !important;
   letter-spacing: -.008em !important;
-}
-
-/* 2026 homepage role typography + slightly denser news */
-body.home-page .home-role,
-body.home-page .home-role span {
-  font-size: .72rem !important;
-  font-weight: 650 !important;
-  letter-spacing: .12em !important;
-  line-height: 1 !important;
-  text-transform: uppercase !important;
-}
-
-body.home-page .news-preview .section-heading {
-  margin-bottom: .55rem !important;
-}
-
-body.home-page .home-news-item summary {
-  width: 100%;
-  box-sizing: border-box;
-  grid-template-columns: 92px minmax(0, 1fr) 22px;
-  gap: .85rem;
-  padding: .72rem 0;
-}
-
-body.home-page .home-news-item time {
-  font-size: .8rem;
-}
-
-body.home-page .home-news-body {
-  padding: 0 2.25rem .95rem 108px;
-  line-height: 1.62;
-}
-
-body.home-page .news-permalink {
-  margin-top: .65rem;
-}
-
-@media (max-width: 767px) {
-  body.home-page .home-news-item summary {
-    grid-template-columns: 74px minmax(0, 1fr) 20px;
-    gap: .7rem;
-    padding: .68rem 0;
-  }
-  body.home-page .home-news-body {
-    padding: 0 0 .9rem 0;
-  }
 }
 
 /* 2026 homepage publication venue pills: match the blue Publications-page treatment. */
@@ -1590,137 +1530,18 @@ body.standard-page .compact-page-hero {
 }
 
 
-/* Homepage news: six-item preview, top-right search, bottom expansion. */
-body.home-page .news-preview .news-heading { align-items: center; margin-bottom: .72rem !important; }
-.home-news-search { display: block; width: min(15rem, 42vw); margin: 0; }
-.home-news-search input { width: 100%; padding: .48rem .75rem; color: var(--global-text-color); background: transparent; border: 1px solid var(--global-divider-color); border-radius: 999px; font: inherit; font-size: .84rem; line-height: 1.2; }
-.home-news-search input::placeholder { color: var(--global-text-color-light); }
-.home-news-search input:hover { border-color: color-mix(in srgb, var(--global-text-color) 38%, transparent); }
-.home-news-search input:focus { border-color: var(--global-theme-color); outline: 2px solid color-mix(in srgb, var(--global-theme-color) 20%, transparent); outline-offset: 2px; }
-.home-news-item[hidden] { display: none !important; }
-.home-news-controls { display: flex; justify-content: center; padding-top: 1.15rem; }
-.home-news-show-all { padding: .58rem 1rem; color: var(--global-text-color); background: transparent; border: 1px solid var(--global-divider-color); border-radius: 999px; font: inherit; font-size: .84rem; font-weight: 600; cursor: pointer; }
-.home-news-show-all:hover, .home-news-show-all:focus-visible { color: var(--global-theme-color); border-color: var(--global-theme-color); }
-.home-news-empty { margin: 1rem 0 0; color: var(--global-text-color-light); font-size: .9rem; }
-/* Quarto sets details { margin-bottom: 1em; }; news details must remain contiguous. */
-body.home-page .home-news-item {
-  margin: 0 !important;
-}
-
-/* 2026-07 authoritative homepage News layout.
-   The row itself owns its height; text cells stretch to that height and use
-   flex centring. This avoids visually misaligned line boxes from mixed font
-   sizes and inherited line-heights. */
+/* Homepage News heading rhythm. */
 body.home-page .news-preview .news-heading {
   align-items: center !important;
   margin-bottom: 1.25rem !important;
 }
 
-body.home-page .home-news-item summary {
-  display: grid !important;
-  grid-template-columns: 92px minmax(0, 1fr) 22px !important;
-  grid-template-areas: "date title disclosure";
-  align-items: stretch !important;
-  column-gap: .85rem !important;
-  min-height: 3.6rem;
-  padding: 0 !important;
-  box-sizing: border-box;
-}
-
-body.home-page .home-news-item summary > time,
-body.home-page .home-news-item summary > .news-summary-text {
-  display: flex;
-  align-items: center;
-  min-width: 0;
-  height: 100%;
-  margin: 0 !important;
-  padding-block: .72rem;
-  box-sizing: border-box;
-  line-height: 1.32 !important;
-}
-
-body.home-page .home-news-item summary > time {
-  grid-area: date;
-}
-
-body.home-page .home-news-item summary > .news-summary-text {
-  grid-area: title;
-}
-
-body.home-page .home-news-item summary > .news-disclosure {
-  grid-area: disclosure;
-  width: 22px !important;
-  height: 22px !important;
-  margin: 0 !important;
-  place-self: center end !important;
-}
-
 @media (max-width: 680px) {
   body.home-page .news-preview .news-heading {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) minmax(8.5rem, 11rem);
-    gap: .75rem !important;
     align-items: center !important;
     margin-bottom: 1.15rem !important;
   }
 
-  body.home-page .news-preview .news-heading .section-title {
-    margin: 0 !important;
-    min-width: 0;
-  }
-
-  body.home-page .home-news-search {
-    width: 100% !important;
-    min-width: 0;
-  }
-
-  body.home-page .home-news-item summary {
-    grid-template-columns: minmax(0, 1fr) 22px !important;
-    grid-template-areas:
-      "date disclosure"
-      "title disclosure";
-    grid-template-rows: auto auto;
-    column-gap: .85rem !important;
-    row-gap: .16rem !important;
-    min-height: 0;
-    padding: .72rem 0 !important;
-    align-items: start !important;
-  }
-
-  body.home-page .home-news-item summary > time,
-  body.home-page .home-news-item summary > .news-summary-text {
-    height: auto;
-    padding: 0;
-  }
-
-  body.home-page .home-news-item summary > time {
-    align-items: flex-start;
-  }
-
-  body.home-page .home-news-item summary > .news-summary-text {
-    align-items: flex-start;
-    overflow-wrap: anywhere;
-  }
-
-  body.home-page .home-news-item summary > .news-disclosure {
-    place-self: center end !important;
-  }
-
-  body.home-page .home-news-body {
-    padding: .1rem 2.25rem .95rem 0 !important;
-  }
-}
-
-@media (max-width: 430px) {
-  body.home-page .news-preview .news-heading {
-    grid-template-columns: 1fr;
-    gap: .65rem !important;
-  }
-
-  body.home-page .home-news-search {
-    width: 100% !important;
-    max-width: none;
-  }
 }
 
 /* ============================================================
@@ -1949,15 +1770,6 @@ body.home-page .home-editorial-heading {
   margin-bottom: clamp(2rem, 4vw, 3.4rem);
 }
 
-body.home-page .home-editorial-heading .eyebrow {
-  margin: 0 0 .65rem;
-  color: var(--expertise-accent);
-  font-size: .76rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-
 body.home-page .home-editorial-heading .section-title {
   margin: 0 0 .75rem;
   color: var(--global-text-color);
@@ -2009,7 +1821,7 @@ body.home-page .home-editorial-heading > a:focus-visible {
 
 /* 2026 homepage editorial labels and identity refinement */
 :root {
-  --homepage-orange-accent: #b45c35;
+  --homepage-orange-accent: #9b4828;
 }
 body.quarto-dark {
   --homepage-orange-accent: #e49472;
@@ -2031,66 +1843,11 @@ body.home-page .expertise-preview-header .eyebrow {
 body.home-page .home-editorial-heading .section-title,
 body.home-page .expertise-preview-header h2 {
   margin: 0 0 .72rem !important;
-  font-size: clamp(1.72rem, 3vw, 2.75rem) !important;
+  font-size: clamp(1.55rem, 2.6vw, 2.25rem) !important;
   font-weight: 680 !important;
-  line-height: 1.04 !important;
-  letter-spacing: -.035em !important;
-}
-
-/* Quiet credential typography: no comma, border, background or pill. */
-body.home-page .home-degree {
-  display: inline;
-  margin-left: .38rem;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
-  color: var(--global-text-color-light);
-  font-size: .28em;
-  font-weight: 520;
-  letter-spacing: .045em;
-  line-height: 1;
-  vertical-align: .48em;
-}
-
-/* Professional descriptor: a visible orange line, not another tiny eyebrow. */
-body.home-page .home-role,
-body.home-page .home-role span {
-  color: var(--homepage-orange-accent) !important;
-  font-size: clamp(1.12rem, 1.65vw, 1.42rem) !important;
-  font-weight: 650 !important;
-  line-height: 1.25 !important;
-  letter-spacing: -.01em !important;
+  line-height: 1.08 !important;
+  letter-spacing: -.025em !important;
   text-transform: none !important;
-}
-
-/* About remains a quiet editorial link within the introduction. */
-body.home-page .home-about-link {
-  margin: .25rem 0 1rem;
-  color: var(--global-text-color);
-  font-size: .9rem;
-  font-weight: 620;
-}
-
-/* Lift the cue away from the bottom edge of the hero. */
-body.home-page .home-scroll-cue {
-  bottom: 2rem;
-}
-
-/* Tighter portrait crop, focused on face and upper shoulders. */
-body.home-page .home-portrait {
-  object-position: center 24%;
-}
-
-@media (max-width: 767.98px) {
-  body.home-page .home-degree {
-    margin-left: .28rem;
-    font-size: .25em;
-    vertical-align: .5em;
-  }
-  body.home-page .home-scroll-cue {
-    margin-top: 0 !important;
-  }
 }
 
 /* ============================================================
@@ -2104,95 +1861,6 @@ body.home-page .home-portrait {
   text-underline-offset: .48em !important;
   text-decoration-thickness: 1.5px !important;
 }
-
-/* Uppercase editorial headlines; body copy and card titles remain natural case. */
-body.home-page .home-role,
-body.home-page .home-role span,
-body.home-page .home-editorial-heading .section-title,
-body.home-page .expertise-preview-header h2 {
-  text-transform: uppercase !important;
-}
-
-body.home-page .home-editorial-heading .section-title,
-body.home-page .expertise-preview-header h2 {
-  letter-spacing: .015em !important;
-  line-height: 1.02 !important;
-}
-
-body.home-page .home-role,
-body.home-page .home-role span {
-  letter-spacing: .075em !important;
-}
-
-/* ============================================================
-   FINAL HERO HIERARCHY REFINEMENT
-   ============================================================ */
-
-/* Keep homepage explanatory headlines in sentence case. */
-body.home-page .home-editorial-heading .section-title,
-body.home-page .expertise-preview-header h2 {
-  text-transform: none !important;
-}
-
-/* The professional descriptor uses the same uppercase editorial treatment as the eyebrows. */
-body.home-page .home-role,
-body.home-page .home-role span {
-  text-transform: uppercase !important;
-}
-
-/* Keep the descriptor clearly subordinate to the name. */
-body.home-page .home-role,
-body.home-page .home-role span {
-  font-size: clamp(1rem, 1.35vw, 1.22rem) !important;
-  font-weight: 620 !important;
-  line-height: 1.25 !important;
-  letter-spacing: -.005em !important;
-}
-
-/* Make the credential visible without turning it into a badge. */
-body.home-page .home-degree {
-  font-size: .36em !important;
-  font-weight: 540 !important;
-  vertical-align: .42em !important;
-}
-
-/* Profile links belong together above the divider/About link. */
-body.home-page .home-profile-links {
-  margin-top: 1.15rem !important;
-  margin-bottom: 0 !important;
-  padding-bottom: 1.05rem !important;
-  border-bottom: 1px solid var(--global-divider-color) !important;
-}
-
-body.home-page .home-profile-links a {
-  font-size: .92rem !important;
-  font-weight: 600 !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-}
-
-body.home-page .home-about-link {
-  margin: .9rem 0 0 !important;
-  font-size: .86rem !important;
-}
-
-/* The explanatory headlines stay smaller than the name. */
-body.home-page .home-editorial-heading .section-title,
-body.home-page .expertise-preview-header h2 {
-  font-size: clamp(1.55rem, 2.6vw, 2.25rem) !important;
-  line-height: 1.08 !important;
-  letter-spacing: -.025em !important;
-}
-
-@media (max-width: 767.98px) {
-  body.home-page .home-degree {
-    font-size: .34em !important;
-  }
-  body.home-page .home-profile-links a {
-    font-size: .9rem !important;
-  }
-}
-
 
 /* ============================================================
    2026 publication hierarchy: themes, quieter authors, fewer actions
@@ -2702,105 +2370,6 @@ body.home-page .expertise-preview-header h2 {
   }
 }
 
-/* Editorial news hierarchy: category, headline, date, collapsed detail. */
-.news-category {
-  color: var(--global-theme-color);
-  font-size: .68rem;
-  font-weight: 750;
-  letter-spacing: .11em;
-  line-height: 1.2;
-  text-transform: uppercase;
-}
-
-.home-news-item summary,
-.news-archive-item summary {
-  display: grid;
-  grid-template-columns: 104px minmax(0, 1fr) auto 22px;
-  gap: .35rem 1rem;
-  align-items: center;
-  padding: 1.05rem 0;
-  color: var(--global-text-color);
-  cursor: pointer;
-  list-style: none;
-}
-
-.home-news-item summary::-webkit-details-marker,
-.news-archive-item summary::-webkit-details-marker { display: none; }
-.home-news-item summary::marker,
-.news-archive-item summary::marker { content: ''; }
-
-.home-news-item .news-category,
-.news-archive-item .news-category { grid-column: 1; }
-.home-news-item .news-summary-text,
-.news-archive-item .news-archive-title {
-  grid-column: 2;
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 620;
-  line-height: 1.4;
-}
-.home-news-item time,
-.news-archive-item time { grid-column: 3; }
-.home-news-item .news-disclosure,
-.news-archive-item .news-disclosure { grid-column: 4; }
-.news-archive-item[open] .news-disclosure::after { transform: rotate(0); }
-
-.news-archive-item {
-  display: block;
-  padding: 0;
-  border-bottom: 1px solid var(--global-divider-color);
-}
-.news-year-list .news-archive-item:first-child {
-  border-top: 1px solid var(--global-divider-color);
-}
-.news-archive-body {
-  max-width: 880px;
-  padding: 0 2.5rem 1.35rem 120px;
-  color: var(--global-text-color-light);
-  line-height: 1.7;
-}
-
-.news-archive-tools {
-  display: flex;
-  justify-content: flex-end;
-  margin: 2rem 0 .75rem;
-}
-.news-archive-search { width: min(100%, 340px); }
-.news-archive-search input {
-  width: 100%;
-  padding: .7rem .9rem;
-  color: var(--global-text-color);
-  background: var(--global-bg-color);
-  border: 1px solid var(--global-divider-color);
-  border-radius: 8px;
-}
-.news-archive-search input:focus {
-  border-color: var(--global-theme-color);
-  outline: 2px solid color-mix(in srgb, var(--global-theme-color) 20%, transparent);
-  outline-offset: 1px;
-}
-.news-archive-empty { margin: 2rem 0; color: var(--global-text-color-light); }
-
-@media (max-width: 680px) {
-  .home-news-item summary,
-  .news-archive-item summary {
-    grid-template-columns: minmax(0, 1fr) auto 22px;
-    gap: .32rem .8rem;
-    align-items: center;
-  }
-  .home-news-item .news-category,
-  .news-archive-item .news-category { grid-column: 1 / span 2; grid-row: 1; }
-  .home-news-item .news-summary-text,
-  .news-archive-item .news-archive-title { grid-column: 1 / span 2; grid-row: 2; }
-  .home-news-item time,
-  .news-archive-item time { grid-column: 1; grid-row: 3; }
-  .home-news-item .news-disclosure,
-  .news-archive-item .news-disclosure { grid-column: 3; grid-row: 1 / span 3; }
-  .news-archive-body { padding: 0 2.25rem 1.2rem 0; }
-  .news-archive-tools { justify-content: stretch; }
-  .news-archive-search { width: 100%; }
-}
-
 /* Unified News component: identical on the homepage and News archive. */
 .news-component {
   width: 100%;
@@ -2932,8 +2501,27 @@ body.home-page .expertise-preview-header h2 {
 }
 
 .news-item .news-disclosure {
+  position: relative;
   grid-column: 4;
+  width: 20px;
+  height: 20px;
   justify-self: end;
+}
+
+.news-item .news-disclosure::before,
+.news-item .news-disclosure::after {
+  content: '';
+  position: absolute;
+  top: 9px;
+  left: 4px;
+  width: 12px;
+  height: 1px;
+  background: currentColor;
+  transition: transform .18s ease;
+}
+
+.news-item .news-disclosure::after {
+  transform: rotate(90deg);
 }
 
 .news-item[open] .news-disclosure::after {

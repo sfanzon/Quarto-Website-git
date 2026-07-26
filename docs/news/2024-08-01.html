@@ -43,9 +43,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fbcf1e92525c6409c952beceabcd441e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-db519073c691c75a24fce6c34853e7e2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-fbcf1e92525c6409c952beceabcd441e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-6950cc3e07206ad85a2506caf1757a01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-543f11fa0fae524dda03518ab66d9cf4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-6950cc3e07206ad85a2506caf1757a01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -280,21 +280,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="../expertise.html"> 
 <span class="menu-text">Expertise</span></a>
   </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">CV</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
-        <li>
-    <a class="dropdown-item" href="../Silvio_Fanzon_Industry_CV.pdf">
- <span class="dropdown-text">Industry résumé</span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="../Silvio_Fanzon_Academic_CV.pdf"> 
+<span class="menu-text">CV</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../Silvio_Fanzon_Academic_CV.pdf">
- <span class="dropdown-text">Academic CV</span></a>
-  </li>  
-    </ul>
-  </li>
   <li class="nav-item">
     <a class="nav-link" href="../publications.html"> 
 <span class="menu-text">Publications</span></a>
@@ -372,7 +361,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>I have produced a Curriculum Evaluation for the module <a href="../teaching/#2024-Statistical-Models">Statistical Models</a> which I taght in 2023/24. This analysis is part of the final assessment for the <b>PCAP</b> module <b>Curriculum Design</b>. The presentation video and slides are available <a href="../presentations/#2024-Curriculum-Design">here</a></p>
+<p>I have produced a Curriculum Evaluation for the module <a href="../teaching.html#2024-Statistical-Models">Statistical Models</a> which I taght in 2023/24. This analysis is part of the final assessment for the <b>PCAP</b> module <b>Curriculum Design</b>. The presentation video and slides are available <a href="../presentations.html#2024-Curriculum-Design">here</a></p>
 
 
 
@@ -386,7 +375,7 @@ ul.task-list li input[type="checkbox"] {
 
     <nav class="site-footer-links" aria-label="Footer">
       <a href="mailto:silvio.fanzon.work@gmail.com">Email</a>
-      <a href="../Silvio_Fanzon_Industry_CV.pdf">CV</a>
+      <a href="../Silvio_Fanzon_Academic_CV.pdf">CV</a>
       <a href="https://www.linkedin.com/in/fanzon" target="_blank" rel="noopener">LinkedIn</a>
       <a href="https://github.com/sfanzon" target="_blank" rel="noopener">GitHub</a>
       <a href="https://scholar.google.com/citations?user=9yJyLsoAAAAJ" target="_blank" rel="noopener">Scholar</a>
@@ -402,18 +391,6 @@ ul.task-list li input[type="checkbox"] {
 </footer>
 <script>
 (function(){
-  const root = document.documentElement;
-  const body = document.body;
-  function apply(mode){
-    body.classList.remove('quarto-light','quarto-dark');
-    body.classList.add(mode === 'dark' ? 'quarto-dark' : 'quarto-light');
-    root.dataset.theme = mode;
-    localStorage.setItem('sf-theme', mode);
-  }
-  const stored = localStorage.getItem('sf-theme');
-  apply(stored || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
-  const btn = document.getElementById('light-toggle');
-  if(btn){ btn.addEventListener('click', () => apply(body.classList.contains('quarto-dark') ? 'light' : 'dark')); }
   const path = window.location.pathname.replace(/index\.html$/, '');
   document.querySelectorAll('#navbar .nav-item[data-path]').forEach(li => {
     const href = li.getAttribute('data-path');
@@ -528,6 +505,23 @@ ul.task-list li input[type="checkbox"] {
       });
     });
     panel.insertBefore(button, panel.firstChild);
+  });
+
+  document.querySelectorAll('.callout-header[data-bs-toggle="collapse"]').forEach(function(header) {
+    header.setAttribute('role', 'button');
+    header.setAttribute('tabindex', '0');
+    header.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        header.click();
+      }
+    });
+  });
+
+  document.querySelectorAll('pre').forEach(function(region) {
+    if (region.scrollWidth > region.clientWidth || region.scrollHeight > region.clientHeight) {
+      region.setAttribute('tabindex', '0');
+    }
   });
 
 })();

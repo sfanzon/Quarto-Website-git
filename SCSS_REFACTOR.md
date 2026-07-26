@@ -43,6 +43,34 @@ not the imported rule bytes or any captured pixels.
 | --- | --- | --- |
 | Publication metadata | Replaced three consecutive correction layers with one authoritative base block and the existing responsive breakpoints | 40-page render and 20/20 visual comparisons |
 | Teaching list | Removed superseded timeline, card and separator layers; retained one authoritative open-list layout | 40-page render and 20/20 visual comparisons |
+| Homepage role typography | Collapsed six contradictory role-specific corrections into the authoritative current-page layer | 40-page render and 20/20 visual comparisons |
+| Homepage profile links | Consolidated container, anchor, mobile and About-link corrections; removed the superseded divider layer | 40-page render and 20/20 visual comparisons |
+| Homepage degree | Replaced four desktop/mobile correction blocks with one authoritative rule and one effective mobile adjustment | 40-page render and 20/20 visual comparisons |
+| Homepage hero positioning | Folded final scroll-cue values into base/mobile rules and colocated the portrait crop with responsive portrait behavior | 40-page render and 20/20 visual comparisons |
+| Homepage section headings | Replaced five size, tracking and text-transform correction blocks with one final shared heading rule | 40-page render and 20/20 visual comparisons |
+| Homepage eyebrow labels | Removed the fully overridden homepage label blocks while retaining separate Expertise-page eyebrow styling | 40-page render and 20/20 visual comparisons |
+| Unified News component | Removed unreachable `.home-news-*`, `.news-archive-*`, `.news-year-*` and `.news-row` layers; colocated disclosure styling with the live `.news-item` component | 40-page render and 169/169 aggregate checks |
+
+## Safety test matrix
+
+Run `npm test` after a complete `quarto render`. The current aggregate suite
+contains 169 checks:
+
+- 40 Chromium smoke tests covering every generated page, document structure,
+  images, browser errors and failed same-origin resources
+- 80 WCAG A/AA checks covering every page in light and dark mode
+- 7 Chromium interaction checks for navigation, themes, search, publication
+  panels and news controls
+- 1 static check covering local HTML/CSS targets and URL fragments
+- 7 Chromium critical-path checks
+- 14 matching critical-path checks in Firefox and WebKit
+- 20 visual comparisons against the original desktop/mobile, light/dark
+  baselines
+
+The validated checkpoint passes all 169 checks without updating the visual
+baselines. External-site availability, deployed-server configuration and
+manual assistive-technology behavior remain outside this deterministic local
+suite.
 
 ## Baseline identity
 

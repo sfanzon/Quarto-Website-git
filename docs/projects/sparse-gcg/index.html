@@ -101,9 +101,9 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-fbcf1e92525c6409c952beceabcd441e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-db519073c691c75a24fce6c34853e7e2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-fbcf1e92525c6409c952beceabcd441e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6950cc3e07206ad85a2506caf1757a01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-543f11fa0fae524dda03518ab66d9cf4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-6950cc3e07206ad85a2506caf1757a01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -367,21 +367,10 @@ window.Quarto = {
     <a class="nav-link" href="../../expertise.html"> 
 <span class="menu-text">Expertise</span></a>
   </li>  
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">CV</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
-        <li>
-    <a class="dropdown-item" href="../../Silvio_Fanzon_Industry_CV.pdf">
- <span class="dropdown-text">Industry résumé</span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="../../Silvio_Fanzon_Academic_CV.pdf"> 
+<span class="menu-text">CV</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../../Silvio_Fanzon_Academic_CV.pdf">
- <span class="dropdown-text">Academic CV</span></a>
-  </li>  
-    </ul>
-  </li>
   <li class="nav-item">
     <a class="nav-link" href="../../publications.html"> 
 <span class="menu-text">Publications</span></a>
@@ -544,7 +533,7 @@ window.Quarto = {
 <p>The natural baselines are <strong>vanilla Frank–Wolfe</strong> (same insertion oracle, but instead of re-optimising it just averages the new atom in with step size <span class="math inline">\(2/(k+2)\)</span>) and <strong>proximal gradient descent</strong> (ISTA, plus its accelerated version FISTA) — the workhorse “gradient descent for sparse problems”. We race them on a lasso with <span class="math inline">\(A \in \mathbb{R}^{300\times 5000}\)</span> and an 11-atom solution:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/convergence.png" class="img-fluid figure-img"></p>
+<p><img src="images/convergence.png" class="img-fluid figure-img" alt="Log-scale convergence plot comparing FC-GCG, Frank-Wolfe, ISTA and FISTA objective suboptimality over iterations."></p>
 <figcaption>Objective suboptimality vs iteration. FC-GCG inserts 11 atoms, then stops at iteration 12 with an exact optimality certificate.</figcaption>
 </figure>
 </div>
@@ -552,7 +541,7 @@ window.Quarto = {
 <p>There’s a second story in the <em>support size</em> of the iterates:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/sparsity.png" class="img-fluid figure-img"></p>
+<p><img src="images/sparsity.png" class="img-fluid figure-img" alt="Plot comparing the support size of FC-GCG, Frank-Wolfe, ISTA and FISTA over iterations."></p>
 <figcaption>Support size along the run. Proximal-gradient iterates are dense early and sparsify late; FC-GCG never exceeds the solution’s sparsity.</figcaption>
 </figure>
 </div>
@@ -563,7 +552,7 @@ window.Quarto = {
 <p>All four methods pay the same <span class="math inline">\(O(mn)\)</span> per iteration — one sweep of the data to compute a gradient or dual variable. So wall-clock time is decided by <em>how many iterations you need</em>, and FC-GCG’s count is essentially the number of atoms in the solution, <strong>independent of the ambient dimension</strong>:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/scaling.png" class="img-fluid figure-img"></p>
+<p><img src="images/scaling.png" class="img-fluid figure-img" alt="Log-scale timing plot comparing FC-GCG, Frank-Wolfe, ISTA and FISTA as problem dimension increases."></p>
 <figcaption>Wall time to solve to relative accuracy <span class="math inline">\(10^{-8}\)</span>, dimension up to <span class="math inline">\(n = 200{,}000\)</span>. Open markers: iteration cap hit before reaching the tolerance.</figcaption>
 </figure>
 </div>
@@ -647,7 +636,7 @@ window.Quarto = {
 
     <nav class="site-footer-links" aria-label="Footer">
       <a href="mailto:silvio.fanzon.work@gmail.com">Email</a>
-      <a href="../../Silvio_Fanzon_Industry_CV.pdf">CV</a>
+      <a href="../../Silvio_Fanzon_Academic_CV.pdf">CV</a>
       <a href="https://www.linkedin.com/in/fanzon" target="_blank" rel="noopener">LinkedIn</a>
       <a href="https://github.com/sfanzon" target="_blank" rel="noopener">GitHub</a>
       <a href="https://scholar.google.com/citations?user=9yJyLsoAAAAJ" target="_blank" rel="noopener">Scholar</a>
@@ -663,18 +652,6 @@ window.Quarto = {
 </footer>
 <script>
 (function(){
-  const root = document.documentElement;
-  const body = document.body;
-  function apply(mode){
-    body.classList.remove('quarto-light','quarto-dark');
-    body.classList.add(mode === 'dark' ? 'quarto-dark' : 'quarto-light');
-    root.dataset.theme = mode;
-    localStorage.setItem('sf-theme', mode);
-  }
-  const stored = localStorage.getItem('sf-theme');
-  apply(stored || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
-  const btn = document.getElementById('light-toggle');
-  if(btn){ btn.addEventListener('click', () => apply(body.classList.contains('quarto-dark') ? 'light' : 'dark')); }
   const path = window.location.pathname.replace(/index\.html$/, '');
   document.querySelectorAll('#navbar .nav-item[data-path]').forEach(li => {
     const href = li.getAttribute('data-path');
@@ -789,6 +766,23 @@ window.Quarto = {
       });
     });
     panel.insertBefore(button, panel.firstChild);
+  });
+
+  document.querySelectorAll('.callout-header[data-bs-toggle="collapse"]').forEach(function(header) {
+    header.setAttribute('role', 'button');
+    header.setAttribute('tabindex', '0');
+    header.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        header.click();
+      }
+    });
+  });
+
+  document.querySelectorAll('pre').forEach(function(region) {
+    if (region.scrollWidth > region.clientWidth || region.scrollHeight > region.clientHeight) {
+      region.setAttribute('tabindex', '0');
+    }
   });
 
 })();

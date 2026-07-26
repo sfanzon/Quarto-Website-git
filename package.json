@@ -4,8 +4,11 @@
   "private": true,
   "description": "Quarto source and visual regression tests for silviofanzon.com",
   "scripts": {
-    "visual:baseline": "playwright test tests/visual/capture.spec.js --update-snapshots",
-    "visual:test": "playwright test tests/visual/capture.spec.js",
+    "test": "playwright test",
+    "safety:test": "playwright test tests/safety --project=chromium",
+    "cross-browser:test": "playwright test tests/safety/cross-browser.spec.js --project=firefox --project=webkit",
+    "visual:baseline": "playwright test tests/visual/capture.spec.js --project=chromium --update-snapshots",
+    "visual:test": "playwright test tests/visual/capture.spec.js --project=chromium",
     "visual:report": "playwright show-report"
   },
   "repository": {
@@ -15,6 +18,7 @@
   "type": "commonjs",
   "homepage": "https://github.com/sfanzon/Quarto-Website-git#readme",
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
     "@playwright/test": "^1.62.0"
   }
 }

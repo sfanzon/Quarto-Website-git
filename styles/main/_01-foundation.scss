@@ -401,7 +401,7 @@ table.table a:hover {
 }
 
 .publications h2.year {
-  color: var(--global-divider-color);
+  color: var(--global-text-color-light);
   border-top: 1px solid var(--global-divider-color);
   padding-top: 1rem;
   margin-top: 2rem;
@@ -409,6 +409,13 @@ table.table a:hover {
   text-align: right;
   font-size: 1.65rem;
   font-weight: 400;
+}
+
+body.standard-page .page-hero p a,
+body.project-detail-page main.content p a.uri {
+  text-decoration: underline;
+  text-decoration-thickness: .08em;
+  text-underline-offset: .16em;
 }
 
 .publication-entry.row {
@@ -1656,8 +1663,6 @@ body.publications-page main.content {
 .carousel-status { text-align:center; margin-top:.8rem; color:var(--global-text-color-light); font-size:.85rem; }
 .carousel-hint { display:none; }
 .news-preview { border-top:1px solid var(--global-divider-color); padding-top:2rem; }
-.news-row { display:grid; grid-template-columns:100px 1fr auto; gap:1rem; padding:1rem 0; border-bottom:1px solid var(--global-divider-color); color:var(--global-text-color); }
-.news-row time { color:var(--global-text-color-light); }
 
 .compact-page-hero { padding:clamp(3rem,7vw,6rem) 0 2.5rem; max-width:900px; }
 .compact-page-hero h1 { font-size:clamp(2.6rem,5vw,4.25rem); }
@@ -1689,7 +1694,6 @@ body.publications-page main.content {
   .selected-paper { grid-template-columns:1fr; padding:1.2rem; }
   .selected-paper img { max-height:220px; }
   .publication-row { grid-template-columns:1fr; gap:.35rem; }
-  .news-row { grid-template-columns:76px 1fr auto; font-size:.9rem; }
   .section-heading { align-items:flex-start; }
   .section-heading > a { font-size:.85rem; text-align:right; }
   .project-card-grid { grid-template-columns: 1fr; }
@@ -1701,4 +1705,3 @@ body.publications-page main.content {
   .project-card { display:flex; }
   .project-card img { aspect-ratio:16/9; border-right:0; border-bottom:1px solid var(--global-divider-color); }
 }
-

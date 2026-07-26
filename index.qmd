@@ -18,7 +18,7 @@ body-classes: home-page show-small-footer
     </div>
     <nav class="home-profile-links" aria-label="Profile links">
       <a href="mailto:silvio.fanzon.work@gmail.com">Email</a>
-      <a href="Silvio_Fanzon_Industry_CV.pdf">CV</a>
+      <a href="Silvio_Fanzon_Academic_CV.pdf">CV</a>
       <a href="https://www.linkedin.com/in/fanzon" target="_blank" rel="noopener">LinkedIn</a>
       <a href="https://github.com/sfanzon" target="_blank" rel="noopener">GitHub</a>
       <a href="https://scholar.google.com/citations?user=9yJyLsoAAAAJ" target="_blank" rel="noopener">Scholar</a>

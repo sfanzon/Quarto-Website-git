@@ -18,6 +18,11 @@ for (const pageTarget of manifest.pages) {
 }
 
 test.describe("SCSS visual baseline", () => {
+  test.skip(
+    ({ browserName }) => browserName !== "chromium",
+    "Pixel baselines are intentionally Chromium-specific."
+  );
+
   for (const combination of combinations) {
     const {
       pageTarget,

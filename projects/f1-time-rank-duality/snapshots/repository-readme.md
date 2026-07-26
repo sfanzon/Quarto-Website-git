@@ -16,7 +16,7 @@ The central result is reproduced with the correct two-stage comparison:
 3. within-team gaps in those odds-implied ranks identify Max Verstappen and
    Fernando Alonso as exceeding the threshold.
 
-![Odds-implied teammate gaps](figures/04_teammate_gaps.png)
+![Odds-implied teammate gaps](figures/04_teammate_gaps.png){fig-alt="Horizontal bar chart of odds-implied Formula 1 teammate performance gaps."}
 
 ## Read or reproduce
 
