@@ -61,21 +61,27 @@ Install the JavaScript test dependencies first:
 npm ci
 ```
 
-While iterating on a small change, run the quick critical-path suite:
+While iterating on a focused change, run the quick interaction and static-link suite (~10 tests):
 
 ```bash
 npm run test:quick
 ```
 
-Before committing, run the default midrange suite:
+Before committing after a full `quarto render`, run the normal pre-commit validation (~59 tests):
 
 ```bash
 npm test
 ```
 
-It checks rendered pages in Chromium, key interactions and links, navigation regressions and visual baselines.
+It checks all rendered pages in Chromium (smoke, interactions, links and critical navigation regressions). It does not run visual screenshots.
 
-Before deployment or after broad structural or browser-specific changes, run the complete Chromium, Firefox and WebKit matrix:
+After CSS, layout, responsive or theme work, run the explicit visual regression suite (30 Chromium comparisons):
+
+```bash
+npm run test:visual
+```
+
+Before deployment or after broad structural, accessibility or browser-specific changes, run the complete Chromium, Firefox and WebKit matrix (~187 tests):
 
 ```bash
 npm run test:full
@@ -84,16 +90,10 @@ npm run test:full
 Additional targeted commands:
 
 ```bash
-npm run safety:test
-npm run cross-browser:test
-npm run visual:test
-npm run visual:report
-```
-
-Update visual baselines only for an intentional, inspected visual change:
-
-```bash
-npm run visual:baseline
+npm run safety:test         # all safety checks in Chromium
+npm run cross-browser:test  # critical page regressions in Firefox + WebKit
+npm run visual:baseline     # update saved screenshots (intentional visual changes only)
+npm run visual:report       # open the last Playwright HTML report
 ```
 
 ## Responsive targets

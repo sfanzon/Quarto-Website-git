@@ -96,16 +96,20 @@ Lua-generated `project-at-a-glance-N` variant unmatched in static source.
 
 ## Safety test matrix
 
-Run `npm run test:quick` while iterating on focused changes. Its 18 Chromium
-checks cover critical pages, interactions, links and scroll restoration.
+Run `npm run test:quick` while iterating on focused changes. Its ~10 Chromium
+checks cover interactions and static/link regressions.
 
-Run `npm test` before committing after a complete `quarto render`. This default midrange suite
-contains 79 Chromium checks: smoke coverage, interactions, links, navigation
-regressions and visual comparisons.
+Run `npm test` before committing after a complete `quarto render`. This default
+midrange suite contains ~59 Chromium checks: all-page smoke coverage,
+interactions, links and critical navigation regressions. It does not run visual
+screenshots.
 
-Run `npm run test:full` before deployment or after broad structural or
-browser-specific changes.
-The complete suite contains 177 checks:
+Run `npm run test:visual` after CSS, layout, responsive or theme work. It runs
+30 Chromium screenshot comparisons (5 pages × 2 themes × 3 viewports).
+
+Run `npm run test:full` before deployment or after broad structural,
+accessibility or browser-specific changes.
+The complete suite contains ~187 checks:
 
 - 40 Chromium smoke tests covering every generated page, document structure,
   images, browser errors and failed same-origin resources
@@ -118,7 +122,7 @@ The complete suite contains 177 checks:
 - 30 visual comparisons against the original desktop/iPad/mobile, light/dark
   baselines
 
-The validated checkpoint passes all 177 checks without updating the visual
+The validated checkpoint passes all checks without updating the visual
 baselines. External-site availability, deployed-server configuration and
 manual assistive-technology behavior remain outside this deterministic local
 suite.

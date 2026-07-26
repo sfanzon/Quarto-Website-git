@@ -823,18 +823,29 @@ ul.task-list li input[type="checkbox"] {
     );
 
     function navbarHeight() {
-      const nodes = [
-        document.querySelector('#quarto-header'),
-        document.querySelector('.navbar'),
-        document.querySelector('.navbar-collapse.show')
-      ].filter(Boolean);
+      // The mobile collapse is an overlay. Excluding it keeps the project
+      // drawer stationary so the expanded navbar covers it at the higher layer.
+      const header = document.querySelector('#quarto-header');
+      const navbar = document.querySelector('.navbar');
+
+      const nodes = [header, navbar].filter(Boolean);
       if (!nodes.length) return 64;
+
       return Math.ceil(
         Math.max.apply(
           null,
           nodes.map(function (node) {
             const rect = node.getBoundingClientRect();
-            return Math.max(rect.height, rect.bottom);
+            // For the navbar, exclude the mobile overlay collapse from
+            // the measurement so the drawer does not shift downward when
+            // the mobile menu opens.
+            if (node === navbar) {
+              const collapse = node.querySelector('.navbar-collapse.show');
+              if (collapse) {
+                return collapse.getBoundingClientRect().top;
+              }
+            }
+            return rect.bottom;
           })
         )
       );

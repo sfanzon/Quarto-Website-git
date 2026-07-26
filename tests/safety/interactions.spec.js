@@ -29,6 +29,43 @@ test.describe("critical interactions", () => {
     await expect(page.getByRole("link", { name: "About", exact: true })).toBeVisible();
   });
 
+  test("mobile navbar covers project navigation without moving it", async ({
+    page
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/projects/f1-time-rank-duality/index.html");
+
+    const projectNavigation = page.locator(".project-chapter-rail");
+    const projectToggle = page.locator(".project-chapter-toggle");
+    const navbarToggle = page.locator(".navbar-toggler");
+    const navbarMenu = page.locator("#navbarCollapse");
+
+    await expect(projectNavigation).toBeAttached();
+    const topBefore = await projectNavigation.evaluate((element) =>
+      element.getBoundingClientRect().top
+    );
+
+    await navbarToggle.click();
+    await expect(navbarMenu).toHaveClass(/\bshow\b/);
+    await expect
+      .poll(() =>
+        projectNavigation.evaluate((element) =>
+          element.getBoundingClientRect().top
+        )
+      )
+      .toBe(topBefore);
+
+    const navbarCoversProjectToggle = await projectToggle.evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      const coveringElement = document.elementFromPoint(
+        rect.left + rect.width / 2,
+        rect.top + rect.height / 2
+      );
+      return Boolean(coveringElement?.closest("#quarto-header"));
+    });
+    expect(navbarCoversProjectToggle).toBe(true);
+  });
+
   test("theme toggle changes and persists the color scheme", async ({ page }) => {
     await page.goto("/index.html");
 
