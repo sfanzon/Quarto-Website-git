@@ -2,6 +2,27 @@
    2026 publication metadata typography and rhythm
    Titles remain dominant; metadata is readable but subordinate.
    ============================================================ */
+.archive-section-heading {
+  margin-top: 3.3rem;
+  margin-bottom: -1rem;
+}
+
+.archive-section-heading--spacious {
+  margin-top: 5rem;
+}
+
+.publications h2.year.archive-year {
+  margin-bottom: .1rem;
+}
+
+.archive-actions {
+  margin-top: .3rem;
+}
+
+.inline-icon--compact {
+  font-size: .85em;
+}
+
 .home-page .home-publication-row .paper-meta .publication-authors,
 .publications-page .publication-entry .paper-meta .publication-authors {
   font-size: 0.88rem !important;

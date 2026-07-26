@@ -546,31 +546,6 @@ body.home-page .home-portrait {
   .teaching-course + .teaching-course { margin-top: .3rem; }
 }
 
-/* ============================================================
-   ANTHROPIC-INSPIRED EXPERTISE EDITORIAL SYSTEM
-   Warm neutrals and terracotta are adapted to this site rather than
-   copied literally from another brand.
-   ============================================================ */
-:root {
-  --expertise-ink: #181816;
-  --expertise-muted: #625f58;
-  --expertise-paper: #f5f0e8;
-  --expertise-paper-soft: #faf7f1;
-  --expertise-line: #d8d0c4;
-  --expertise-accent: #a8522f;
-  --expertise-accent-dark: #78391f;
-}
-
-body.quarto-dark {
-  --expertise-ink: #f5f0e8;
-  --expertise-muted: #c6beb2;
-  --expertise-paper: #28241f;
-  --expertise-paper-soft: #211e1a;
-  --expertise-line: #554d43;
-  --expertise-accent: #e18a68;
-  --expertise-accent-dark: #f0a184;
-}
-
 .home-expertise-preview {
   margin-top: clamp(1.5rem, 4vw, 3rem) !important;
   padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 3.5rem);
@@ -818,7 +793,7 @@ body.quarto-dark {
   max-width: 56rem;
 }
 
-.publications-page .publication-jump {
+.publications-page .section-jump {
   margin-top: .2rem;
 }
 
@@ -964,21 +939,6 @@ body.home-page .home-hero { position: relative; }
     margin: 0 auto;
     transform: none;
   }
-}
-
-/* ============================================================
-   MUTED BLUE SECONDARY ACCENT + SMALLER PUBLICATION TITLES
-   ============================================================ */
-:root {
-  --global-blue-accent: #3f6678;
-  --global-blue-accent-deep: #466b7a;
-  --global-blue-accent-soft: #dce6e8;
-}
-
-body.quarto-dark {
-  --global-blue-accent: #8fb1bf;
-  --global-blue-accent-deep: #a9c4cf;
-  --global-blue-accent-soft: #26383f;
 }
 
 /* Blue is secondary and informational: indices, venue labels and focus. */
@@ -1418,14 +1378,6 @@ body.home-page .home-editorial-heading > a:focus-visible {
   }
 }
 
-
-/* 2026 homepage editorial labels and identity refinement */
-:root {
-  --homepage-orange-accent: #9b4828;
-}
-body.quarto-dark {
-  --homepage-orange-accent: #e49472;
-}
 
 /* The orange navbar-echo labels are the dominant editorial markers. */
 body.home-page .home-editorial-heading .eyebrow,

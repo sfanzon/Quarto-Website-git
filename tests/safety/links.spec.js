@@ -1,7 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { test, expect } = require("@playwright/test");
-const { docsRoot, htmlPages } = require("./site");
+const { docsRoot, htmlPages, repositoryRoot } = require("./site");
 
 const ignoredSchemes = /^(?:data:|mailto:|tel:|javascript:|blob:)/i;
 
@@ -107,4 +107,24 @@ test("retired component classes remain absent from the rendered site", async () 
     expect(rendered, `retired class still rendered: ${className}`)
       .not.toContain(className);
   }
+});
+
+test("source markup keeps presentation styles in reusable classes", async () => {
+  const sourceMarkupFiles = [
+    ...fs.globSync("**/*.qmd", { cwd: repositoryRoot }),
+    ...fs.globSync("**/*.html", { cwd: repositoryRoot })
+  ].filter(
+    (relativePath) =>
+      !relativePath.startsWith("docs/") &&
+      !relativePath.startsWith("node_modules/") &&
+      !relativePath.startsWith("playwright-report/") &&
+      !relativePath.startsWith("test-results/")
+  );
+  const inlineStyleFiles = sourceMarkupFiles.filter((relativePath) =>
+    /\bstyle\s*=/i.test(
+      fs.readFileSync(path.join(repositoryRoot, relativePath), "utf8")
+    )
+  );
+
+  expect(inlineStyleFiles, "source markup should not use inline styles").toEqual([]);
 });

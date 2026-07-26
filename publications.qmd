@@ -13,7 +13,7 @@ body-classes: standard-page publications-page
 </header>
 
 <section class="publication-section all-publications" aria-label="Publication list">
-  <nav class="publication-jump" aria-label="Publication categories">
+  <nav class="section-jump" aria-label="Publication categories">
     <a href="#journal-publications">Journal publications</a>
     <a href="#theses">Theses</a>
     <a href="#miscellaneous">Miscellaneous</a>

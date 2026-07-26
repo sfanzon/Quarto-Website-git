@@ -343,7 +343,7 @@ body.standard-page #title-block-header {
   margin-top: clamp(2.75rem, 6vw, 4.5rem);
 }
 
-.publication-jump {
+.section-jump {
   display: flex;
   flex-wrap: wrap;
   gap: .65rem 1.5rem;
@@ -353,20 +353,20 @@ body.standard-page #title-block-header {
   border-bottom: 1px solid var(--global-divider-color);
 }
 
-.publication-jump a {
+.section-jump a {
   color: var(--global-text-color);
   font-size: .88rem;
   font-weight: 600;
 }
 
-.publication-jump a::after {
+.section-jump a::after {
   content: " ↓";
   color: var(--global-warm-accent);
   font-size: .8em;
 }
 
-.publication-jump a:hover,
-.publication-jump a:focus-visible {
+.section-jump a:hover,
+.section-jump a:focus-visible {
   color: var(--global-theme-color);
 }
 

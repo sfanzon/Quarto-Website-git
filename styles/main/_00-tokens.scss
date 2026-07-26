@@ -1,0 +1,115 @@
+/* ============================================================
+   GLOBAL THEME COLOURS
+   ------------------------------------------------------------
+   Shared light/dark tokens consumed by the site's components.
+   ============================================================ */
+
+:root {
+  color-scheme: light;
+
+  /* Main page colours */
+  --global-theme-color: #a8522f;
+  --global-hover-color: #824735;
+  --global-hover-text-color: #ffffff;
+  --global-bg-color: #ffffff;
+  --global-card-bg-color: #ffffff;
+  --global-text-color: #000000;
+  --global-text-color-light: #444444;
+  --global-divider-color: #ddd3c6;
+  --global-section-bg: #f6f1e9;
+  --global-warm-bg: #f7f2ee;
+  --global-warm-border: #e4d3c8;
+  --global-warm-accent: #9a5f4d;
+
+  /* Code, navbar and callout colours */
+  --global-code-bg-color: rgba(184, 86, 53, 0.07);
+  --global-navbar-color: #1c1c1d;
+  --global-navbar-text-color: #e8e8e8;
+  --global-navbar-active-text-color: #e59a7c;
+  --global-navbar-hover-color: #efb29a;
+  --global-highlight-color: #b71c1c;
+  --global-tip-block: #42b983;
+  --global-tip-block-bg: #e2f5ec;
+  --global-tip-block-text: #215d42;
+  --global-tip-block-title: #359469;
+  --global-warning-block: #8b604d;
+  --global-warning-block-bg: #f5f1f3;
+  --global-warning-block-text: #3f3037;
+  --global-warning-block-title: #704838;
+  --global-danger-block: #cc0000;
+  --global-danger-block-bg: #ffe0e0;
+  --global-danger-block-text: #660000;
+  --global-danger-block-title: #cc0000;
+
+  /* Expertise editorial palette */
+  --expertise-ink: #181816;
+  --expertise-muted: #625f58;
+  --expertise-paper: #f5f0e8;
+  --expertise-paper-soft: #faf7f1;
+  --expertise-line: #d8d0c4;
+  --expertise-accent: #a8522f;
+  --expertise-accent-dark: #78391f;
+
+  /* Secondary informational accent */
+  --global-blue-accent: #3f6678;
+  --global-blue-accent-deep: #466b7a;
+  --global-blue-accent-soft: #dce6e8;
+
+  /* Homepage editorial accent */
+  --homepage-orange-accent: #9b4828;
+}
+
+body.quarto-dark {
+  color-scheme: dark;
+
+  /* Main page colours */
+  --global-theme-color: #9a7650;
+  --global-hover-color: #b8946c;
+  --global-hover-text-color: #ffffff;
+  --global-bg-color: #1c1c1d;
+  --global-card-bg-color: #24211e;
+  --global-text-color: #f5f5f5;
+  --global-text-color-light: #f5f5f5;
+  --global-divider-color: #554d43;
+  --global-section-bg: #29251f;
+  --global-warm-bg: #302925;
+  --global-warm-border: #59483e;
+  --global-warm-accent: #d1a18f;
+
+  /* Code, navbar and callout colours */
+  --global-code-bg-color: #2c2824;
+  --global-navbar-color: #222222;
+  --global-navbar-text-color: #f5f5f5;
+  --global-navbar-active-text-color: #9a7650;
+  --global-navbar-hover-color: #b8946c;
+  --global-highlight-color: #b71c1c;
+  --global-tip-block: #42b983;
+  --global-tip-block-bg: #e2f5ec;
+  --global-tip-block-text: #215d42;
+  --global-tip-block-title: #359469;
+  --global-warning-block: #c38e76;
+  --global-warning-block-bg: #30272c;
+  --global-warning-block-text: #f1e8ec;
+  --global-warning-block-title: #dfad96;
+  --global-danger-block: #cc0000;
+  --global-danger-block-bg: #ffe0e0;
+  --global-danger-block-text: #660000;
+  --global-danger-block-title: #cc0000;
+
+  /* Expertise editorial palette */
+  --expertise-ink: #f5f0e8;
+  --expertise-muted: #c6beb2;
+  --expertise-paper: #28241f;
+  --expertise-paper-soft: #211e1a;
+  --expertise-line: #554d43;
+  --expertise-accent: #e18a68;
+  --expertise-accent-dark: #f0a184;
+
+  /* Secondary informational accent */
+  --global-blue-accent: #8fb1bf;
+  --global-blue-accent-deep: #a9c4cf;
+  --global-blue-accent-soft: #26383f;
+
+  /* Homepage editorial accent */
+  --homepage-orange-accent: #e49472;
+}

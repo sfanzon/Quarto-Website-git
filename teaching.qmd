@@ -18,7 +18,7 @@ body-classes: standard-page teaching-page
   </div>
 </section>
 
-<nav class="publication-jump teaching-jump" aria-label="Teaching sections">
+<nav class="section-jump teaching-jump" aria-label="Teaching sections">
   <a href="#lecturer">Lecturer</a>
   <a href="#tutor">Teaching assistant</a>
 </nav>
