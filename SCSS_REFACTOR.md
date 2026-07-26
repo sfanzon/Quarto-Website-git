@@ -88,8 +88,16 @@ Lua-generated `project-at-a-glance-N` variant unmatched in static source.
 
 ## Safety test matrix
 
-Run `npm test` after a complete `quarto render`. The current aggregate suite
-contains 176 checks:
+Run `npm run test:quick` while iterating on focused changes. Its 18 Chromium
+checks cover critical pages, interactions, links and scroll restoration.
+
+Run `npm test` before committing after a complete `quarto render`. This default midrange suite
+contains 78 Chromium checks: smoke coverage, interactions, links, navigation
+regressions and visual comparisons.
+
+Run `npm run test:full` before deployment or after broad structural or
+browser-specific changes.
+The complete suite contains 176 checks:
 
 - 40 Chromium smoke tests covering every generated page, document structure,
   images, browser errors and failed same-origin resources

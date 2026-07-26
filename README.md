@@ -33,6 +33,28 @@ quarto render
 
 The Quarto pre-render hook runs `scripts/build-content.py`, which rebuilds publication, project, teaching and news fragments from their structured sources.
 
+## Test locally
+
+While iterating on a small change, run the quick critical-path suite:
+
+```bash
+npm run test:quick
+```
+
+Before committing, run the default midrange suite:
+
+```bash
+npm test
+```
+
+It checks every rendered page in Chromium, key interactions and links, navigation
+regressions and visual baselines. Before deployment or after broad structural
+or browser-specific changes, run the complete Chromium, Firefox and WebKit matrix:
+
+```bash
+npm run test:full
+```
+
 Only directly referenced assets are stored under `assets/`. Images are grouped
 by brand, profile and project, while downloadable files are grouped by journal,
 seminar, news, teaching and thesis purpose. Unlinked archive material remains
