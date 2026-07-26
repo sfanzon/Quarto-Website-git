@@ -1,0 +1,29 @@
+---
+title: "Teaching"
+description: "Teaching, course materials and student supervision"
+toc: false
+page-layout: full
+body-classes: standard-page teaching-page show-small-footer
+---
+
+```{=html}
+<header class="page-hero compact-page-hero teaching-hero">
+  <h1>Teaching</h1>
+  <p>I teach across statistics, applied mathematics and pure mathematics, with an emphasis on clear exposition, problem solving and reproducible computational work.</p>
+</header>
+
+<section class="teaching-intro">
+  <div>
+    <p>Selected notes, slides, revision guides and course pages are linked below. Materials may be reused for teaching with attribution.</p>
+  </div>
+</section>
+
+<nav class="publication-jump teaching-jump" aria-label="Teaching sections">
+  <a href="#lecturer">Lecturer</a>
+  <a href="#tutor">Teaching assistant</a>
+</nav>
+```
+
+```{=html}
+{{< include includes/teaching-list.html >}}
+```

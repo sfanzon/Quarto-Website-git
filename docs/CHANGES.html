@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>changes – Silvio Fanzon</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./assets/img/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-9e96ab43fd0d283596a4e48396a529b5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-3bae2923977e871cd45f382312f2c49b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-9e96ab43fd0d283596a4e48396a529b5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="styles/project-pages.css">
+<link rel="stylesheet" href="styles/project-navigation.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Silvio Fanzon</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./projects.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./expertise.html"> 
+<span class="menu-text">Expertise</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">CV</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
+        <li>
+    <a class="dropdown-item" href="./Silvio_Fanzon_Industry_CV.pdf">
+ <span class="dropdown-text">Industry résumé</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Silvio_Fanzon_Academic_CV.pdf">
+ <span class="dropdown-text">Academic CV</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./teaching.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./news.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-more" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">More</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-more">    
+        <li>
+    <a class="dropdown-item" href="./research.html">
+ <span class="dropdown-text">Research</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./presentations.html">
+ <span class="dropdown-text">Presentations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./supervision.html">
+ <span class="dropdown-text">Supervision</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./contact.html">
+ <span class="dropdown-text">Contact</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="latest-refinement" class="level1">
+<h1>Latest refinement</h1>
+<section id="shared-project-card-source-and-compact-projects-grid" class="level2">
+<h2 data-anchor-id="shared-project-card-source-and-compact-projects-grid">2026-07-25 — Shared project-card source and compact Projects grid</h2>
+<ul>
+<li><p>Made <code>data/projects.yml</code> the single source for both homepage and Projects-page cards.</p></li>
+<li><p>Added generated <code>includes/projects-portfolio.html</code>; <code>projects.qmd</code> no longer duplicates project titles, labels, summaries or links.</p></li>
+<li><p>Reduced card actions to <code>Read project</code> plus <code>Code</code> only where a real repository is available.</p></li>
+<li><p>Replaced the oversized two-column fact-heavy Projects cards with a compact three-column card grid using the homepage design language.</p></li>
+<li><p>Kept the archived F1 overview visually distinct with a dashed card treatment.</p></li>
+<li><p>Reduced the responsive eyebrow size on project article headers.</p></li>
+<li><p>Added two controlled research-theme pills to every publication record.</p></li>
+<li><p>Kept authors visible but reduced their prominence relative to title, venue and themes.</p></li>
+<li><p>Curated four homepage publications: the 2026 Formula 1 normal model, the Mathematical Programming optimisation paper, the 2024 Formula 1 time-rank paper, and the FoCM dynamic inverse-problems paper.</p></li>
+<li><p>Simplified homepage publication actions to <strong>Paper</strong> and <strong>Code</strong> only, with Code shown only when a useful implementation exists.</p></li>
+<li><p>Simplified full publication actions to <strong>Paper</strong>, <strong>Abstract</strong>, <strong>Cite</strong>, followed by genuine supplementary material such as Code, Slides, Poster or Video.</p></li>
+<li><p>Made the primary Paper action fall back to the canonical DOI/arXiv page when a local PDF is not included in the project.</p></li>
+</ul>
+</section>
+</section>
+<section id="redesign-changes" class="level1">
+<h1>Redesign changes</h1>
+<ul>
+<li>Replaced the long homepage biography with a concise, industry-compatible introduction.</li>
+<li>Added a full-width editorial hero using the existing portrait and smaller contact icons.</li>
+<li>Added swipeable/keyboard-button carousels for three featured projects and four selected publications, with counters and “view all” links.</li>
+<li>Added original research-derived SVG visuals for F1 modelling, optimal transport, optimization, PDEs and materials science.</li>
+<li>Rebuilt the publications page as one responsive page: curated papers first, then the complete list in collapsible year groups.</li>
+<li>Moved publication metadata into <code>data/publications.bib</code>; <code>scripts/build-content.py</code> generates reusable homepage and publications HTML before each render.</li>
+<li>Added <code>data/projects.yml</code> for maintainable project cards.</li>
+<li>Widened desktop content while keeping compact mobile margins.</li>
+<li>Fixed the mobile navbar so it overlays rather than shifts the page, removed the end-of-animation jump, matched burger colour/spacing, and made the burger reliably animate to an X using <code>aria-expanded</code>.</li>
+<li>Preserved the existing magenta light palette and blue dark palette, navbar, footer, teaching, supervision, CV, contact and presentation pages.</li>
+</ul>
+<section id="july-2026-compact-layout-update" class="level2">
+<h2 data-anchor-id="july-2026-compact-layout-update">July 2026 compact-layout update</h2>
+<ul>
+<li>Reduced featured project/publication cards from 520px to 390px minimum height.</li>
+<li>Reduced card padding, image height, section spacing and card-title sizes for 13–14 inch laptop screens.</li>
+<li>Reduced publication-page hero and selected-paper title sizes.</li>
+<li>Replaced the missing/fixed footer with a static, minimal professional footer.</li>
+<li>Footer now contains only name, role, email/contact/CV and key professional profiles; address and map were removed.</li>
+<li>Removed footer-generation scripts from the Quarto pre-render pipeline.</li>
+<li>Removed the automatic Python/PyYAML pre-render step, so <code>quarto preview</code> works without installing Python packages.</li>
+</ul>
+</section>
+<section id="projects-and-publications-pages" class="level2">
+<h2 data-anchor-id="projects-and-publications-pages">Projects and publications pages</h2>
+<ul>
+<li>Rebuilt the Projects page as a compact editorial page rather than a generic Quarto listing.</li>
+<li>Added a three-item featured-project carousel with arrows, counters and mobile swipe.</li>
+<li>Added restrained research-theme accordions for optimization/inverse problems, sports analytics, and PDEs/materials science.</li>
+<li>Added a compact methods strip and direct links to papers and code.</li>
+<li>Converted Selected Publications into a single-item carousel.</li>
+<li>Kept the complete publication archive on the same page in expandable year sections.</li>
+<li>Reduced selected-paper and archive title sizes and tightened spacing for 13–14-inch laptop screens.</li>
+<li>Preserved the minimal footer, responsive navbar and light/dark themes.</li>
+</ul>
+</section>
+<section id="selected-publications-list-update" class="level2">
+<h2 data-anchor-id="selected-publications-list-update">Selected publications list update</h2>
+<ul>
+<li>Replaced the selected-publications image carousel with a compact editorial list.</li>
+<li>Removed decorative publication images and carousel controls from the publications page.</li>
+<li>Reduced selected-paper title sizes and tightened spacing for laptop-sized browser windows.</li>
+<li>Preserved Abstract, BibTeX, HTML, PDF, code, slides and other supporting links.</li>
+<li>Updated <code>scripts/build-content.py</code> so regenerated publication content keeps the new list layout.</li>
+</ul>
+</section>
+<section id="streamlined-homepage-profile" class="level2">
+<h2 data-anchor-id="streamlined-homepage-profile">Streamlined homepage profile</h2>
+<ul>
+<li>Removed the row of social-media icons from the homepage hero.</li>
+<li>Removed the outlined download button and its icon.</li>
+<li>Replaced both with one restrained text-link row: CV, Email, GitHub and Google Scholar.</li>
+<li>Added a subtle divider so the profile links read as part of the typography rather than a separate control panel.</li>
+<li>Left LinkedIn and ORCID available elsewhere on the site/footer to keep the homepage concise.</li>
+</ul>
+</section>
+<section id="streamlined-navbar" class="level2">
+<h2 data-anchor-id="streamlined-navbar">Streamlined navbar</h2>
+<ul>
+<li>Reduced the navbar to the five primary destinations: Projects, Publications, Teaching, CV and Contact.</li>
+<li>Moved News, Presentations and Supervision into a compact <strong>More</strong> menu.</li>
+<li>Removed the redundant Home link; the site name links to the homepage.</li>
+<li>Removed “Dr” from the navbar brand for a lighter editorial treatment.</li>
+<li>Reduced navbar height, link size and horizontal spacing.</li>
+<li>Added a restrained active-page underline instead of heavy bold styling.</li>
+<li>Added a subtle translucent background, blur and fine shadow while preserving the sticky navbar.</li>
+<li>Refined the dropdown and mobile menu styling to match the minimal design.</li>
+</ul>
+</section>
+<section id="editorial-teaching-and-publications-update" class="level2">
+<h2 data-anchor-id="editorial-teaching-and-publications-update">Editorial teaching and publications update</h2>
+<ul>
+<li>Rebuilt Teaching with a compact page introduction, section navigation and a clean chronological course list.</li>
+<li>Kept all existing teaching materials and links while removing the heavy card treatment.</li>
+<li>Kept “Silvio Fanzon” on one line and moved “Applied mathematician” directly below the name.</li>
+<li>Rebuilt the complete Publications list without collapsible years.</li>
+<li>Divided publications into Journal articles and preprints, Theses, and Miscellaneous.</li>
+<li>Removed venue badges and oversized journal-name headlines.</li>
+<li>Put publication title, authors and journal details on separate lines.</li>
+<li>Reduced page and publication title sizes across desktop and mobile.</li>
+</ul>
+</section>
+<section id="publication-list-refinement" class="level2">
+<h2 data-anchor-id="publication-list-refinement">Publication list refinement</h2>
+<ul>
+<li>Restored “Silvio Fanzon” explicitly within the homepage biography.</li>
+<li>Kept “Applied mathematician” directly below the name.</li>
+<li>Removed card styling and repeated divider lines from publication entries.</li>
+<li>Used the same concise bibliography on desktop and mobile: venue and year only.</li>
+<li>Retained full citation data inside BibTeX rather than in the visible list.</li>
+</ul>
+</section>
+<section id="final-homepage-identity-and-publication-spacing-pass" class="level2">
+<h2 data-anchor-id="final-homepage-identity-and-publication-spacing-pass">Final homepage identity and publication spacing pass</h2>
+<ul>
+<li>Removed the duplicate navbar brand from the homepage, leaving the hero identity as the only name near the portrait.</li>
+<li>Enlarged “Silvio Fanzon” and placed it immediately above “Applied mathematician”.</li>
+<li>Kept the name on one line at desktop and mobile sizes.</li>
+<li>Added one subtle divider between publication entries rather than boxes or multiple internal rules.</li>
+<li>Increased the vertical spacing between papers while keeping authors and short venue/year details compact.</li>
+</ul>
+</section>
+<section id="final-editorial-pass" class="level2">
+<h2 data-anchor-id="final-editorial-pass">Final editorial pass</h2>
+<ul>
+<li><p>Added a dedicated <strong>Research</strong> page linking research themes to projects and publications.</p></li>
+<li><p>Added <strong>Research</strong> to the main navigation while keeping the navbar role-free and compact.</p></li>
+<li><p>Added a concise expertise line below <strong>Applied mathematician</strong> on the homepage.</p></li>
+<li><p>Removed the repeated name from the homepage biography copy.</p></li>
+<li><p>Kept the homepage biography brief and preserved the large single identity heading.</p></li>
+<li><p>Added responsive, typography-led Research page styling without cards or decorative icons.</p></li>
+<li><p>Standardised the navbar at a restrained 56 px height and medium-weight typography.</p></li>
+<li><p>Removed the navbar brand entirely so no small duplicate name floats above the portrait.</p></li>
+<li><p>Kept one large “Silvio Fanzon” heading directly above “Applied mathematician” in the homepage hero.</p></li>
+</ul>
+</section>
+<section id="navbar-home-link-correction" class="level2">
+<h2 data-anchor-id="navbar-home-link-correction">Navbar home link correction</h2>
+<ul>
+<li><p>Restored “Silvio Fanzon” as the navbar brand on every page.</p></li>
+<li><p>The navbar name links back to the homepage, while the homepage retains the large name above “Applied mathematician”.</p></li>
+<li><p>Changed Abstract and BibTeX controls from modal pop-ups to inline al-folio-style disclosure panels.</p></li>
+<li><p>Removed separator lines between publications.</p></li>
+<li><p>Ensured publication titles are never underlined inside detail panels.</p></li>
+</ul>
+</section>
+<section id="teaching-and-homepage-refinement" class="level2">
+<h2 data-anchor-id="teaching-and-homepage-refinement">Teaching and homepage refinement</h2>
+<ul>
+<li>Increased the homepage news limit from 5 to 8.</li>
+<li>Added a persistent project-carousel instruction: position plus “Use the arrows or swipe”.</li>
+<li>Removed unexplained T1/T2/T3 labels from teaching modules.</li>
+<li>Condensed institution, degree and year information into one metadata line.</li>
+<li>Redesigned teaching modules as compact responsive cards.</li>
+<li>Restyled teaching material links to match the borderless magenta publication controls.</li>
+<li>Updated both source files and the pre-rendered <code>docs</code> site.</li>
+</ul>
+</section>
+<section id="animated-homepage-hero" class="level2">
+<h2 data-anchor-id="animated-homepage-hero">Animated homepage hero</h2>
+<ul>
+<li>Added a slow, subtle blue-and-mint animated gradient behind the homepage biography.</li>
+<li>Kept the effect confined to the hero and faded it back into the page background.</li>
+<li>Added a <code>prefers-reduced-motion</code> fallback and a restrained dark-mode treatment.</li>
+<li>Kept Latest News after Selected Publications so the homepage prioritises identity, work, and evidence before updates.</li>
+</ul>
+</section>
+<section id="publications-action-consistency" class="level2">
+<h2 data-anchor-id="publications-action-consistency">Publications action consistency</h2>
+<ul>
+<li><p>Standardised the publications-page action order to PDF, Abstract, BibTeX, then Journal/arXiv and optional resources.</p></li>
+<li><p>Shortened publisher links from “Journal page” to “Journal”.</p></li>
+<li><p>Shortened the unpublished preprint link from “arXiv page” to “arXiv”.</p></li>
+<li><p>Kept homepage publication controls unchanged.</p></li>
+<li><p>Added a Copy citation button with feedback to each non-empty BibTeX panel.</p></li>
+<li><p>Styled publication venue abbreviations as subtle linked magenta pills.</p></li>
+</ul>
+</section>
+<section id="navbar-and-footer-link-order" class="level2">
+<h2 data-anchor-id="navbar-and-footer-link-order">Navbar and footer link order</h2>
+<ul>
+<li><p>Reordered the main navbar to: Projects, Research, CV, Publications, Teaching, More.</p></li>
+<li><p>Reordered footer links to: Email, Résumé, LinkedIn, GitHub, Scholar, Contact.</p></li>
+<li><p>Changed the project-carousel hint back to “Swipe for more”.</p></li>
+<li><p>Renamed Résumé to CV in the footer.</p></li>
+<li><p>Matched the homepage bio links to the footer order: Email, CV, LinkedIn, GitHub, Scholar, Contact.</p></li>
+<li><p>Removed the remaining gap between the fixed navbar and homepage hero.</p></li>
+</ul>
+</section>
+<section id="homepage-hero-and-selected-publication-parity" class="level2">
+<h2 data-anchor-id="homepage-hero-and-selected-publication-parity">Homepage hero and selected-publication parity</h2>
+<ul>
+<li>Moved “PhD in Mathematics” onto the role line so it reads naturally with “Applied mathematician”.</li>
+<li>Removed arrow markers from all profile-card links.</li>
+<li>Made the desktop hero fill the viewport below the navbar and vertically centre its contents, preventing the following section colour from peeking into the first screen.</li>
+<li>Updated YAML-generated selected publications on the homepage to use the same venue pills, action order, inline Abstract/BibTeX panels, and citation-copy behaviour as the publications page.</li>
+</ul>
+</section>
+<section id="homepage-identity-hierarchy" class="level2">
+<h2 data-anchor-id="homepage-identity-hierarchy">Homepage identity hierarchy</h2>
+<ul>
+<li>Removed the duplicated expertise text beneath the name.</li>
+<li>Placed “PhD in Mathematics” beneath “Applied mathematician” as secondary metadata.</li>
+<li>Updated the research pills to Optimisation, Statistics, PDEs, Inverse Problems, Machine Learning, and Sports Analytics.</li>
+</ul>
+</section>
+<section id="mobile-hero-refinement" class="level2">
+<h2 data-anchor-id="mobile-hero-refinement">Mobile hero refinement</h2>
+<ul>
+<li><p>Removed the forced landscape crop from the portrait on phones so the full portrait remains visible.</p></li>
+<li><p>Reduced the name size on desktop and mobile.</p></li>
+<li><p>Reduced the emphasized opening biography sentence while preserving its hierarchy.</p></li>
+<li><p>Moved “PhD in Mathematics” inline with “Applied mathematician” as quieter metadata.</p></li>
+<li><p>Increased separation between the homepage role and qualification, added a divider below Featured projects, and restored the previous static hero background.</p></li>
+<li><p>Matched the homepage Selected publications section’s top and bottom spacing to the Latest news section, including removing the extra margin after the final publication.</p></li>
+</ul>
+</section>
+<section id="homepage-publication-spacing-correction" class="level2">
+<h2 data-anchor-id="homepage-publication-spacing-correction">Homepage publication spacing correction</h2>
+<ul>
+<li>Removed the large bottom margin from Featured Projects that was creating the apparent gap above Selected publications.</li>
+<li>Removed extra top padding from the first publication and extra bottom padding from the last publication.</li>
+<li>Added an explicit <code>selected-publications-section</code> class so spacing no longer depends on fragile <code>nth-of-type</code> selectors.</li>
+</ul>
+</section>
+<section id="research-and-projects-separation" class="level2">
+<h2 data-anchor-id="research-and-projects-separation">Research and Projects separation</h2>
+<ul>
+<li><p>Repurposed the former Projects research-theme accordions and methods list on the Research page.</p></li>
+<li><p>Kept Projects problem-led and employer-facing.</p></li>
+<li><p>Restored the website redesign as a fifth portfolio project, matching the homepage carousel.</p></li>
+<li><p>Clarified that the homepage carousel is a visual preview while the Projects page provides fuller evidence.</p></li>
+<li><p>Moved the editable Projects source from <code>posts/index.qmd</code> to root-level <code>projects.qmd</code>; updated navbar and internal links.</p></li>
+<li><p>Fixed News workflow: homepage and archive are generated from dated Markdown files in <code>news/</code> during Quarto pre-render; removed the <code>_news/</code> mismatch.</p></li>
+<li><p>Replaced publication YAML with one authoritative <code>data/publications.bib</code> file.</p></li>
+<li><p>Publication sections now use the exact <code>category</code> field from each BibTeX entry, with no inferred or fallback category.</p></li>
+<li><p>Removed separator lines between entries on the standalone News page; entries are now separated by whitespace only. Homepage News styling is unchanged.</p></li>
+</ul>
+</section>
+<section id="teaching-timeline" class="level2">
+<h2 data-anchor-id="teaching-timeline">Teaching timeline</h2>
+<ul>
+<li>Replaced the two-column teaching grid with a single-column vertical timeline.</li>
+<li>Kept each course as a card and preserved the existing academic-year dividers.</li>
+<li>Added a restrained connecting rule and timeline markers for easier chronological scanning.</li>
+<li>Left the homepage bio gradient and Featured Projects section colors unchanged.</li>
+</ul>
+</section>
+<section id="teaching-list-cleanup" class="level2">
+<h2 data-anchor-id="teaching-list-cleanup">Teaching list cleanup</h2>
+<ul>
+<li>Removed card backgrounds, borders, rounded corners, and shadows from Teaching entries.</li>
+<li>Preserved all course titles, metadata, links, buttons, and expandable descriptions.</li>
+<li>Added clean horizontal separators and generous vertical spacing between courses.</li>
+</ul>
+</section>
+<section id="infinite-project-carousel" class="level2">
+<h2 data-anchor-id="infinite-project-carousel">Infinite project carousel</h2>
+<ul>
+<li>Made the Featured Projects carousel loop seamlessly in both directions.</li>
+<li>Continuous swiping now works with touch, trackpad, mouse scrolling, and arrow controls.</li>
+<li>Preserved the existing project cards and responsive 1/2/3-card layout.</li>
+</ul>
+</section>
+<section id="project-carousel-navigation-restored" class="level2">
+<h2 data-anchor-id="project-carousel-navigation-restored">Project carousel navigation restored</h2>
+<ul>
+<li>Restored the original “Swipe for more ↔︎” instruction.</li>
+<li>Restored the project position counter on desktop.</li>
+<li>Kept the seamless infinite-loop carousel behaviour.</li>
+</ul>
+</section>
+<section id="homepage-bio-colour-reversion" class="level2">
+<h2 data-anchor-id="homepage-bio-colour-reversion">Homepage bio colour reversion</h2>
+<ul>
+<li>Restored the earlier, subtler blue-and-mint gradient behind the homepage biography.</li>
+<li>Restored the earlier translucent theme-coloured research pills.</li>
+<li>Left the project carousel, sentence, counter, and all other site styling unchanged.</li>
+</ul>
+</section>
+<section id="anthropic-inspired-expertise-update" class="level2">
+<h2 data-anchor-id="anthropic-inspired-expertise-update">Anthropic-inspired expertise update</h2>
+<ul>
+<li>Added a warm editorial <strong>What I work on</strong> preview to the homepage.</li>
+<li>Renamed the navbar item and page presentation from <strong>Research</strong> to <strong>Expertise</strong> while retaining <code>research.html</code> for URL compatibility.</li>
+<li>Rebuilt the Expertise page around five capabilities: optimisation, statistical modelling, inverse problems, scientific computing, and technical communication and leadership.</li>
+<li>Used an adapted warm ivory and terracotta palette rather than copying Anthropic’s exact brand colours.</li>
+<li>Updated both Quarto source files and the included rendered <code>docs</code> output.</li>
+</ul>
+</section>
+<section id="restrained-identity-and-about-page" class="level2">
+<h2 data-anchor-id="restrained-identity-and-about-page">Restrained identity and About page</h2>
+<ul>
+<li>Shortened the homepage introduction to two sentences and added one quiet About link.</li>
+<li>Presented the homepage identity as “Dr Silvio Fanzon” while keeping the navbar brand compact.</li>
+<li>Added a concise About page focused on approach, background, teaching and collaboration.</li>
+<li>Deepened the site accent from bright terracotta <code>#b85635</code> to clay/rust <code>#a8522f</code> across source, rendered CSS and SVG artwork.</li>
+</ul>
+</section>
+<section id="restrained-identity-and-about-page-1" class="level2">
+<h2 data-anchor-id="restrained-identity-and-about-page-1">Restrained identity and About page</h2>
+<ul>
+<li>Shortened the homepage introduction to two sentences and added one quiet About link.</li>
+<li>Presented the homepage identity as “Dr Silvio Fanzon” while keeping the navbar brand compact.</li>
+<li>Added a concise About page focused on approach, background, teaching and collaboration.</li>
+<li>Deepened the site accent from bright terracotta <code>#b85635</code> to clay/rust <code>#a8522f</code> across source, rendered CSS and SVG artwork.</li>
+</ul>
+</section>
+<section id="publications-editorial-hierarchy" class="level2">
+<h2 data-anchor-id="publications-editorial-hierarchy">Publications editorial hierarchy</h2>
+<ul>
+<li>Added a restrained four-item featured publications section.</li>
+<li>Added a concise research summary and a clear complete-list heading.</li>
+<li>Kept the presentation image-free and typographic rather than card-based.</li>
+<li>Updated both Quarto source and rendered docs output.</li>
+</ul>
+</section>
+<section id="homepage-bio-correction" class="level2">
+<h2 data-anchor-id="homepage-bio-correction">Homepage bio correction</h2>
+<ul>
+<li>Restored the two requested sentences verbatim.</li>
+<li>Kept <code>Silvio Fanzon, PhD</code> and removed any redundant <code>PhD in Mathematics</code> credential.</li>
+<li>Reduced the name size substantially.</li>
+<li>Made both bio sentences identical in size, weight, colour and line-height.</li>
+<li>Added clear whitespace and a quiet divider between the identity header and biography.</li>
+<li>Patched both Quarto source and pre-rendered <code>docs</code> output.</li>
+</ul>
+</section>
+<section id="homepage-scroll-cue" class="level2">
+<h2 data-anchor-id="homepage-scroll-cue">Homepage scroll cue</h2>
+<ul>
+<li>Added a restrained “Explore” cue with a small downward arrow at the bottom of the landing hero.</li>
+<li>The cue links directly to the “What I work on” section.</li>
+<li>Animation is subtle and disabled when reduced motion is requested.</li>
+<li>On mobile it participates in the document flow rather than overlaying content.</li>
+</ul>
+</section>
+<section id="muted-blue-secondary-accent-and-publication-typography" class="level2">
+<h2 data-anchor-id="muted-blue-secondary-accent-and-publication-typography">Muted blue secondary accent and publication typography</h2>
+<ul>
+<li>Added a muted slate blue (<code>#55778a</code>) as a secondary informational accent.</li>
+<li>Applied it to expertise indices, publication venue labels, focus states, and selected illustration details.</li>
+<li>Added a faint blue counterpoint to the warm homepage hero gradient.</li>
+<li>Reduced publication-title sizing on both the homepage and full Publications page.</li>
+<li>Kept deep clay (<code>#a8522f</code>) as the primary brand accent.</li>
+</ul>
+</section>
+<section id="homepage-news-and-role-refinement" class="level2">
+<h2 data-anchor-id="homepage-news-and-role-refinement">Homepage news and role refinement</h2>
+<ul>
+<li>Made the homepage News rows slightly more compact without changing their content or accordion behaviour.</li>
+<li>Matched “Applied mathematician” to the uppercase, tracked typography used by the “Explore” scroll cue.</li>
+<li>Updated both Quarto source styling and the included rendered homepage.</li>
+</ul>
+</section>
+<section id="homepage-publication-pills" class="level2">
+<h2 data-anchor-id="homepage-publication-pills">Homepage publication pills</h2>
+<ul>
+<li>Matched homepage publication venue pills to the muted-blue styling used on the full Publications page.</li>
+<li>Updated normal, hover, focus, light-mode, and dark-mode states.</li>
+</ul>
+</section>
+<section id="news-responsive-consolidation" class="level2">
+<h2 data-anchor-id="news-responsive-consolidation">News responsive consolidation</h2>
+<ul>
+<li>Removed the older mobile News override that conflicted with the final grid layout.</li>
+<li>Kept one authoritative named-grid implementation for desktop and mobile.</li>
+<li>Added explicit sizing and box-model constraints so the disclosure icon remains pinned to the right and long titles cannot distort the row.</li>
+</ul>
+</section>
+<section id="news-vertical-alignment-correction" class="level2">
+<h2 data-anchor-id="news-vertical-alignment-correction">News vertical alignment correction</h2>
+<ul>
+<li>Replaced line-box centring with stretched grid cells using flex alignment.</li>
+<li>Removed the min-height plus vertical-padding combination that made rows look off-centre.</li>
+<li>Normalised date/title line-height and margins.</li>
+<li>Preserved a separate robust two-row mobile layout with the disclosure icon locked right.</li>
+</ul>
+</section>
+<section id="global-search-redesign" class="level2">
+<h2 data-anchor-id="global-search-redesign">Global search redesign</h2>
+<ul>
+<li>Reworked the navbar search trigger into a compact editorial pill on desktop and a circular icon on mobile.</li>
+<li>Restyled the detached search overlay to use the site’s warm neutral background, clay accent, restrained borders, typography and spacing.</li>
+<li>Added clearer result hover/focus states and matching light/dark theme behaviour.</li>
+<li>Changed the empty input prompt and accessible label to <code>Search site-wide</code>.</li>
+<li>Added responsive overlay sizing for phones and narrow viewports.</li>
+</ul>
+</section>
+<section id="navbar-search-correction" class="level2">
+<h2 data-anchor-id="navbar-search-correction">Navbar search correction</h2>
+<ul>
+<li>Restored the original bare search icon in the navbar.</li>
+<li>Removed the added desktop “Search” pill label and pill styling.</li>
+<li>Reworked the selected search-result state so active results use a pale editorial highlight with readable title, description, and metadata text.</li>
+</ul>
+</section>
+<section id="final-hero-hierarchy-refinement" class="level2">
+<h2 data-anchor-id="final-hero-hierarchy-refinement">Final hero hierarchy refinement</h2>
+<ul>
+<li><p>Restored navbar brand to Silvio Fanzon.</p></li>
+<li><p>Returned homepage headlines and Applied mathematician to sentence case.</p></li>
+<li><p>Reduced Applied mathematician, enlarged the typographic PhD suffix.</p></li>
+<li><p>Moved Contact into the profile-link row above the divider.</p></li>
+<li><p>Reduced profile-link size and kept standard brand capitalization.</p></li>
+<li><p>Publication actions now use <strong>PDF</strong> rather than <strong>Paper</strong>; Code remains visible and Slides/Poster/Video are grouped under an accessible <strong>More</strong> menu.</p></li>
+</ul>
+</section>
+<section id="july-2026-career-narrative-and-transition-redesign" class="level2">
+<h2 data-anchor-id="july-2026-career-narrative-and-transition-redesign">July 2026 career narrative and transition redesign</h2>
+<ul>
+<li>Rewrote the homepage biography around interpretable modelling, optimisation and reproducible computation.</li>
+<li>Removed the early hero About link and added a closing academic-background section after the homepage story.</li>
+<li>Replaced the project carousel with three visible cards that stack vertically on mobile.</li>
+<li>Added a dedicated <code>expertise.qmd</code> page focused on transferable capabilities.</li>
+<li>Rebuilt <code>research.qmd</code> as a separate, accessible account of the three academic research themes.</li>
+<li>Rebuilt About as a career narrative covering the EPSRC-funded Sussex PhD, Graz postdoctoral and faculty appointments, and the permanent Hull Lecturer role, explained as the UK grade closest to Assistant Professor.</li>
+<li>Added programme leadership, supervision, documentation, international work and technical communication throughout the site.</li>
+<li>Strengthened the Projects page so each example identifies non-mathematical capabilities as well as technical methods.</li>
+<li>Updated navigation, source files and pre-rendered <code>docs</code> output.</li>
+<li>Added <code>WEBSITE_REDESIGN_REPORT.md</code> with a prioritised industry-transition project roadmap.</li>
+</ul>
+</section>
+<section id="publication-grounded-project-integration" class="level2">
+<h2 data-anchor-id="publication-grounded-project-integration">2026-07-23 — Publication-grounded project integration</h2>
+<ul>
+<li>Added full F1 time–rank duality project/explainer page.</li>
+<li>Added full sparse FC-GCG project/explainer page.</li>
+<li>Replaced generic homepage project links with inspectable project pages.</li>
+<li>Added Explainer actions to the corresponding publication entries.</li>
+<li>Added downloadable source archives for both projects.</li>
+<li>Added project-detail responsive styling and updated deployable <code>docs</code> output.</li>
+<li>See <code>PROJECT_INTEGRATION_REPORT.md</code> for validation and repository-publishing notes.</li>
+</ul>
+</section>
+<section id="f1-project-explainer-update-2026-07-23" class="level2">
+<h2 data-anchor-id="f1-project-explainer-update-2026-07-23">F1 project explainer update — 2026-07-23</h2>
+<ul>
+<li>Added the generated team-mate gap figure directly to the F1 project page.</li>
+<li>Reworked the R section into four explained modelling stages rather than an uncommented code dump.</li>
+<li>Kept the website build non-executable; the full reproducible analysis remains in the project repository.</li>
+</ul>
+</section>
+<section id="july-2026-f1-dual-page-project-integration" class="level2">
+<h2 data-anchor-id="july-2026-f1-dual-page-project-integration">23 July 2026 — F1 dual-page project integration</h2>
+<ul>
+<li>Replaced the canonical F1 project page with a plain-language overview based on the newer companion project.</li>
+<li>Added a separate annotated R and reproducibility walkthrough.</li>
+<li>Preserved the previous F1 single-page explainer as a visible archive card and page.</li>
+<li>Updated the homepage F1 card, Projects page, search index and sitemap.</li>
+<li>Replaced the bundled F1 repository/download with the newer R project while retaining the previous bundled repository as a backup.</li>
+<li>Clarified that the GCG NumPy code is a pedagogical implementation rather than the original research code.</li>
+</ul>
+</section>
+<section id="f1-project-narrative-restored-and-expanded" class="level2">
+<h2 data-anchor-id="f1-project-narrative-restored-and-expanded">2026-07-24 — F1 project narrative restored and expanded</h2>
+<ul>
+<li><p>restored the earlier single-page, industry-facing narrative as the canonical F1 overview;</p></li>
+<li><p>added the corrected two-dataset outputs and three relevant R-generated figures;</p></li>
+<li><p>kept plotting code available in collapsed blocks;</p></li>
+<li><p>updated the technical walkthrough from the checked <code>F1-Paper-Code</code> reproduction;</p></li>
+<li><p>retained the superseded compact overview as a visible archive;</p></li>
+<li><p>replaced the bundled F1 repository and download with the corrected implementation;</p></li>
+<li><p>updated project cards, homepage metadata and publication code links. ## F1 resource integration refinement</p></li>
+<li><p>kept the industry-facing F1 post in the main website;</p></li>
+<li><p>moved ownership of the technical walkthrough to <code>F1-Paper-Code</code>;</p></li>
+<li><p>made the deployed code-site root open directly into the walkthrough;</p></li>
+<li><p>retained the old website walkthrough URL as a redirect;</p></li>
+<li><p>kept publication <code>Explainer</code> pointing to the project post and <code>Code</code> pointing to GitHub;</p></li>
+<li><p>added explicit return links between the walkthrough, project overview and main website.</p></li>
+</ul>
+</section>
+<section id="project-page-visual-refinement" class="level2">
+<h2 data-anchor-id="project-page-visual-refinement">2026-07-24 — project-page visual refinement</h2>
+<ul>
+<li>Reduced the F1 project title scale.</li>
+<li>Replaced Quarto’s margin TOC with a numbered sticky chapter rail.</li>
+<li>Added active-section highlighting and reading progress.</li>
+<li>Introduced a subtle warm project-page canvas in light and dark modes.</li>
+<li>Replaced the mixed top action row with a clear overview / walkthrough / repository resource map.</li>
+<li>Relabelled and restyled the four-stage roadmap as an explicit analysis pipeline.</li>
+<li>Added reusable project-page CSS and documented the pattern in <code>PROJECT_PAGE_DESIGN.md</code>.</li>
+</ul>
+</section>
+<section id="project-eyebrow-correction" class="level2">
+<h2 data-anchor-id="project-eyebrow-correction">2026-07-25 — Project eyebrow correction</h2>
+<ul>
+<li>Fixed card metadata labels being overridden by the generic project-card paragraph rule.</li>
+<li>Card labels now reliably use the shared orange eyebrow accent and compact 0.50–0.56rem responsive sizing.</li>
+<li>Reduced visible project-article category/eyebrow sizing to 0.54–0.61rem, including F1/GCG <code>.project-category</code> headers and archived <code>.eyebrow</code> headers.</li>
+</ul>
+</section>
+<section id="project-article-navigation-and-closure" class="level2">
+<h2 data-anchor-id="project-article-navigation-and-closure">2026-07-25 — Project article navigation and closure</h2>
+<ul>
+<li>Restored the informative F1 three-view explorer in a slimmer editorial format, with subtle hover motion and a current-view marker.</li>
+<li>Repeated the explorer at the end of each F1 view; the page just read is marked with a restrained checkmark.</li>
+<li>Added three compact related-project recommendations to every long-form project page, using <code>data/projects.yml</code> as the source.</li>
+<li>Moved visible F1 and GCG article hero titles, eyebrows, leads, dates and resource links into generated includes driven by <code>data/projects.yml</code>. Quarto front-matter titles remain for metadata and SEO.</li>
+</ul>
+</section>
+<section id="compact-project-at-a-glance-strip" class="level2">
+<h2 data-anchor-id="compact-project-at-a-glance-strip">2026-07-25 — Compact project “at a glance” strip</h2>
+<ul>
+<li>Restored the useful project-card context from the earlier Projects page into <code>data/projects.yml</code> under <code>at_a_glance</code>.</li>
+<li>Long-form project articles render those items directly below the hero through the shared <code>filters/project-components.lua</code> renderer.</li>
+<li>F1 and FC-GCG preserve the original Question / Approach / Evidence wording from the earlier portfolio cards.</li>
+<li>The strip is intentionally not card-like: three columns with thin separators on desktop, stacked rows on mobile.</li>
+<li>Homepage and Projects-page cards are unchanged.</li>
+<li>Revert path: remove/disable <code>render_at_a_glance()</code> in <code>filters/project-components.lua</code>; the YAML data can remain without affecting cards.</li>
+</ul>
+</section>
+<section id="continue-exploring-layout-refinement" class="level2">
+<h2 data-anchor-id="continue-exploring-layout-refinement">Continue exploring layout refinement</h2>
+<ul>
+<li>Related projects now sit outside the narrow 820px article-ending wrapper.</li>
+<li>On screens &gt;=1500px, project pages locally override Quarto’s article shell to 1380px; the readable article remains 820px.</li>
+<li>Continue exploring has more external separation but a shorter internal header row.</li>
+<li>Related-card labels/titles are top-aligned and Read project is bottom-aligned.</li>
+<li>Desktop chapter navigation fades out when the related-project section enters view to avoid overlap.</li>
+</ul>
+</section>
+<section id="continue-exploring-real-wide-column-fix" class="level2">
+<h2 data-anchor-id="continue-exploring-real-wide-column-fix">Continue exploring: real wide-column fix</h2>
+<ul>
+<li>Marked the related-project section as Quarto <code>.column-page</code>, the native local wide-column mechanism.</li>
+<li>Removed the obsolete 1060px project-shell cap from <code>main.scss</code> and excluded <code>.project-related</code> from the legacy 820px direct-section cap.</li>
+<li>Consolidated desktop shell geometry in <code>project-navigation.css</code>, which loads last: 1200–1399px preserves rail clearance; &gt;=1400px uses a centred shell up to 1380px.</li>
+<li>Kept normal article sections at 820px while the related-project section fills the wider shell.</li>
+<li>Raised the bottom clearance of the desktop chapter rail on wide screens and retained automatic fade-out near related projects.</li>
+<li>Browser geometry check: at 1512px viewport, article=820px and related grid≈1308px; at 1400px, article=820px and related grid≈1280px.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer-inner">
+    <div class="site-footer-identity">
+      <strong>Silvio Fanzon</strong>
+      <span>Applied mathematician</span>
+    </div>
+
+    <nav class="site-footer-links" aria-label="Footer">
+      <a href="mailto:silvio.fanzon.work@gmail.com">Email</a>
+      <a href="./Silvio_Fanzon_Industry_CV.pdf">CV</a>
+      <a href="https://www.linkedin.com/in/fanzon" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/sfanzon" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://scholar.google.com/citations?user=9yJyLsoAAAAJ" target="_blank" rel="noopener">Scholar</a>
+      <a href="./contact.html">Contact</a>
+    </nav>
+
+    <div class="site-footer-meta">
+      <span>© 2026 Silvio Fanzon</span>
+      <span>Designed &amp; developed by Silvio Fanzon</span>
+      <span><a href="https://github.com/sfanzon" target="_blank" rel="noopener">Source code</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  const root = document.documentElement;
+  const body = document.body;
+  function apply(mode){
+    body.classList.remove('quarto-light','quarto-dark');
+    body.classList.add(mode === 'dark' ? 'quarto-dark' : 'quarto-light');
+    root.dataset.theme = mode;
+    localStorage.setItem('sf-theme', mode);
+  }
+  const stored = localStorage.getItem('sf-theme');
+  apply(stored || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  const btn = document.getElementById('light-toggle');
+  if(btn){ btn.addEventListener('click', () => apply(body.classList.contains('quarto-dark') ? 'light' : 'dark')); }
+  const path = window.location.pathname.replace(/index\.html$/, '');
+  document.querySelectorAll('#navbar .nav-item[data-path]').forEach(li => {
+    const href = li.getAttribute('data-path');
+    if((href === '/' && path === '/') || (href !== '/' && path.startsWith(href))){ li.classList.add('active'); }
+  });
+
+  function toggleDetails(button, selector) {
+    const entry = button.closest('.publication-entry');
+    const panel = entry?.querySelector(selector);
+    if (!panel) return;
+    const opening = !panel.classList.contains('open');
+    entry.querySelectorAll('.abstract.open, .bibtex.open').forEach(el => el.classList.remove('open'));
+    entry.querySelectorAll('.abstract-toggle, .bibtex-toggle').forEach(el => el.setAttribute('aria-expanded', 'false'));
+    if (opening) {
+      panel.classList.add('open');
+      button.setAttribute('aria-expanded', 'true');
+      if (selector === '.abstract') {
+        requestAnimationFrame(function () {
+          if (typeof typesetMath === 'function') typesetMath(panel);
+          else if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise([panel]);
+        });
+      }
+    }
+  }
+
+  document.querySelectorAll('.abstract-toggle').forEach(button => {
+    button.setAttribute('aria-expanded', 'false');
+    button.addEventListener('click', () => toggleDetails(button, '.abstract'));
+  });
+  document.querySelectorAll('.bibtex-toggle').forEach(button => {
+    button.setAttribute('aria-expanded', 'false');
+    button.addEventListener('click', () => toggleDetails(button, '.bibtex'));
+  });
+
+  const publicationMoreMenus = [...document.querySelectorAll('.publication-more')];
+  publicationMoreMenus.forEach(details => {
+    const summary = details.querySelector('summary');
+    if (!summary) return;
+    summary.setAttribute('aria-expanded', details.open ? 'true' : 'false');
+    details.addEventListener('toggle', () => {
+      summary.setAttribute('aria-expanded', details.open ? 'true' : 'false');
+      if (details.open) {
+        publicationMoreMenus.forEach(other => { if (other !== details) other.open = false; });
+      }
+    });
+  });
+  document.addEventListener('click', event => {
+    publicationMoreMenus.forEach(details => {
+      if (details.open && !details.contains(event.target)) details.open = false;
+    });
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') publicationMoreMenus.forEach(details => { details.open = false; });
+  });
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function(resolve, reject) {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      try {
+        document.execCommand('copy') ? resolve() : reject(new Error('Copy failed'));
+      } catch (error) { reject(error); }
+      area.remove();
+    });
+  }
+
+  document.querySelectorAll('[data-news-component]').forEach(function(component) {
+    const input = component.querySelector('[data-news-search]');
+    const items = [...component.querySelectorAll('[data-news-item]')];
+    const empty = component.querySelector('.news-search-empty');
+    if (!input) return;
+
+    function filterNews() {
+      const query = input.value.trim().toLowerCase();
+      let matches = 0;
+      items.forEach(function(item) {
+        const visible = !query || item.textContent.toLowerCase().includes(query);
+        item.hidden = !visible;
+        if (visible) matches += 1;
+      });
+      if (empty) empty.hidden = matches !== 0;
+    }
+
+    input.addEventListener('input', filterNews);
+    filterNews();
+  });
+
+  document.querySelectorAll('.publication-entry .bibtex').forEach(function(panel) {
+    const code = panel.querySelector('pre code');
+    if (!code || !code.textContent.trim() || panel.querySelector('.copy-citation')) return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'copy-citation';
+    button.innerHTML = '<i class="fa-regular fa-copy" aria-hidden="true"></i><span>Copy citation</span>';
+    button.addEventListener('click', function() {
+      copyText(code.textContent.trim()).then(function() {
+        const label = button.querySelector('span');
+        label.textContent = 'Copied';
+        button.classList.add('is-copied');
+        window.setTimeout(function() {
+          label.textContent = 'Copy citation';
+          button.classList.remove('is-copied');
+        }, 1600);
+      });
+    });
+    panel.insertBefore(button, panel.firstChild);
+  });
+
+})();
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('[data-carousel]').forEach(function (carousel) {
+    const slides = [...carousel.querySelectorAll('[data-slide]')];
+    const status = carousel.querySelector('.carousel-status');
+    let index = 0;
+    function show(next) {
+      index = (next + slides.length) % slides.length;
+      slides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
+      if (status) status.textContent = `${index + 1} / ${slides.length}`;
+    }
+    carousel.querySelector('.previous')?.addEventListener('click', () => show(index - 1));
+    carousel.querySelector('.next')?.addEventListener('click', () => show(index + 1));
+    let startX = null;
+    carousel.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+    carousel.addEventListener('touchend', e => {
+      if (startX === null) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 45) show(index + (dx < 0 ? 1 : -1));
+      startX = null;
+    }, {passive:true});
+    show(0);
+  });
+
+  document.querySelectorAll('[data-project-carousel]').forEach(function (carousel) {
+    const track = carousel.querySelector('.showcase-track');
+    const originals = [...carousel.querySelectorAll('[data-slide]')];
+    const status = carousel.querySelector('.carousel-status');
+    if (!track || originals.length < 2) return;
+
+    /* Duplicate one complete set at each end.  When the reader reaches a
+       duplicate set, jump to the matching original position without animation.
+       This makes mouse, trackpad and touch swiping continuous in both directions. */
+    const before = document.createDocumentFragment();
+    const after = document.createDocumentFragment();
+    originals.forEach(function (slide) {
+      const leadingClone = slide.cloneNode(true);
+      const trailingClone = slide.cloneNode(true);
+      leadingClone.dataset.carouselClone = 'true';
+      trailingClone.dataset.carouselClone = 'true';
+      before.appendChild(leadingClone);
+      after.appendChild(trailingClone);
+    });
+    track.prepend(before);
+    track.append(after);
+
+    const allSlides = [...track.querySelectorAll('[data-slide]')];
+    const originalStart = originals.length;
+    let current = 0;
+    let scrollTimer = null;
+    let resizeTimer = null;
+    let resetting = false;
+
+    function visibleCount() {
+      if (window.innerWidth <= 680) return 1;
+      if (window.innerWidth <= 1040) return 2;
+      return 3;
+    }
+
+    function targetLeft(slide) {
+      return slide.offsetLeft - track.offsetLeft;
+    }
+
+    function nearestIndex() {
+      const left = track.scrollLeft;
+      return allSlides.reduce(function (best, slide, index) {
+        return Math.abs(targetLeft(slide) - left) < Math.abs(targetLeft(allSlides[best]) - left) ? index : best;
+      }, 0);
+    }
+
+    function logicalIndex(physicalIndex) {
+      return ((physicalIndex - originalStart) % originals.length + originals.length) % originals.length;
+    }
+
+    function updateStatus(physicalIndex = nearestIndex()) {
+      current = logicalIndex(physicalIndex);
+      const visible = Math.min(visibleCount(), originals.length);
+      if (!status) return;
+      if (visible === 1) {
+        status.textContent = `${current + 1} / ${originals.length}`;
+      } else {
+        const labels = Array.from({length: visible}, (_, i) => ((current + i) % originals.length) + 1);
+        status.textContent = `${labels.join('–')} / ${originals.length}`;
+      }
+    }
+
+    function jumpToPhysical(physicalIndex) {
+      resetting = true;
+      track.classList.add('is-resetting');
+      track.scrollLeft = targetLeft(allSlides[physicalIndex]);
+      track.getBoundingClientRect();
+      track.classList.remove('is-resetting');
+      resetting = false;
+      updateStatus(physicalIndex);
+    }
+
+    function normalizePosition() {
+      const physical = nearestIndex();
+      if (physical < originalStart) {
+        jumpToPhysical(physical + originals.length);
+      } else if (physical >= originalStart + originals.length) {
+        jumpToPhysical(physical - originals.length);
+      } else {
+        updateStatus(physical);
+      }
+    }
+
+    function move(direction) {
+      const physical = nearestIndex();
+      const next = physical + direction;
+      allSlides[next]?.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'start'});
+    }
+
+    carousel.querySelector('.previous')?.addEventListener('click', () => move(-1));
+    carousel.querySelector('.next')?.addEventListener('click', () => move(1));
+
+    track.addEventListener('scroll', function () {
+      if (resetting) return;
+      updateStatus();
+      window.clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(normalizePosition, 110);
+    }, {passive: true});
+
+    window.addEventListener('resize', function () {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(function () {
+        jumpToPhysical(originalStart + current);
+      }, 120);
+    });
+
+    requestAnimationFrame(function () {
+      jumpToPhysical(originalStart);
+    });
+  });
+});
+</script>
+<script>
+(function () {
+  const placeholder = 'Search site-wide';
+  function labelPopupSearch(root) {
+    (root || document).querySelectorAll('.aa-DetachedContainer .aa-Input').forEach(function (input) {
+      input.setAttribute('placeholder', placeholder);
+      input.setAttribute('aria-label', placeholder);
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    labelPopupSearch(document);
+    new MutationObserver(function () { labelPopupSearch(document); })
+      .observe(document.body, { childList: true, subtree: true });
+  });
+})();
+</script>
+<!-- Reusable project chapter navigation.
+     Desktop: permanent left rail.
+     Narrow screens: drawer with an attached pull tab.
+     Add body class `project-nav-secondary-bar` for a full-width secondary bar,
+     useful for long lecture notes. -->
+<script>
+(function () {
+  const MOBILE_BREAKPOINT = 1200;
+  const FULL_BAR_HEIGHT = 46;
+
+  function headingText(heading) {
+    const clone = heading.cloneNode(true);
+    clone.querySelectorAll(
+      '.anchorjs-link, .header-section-number, .project-section-number'
+    ).forEach(function (node) {
+      node.remove();
+    });
+    return clone.textContent.replace(/\s+/g, ' ').trim();
+  }
+
+  function initProjectChapterNavigation() {
+    if (!document.body.classList.contains('project-detail-page')) return;
+    if (document.querySelector('[data-project-chapter-rail]')) return;
+
+    const entries = Array.from(document.querySelectorAll('main.content h2'))
+      .map(function (heading) {
+        const fullLabel = headingText(heading);
+        const shortLabel = (heading.getAttribute('data-nav-title') || fullLabel).trim();
+        const section = heading.closest('section.level2[id]');
+        const id = (section && section.id) || heading.id || heading.getAttribute('data-anchor-id');
+        const target = section || heading;
+        const isUnnumbered =
+          heading.classList.contains('unnumbered') ||
+          target.classList.contains('unnumbered');
+        return {
+          heading: heading,
+          section: target,
+          id: id,
+          fullLabel: fullLabel,
+          shortLabel: shortLabel,
+          isUnnumbered: isUnnumbered,
+          number: ''
+        };
+      })
+      .filter(function (entry) {
+        if (!entry.id || !entry.fullLabel) return false;
+        if (/^(show|hide)\b.*\bcode\b/i.test(entry.fullLabel)) return false;
+        if (
+          entry.heading.hasAttribute('data-nav-exclude') ||
+          entry.section.hasAttribute('data-nav-exclude')
+        ) {
+          return false;
+        }
+        return !entry.heading.closest(
+          'details, .cell, .code-fold, .sourceCode, #quarto-margin-sidebar'
+        );
+      });
+
+    if (entries.length < 2) return;
+
+    let numberedIndex = 0;
+    entries.forEach(function (entry) {
+      if (!entry.isUnnumbered) {
+        numberedIndex += 1;
+        entry.number = String(numberedIndex);
+      }
+    });
+
+    entries.forEach(function (entry) {
+      if (entry.isUnnumbered) return;
+      if (entry.heading.querySelector('.project-section-number')) return;
+      const number = document.createElement('span');
+      number.className = 'project-section-number';
+      number.textContent = entry.number;
+      number.setAttribute('aria-hidden', 'true');
+      entry.heading.insertBefore(number, entry.heading.firstChild);
+    });
+
+    const nav = document.createElement('nav');
+    nav.id = 'project-chapter-navigation';
+    nav.className = 'project-chapter-rail';
+    nav.setAttribute('data-project-chapter-rail', '');
+    nav.setAttribute('aria-label', 'Project sections');
+
+    const list = document.createElement('ol');
+    const links = entries.map(function (entry) {
+      const item = document.createElement('li');
+      const link = document.createElement('a');
+      const numberSpan = document.createElement('span');
+      const labelSpan = document.createElement('span');
+
+      link.href = '#' + entry.id;
+      link.title = entry.fullLabel;
+      link.setAttribute(
+        'aria-label',
+        entry.isUnnumbered
+          ? entry.fullLabel
+          : entry.number + '. ' + entry.fullLabel
+      );
+
+      numberSpan.className =
+        'project-chapter-number' + (entry.isUnnumbered ? ' is-empty' : '');
+      numberSpan.textContent = entry.number;
+      numberSpan.setAttribute('aria-hidden', 'true');
+
+      labelSpan.className = 'project-chapter-label';
+      labelSpan.textContent = entry.shortLabel;
+
+      link.appendChild(numberSpan);
+      link.appendChild(labelSpan);
+      item.appendChild(link);
+      list.appendChild(item);
+      return link;
+    });
+
+    const scrollRegion = document.createElement('div');
+    scrollRegion.className = 'project-chapter-scroll';
+    scrollRegion.appendChild(list);
+    nav.appendChild(scrollRegion);
+
+    const toggle = document.createElement('button');
+    toggle.className = 'project-chapter-toggle';
+    toggle.type = 'button';
+    toggle.setAttribute('aria-controls', nav.id);
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open project navigation');
+    toggle.innerHTML =
+      '<i class="bi bi-chevron-right" aria-hidden="true"></i>';
+    nav.appendChild(toggle);
+
+    const currentLabel = document.createElement('span');
+    currentLabel.className = 'project-secondary-nav-label';
+    currentLabel.setAttribute('aria-live', 'polite');
+    nav.appendChild(currentLabel);
+
+    document.body.appendChild(nav);
+
+    const backdrop = document.createElement('div');
+    backdrop.className = 'project-chapter-backdrop';
+    backdrop.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(backdrop);
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const desktopQuery = window.matchMedia(
+      '(min-width: ' + MOBILE_BREAKPOINT + 'px)'
+    );
+
+    function navbarHeight() {
+      const nodes = [
+        document.querySelector('#quarto-header'),
+        document.querySelector('.navbar'),
+        document.querySelector('.navbar-collapse.show')
+      ].filter(Boolean);
+      if (!nodes.length) return 64;
+      return Math.ceil(
+        Math.max.apply(
+          null,
+          nodes.map(function (node) {
+            const rect = node.getBoundingClientRect();
+            return Math.max(rect.height, rect.bottom);
+          })
+        )
+      );
+    }
+
+    function secondaryNavigationHeight() {
+      return document.body.classList.contains('project-nav-secondary-bar')
+        ? FULL_BAR_HEIGHT
+        : 0;
+    }
+
+    function updateNavigationGeometry() {
+      const height = navbarHeight();
+      const secondaryHeight = secondaryNavigationHeight();
+      document.documentElement.style.setProperty(
+        '--project-navbar-height',
+        height + 'px'
+      );
+      document.documentElement.style.setProperty(
+        '--project-secondary-height',
+        FULL_BAR_HEIGHT + 'px'
+      );
+      document.documentElement.style.setProperty(
+        '--project-navigation-stack-height',
+        (height + secondaryHeight) + 'px'
+      );
+    }
+
+    function closeDrawer(restoreFocus) {
+      if (!document.body.classList.contains('project-nav-open')) return;
+      document.body.classList.remove('project-nav-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open project navigation');
+      if (restoreFocus) toggle.focus();
+    }
+
+    function openDrawer() {
+      if (desktopQuery.matches) return;
+      document.body.classList.add('project-nav-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close project navigation');
+    }
+
+    function setActive(index) {
+      links.forEach(function (link, linkIndex) {
+        const active = linkIndex === index;
+        link.classList.toggle('is-active', active);
+        if (active) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+      currentLabel.textContent = entries[index].shortLabel;
+      toggle.title = 'Sections · ' + entries[index].shortLabel;
+    }
+
+    function scrollOffset() {
+      return desktopQuery.matches
+        ? navbarHeight() + 22
+        : navbarHeight() + secondaryNavigationHeight() + 16;
+    }
+
+    function scrollToEntry(entry, index, updateHash) {
+      const top = Math.max(
+        0,
+        entry.section.getBoundingClientRect().top + window.scrollY - scrollOffset()
+      );
+      window.scrollTo({
+        top: top,
+        behavior: reducedMotion.matches ? 'auto' : 'smooth'
+      });
+      setActive(index);
+      if (updateHash && window.history && window.history.pushState) {
+        window.history.pushState(null, '', '#' + entry.id);
+      }
+    }
+
+    links.forEach(function (link, index) {
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        closeDrawer(false);
+        window.requestAnimationFrame(function () {
+          scrollToEntry(entries[index], index, true);
+        });
+      });
+    });
+
+    toggle.addEventListener('click', function () {
+      if (document.body.classList.contains('project-nav-open')) {
+        closeDrawer(false);
+      } else {
+        openDrawer();
+      }
+    });
+
+    backdrop.addEventListener('click', function () {
+      closeDrawer(true);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeDrawer(true);
+    });
+
+    desktopQuery.addEventListener('change', function (event) {
+      updateNavigationGeometry();
+      if (event.matches) closeDrawer(false);
+    });
+
+    let edgeTouch = null;
+    let drawerTouch = null;
+
+    document.addEventListener('touchstart', function (event) {
+      if (desktopQuery.matches || document.body.classList.contains('project-nav-open')) return;
+      const touch = event.touches[0];
+      if (touch && touch.clientX <= 24) {
+        edgeTouch = { x: touch.clientX, y: touch.clientY };
+      }
+    }, { passive: true });
+
+    document.addEventListener('touchend', function (event) {
+      if (!edgeTouch || desktopQuery.matches) return;
+      const touch = event.changedTouches[0];
+      const dx = touch.clientX - edgeTouch.x;
+      const dy = Math.abs(touch.clientY - edgeTouch.y);
+      edgeTouch = null;
+      if (dx >= 58 && dy <= 70) openDrawer();
+    }, { passive: true });
+
+    nav.addEventListener('touchstart', function (event) {
+      if (!document.body.classList.contains('project-nav-open')) return;
+      const touch = event.touches[0];
+      if (touch) drawerTouch = { x: touch.clientX, y: touch.clientY };
+    }, { passive: true });
+
+    nav.addEventListener('touchend', function (event) {
+      if (!drawerTouch) return;
+      const touch = event.changedTouches[0];
+      const dx = touch.clientX - drawerTouch.x;
+      const dy = Math.abs(touch.clientY - drawerTouch.y);
+      drawerTouch = null;
+      if (dx <= -58 && dy <= 70) closeDrawer(false);
+    }, { passive: true });
+
+    let scheduled = false;
+    function updateActiveSection() {
+      scheduled = false;
+      const marker =
+        window.scrollY + scrollOffset() + Math.min(150, window.innerHeight * 0.18);
+      let activeIndex = 0;
+      entries.forEach(function (entry, index) {
+        if (
+          entry.section.getBoundingClientRect().top + window.scrollY <= marker
+        ) {
+          activeIndex = index;
+        }
+      });
+      setActive(activeIndex);
+    }
+
+    function requestUpdate() {
+      if (scheduled) return;
+      scheduled = true;
+      window.requestAnimationFrame(updateActiveSection);
+    }
+
+
+    const geometryNodes = [
+      document.querySelector('#quarto-header'),
+      document.querySelector('.navbar'),
+      document.querySelector('.navbar-collapse')
+    ].filter(Boolean);
+
+    if ('ResizeObserver' in window) {
+      const navigationResizeObserver = new ResizeObserver(function () {
+        updateNavigationGeometry();
+        requestUpdate();
+      });
+      geometryNodes.forEach(function (node) {
+        navigationResizeObserver.observe(node);
+      });
+    }
+
+    const navbarCollapse = document.querySelector('.navbar-collapse');
+    if (navbarCollapse && 'MutationObserver' in window) {
+      const navigationMutationObserver = new MutationObserver(function () {
+        window.requestAnimationFrame(function () {
+          updateNavigationGeometry();
+          requestUpdate();
+        });
+      });
+      navigationMutationObserver.observe(navbarCollapse, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+      });
+    }
+
+    ['show.bs.collapse', 'shown.bs.collapse', 'hide.bs.collapse', 'hidden.bs.collapse']
+      .forEach(function (eventName) {
+        document.addEventListener(eventName, function () {
+          window.setTimeout(function () {
+            updateNavigationGeometry();
+            requestUpdate();
+          }, 0);
+        });
+      });
+
+    const relatedSection = document.querySelector('.project-related');
+    if (relatedSection && 'IntersectionObserver' in window) {
+      const relatedObserver = new IntersectionObserver(function (entries) {
+        const visible = entries.some(function (entry) {
+          return entry.isIntersecting;
+        });
+        document.body.classList.toggle('project-related-in-view', visible);
+      }, {
+        root: null,
+        rootMargin: '0px 0px -28% 0px',
+        threshold: 0
+      });
+      relatedObserver.observe(relatedSection);
+    }
+
+    updateNavigationGeometry();
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', function () {
+      updateNavigationGeometry();
+      requestUpdate();
+    });
+    window.addEventListener('hashchange', requestUpdate);
+
+    if (window.location.hash) {
+      const initialId = decodeURIComponent(window.location.hash.slice(1));
+      const initialIndex = entries.findIndex(function (entry) {
+        return entry.id === initialId;
+      });
+      if (initialIndex >= 0) {
+        window.setTimeout(function () {
+          scrollToEntry(entries[initialIndex], initialIndex, false);
+        }, 0);
+      }
+    }
+
+    updateActiveSection();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener(
+      'DOMContentLoaded',
+      initProjectChapterNavigation
+    );
+  } else {
+    initProjectChapterNavigation();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/www\.silviofanzon\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

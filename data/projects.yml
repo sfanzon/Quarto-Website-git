@@ -1,0 +1,208 @@
+- id: f1-benchmarking
+  title: Who’s actually the best F1 driver?
+  eyebrow: Statistical modelling
+  labels:
+  - Statistical modelling
+  - Sports analytics
+  - R
+  summary: An industry-facing explanation of how 2022 race results and 2023 betting odds separate driver performance
+    from constructor advantage.
+  image: projects/f1-time-rank-duality/figures/04_teammate_gaps.png
+  href: projects/f1-time-rank-duality/index.html
+  featured: true
+  code: https://github.com/sfanzon/F1-Paper-Code
+  article:
+    title: Who’s actually the best F1 driver?
+    eyebrow: Statistical modelling
+    lead: Companion code and technical walkthrough for our joint paper on separating driver performance from car
+      advantage with time–rank duality.
+    author: Silvio Fanzon
+    published: Mar. 18, 2024
+    resources:
+    - label: Paper PDF
+      href: https://www.silviofanzon.com/assets/pdf/journal/2024-Fry-Bri-Fan.pdf
+    - label: Journal article
+      href: https://doi.org/10.1016/j.econlet.2024.111671
+    - label: GitHub
+      href: https://github.com/sfanzon/F1-Paper-Code
+    views:
+    - id: overview
+      number: '01'
+      title: Project overview
+      description: The question, evidence and result
+      href: index.html
+    - id: technical
+      number: '02'
+      title: Technical walkthrough
+      description: Paper and R code, step by step
+      href: technical.html
+    - id: code
+      number: '03'
+      title: Code & data
+      description: R scripts, data and reproducibility files
+      href: code.html
+  related:
+  - sparse-gcg
+  - statistical-models-teaching
+  - dynamic-ot
+  at_a_glance:
+  - label: Question
+    text: How much of a race result comes from the driver, and how much from the car?
+  - label: Model
+    text: Connect a tractable race-time model to observable finishing ranks, then use separate datasets to benchmark
+      constructor effects and compare drivers with their cars.
+  - label: Finding
+    text: Constructor quality is the dominant source of variation; the driver comparison then identifies expected
+      performances that beat the benchmark implied by the car.
+- id: f1-previous-explainer
+  title: F1 compact overview (archive)
+  eyebrow: Statistical modelling
+  labels:
+  - Statistical modelling
+  - Archive
+  summary: The shorter dual-page overview retained as a visible backup after the richer industry-facing post became
+    canonical.
+  image: projects/f1-time-rank-duality/figures/02_team_effects.png
+  href: projects/f1-time-rank-duality-previous/index.html
+  featured: false
+  archived: true
+  related:
+  - f1-benchmarking
+  - sparse-gcg
+  - statistical-models-teaching
+  at_a_glance:
+  - label: Status
+    text: Archived but readable; it is no longer the canonical project page.
+  - label: Format
+    text: A compact account of the modelling idea and constructor regression, without the fuller visual narrative
+      and corrected reproducibility detail.
+- id: sparse-gcg
+  title: Sparse optimisation with FC-GCG
+  eyebrow: Optimisation
+  labels:
+  - Optimisation
+  - Algorithms
+  - Python
+  summary: A visual pedagogical implementation showing how fully-corrective conditional gradients build sparse solutions
+    one atom at a time.
+  image: projects/sparse-gcg/images/convergence.png
+  href: projects/sparse-gcg/index.html
+  featured: true
+  code: https://github.com/sfanzon/sparse-gcg-paper-explainer
+  article:
+    title: 'Sparsity by design: building solutions one atom at a time'
+    eyebrow: Optimisation
+    lead: A plain-language tour of our Mathematical Programming paper on fully-corrective generalized conditional
+      gradient methods — with the whole idea worked out on the lasso, where you can see every moving part.
+    author: Silvio Fanzon
+    published: Jan. 1, 2025
+    resources:
+    - label: Open-access paper
+      href: https://doi.org/10.1007/s10107-023-01975-z
+    - label: GitHub
+      href: https://github.com/sfanzon/sparse-gcg-paper-explainer
+  related:
+  - f1-benchmarking
+  - dynamic-ot
+  - polycrystals
+  at_a_glance:
+  - label: Problem
+    text: Can an optimisation method preserve sparsity throughout the computation and stop with an exact certificate?
+  - label: Algorithm
+    text: FC-GCG alternates atom insertion with full correction over the active set, keeping every iterate sparse by
+      construction.
+  - label: Behaviour
+    text: In the pedagogical lasso experiment it inserts 11 atoms, stops at iteration 12 with an optimality certificate,
+      and never exceeds the solution sparsity.
+- id: dynamic-ot
+  title: Dynamic inverse problems with optimal transport
+  eyebrow: Inverse problems
+  labels:
+  - Inverse problems
+  - Optimal transport
+  - Imaging
+  summary: Algorithms that reconstruct moving sources from incomplete and noisy measurements, supported by theory
+    and numerical experiments.
+  image: assets/img/project-ot.svg
+  href: publications.html#2023-Bre-Car-Fan-Rom
+  featured: false
+  code: https://github.com/sfanzon/DGCG_algorithm
+  related:
+  - f1-benchmarking
+  - sparse-gcg
+  - statistical-models-teaching
+  at_a_glance:
+  - label: Problem
+    text: Recover time-dependent structure when every observation is indirect and severely undersampled.
+  - label: Approach
+    text: Convex optimisation, optimal transport, sparse representations and numerical experiments.
+  - label: Beyond maths
+    text: Research software, validation, international collaboration and long-term project ownership.
+- id: statistical-models-teaching
+  title: An applied statistical modelling course
+  eyebrow: Statistics
+  labels:
+  - Statistics
+  - Teaching
+  - R
+  summary: A complete R-based learning system combining lectures, worked examples, practical exercises and accessible
+    digital publishing.
+  image: assets/img/project-teaching.svg
+  href: https://www.silviofanzon.com/blog/2026/Statistical-Models/
+  featured: true
+  related:
+  - f1-benchmarking
+  - sparse-gcg
+  - dynamic-ot
+  at_a_glance:
+  - label: Problem
+    text: Make statistical reasoning usable for students with varied technical backgrounds.
+  - label: Approach
+    text: Structured explanations, practical exercises, visualisation, assessment and accessible publishing.
+  - label: Beyond maths
+    text: Product thinking, documentation, user needs, iteration and programme-level delivery.
+- id: polycrystals
+  title: Variational models for polycrystals
+  eyebrow: PDEs
+  labels:
+  - PDEs
+  - Calculus of variations
+  - Materials science
+  summary: Mathematical models explaining how dislocations and elastic energy generate large-scale crystalline structures.
+  image: assets/img/project-poly.svg
+  href: publications.html#2019-Fan-Pal-Pon
+  related:
+  - f1-benchmarking
+  - sparse-gcg
+  - dynamic-ot
+  at_a_glance:
+  - label: Problem
+    text: Explain how many interacting defects produce observable material patterns.
+  - label: Approach
+    text: Model formulation, asymptotic analysis, PDEs and multiscale reasoning.
+  - label: Beyond maths
+    text: Long-form problem solving, abstraction and collaboration across an international research network.
+- id: quarto-website
+  title: A research communication platform
+  eyebrow: Web design
+  labels:
+  - Web design
+  - Research communication
+  - Quarto
+  summary: A responsive portfolio that turns publications, projects, teaching and structured data into a coherent
+    story for different audiences.
+  image: assets/img/project-website.svg
+  href: index.html
+  code: https://github.com/sfanzon/sfanzon.github.io
+  related:
+  - f1-benchmarking
+  - sparse-gcg
+  - dynamic-ot
+  at_a_glance:
+  - label: Problem
+    text: A conventional academic website presents outputs but rarely explains capabilities or connects them into
+      a coherent story.
+  - label: Approach
+    text: Structured data, reusable components, responsive design and editorial content architecture.
+  - label: Beyond maths
+    text: UX judgement, technical writing, web development and iterative delivery.

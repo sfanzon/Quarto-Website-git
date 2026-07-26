@@ -1,0 +1,34 @@
+---
+title: "Projects"
+description: "Selected modelling, optimisation, research software, documentation and communication projects by Silvio Fanzon"
+toc: false
+page-layout: full
+body-classes: standard-page projects-page show-small-footer
+---
+
+```{=html}
+<header class="page-hero compact-page-hero projects-hero">
+  <p class="eyebrow">Projects</p>
+  <h1>Evidence of how I work</h1>
+  <p>Selected examples showing problem formulation, modelling, implementation, evaluation and communication—not only technical mathematics.</p>
+</header>
+<section class="projects-positioning" aria-label="About these projects">
+  <p><strong>Expertise</strong> describes my transferable capabilities. <strong>Research</strong> explains the academic contributions. <strong>Projects</strong> makes the work inspectable through code, experiments, documentation and plain-language explanations.</p>
+</section>
+```
+
+{{< include includes/projects-portfolio.html >}}
+
+```{=html}
+<section class="project-capabilities">
+  <div class="section-heading"><div><p class="eyebrow">What the portfolio shows</p><h2>More than technical mathematics</h2></div></div>
+  <div class="capability-grid">
+    <article><h3>Problem formulation</h3><p>Turning ambiguous scientific or applied questions into explicit assumptions, models and measurable outputs.</p></article>
+    <article><h3>Implementation</h3><p>Building reproducible numerical and statistical workflows in Python, R and MATLAB.</p></article>
+    <article><h3>Evaluation</h3><p>Comparing methods, checking sensitivity, stating limitations and distinguishing evidence from interpretation.</p></article>
+    <article><h3>Communication</h3><p>Writing for technical and non-technical audiences through papers, documentation, teaching and visual explanation.</p></article>
+    <article><h3>Leadership</h3><p>Coordinating programmes and research projects, mentoring junior researchers and collaborating internationally.</p></article>
+    <article><h3>Delivery</h3><p>Producing inspectable outputs: code, figures, reports, learning systems and maintained digital resources.</p></article>
+  </div>
+</section>
+```

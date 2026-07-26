@@ -1,0 +1,73 @@
+```{=html}
+<div class="news-component" data-news-component>
+  
+  <div class="news-list" data-news-list>
+    <details class="news-item" id="news-2026-03-17" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2026-03-17">Mar 2026</time>
+        <span class="news-category">PREPRINT</span>
+        <span class="news-title">Formula 1 benchmarking preprint released</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>Our new paper, <a href="/publications.html#2026-Fry-Fan-Aus-Bri">Benchmarking Formula 1 results using a normal model</a>, is now available as a preprint. A long-standing question in sport is how to separate the effects of skill and luck. In Formula 1, this often comes down to distinguishing between driver performance and the performance of the car. At present, four elite teams dominate the sport and have won every major race over the past four years. In the paper, we use univariate and bivariate normal models to estimate realistic performance expectations at both the driver and team levels, distinguishing between elite and non-elite teams. This provides a more meaningful benchmark for Formula 1 results. We apply the approach to analyse the most recent fully completed F1 season (2025). You can read the paper <a href="https://www.silviofanzon.com/assets/pdf/journal/2026-Fry-Fan-Aus-Bri.pdf">here</a></p></div>
+    </details><details class="news-item" id="news-2026-02-10" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2026-02-10">Feb 2026</time>
+        <span class="news-category">TALK</span>
+        <span class="news-title">Presenting at the University of Hull Research Sandpit</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>On 11th February, I will be taking part in the <b>Annual Research Sandpit Event</b> hosted by the <em>School of Digital and Physical Sciences</em> at the <em>University of Hull</em>. This is a fantastic opportunity to meet new colleagues and discuss research interests. My slides are available <a href="/assets/pdf/seminars/slides/2026/2026-Hull-Research-Event-Slides.pdf">here</a>.</p></div>
+    </details><details class="news-item" id="news-2025-12-16" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2025-12-16">Dec 2025</time>
+        <span class="news-category">TALK</span>
+        <span class="news-title">Speaking at the Young Analysts in Rome workshop</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>From 17-19 December I will be at the <a href="https://sites.google.com/view/yar-2025/home-page">1st Workshop of Young Analysts in Rome</a> conference at Sapienza University in Rome (Italy). I will be presenting on 18 December at 2.30pm. Here are the <a href="/assets/pdf/seminars/slides/2025/2025-Sapienza-Slides.pdf">slides</a>. I am extremely grateful to the organizers for the invite.</p></div>
+    </details><details class="news-item" id="news-2025-08-01" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2025-08-01">Aug 2025</time>
+        <span class="news-category">TEACHING</span>
+        <span class="news-title">Awarded Fellowship of the Higher Education Academy</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>I have successfully completed the <b>Postgraduate Certificate in Academic Practice (PCAP)</b> programme at the University of Hull. As a result, I have been awarded the <a href="https://www.advance-he.ac.uk/fellowship/fellowship">Fellowship of the Higher Education Academy (FHEA)</a></p></div>
+    </details><details class="news-item" id="news-2025-03-20" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2025-03-20">Mar 2025</time>
+        <span class="news-category">TEACHING</span>
+        <span class="news-title">Teaching philosophy statement published</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>I have just completed writing my teaching philosophy statement! It was a thoughtful process reflecting on my approach, values, and goals as an educator. I am sharing it now - check it out <a href="https://www.silviofanzon.com/assets/pdf/news/2025/Fanzon_Teaching_Philosophy.pdf">here</a>. Looking forward to continuing to grow as a teacher!</p></div>
+    </details><details class="news-item" id="news-2025-02-18" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2025-02-18">Feb 2025</time>
+        <span class="news-category">JOURNAL</span>
+        <span class="news-title">Curling strategy paper published in Managerial Finance</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>Our paper <a href="/publications.html#2025-Fry-Aus-Fan">Elementary econometric and strategic analysis of curling matches</a> has been published on <b>Managerial Finance</b>. We develop a Markov model of curling matches, parametrised by the probability of winning an end and the probability distribution of scoring ends. Using a maximum entropy argument, we predict that the points distribution of scoring ends should follow a constrained geometric distribution. Read the paper <a href="https://www.silviofanzon.com/assets/pdf/journal/2025-Fry-Aus-Fan.pdf">here</a></p></div>
+    </details><details class="news-item" id="news-2025-01-10" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2025-01-10">Jan 2025</time>
+        <span class="news-category">TEACHING</span>
+        <span class="news-title">Teaching Statistical Models in 2024/25</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>I am teaching the module <a href="/teaching.html#2025-Statistical-Models">Statistical Models</a> at the University of Hull. This is a Year 2 module for the BSc in Mathematics 2024/25. Here are the module <a href="/blog/2025/Statistical-Models">Webpage</a> and <a href="https://www.silviofanzon.com/2025-Statistical-Models-Slides/">Slides</a></p></div>
+    </details><details class="news-item" id="news-2024-09-15" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2024-09-15">Sep 2024</time>
+        <span class="news-category">TEACHING</span>
+        <span class="news-title">Teaching in Autumn 2024</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>During T1 of the 2024/25 academic year, I am teaching the modules <a href="/teaching.html#2024-NSS">Numbers, Sequences and Series</a> and <a href="/teaching.html#2024-Differential-Geometry">Differential Geometry</a> at the University of Hull. You can find lecture notes and more information by following the links</p></div>
+    </details>
+    
+  </div>
+</div>
+```

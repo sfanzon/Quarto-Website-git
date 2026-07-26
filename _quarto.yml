@@ -1,0 +1,79 @@
+project:
+  type: website
+  output-dir: docs
+  pre-render: python3 scripts/build-content.py
+  render:
+  - '*.qmd'
+  - news/*.md
+  - projects/**/*.qmd
+  - includes/*.qmd
+  - CHANGES.md
+  - '!github-repos/**'
+website:
+  title: Silvio Fanzon
+  site-url: https://www.silviofanzon.com
+  description: Personal website of Silvio Fanzon
+  favicon: assets/img/favicon.png
+  navbar:
+    title: Silvio Fanzon
+    pinned: true
+    collapse: true
+    collapse-below: lg
+    toggle-position: right
+    tools-collapse: false
+    right:
+    - text: About
+      href: about.qmd
+    - text: Projects
+      href: projects.qmd
+    - text: Expertise
+      href: expertise.qmd
+    - text: CV
+      menu:
+      - text: Industry résumé
+        href: Silvio_Fanzon_Industry_CV.pdf
+      - text: Academic CV
+        href: Silvio_Fanzon_Academic_CV.pdf
+    - text: Publications
+      href: publications.qmd
+    - text: Teaching
+      href: teaching.qmd
+    - text: News
+      href: news.qmd
+    - text: More
+      menu:
+      - text: Research
+        href: research.qmd
+      - text: Presentations
+        href: presentations.qmd
+      - text: Supervision
+        href: supervision.qmd
+      - text: Contact
+        href: contact.qmd
+format:
+  html:
+    theme:
+      light:
+      - flatly
+      - styles/main.scss
+      dark:
+      - darkly
+      - styles/main.scss
+    respect-user-color-scheme: true
+    css:
+    - styles/project-pages.css
+    - styles/project-navigation.css
+    toc: false
+    page-layout: article
+    smooth-scroll: true
+    link-external-newwindow: true
+    link-external-icon: false
+    include-after-body:
+    - includes/site-footer.html
+    - includes/after-body.html
+    - includes/project-navigation.html
+    anchor-sections: false
+filters:
+- filters/project-components.lua
+execute:
+  freeze: auto

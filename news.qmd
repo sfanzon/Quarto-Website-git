@@ -1,0 +1,16 @@
+---
+title: "News"
+description: "News and past announcements"
+toc: false
+page-layout: full
+body-classes: standard-page news-page
+---
+
+```{=html}
+<header class="page-hero compact-page-hero">
+  <h1>News</h1>
+  <p>The complete archive, with the newest announcements first.</p>
+</header>
+```
+
+{{< include includes/news-all.qmd >}}

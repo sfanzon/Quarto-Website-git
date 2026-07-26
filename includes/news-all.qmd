@@ -1,0 +1,191 @@
+```{=html}
+<div class="news-component" data-news-component>
+  <div class="news-tools">
+    <label class="news-search">
+      <span class="visually-hidden">Search news</span>
+      <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+      <input type="search" placeholder="Search updates" autocomplete="off" data-news-search>
+    </label>
+  </div>
+  <div class="news-list" data-news-list>
+    <details class="news-item" id="news-2026-03-17" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2026-03-17">Mar 2026</time>
+        <span class="news-category">PREPRINT</span>
+        <span class="news-title">Formula 1 benchmarking preprint released</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>Our new paper, <a href="/publications.html#2026-Fry-Fan-Aus-Bri">Benchmarking Formula 1 results using a normal model</a>, is now available as a preprint. A long-standing question in sport is how to separate the effects of skill and luck. In Formula 1, this often comes down to distinguishing between driver performance and the performance of the car. At present, four elite teams dominate the sport and have won every major race over the past four years. In the paper, we use univariate and bivariate normal models to estimate realistic performance expectations at both the driver and team levels, distinguishing between elite and non-elite teams. This provides a more meaningful benchmark for Formula 1 results. We apply the approach to analyse the most recent fully completed F1 season (2025). You can read the paper <a href="https://www.silviofanzon.com/assets/pdf/journal/2026-Fry-Fan-Aus-Bri.pdf">here</a></p></div>
+    </details><details class="news-item" id="news-2026-02-10" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2026-02-10">Feb 2026</time>
+        <span class="news-category">TALK</span>
+        <span class="news-title">Presenting at the University of Hull Research Sandpit</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>On 11th February, I will be taking part in the <b>Annual Research Sandpit Event</b> hosted by the <em>School of Digital and Physical Sciences</em> at the <em>University of Hull</em>. This is a fantastic opportunity to meet new colleagues and discuss research interests. My slides are available <a href="/assets/pdf/seminars/slides/2026/2026-Hull-Research-Event-Slides.pdf">here</a>.</p></div>
+    </details><details class="news-item" id="news-2025-12-16" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2025-12-16">Dec 2025</time>
+        <span class="news-category">TALK</span>
+        <span class="news-title">Speaking at the Young Analysts in Rome workshop</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>From 17-19 December I will be at the <a href="https://sites.google.com/view/yar-2025/home-page">1st Workshop of Young Analysts in Rome</a> conference at Sapienza University in Rome (Italy). I will be presenting on 18 December at 2.30pm. Here are the <a href="/assets/pdf/seminars/slides/2025/2025-Sapienza-Slides.pdf">slides</a>. I am extremely grateful to the organizers for the invite.</p></div>
+    </details><details class="news-item" id="news-2025-08-01" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2025-08-01">Aug 2025</time>
+        <span class="news-category">TEACHING</span>
+        <span class="news-title">Awarded Fellowship of the Higher Education Academy</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>I have successfully completed the <b>Postgraduate Certificate in Academic Practice (PCAP)</b> programme at the University of Hull. As a result, I have been awarded the <a href="https://www.advance-he.ac.uk/fellowship/fellowship">Fellowship of the Higher Education Academy (FHEA)</a></p></div>
+    </details><details class="news-item" id="news-2025-03-20" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2025-03-20">Mar 2025</time>
+        <span class="news-category">TEACHING</span>
+        <span class="news-title">Teaching philosophy statement published</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>I have just completed writing my teaching philosophy statement! It was a thoughtful process reflecting on my approach, values, and goals as an educator. I am sharing it now - check it out <a href="https://www.silviofanzon.com/assets/pdf/news/2025/Fanzon_Teaching_Philosophy.pdf">here</a>. Looking forward to continuing to grow as a teacher!</p></div>
+    </details><details class="news-item" id="news-2025-02-18" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2025-02-18">Feb 2025</time>
+        <span class="news-category">JOURNAL</span>
+        <span class="news-title">Curling strategy paper published in Managerial Finance</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>Our paper <a href="/publications.html#2025-Fry-Aus-Fan">Elementary econometric and strategic analysis of curling matches</a> has been published on <b>Managerial Finance</b>. We develop a Markov model of curling matches, parametrised by the probability of winning an end and the probability distribution of scoring ends. Using a maximum entropy argument, we predict that the points distribution of scoring ends should follow a constrained geometric distribution. Read the paper <a href="https://www.silviofanzon.com/assets/pdf/journal/2025-Fry-Aus-Fan.pdf">here</a></p></div>
+    </details><details class="news-item" id="news-2025-01-10" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2025-01-10">Jan 2025</time>
+        <span class="news-category">TEACHING</span>
+        <span class="news-title">Teaching Statistical Models in 2024/25</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>I am teaching the module <a href="/teaching.html#2025-Statistical-Models">Statistical Models</a> at the University of Hull. This is a Year 2 module for the BSc in Mathematics 2024/25. Here are the module <a href="/blog/2025/Statistical-Models">Webpage</a> and <a href="https://www.silviofanzon.com/2025-Statistical-Models-Slides/">Slides</a></p></div>
+    </details><details class="news-item" id="news-2024-09-15" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2024-09-15">Sep 2024</time>
+        <span class="news-category">TEACHING</span>
+        <span class="news-title">Teaching in Autumn 2024</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>During T1 of the 2024/25 academic year, I am teaching the modules <a href="/teaching.html#2024-NSS">Numbers, Sequences and Series</a> and <a href="/teaching.html#2024-Differential-Geometry">Differential Geometry</a> at the University of Hull. You can find lecture notes and more information by following the links</p></div>
+    </details><details class="news-item" id="news-2024-08-01" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2024-08-01">Aug 2024</time>
+        <span class="news-category">TEACHING</span>
+        <span class="news-title">Statistical Models curriculum review completed</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>I have produced a Curriculum Evaluation for the module <a href="/teaching.html#2024-Statistical-Models">Statistical Models</a> which I taght in 2023/24. This analysis is part of the final assessment for the <b>PCAP</b> module <b>Curriculum Design</b>. The presentation video and slides are available <a href="/presentations.html#2024-Curriculum-Design">here</a></p></div>
+    </details><details class="news-item" id="news-2024-06-18" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2024-06-18">Jun 2024</time>
+        <span class="news-category">PREPRINT</span>
+        <span class="news-title">Curling strategy preprint released</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>Check out our paper <a href="/publications.html#2025-Fry-Aus-Fan">Elementary econometric and strategic analysis of curling matches</a>. We develop a Markov model of curling matches, parametrised by the probability of winning an end and the probability distribution of scoring ends. Using a maximum entropy argument, we predict that the points distribution of scoring ends should follow a constrained geometric distribution. Read the paper <a href="https://www.silviofanzon.com/assets/pdf/journal/2025-Fry-Aus-Fan.pdf">here</a></p></div>
+    </details><details class="news-item" id="news-2024-05-14" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2024-05-14">May 2024</time>
+        <span class="news-category">TEACHING</span>
+        <span class="news-title">Reflective teaching case studies completed</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>I have written two case studies for the final assessment of the <b>PCAP</b> module titled <b>Reflective Teaching in Higher Education</b>:</p><ul><li>The first case study <a href="https://www.silviofanzon.com/assets/pdf/news/2024/Fanzon_Case_Study_1.pdf">(Link)</a> addresses how I have employed a range of methods, approaches, and digital skills in my teaching, learning, and assessment during my first year at Hull</li><li>The second case study <a href="https://www.silviofanzon.com/assets/pdf/news/2024/Fanzon_Case_Study_2.pdf">(Link)</a> provides insights into how I have supported individual students, including my experience of co-authoring a paper with a Hull undergraduate student: <a href="/publications.html#2024-Fry-Bri-Fan">Faster identification of faster Formula 1 drivers via time-rank duality</a></li></ul></div>
+    </details><details class="news-item" id="news-2024-03-25" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2024-03-25">Mar 2024</time>
+        <span class="news-category">JOURNAL</span>
+        <span class="news-title">Formula 1 paper published in Economics Letters</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>Our paper <a href="/publications.html#2024-Fry-Bri-Fan">Faster identification of faster Formula 1 drivers via time-rank duality</a> has been published on <b>Economics Letters</b>. We provide a novel approach to estimate race-winning probabilities, which leads to new insights regarding driver-level versus car-level effects, as well as a simplified Monte Carlo simulation algorithm. The paper can be found <a href="https://www.silviofanzon.com/assets/pdf/journal/2024-Fry-Bri-Fan.pdf">here</a>. The annotated R code to reproduce the findings is <a href="https://www.silviofanzon.com/F1-Paper-Code/">here</a></p></div>
+    </details><details class="news-item" id="news-2024-01-01" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2024-01-01">Jan 2024</time>
+        <span class="news-category">TEACHING</span>
+        <span class="news-title">Teaching Statistical Models in 2023/24</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>I am teaching the module <a href="/teaching.html#2024-Statistical-Models">Statistical Models</a> at the University of Hull. This is a Year 2 module for the BSc in Mathematics 2023/24. Here are the module <a href="/blog/2024/Statistical-Models">Webpage</a> and <a href="https://www.silviofanzon.com/2024-Statistical-Models-Slides/">Slides</a></p></div>
+    </details><details class="news-item" id="news-2023-12-22" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2023-12-22">Dec 2023</time>
+        <span class="news-category">PREPRINT</span>
+        <span class="news-title">Formula 1 time-rank preprint and reproducible code released</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>Our preprint <a href="/publications.html#2024-Fry-Bri-Fan">Faster identification of faster Formula 1 drivers via time-rank duality</a> is out. We provide a novel approach to estimate race-winning probabilities, which leads to new insights regarding driver-level versus car-level effects, as well as a simplified Monte Carlo simulation algorithm. The annotated R code to reproduce the findings is <a href="https://www.silviofanzon.com/F1-Paper-Code/">here</a></p></div>
+    </details><details class="news-item" id="news-2023-09-20" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2023-09-20">Sep 2023</time>
+        <span class="news-category">TEACHING</span>
+        <span class="news-title">Teaching in Autumn 2023</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>During Term 1 of the current academic year 2023/24 I am leading the courses <a href="/teaching.html#2023-NSS">Numbers, Sequences and Series</a> and <a href="/teaching.html#2023-Differential-Geometry">Differential Geometry</a> at the University of Hull. Follow the links for Lecture notes and Exercises</p></div>
+    </details><details class="news-item" id="news-2023-09-04" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2023-09-04">Sep 2023</time>
+        <span class="news-category">TALK</span>
+        <span class="news-title">Presenting dynamic imaging research at AIP 2023</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>From 4-8 September I am at the <a href="http://www.aip2023.com/start/">AIP 2023</a> conference in Göttingen (Germany). I am presenting in the minisymposium <b>MS40: Dynamic Imaging</b> on 5 September at 2pm, room VG2.107. Here are the <a href="/assets/pdf/seminars/slides/2023/2023-Gottingen-Slides.pdf">slides</a></p></div>
+    </details><details class="news-item" id="news-2023-07-13" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2023-07-13">Jul 2023</time>
+        <span class="news-category">JOURNAL</span>
+        <span class="news-title">Conditional-gradient paper published in Mathematical Programming</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>Our paper <a href="/publications.html#2024-Bre-Car-Fan-Wal">Asymptotic linear convergence of Fully-Corrective Generalized Gradient methods</a> has been published on <b>Mathematical Programming</b>. For a quick overview of the paper check out these <a href="/assets/pdf/journal/slides/2024-Bre-Car-Fan-Wal-Slides-Short.pdf">slides</a>. More detailed explanation <a href="/assets/pdf/journal/slides/2024-Bre-Car-Fan-Wal-Slides-Long.pdf">here</a></p></div>
+    </details><details class="news-item" id="news-2023-06-01" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2023-06-01">Jun 2023</time>
+        <span class="news-category">TEACHING</span>
+        <span class="news-title">Beginning the PCAP programme</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>I have been accepted into the Postgraduate Certificate in Academic Practice (PCAP) programme at the University of Hull. The programme is designed to develop my teaching practice in Higher Education, and will lead to a <a href="https://www.advance-he.ac.uk/fellowship/fellowship">Fellowship of the Higher Education Academy</a> (FHEA). Looking forward to start in February 2024!</p></div>
+    </details><details class="news-item" id="news-2023-05-12" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2023-05-12">May 2023</time>
+        <span class="news-category">COMMUNITY</span>
+        <span class="news-title">Joining the PRIMO Research Group</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>Happy to have joined the <a href="https://primomath.wordpress.com/">PRIMO Reserach Group</a>. Looking forward to attend their <a href="https://primomath.wordpress.com/primo-talks-series/">talks</a> on inverse problems, machine learning and optimization</p></div>
+    </details><details class="news-item" id="news-2023-04-17" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2023-04-17">Apr 2023</time>
+        <span class="news-category">COMMUNITY</span>
+        <span class="news-title">Joining the Inverse Problems International Association</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>I became a member of <a href="https://www.ipia.site">IPIA</a>, the <em>Inverse Problems International Association</em></p></div>
+    </details><details class="news-item" id="news-2023-04-12" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2023-04-12">Apr 2023</time>
+        <span class="news-category">WEBSITE</span>
+        <span class="news-title">Launching silviofanzon.com</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>My website <a href = "https://www.silviofanzon.com">silviofanzon.com</a> is live</p></div>
+    </details><details class="news-item" id="news-2023-04-03" data-news-item>
+      <summary>
+        <time class="news-date" datetime="2023-04-03">Apr 2023</time>
+        <span class="news-category">CAREER</span>
+        <span class="news-title">Joining the University of Hull</span>
+        <span class="news-disclosure" aria-hidden="true"></span>
+      </summary>
+      <div class="news-body"><p>Excited to start my new position as <b>Lecturer in Applied Mathematics</b> at the <a href="https://www.hull.ac.uk">University of Hull</a></p></div>
+    </details>
+    <p class="news-search-empty" hidden>No news items match your search.</p>
+  </div>
+</div>
+```

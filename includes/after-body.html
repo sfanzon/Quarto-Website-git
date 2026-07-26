@@ -1,0 +1,284 @@
+<script>
+(function(){
+  const root = document.documentElement;
+  const body = document.body;
+  function apply(mode){
+    body.classList.remove('quarto-light','quarto-dark');
+    body.classList.add(mode === 'dark' ? 'quarto-dark' : 'quarto-light');
+    root.dataset.theme = mode;
+    localStorage.setItem('sf-theme', mode);
+  }
+  const stored = localStorage.getItem('sf-theme');
+  apply(stored || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  const btn = document.getElementById('light-toggle');
+  if(btn){ btn.addEventListener('click', () => apply(body.classList.contains('quarto-dark') ? 'light' : 'dark')); }
+  const path = window.location.pathname.replace(/index\.html$/, '');
+  document.querySelectorAll('#navbar .nav-item[data-path]').forEach(li => {
+    const href = li.getAttribute('data-path');
+    if((href === '/' && path === '/') || (href !== '/' && path.startsWith(href))){ li.classList.add('active'); }
+  });
+
+  function toggleDetails(button, selector) {
+    const entry = button.closest('.publication-entry');
+    const panel = entry?.querySelector(selector);
+    if (!panel) return;
+    const opening = !panel.classList.contains('open');
+    entry.querySelectorAll('.abstract.open, .bibtex.open').forEach(el => el.classList.remove('open'));
+    entry.querySelectorAll('.abstract-toggle, .bibtex-toggle').forEach(el => el.setAttribute('aria-expanded', 'false'));
+    if (opening) {
+      panel.classList.add('open');
+      button.setAttribute('aria-expanded', 'true');
+      if (selector === '.abstract') {
+        requestAnimationFrame(function () {
+          if (typeof typesetMath === 'function') typesetMath(panel);
+          else if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise([panel]);
+        });
+      }
+    }
+  }
+
+  document.querySelectorAll('.abstract-toggle').forEach(button => {
+    button.setAttribute('aria-expanded', 'false');
+    button.addEventListener('click', () => toggleDetails(button, '.abstract'));
+  });
+  document.querySelectorAll('.bibtex-toggle').forEach(button => {
+    button.setAttribute('aria-expanded', 'false');
+    button.addEventListener('click', () => toggleDetails(button, '.bibtex'));
+  });
+
+  const publicationMoreMenus = [...document.querySelectorAll('.publication-more')];
+  publicationMoreMenus.forEach(details => {
+    const summary = details.querySelector('summary');
+    if (!summary) return;
+    summary.setAttribute('aria-expanded', details.open ? 'true' : 'false');
+    details.addEventListener('toggle', () => {
+      summary.setAttribute('aria-expanded', details.open ? 'true' : 'false');
+      if (details.open) {
+        publicationMoreMenus.forEach(other => { if (other !== details) other.open = false; });
+      }
+    });
+  });
+  document.addEventListener('click', event => {
+    publicationMoreMenus.forEach(details => {
+      if (details.open && !details.contains(event.target)) details.open = false;
+    });
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') publicationMoreMenus.forEach(details => { details.open = false; });
+  });
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function(resolve, reject) {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      try {
+        document.execCommand('copy') ? resolve() : reject(new Error('Copy failed'));
+      } catch (error) { reject(error); }
+      area.remove();
+    });
+  }
+
+  document.querySelectorAll('[data-news-component]').forEach(function(component) {
+    const input = component.querySelector('[data-news-search]');
+    const items = [...component.querySelectorAll('[data-news-item]')];
+    const empty = component.querySelector('.news-search-empty');
+    if (!input) return;
+
+    function filterNews() {
+      const query = input.value.trim().toLowerCase();
+      let matches = 0;
+      items.forEach(function(item) {
+        const visible = !query || item.textContent.toLowerCase().includes(query);
+        item.hidden = !visible;
+        if (visible) matches += 1;
+      });
+      if (empty) empty.hidden = matches !== 0;
+    }
+
+    input.addEventListener('input', filterNews);
+    filterNews();
+  });
+
+  document.querySelectorAll('.publication-entry .bibtex').forEach(function(panel) {
+    const code = panel.querySelector('pre code');
+    if (!code || !code.textContent.trim() || panel.querySelector('.copy-citation')) return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'copy-citation';
+    button.innerHTML = '<i class="fa-regular fa-copy" aria-hidden="true"></i><span>Copy citation</span>';
+    button.addEventListener('click', function() {
+      copyText(code.textContent.trim()).then(function() {
+        const label = button.querySelector('span');
+        label.textContent = 'Copied';
+        button.classList.add('is-copied');
+        window.setTimeout(function() {
+          label.textContent = 'Copy citation';
+          button.classList.remove('is-copied');
+        }, 1600);
+      });
+    });
+    panel.insertBefore(button, panel.firstChild);
+  });
+
+})();
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('[data-carousel]').forEach(function (carousel) {
+    const slides = [...carousel.querySelectorAll('[data-slide]')];
+    const status = carousel.querySelector('.carousel-status');
+    let index = 0;
+    function show(next) {
+      index = (next + slides.length) % slides.length;
+      slides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
+      if (status) status.textContent = `${index + 1} / ${slides.length}`;
+    }
+    carousel.querySelector('.previous')?.addEventListener('click', () => show(index - 1));
+    carousel.querySelector('.next')?.addEventListener('click', () => show(index + 1));
+    let startX = null;
+    carousel.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+    carousel.addEventListener('touchend', e => {
+      if (startX === null) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 45) show(index + (dx < 0 ? 1 : -1));
+      startX = null;
+    }, {passive:true});
+    show(0);
+  });
+
+  document.querySelectorAll('[data-project-carousel]').forEach(function (carousel) {
+    const track = carousel.querySelector('.showcase-track');
+    const originals = [...carousel.querySelectorAll('[data-slide]')];
+    const status = carousel.querySelector('.carousel-status');
+    if (!track || originals.length < 2) return;
+
+    /* Duplicate one complete set at each end.  When the reader reaches a
+       duplicate set, jump to the matching original position without animation.
+       This makes mouse, trackpad and touch swiping continuous in both directions. */
+    const before = document.createDocumentFragment();
+    const after = document.createDocumentFragment();
+    originals.forEach(function (slide) {
+      const leadingClone = slide.cloneNode(true);
+      const trailingClone = slide.cloneNode(true);
+      leadingClone.dataset.carouselClone = 'true';
+      trailingClone.dataset.carouselClone = 'true';
+      before.appendChild(leadingClone);
+      after.appendChild(trailingClone);
+    });
+    track.prepend(before);
+    track.append(after);
+
+    const allSlides = [...track.querySelectorAll('[data-slide]')];
+    const originalStart = originals.length;
+    let current = 0;
+    let scrollTimer = null;
+    let resizeTimer = null;
+    let resetting = false;
+
+    function visibleCount() {
+      if (window.innerWidth <= 680) return 1;
+      if (window.innerWidth <= 1040) return 2;
+      return 3;
+    }
+
+    function targetLeft(slide) {
+      return slide.offsetLeft - track.offsetLeft;
+    }
+
+    function nearestIndex() {
+      const left = track.scrollLeft;
+      return allSlides.reduce(function (best, slide, index) {
+        return Math.abs(targetLeft(slide) - left) < Math.abs(targetLeft(allSlides[best]) - left) ? index : best;
+      }, 0);
+    }
+
+    function logicalIndex(physicalIndex) {
+      return ((physicalIndex - originalStart) % originals.length + originals.length) % originals.length;
+    }
+
+    function updateStatus(physicalIndex = nearestIndex()) {
+      current = logicalIndex(physicalIndex);
+      const visible = Math.min(visibleCount(), originals.length);
+      if (!status) return;
+      if (visible === 1) {
+        status.textContent = `${current + 1} / ${originals.length}`;
+      } else {
+        const labels = Array.from({length: visible}, (_, i) => ((current + i) % originals.length) + 1);
+        status.textContent = `${labels.join('–')} / ${originals.length}`;
+      }
+    }
+
+    function jumpToPhysical(physicalIndex) {
+      resetting = true;
+      track.classList.add('is-resetting');
+      track.scrollLeft = targetLeft(allSlides[physicalIndex]);
+      track.getBoundingClientRect();
+      track.classList.remove('is-resetting');
+      resetting = false;
+      updateStatus(physicalIndex);
+    }
+
+    function normalizePosition() {
+      const physical = nearestIndex();
+      if (physical < originalStart) {
+        jumpToPhysical(physical + originals.length);
+      } else if (physical >= originalStart + originals.length) {
+        jumpToPhysical(physical - originals.length);
+      } else {
+        updateStatus(physical);
+      }
+    }
+
+    function move(direction) {
+      const physical = nearestIndex();
+      const next = physical + direction;
+      allSlides[next]?.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'start'});
+    }
+
+    carousel.querySelector('.previous')?.addEventListener('click', () => move(-1));
+    carousel.querySelector('.next')?.addEventListener('click', () => move(1));
+
+    track.addEventListener('scroll', function () {
+      if (resetting) return;
+      updateStatus();
+      window.clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(normalizePosition, 110);
+    }, {passive: true});
+
+    window.addEventListener('resize', function () {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(function () {
+        jumpToPhysical(originalStart + current);
+      }, 120);
+    });
+
+    requestAnimationFrame(function () {
+      jumpToPhysical(originalStart);
+    });
+  });
+});
+</script>
+<script>
+(function () {
+  const placeholder = 'Search site-wide';
+  function labelPopupSearch(root) {
+    (root || document).querySelectorAll('.aa-DetachedContainer .aa-Input').forEach(function (input) {
+      input.setAttribute('placeholder', placeholder);
+      input.setAttribute('aria-label', placeholder);
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    labelPopupSearch(document);
+    new MutationObserver(function () { labelPopupSearch(document); })
+      .observe(document.body, { childList: true, subtree: true });
+  });
+})();
+</script>

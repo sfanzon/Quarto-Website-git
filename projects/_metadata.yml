@@ -1,0 +1,10 @@
+# Shared defaults for all portfolio explainers.
+# Project pages use a custom in-page chapter navigator rather than Quarto's margin TOC.
+# They are documentation only: expensive computation lives in the
+# separate code repositories and figures are committed as static assets.
+execute:
+  enabled: false
+  freeze: true
+
+toc: false
+page-layout: article

@@ -1,0 +1,61 @@
+---
+subtitle: Separating driver performance from car advantage with time–rank duality
+description: An industry-facing account of how two datasets, a tractable probability model and a reproducible R pipeline separate driver performance from car quality.
+author:
+- name: Silvio Fanzon
+  affiliation: University of Hull
+categories:
+- statistics
+- sports analytics
+- R
+- projects
+body-classes: standard-page project-detail-page project-custom-hero f1-project-page f1-technical-page show-small-footer
+bibliography: f1-references.bib
+link-citations: true
+citations-hover: true
+format:
+  html:
+    toc: false
+    code-fold: true
+    code-summary: Show the R code
+execute:
+  enabled: false
+  warning: false
+image: figures/04_teammate_gaps.png
+nocite: '@*'
+csl: f1-numeric.csl
+date: '2024-03-18'
+project-id: f1-benchmarking
+project-view: technical
+---
+
+
+## Technical walkthrough {#technical-walkthrough data-nav-title="Walkthrough"}
+
+This view follows the paper and its reproducible R implementation step by step [@fry2024f1]. The research paper is joint work by **John Fry, Tom Brighton and Silvio Fanzon**; the website presentation and repository documentation are maintained by Silvio Fanzon [@f1repo].
+
+{{< include snapshots/technical-walkthrough.md >}}
+
+
+
+## Citation and licence {#citation data-nav-title="Cite & reuse" .unnumbered}
+If the paper or companion code is useful in your work, please cite the published article [@fry2024f1]. The maintained code is available at [sfanzon/F1-Paper-Code](https://github.com/sfanzon/F1-Paper-Code) [@f1repo]. Code and data are released under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
+
+```bibtex
+@article{2024-Fry-Bri-Fan,
+  author  = {Fry, John and Brighton, Tom and Fanzon, Silvio},
+  title   = {Faster identification of faster Formula 1 drivers via time-rank duality},
+  journal = {Economics Letters},
+  volume  = {237},
+  pages   = {111671},
+  year    = {2024},
+  doi     = {10.1016/j.econlet.2024.111671}
+}
+```
+:::
+
+## References {.unnumbered}
+
+::: {#refs}
+:::
+

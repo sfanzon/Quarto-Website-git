@@ -1,0 +1,920 @@
+/* Project-page editorial system
+   Inspired by the numbered chapter navigation of long-form feature pages,
+   but adapted to the Silvio Fanzon site: warm canvas, compact type,
+   explicit resource choices and a minimal desktop chapter rail. */
+
+body.project-detail-page {
+  --project-canvas: #f8f3eb;
+  --project-surface: #fffdf9;
+  --project-surface-strong: #ffffff;
+  --project-ink-muted: #625b54;
+  --project-line: #dfd4c7;
+  --project-soft-accent: #efe0d6;
+  background: var(--project-canvas);
+}
+
+body.quarto-dark.project-detail-page {
+  --project-canvas: #211e1a;
+  --project-surface: #29251f;
+  --project-surface-strong: #302a24;
+  --project-ink-muted: #d8d0c8;
+  --project-line: #51483f;
+  --project-soft-accent: #3b2e28;
+}
+
+body.project-detail-page #quarto-content {
+  display: block;
+  background:
+    radial-gradient(circle at 8% 2%, color-mix(in srgb, var(--global-theme-color) 7%, transparent) 0, transparent 26rem),
+    var(--project-canvas);
+}
+
+body.project-detail-page #quarto-margin-sidebar,
+body.project-detail-page .margin-sidebar,
+body.project-detail-page nav#TOC {
+  display: none !important;
+}
+
+body.project-detail-page main.content {
+  width: min(1180px, 100%);
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-top: clamp(.7rem, 1.5vw, 1.2rem);
+  padding-inline: clamp(1rem, 3vw, 2.25rem);
+  background: transparent;
+  box-sizing: border-box;
+}
+
+
+/* Individual project pages use a compact custom article header.
+   Quarto keeps a valid string title for metadata, while this visible header
+   provides the project-page presentation. */
+body.project-custom-hero #title-block-header { display: none !important; }
+
+
+.project-detail-hero {
+  width: min(920px, 100%);
+  max-width: 920px;
+  margin: 0 auto clamp(1.8rem, 4vw, 3.2rem);
+  padding: clamp(1.4rem, 3.2vw, 2.7rem) 0 clamp(1.35rem, 2.6vw, 2rem);
+  box-sizing: border-box;
+  text-align: center;
+}
+.project-category {
+  margin: 0 0 .9rem;
+  color: var(--homepage-orange-accent, var(--global-theme-color));
+  font-size: clamp(.48rem, calc(.38rem + .22vw), .60rem);
+  font-weight: 720;
+  letter-spacing: .1em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+body.project-detail-page .project-detail-hero h1 {
+  max-width: 850px;
+  margin: 0 auto .95rem;
+  font-size: clamp(1.95rem, 3.15vw, 2.95rem);
+  font-weight: 700;
+  line-height: 1.035;
+  letter-spacing: -.046em;
+  text-wrap: balance;
+}
+.project-detail-lead {
+  max-width: 790px;
+  margin: 0 auto;
+  color: var(--project-ink-muted);
+  font-size: clamp(1rem, 1.35vw, 1.14rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.project-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .72rem 2rem;
+  width: min(540px, 100%);
+  margin: clamp(.95rem, 1.7vw, 1.3rem) auto 0;
+  padding-top: .72rem;
+  border-top: 1px solid var(--project-line);
+  text-align: center;
+}
+.project-meta-item {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: .2rem;
+  min-width: 0;
+}
+.project-meta-label {
+  color: var(--project-ink-muted);
+  font-size: .58rem;
+  font-weight: 760;
+  letter-spacing: .11em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+.project-meta-value {
+  color: var(--global-text-color);
+  font-size: .78rem;
+  line-height: 1.42;
+}
+.project-author-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .12rem .38rem;
+}
+.project-author-name:not(:last-child)::after {
+  content: ",";
+}
+.project-meta-resources {
+  grid-column: 1 / -1;
+  display: grid;
+  justify-items: center;
+  gap: .36rem;
+  margin-top: 0;
+  padding-top: .68rem;
+  border-top: 1px solid color-mix(
+    in srgb,
+    var(--project-line) 72%,
+    transparent
+  );
+}
+.project-primary-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .4rem 1rem;
+  margin: 0;
+}
+.project-primary-links a {
+  color: var(--global-text-color);
+  font-size: .77rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+.project-primary-links a:not(:last-child)::after {
+  margin-left: 1rem;
+  color: var(--project-line);
+  content: "·";
+  pointer-events: none;
+}
+.project-primary-links a:hover {
+  color: var(--global-theme-color);
+}
+
+
+/* Compact project context restored from the earlier portfolio cards.
+   It stays visible without becoming another set of cards. */
+.project-detail-hero.has-at-a-glance {
+  margin-bottom: clamp(1rem, 2vw, 1.45rem);
+}
+.project-at-a-glance {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: min(820px, 100%);
+  margin: 0 auto 1.55rem;
+  border-top: 1px solid var(--project-line);
+  border-bottom: 1px solid var(--project-line);
+}
+.project-at-a-glance-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.project-glance-item {
+  min-width: 0;
+  padding: .78rem .9rem .82rem;
+  border-right: 1px solid var(--project-line);
+}
+.project-glance-item:first-child { padding-left: .1rem; }
+.project-glance-item:last-child {
+  padding-right: .1rem;
+  border-right: 0;
+}
+.project-glance-label {
+  display: block;
+  margin-bottom: .34rem;
+  color: var(--homepage-orange-accent, var(--global-theme-color));
+  font-size: .52rem;
+  font-weight: 760;
+  letter-spacing: .1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.project-glance-item p {
+  margin: 0;
+  color: var(--project-ink-muted);
+  font-size: .64rem;
+  line-height: 1.44;
+}
+
+.project-resource-map {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: min(820px, 100%);
+  max-width: 820px;
+  margin: 0 auto 1.55rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--project-line) 82%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--project-surface) 44%, transparent);
+  box-sizing: border-box;
+}
+.project-resource-intro {
+  display: grid;
+  align-content: center;
+  gap: .17rem;
+  min-width: 0;
+  padding: .62rem .72rem;
+  border-right: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--project-line) 78%, transparent);
+  background: color-mix(in srgb, var(--project-surface) 62%, transparent);
+}
+.project-resource-intro span {
+  color: var(--homepage-orange-accent, var(--global-theme-color));
+  font-size: .54rem;
+  font-weight: 760;
+  letter-spacing: .1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.project-resource-intro strong {
+  color: var(--project-ink-muted);
+  font-size: .69rem;
+  font-weight: 560;
+  line-height: 1.32;
+}
+.project-resource-link {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-content: start;
+  align-items: start;
+  gap: .08rem .48rem;
+  min-width: 0;
+  padding: .7rem .72rem;
+  border-right: 1px solid color-mix(in srgb, var(--project-line) 78%, transparent);
+  background: transparent;
+  color: var(--global-text-color);
+  text-decoration: none;
+  transform: translateY(0);
+  transition: background-color .22s ease, transform .22s ease, box-shadow .22s ease;
+}
+.project-resource-link:last-child { border-right: 0; }
+.project-resource-link::before {
+  position: absolute;
+  right: .65rem;
+  bottom: -1px;
+  left: .65rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--homepage-orange-accent, var(--global-theme-color));
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .24s ease;
+}
+.project-resource-link:hover,
+.project-resource-link:focus-visible {
+  color: var(--global-text-color);
+  background: color-mix(in srgb, var(--project-soft-accent) 36%, transparent);
+  transform: translateY(-1px);
+}
+.project-resource-link:hover::before,
+.project-resource-link:focus-visible::before,
+.project-resource-link.is-current::before { transform: scaleX(1); }
+.project-resource-link:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--homepage-orange-accent, var(--global-theme-color)) 42%, transparent);
+  outline-offset: -2px;
+}
+.project-resource-link.is-current {
+  background: color-mix(in srgb, var(--project-soft-accent) 28%, transparent);
+}
+.project-resource-number {
+  grid-row: 1 / span 2;
+  align-self: start;
+  margin-top: .12rem;
+  color: var(--homepage-orange-accent, var(--global-theme-color));
+  font-size: .56rem;
+  font-weight: 790;
+  letter-spacing: .07em;
+  line-height: 1.2;
+}
+.project-resource-copy {
+  display: grid;
+  min-width: 0;
+  gap: .12rem;
+}
+.project-resource-link strong {
+  min-width: 0;
+  padding-right: 2.2rem;
+  font-size: .76rem;
+  font-weight: 680;
+  line-height: 1.22;
+}
+.project-resource-link small {
+  display: block;
+  color: var(--project-ink-muted);
+  font-size: .64rem;
+  line-height: 1.3;
+}
+.project-resource-status {
+  position: absolute;
+  top: .73rem;
+  right: .66rem;
+  color: var(--homepage-orange-accent, var(--global-theme-color));
+  font-size: .5rem;
+  font-weight: 760;
+  letter-spacing: .055em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.project-resource-map-end {
+  margin-top: 1.85rem;
+  margin-bottom: .55rem;
+}
+.project-resource-map-end .project-resource-link.is-finished {
+  background: transparent;
+}
+.project-resource-map-end .project-resource-link.is-finished::before {
+  opacity: .7;
+}
+.project-resource-map-end .project-resource-status {
+  letter-spacing: .035em;
+  text-transform: none;
+}
+
+.project-evidence-strip {
+  overflow: hidden;
+  border-color: var(--project-line);
+  border-radius: 12px;
+  background: var(--project-line);
+}
+.project-evidence-strip > div { background: var(--project-surface); }
+.project-role-note {
+  border-left-width: 2px;
+  border-radius: 0 10px 10px 0;
+  background: color-mix(in srgb, var(--project-surface) 76%, var(--project-soft-accent));
+}
+
+
+/* The page shell remains 1180px wide, while the readable article column stays
+   at 820px and is centered inside it. */
+body.project-detail-page main.content > section.level2,
+body.project-detail-page main.content > p,
+body.project-detail-page main.content > ol,
+body.project-detail-page main.content > ul,
+body.project-detail-page main.content > figure,
+body.project-detail-page main.content > details,
+body.project-detail-page main.content > .callout,
+body.project-detail-page main.content > .headline-box,
+body.project-detail-page main.content > .project-role-note,
+body.project-detail-page main.content > .project-output-grid,
+body.project-detail-page main.content > .project-demonstrates,
+body.project-detail-page main.content > .project-closing-actions,
+body.project-detail-page main.content > .f1-source-actions,
+body.project-detail-page main.content > .f1-snapshot-note,
+body.project-detail-page main.content > .project-end-back-link {
+  margin-left: auto;
+  margin-right: auto;
+}
+body.project-detail-page main.content > section.level2,
+body.project-detail-page main.content > .callout,
+body.project-detail-page main.content > .headline-box,
+body.project-detail-page main.content > .project-role-note,
+body.project-detail-page main.content > .f1-source-actions,
+body.project-detail-page main.content > .f1-snapshot-note {
+  width: min(820px, 100%);
+}
+body.project-detail-page .project-evidence-strip,
+body.project-detail-page .project-resource-map {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.project-end-back-link {
+  display: inline-flex;
+  align-items: center;
+  margin: .45rem 0 .35rem;
+  color: var(--project-ink-muted);
+  font-size: .82rem;
+  font-weight: 620;
+  text-decoration: none;
+}
+.project-end-back-link:hover { color: var(--global-theme-color); }
+
+
+
+body.project-detail-page main.content h2 {
+  scroll-margin-top: 145px;
+  padding-top: 0;
+  border-top: 0 !important;
+  font-size: clamp(1.38rem, 2.15vw, 1.85rem);
+}
+body.project-detail-page main.content h3 {
+  max-width: 820px;
+  margin-top: 2rem;
+  font-size: 1.08rem;
+  letter-spacing: -.015em;
+}
+body.project-detail-page main.content figure img {
+  border-color: var(--project-line);
+  border-radius: 12px;
+  background: var(--project-surface-strong);
+  box-shadow: 0 12px 34px rgba(60, 45, 33, .045);
+}
+
+/* The analysis flow is now visibly a process diagram, not a set of links. */
+.analysis-pipeline-intro {
+  max-width: 760px;
+  margin: -.15rem 0 1rem;
+  color: var(--project-ink-muted);
+  font-size: .9rem !important;
+  line-height: 1.58 !important;
+}
+.analysis-pipeline {
+  display: grid;
+  max-width: 820px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .72rem;
+  margin: 1rem 0 2.3rem;
+}
+.analysis-pipeline > div {
+  position: relative;
+  min-height: 154px;
+  padding: 1rem;
+  border: 1px solid var(--project-line);
+  border-radius: 11px;
+  background: var(--project-surface);
+}
+.analysis-pipeline > div:not(:last-child)::after {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: -.72rem;
+  width: .72rem;
+  color: var(--global-theme-color);
+  content: "→";
+  font-size: .82rem;
+  font-weight: 800;
+  text-align: center;
+  transform: translateY(-50%);
+}
+.analysis-pipeline span {
+  display: block;
+  margin-bottom: 1.15rem;
+  color: var(--global-theme-color);
+  font-size: .66rem;
+  font-weight: 780;
+  letter-spacing: .085em;
+  text-transform: uppercase;
+}
+.analysis-pipeline strong {
+  display: block;
+  margin-bottom: .42rem;
+  font-size: .9rem;
+  line-height: 1.28;
+}
+.analysis-pipeline small {
+  display: block;
+  color: var(--project-ink-muted);
+  font-size: .76rem;
+  line-height: 1.45;
+}
+
+.headline-box {
+  border-radius: 0 11px 11px 0;
+  background: color-mix(in srgb, var(--project-surface) 70%, var(--project-soft-accent));
+}
+
+body.project-detail-page main.content > .project-related.column-page {
+  width: 100%;
+  max-width: none !important;
+  margin: clamp(4.6rem, 8vw, 6.4rem) auto .8rem;
+  padding: .9rem 0 .2rem;
+  border-top: 1px solid color-mix(in srgb, var(--project-line) 92%, transparent);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--project-surface) 34%, transparent) 0,
+    transparent 4rem
+  );
+}
+.project-related-heading {
+  display: flex;
+  min-height: 0;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: .5rem;
+}
+.project-related-heading .project-category {
+  margin: 0;
+  font-size: .52rem;
+}
+body.project-detail-page main.content .project-related-heading h2 {
+  margin: 0;
+  padding: 0;
+  border: 0 !important;
+  color: var(--global-text-color);
+  font-size: .96rem;
+  font-weight: 680;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
+.project-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  border-top: 1px solid var(--project-line);
+  border-bottom: 1px solid var(--project-line);
+}
+.project-related-card {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  align-items: start;
+  min-width: 0;
+  min-height: 116px;
+  gap: .28rem;
+  padding: .72rem .85rem .7rem;
+  border-right: 1px solid var(--project-line);
+  color: var(--global-text-color);
+  text-decoration: none;
+  transform: translateY(0);
+  transition: background-color .2s ease, transform .2s ease;
+}
+.project-related-card:last-child { border-right: 0; }
+.project-related-card:hover {
+  color: var(--global-text-color);
+  background: color-mix(in srgb, var(--project-soft-accent) 34%, transparent);
+  transform: translateY(-2px);
+}
+.project-related-label {
+  align-self: start;
+  color: var(--homepage-orange-accent, var(--global-theme-color));
+  font-size: .5rem;
+  font-weight: 760;
+  letter-spacing: .085em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.project-related-card strong {
+  align-self: start;
+  font-size: .82rem;
+  font-weight: 680;
+  line-height: 1.24;
+  letter-spacing: -.01em;
+}
+.project-related-card small {
+  display: -webkit-box;
+  align-self: start;
+  overflow: hidden;
+  color: var(--project-ink-muted);
+  font-size: .67rem;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.project-related-action {
+  align-self: end;
+  margin-top: .45rem;
+  color: var(--homepage-orange-accent, var(--global-theme-color));
+  font-size: .62rem;
+  font-weight: 700;
+}
+
+.project-end-footer {
+  width: min(820px, 100%);
+  margin: .75rem auto .4rem;
+}
+
+.project-page-end {
+  width: min(820px, 100%);
+  margin: 1.4rem auto .4rem;
+}
+.project-closing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin: 0;
+}
+.project-closing-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: .38rem .62rem;
+  border: 1px solid var(--project-line);
+  border-radius: 7px;
+  background: var(--project-surface);
+  color: var(--global-text-color);
+  font-size: .76rem;
+  font-weight: 670;
+  line-height: 1.1;
+  text-decoration: none;
+}
+.project-closing-actions a:hover {
+  border-color: color-mix(in srgb, var(--global-theme-color) 45%, var(--project-line));
+  background: color-mix(in srgb, var(--project-surface) 86%, var(--project-soft-accent));
+}
+
+@media (max-width: 980px) {
+  .project-resource-map { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .project-resource-intro {
+    grid-column: 1 / -1;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: baseline;
+    gap: .55rem;
+    padding: .55rem .1rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--project-line);
+  }
+  .project-resource-publication { grid-column: 1; }
+  .analysis-pipeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .analysis-pipeline > div:nth-child(2)::after { display: none; }
+}
+
+@media (max-width: 720px) {
+  body.project-detail-page main.content {
+    width: 100%;
+    padding-left: 3.45rem;
+    padding-right: 1rem;
+  }
+  .project-detail-hero {
+    margin-bottom: 1.4rem;
+    padding-top: 1.2rem;
+    padding-bottom: 1.1rem;
+  }
+  .project-category {
+    margin-bottom: .7rem;
+  }
+  body.project-detail-page .project-detail-hero h1 {
+    font-size: clamp(1.46rem, 5.5vw, 1.76rem);
+    line-height: 1.1;
+    letter-spacing: -.032em;
+  }
+  .project-detail-lead {
+    font-size: .94rem;
+    line-height: 1.52;
+  }
+  .project-primary-links {
+    margin-top: 1.05rem;
+  }
+  .project-meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .58rem .9rem;
+    margin-top: .88rem;
+    padding-top: .62rem;
+    text-align: center;
+  }
+  .project-meta-resources {
+    grid-column: 1 / -1;
+    padding-top: .58rem;
+  }
+  .project-meta-item {
+    gap: .18rem;
+  }
+  .project-primary-links {
+    gap: .4rem .8rem;
+    margin-top: 1rem;
+  }
+  .project-primary-links a {
+    font-size: .76rem;
+  }
+  .project-primary-links a:not(:last-child)::after {
+    margin-left: .8rem;
+  }
+  .project-resource-map {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+  .project-resource-intro {
+    grid-column: 1;
+    grid-template-columns: 1fr;
+    gap: .12rem;
+    padding: .58rem .62rem;
+  }
+  .project-resource-link {
+    min-height: 54px;
+    padding: .58rem .62rem;
+    border-right: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--project-line) 72%, transparent);
+  }
+  .project-resource-link:last-child { border-bottom: 0; }
+  .project-resource-link strong {
+    padding-right: 2.4rem;
+    font-size: .76rem;
+  }
+  .project-resource-link small { font-size: .63rem; }
+  .project-related {
+    margin-top: 3.6rem;
+    padding-top: .85rem;
+  }
+  .project-related-heading {
+    display: grid;
+    gap: .22rem;
+  }
+  .project-related-grid { grid-template-columns: 1fr; }
+  .project-related-card {
+    grid-template-rows: auto auto auto auto;
+    min-height: 0;
+    padding: .72rem .15rem .76rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--project-line);
+  }
+  .project-related-card:last-child { border-bottom: 0; }
+  .project-at-a-glance,
+  .project-at-a-glance-2 {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+  .project-glance-item,
+  .project-glance-item:first-child,
+  .project-glance-item:last-child {
+    padding: .68rem .1rem .72rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--project-line);
+  }
+  .project-glance-item:last-child { border-bottom: 0; }
+  .project-glance-item p { font-size: .62rem; }
+  .analysis-pipeline { grid-template-columns: 1fr; gap: .55rem; }
+  .analysis-pipeline > div { min-height: auto; }
+  .analysis-pipeline > div:not(:last-child)::after {
+    top: auto;
+    right: 50%;
+    bottom: -.59rem;
+    width: 1rem;
+    content: "↓";
+    transform: translateX(50%);
+  }
+  .analysis-pipeline > div:nth-child(2)::after { display: block; }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .project-resource-link {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color .18s ease, transform .18s ease, box-shadow .18s ease;
+  }
+  .project-resource-link::before {
+    opacity: .42;
+    transform: scaleX(.12);
+    transition: transform .18s ease, opacity .18s ease;
+  }
+  .project-resource-link.is-current::before {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  .project-resource-link:active {
+    background: color-mix(in srgb, var(--project-soft-accent) 48%, transparent);
+    transform: scale(.992);
+  }
+  .project-resource-link:active::before {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-resource-link,
+  .project-related-card,
+  .project-chapter-rail,
+  .project-chapter-rail a,
+  .project-chapter-rail a::before { transition: none; }
+}
+
+
+.f1-source-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin: 1rem 0 1.8rem;
+}
+.f1-source-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.4rem;
+  padding: .48rem .75rem;
+  border: 1px solid var(--project-line);
+  border-radius: 8px;
+  background: var(--project-surface);
+  color: var(--global-text-color);
+  font-size: .8rem;
+  font-weight: 680;
+  text-decoration: none;
+}
+.f1-source-actions a:hover {
+  border-color: var(--global-theme-color);
+  color: var(--global-theme-color);
+}
+.f1-source-actions .primary {
+  border-color: var(--global-theme-color);
+  background: var(--global-theme-color);
+  color: #fff !important;
+}
+.f1-snapshot-note {
+  margin: 1rem 0 1.6rem;
+  color: var(--project-ink-muted);
+  font-size: .82rem;
+  line-height: 1.55;
+}
+
+
+@media (max-width: 720px) {
+  .project-resource-publication {
+    grid-template-columns: 1fr;
+    row-gap: .65rem;
+  }
+  .project-resource-actions {
+    gap: .4rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .project-summary-band .project-resource-publication {
+    grid-template-columns: 1fr;
+    row-gap: .65rem;
+  }
+}
+
+.project-resource-map > .project-resource-intro {
+  grid-column: 1 / -1;
+}
+.project-resource-map > .project-resource-link {
+  min-width: 0;
+}
+@media (min-width: 721px) {
+  .project-resource-map > .project-resource-link {
+    grid-column: auto;
+  }
+}
+
+
+
+
+body.gcg-project-page main.content > .project-detail-hero {
+  margin-left: auto;
+  margin-right: auto;
+}
+body.gcg-project-page .project-summary-band {
+  margin-bottom: 1.55rem;
+}
+body.gcg-project-page .project-summary-band .project-evidence-strip > div {
+  min-height: 5rem;
+}
+
+/* Wide related-project breakout is intentionally isolated.
+   Bibliographies and the F1 completion explorer remain part of the readable
+   article column even when main.content expands for `.column-page`. */
+body.project-detail-page main.content > #refs,
+body.project-detail-page main.content > .references,
+body.project-detail-page main.content > .csl-bib-body,
+body.project-detail-page main.content .references,
+body.project-detail-page main.content .csl-bib-body {
+  width: min(820px, 100%);
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body.project-detail-page main.content > .project-page-end,
+body.project-detail-page .project-page-end {
+  width: min(820px, 100%) !important;
+  max-width: 820px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+body.project-detail-page .project-page-end .project-resource-map,
+body.project-detail-page .project-resource-map-end {
+  width: min(820px, 100%) !important;
+  max-width: 820px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* The related cards now have enough room to read like recommendations rather
+   than metadata. Their geometry remains unchanged. */
+.project-related-label {
+  font-size: .54rem;
+}
+.project-related-card strong {
+  font-size: .94rem;
+  line-height: 1.25;
+}
+.project-related-card small {
+  font-size: .76rem;
+  line-height: 1.42;
+}
+.project-related-action {
+  font-size: .7rem;
+}
+
+@media (max-width: 720px) {
+  .project-related-card strong {
+    font-size: .9rem;
+  }
+  .project-related-card small {
+    font-size: .74rem;
+  }
+  .project-related-action {
+    font-size: .68rem;
+  }
+}

@@ -1,0 +1,2195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="John Fry">
+<meta name="author" content="Tom Brighton">
+<meta name="author" content="Silvio Fanzon">
+<meta name="dcterms.date" content="2024-03-18">
+<meta name="description" content="Technical paper-and-code walkthrough reproducing the F1 time-rank duality analysis in R.">
+
+<title>Faster identification of faster F1 drivers via time–rank duality – Silvio Fanzon</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../assets/img/favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-9e96ab43fd0d283596a4e48396a529b5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-3bae2923977e871cd45f382312f2c49b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-9e96ab43fd0d283596a4e48396a529b5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles/project-pages.css">
+<link rel="stylesheet" href="../../../styles/project-navigation.css">
+</head>
+
+<body class="nav-fixed technical-resource-page f1-walkthrough-page quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Silvio Fanzon</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../projects.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../expertise.html"> 
+<span class="menu-text">Expertise</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-cv" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">CV</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-cv">    
+        <li>
+    <a class="dropdown-item" href="../../../Silvio_Fanzon_Industry_CV.pdf">
+ <span class="dropdown-text">Industry résumé</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../Silvio_Fanzon_Academic_CV.pdf">
+ <span class="dropdown-text">Academic CV</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../teaching.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../news.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-more" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">More</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-more">    
+        <li>
+    <a class="dropdown-item" href="../../../research.html">
+ <span class="dropdown-text">Research</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../presentations.html">
+ <span class="dropdown-text">Presentations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../supervision.html">
+ <span class="dropdown-text">Supervision</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../contact.html">
+ <span class="dropdown-text">Contact</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#reproducibility-map" id="toc-reproducibility-map" class="nav-link active" data-scroll-target="#reproducibility-map">Reproducibility map</a></li>
+  <li><a href="#from-bookmaker-odds-to-win-probabilities" id="toc-from-bookmaker-odds-to-win-probabilities" class="nav-link" data-scroll-target="#from-bookmaker-odds-to-win-probabilities">1. From bookmaker odds to win probabilities</a></li>
+  <li><a href="#exponential-race-time-calibration" id="toc-exponential-race-time-calibration" class="nav-link" data-scroll-target="#exponential-race-time-calibration">2. Exponential race-time calibration</a></li>
+  <li><a href="#time-rank-duality-and-table-2" id="toc-time-rank-duality-and-table-2" class="nav-link" data-scroll-target="#time-rank-duality-and-table-2">3. Time-rank duality and Table 2</a></li>
+  <li><a href="#historical-regression-and-table-3" id="toc-historical-regression-and-table-3" class="nav-link" data-scroll-target="#historical-regression-and-table-3">4. Historical regression and Table 3</a></li>
+  <li><a href="#the-correct-driver-level-comparison" id="toc-the-correct-driver-level-comparison" class="nav-link" data-scroll-target="#the-correct-driver-level-comparison">5. The correct driver-level comparison</a></li>
+  <li><a href="#validation-and-limitations" id="toc-validation-and-limitations" class="nav-link" data-scroll-target="#validation-and-limitations">6. Validation and limitations</a></li>
+  <li><a href="#files-produced" id="toc-files-produced" class="nav-link" data-scroll-target="#files-produced">Files produced</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Faster identification of faster F1 drivers via time–rank duality</h1>
+<p class="subtitle lead">Technical walkthrough and reproducible R implementation</p>
+</div>
+
+<div>
+  <div class="description">
+    Technical paper-and-code walkthrough reproducing the F1 time-rank duality analysis in R.
+  </div>
+</div>
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Authors</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">John Fry </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            University of Hull
+          </p>
+      </div>
+    <div class="quarto-title-meta-contents">
+    <p class="author">Tom Brighton </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            University of Hull
+          </p>
+      </div>
+    <div class="quarto-title-meta-contents">
+    <p class="author">Silvio Fanzon </p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            University of Hull
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 18, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="resource-actions" aria-label="Resource links">
+<p><a href="https://www.silviofanzon.com/projects/f1-time-rank-duality/" class="primary">← Project overview</a> <a href="https://www.silviofanzon.com/assets/pdf/journal/2024-Fry-Bri-Fan.pdf">Published paper</a> <a href="https://github.com/sfanzon/F1-Paper-Code">GitHub repository</a> <a href="https://www.silviofanzon.com/">Main website</a></p>
+</div>
+<div class="headline-box">
+<p>This walkthrough reproduces Tables 1–3 and Section 5 of the published analysis with two distinct data sources <span class="citation" data-cites="fry2024f1">(<a href="#ref-fry2024f1" role="doc-biblioref">Fry et al. 2024</a>)</span>. The corrected Section 5 calculation compares <strong>Table 2’s 2023 odds-implied expected ranks</strong> within each team; it does not compare raw 2022 season averages.</p>
+</div>
+<p>For a shorter, industry-facing account, read the <a href="https://www.silviofanzon.com/projects/f1-time-rank-duality/">project overview</a>. The complete pipeline is run with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> analysis/reproduce_paper.R</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> tests/run_tests.R</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>To regenerate only the figures:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> analysis/generate_figures.R</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>No external R packages are required. All four committed figures are generated with base R; none is manually drawn or produced in Python. The exact plotting source is shown below each figure in a collapsed block and lives under <code>R/figures/</code>.</p>
+<section id="reproducibility-map" class="level2">
+<h2 data-anchor-id="reproducibility-map">Reproducibility map</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Paper component</th>
+<th>Input</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Table 1</td>
+<td>2023 Qatar bookmaker odds</td>
+<td><code>R/00_utils.R</code>, <code>R/01_odds_calibration.R</code></td>
+</tr>
+<tr class="even">
+<td>Table 2</td>
+<td>Table 1 win probabilities</td>
+<td><code>R/02_rank_duality.R</code></td>
+</tr>
+<tr class="odd">
+<td>Table 3</td>
+<td>2022 finishing positions</td>
+<td><code>R/03_regression.R</code></td>
+</tr>
+<tr class="even">
+<td>Section 5</td>
+<td>Table 3 CI + Table 2 expected ranks</td>
+<td><code>R/04_driver_effects.R</code></td>
+</tr>
+<tr class="odd">
+<td>Figures</td>
+<td>reproduced model objects</td>
+<td><code>R/05_visualization.R</code>, <code>R/figures/</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="from-bookmaker-odds-to-win-probabilities" class="level2">
+<h2 data-anchor-id="from-bookmaker-odds-to-win-probabilities">1. From bookmaker odds to win probabilities</h2>
+<p>For fractional odds <span class="math inline">\(a/b\)</span>, the raw implied probability is</p>
+<p><span class="math display">\[p_{\mathrm{raw}}=\frac{b}{a+b}.\]</span></p>
+<p>The raw probabilities include the bookmaker’s overround, so they are divided by their sum <span class="citation" data-cites="strumbelj2014betting">(<a href="#ref-strumbelj2014betting" role="doc-biblioref">Strumbelj 2014</a>)</span>. The Qatar odds are stored as data rather than hard-coded inside an objective function.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>odds_to_probs <span class="ot">&lt;-</span> <span class="cf">function</span>(odds) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  fractional <span class="ot">&lt;-</span> <span class="fu">parse_fractional_odds</span>(odds)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  raw <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> (fractional <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  raw <span class="sc">/</span> <span class="fu">sum</span>(raw)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="fu">read_qatar_odds</span>(<span class="st">"data/qatar2023_odds.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The recomputed probabilities agree with the values printed in Table 1 up to the rounding of the published table.</p>
+</section>
+<section id="exponential-race-time-calibration" class="level2">
+<h2 data-anchor-id="exponential-race-time-calibration">2. Exponential race-time calibration</h2>
+<p>Assume independent finishing times</p>
+<p><span class="math display">\[T_i\sim\operatorname{Exp}(\lambda_i).\]</span></p>
+<p>Then</p>
+<p><span class="math display">\[
+\Pr(\text{car }i\text{ wins})=
+\frac{\lambda_i}{\sum_j\lambda_j}.
+\]</span></p>
+<p>The paper proposes minimising</p>
+<p><span class="math display">\[
+\operatorname{RSS}(\lambda)=
+\sum_i\left(\frac{\lambda_i}{\sum_j\lambda_j}-p_i\right)^2.
+\]</span></p>
+<section id="the-scale-is-not-identifiable" class="level3">
+<h3 data-anchor-id="the-scale-is-not-identifiable">The scale is not identifiable</h3>
+<p>The objective only uses normalised rates. Therefore, for every <span class="math inline">\(c&gt;0\)</span>,</p>
+<p><span class="math display">\[\lambda_i=c\,p_i\]</span></p>
+<p>has zero RSS. The absolute scale of Table 1 is not estimated by the win probabilities; only the ratios are identified.</p>
+<p>The corrected code makes the exact solution the primary implementation:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lambda_from_probs <span class="ot">&lt;-</span> <span class="cf">function</span>(probs, <span class="at">scale =</span> <span class="dv">1</span>) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assert_probabilities</span>(probs)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  scale <span class="sc">*</span> probs</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>It also retains a numerical check, but removes the degeneracy by normalising inside the objective and enforces positivity through log-rates:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>numerical <span class="ot">&lt;-</span> <span class="fu">estimate_lambda_numerically</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  odds<span class="sc">$</span>implied_probability,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">restarts =</span> <span class="dv">20</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The unit-sum numerical rates agree with <code>lambda = p</code>. To compare with Table 1, the code estimates the common multiplier that best maps the rounded published probabilities to the rounded published lambda column.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/01_lambda_estimates.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:92.0%" alt="Estimated exponential race-time rate for each driver from Qatar 2023 bookmaker odds."></p>
+</figure>
+</div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Show the R code for Figure 1">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show the R code for Figure 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Figure 1: odds-implied exponential rates</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param calibration output from build_calibration_table()</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param file output PNG path</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plot_lambda_estimates <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    calibration,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">"figures/01_lambda_estimates.png"</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>) {</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  ord <span class="ot">&lt;-</span> <span class="fu">order</span>(<span class="sc">-</span>calibration<span class="sc">$</span>lambda_paper_scale)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  driver_labels <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">"^.* "</span>, <span class="st">""</span>, calibration<span class="sc">$</span>driver)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">png</span>(file, <span class="at">width =</span> <span class="dv">900</span>, <span class="at">height =</span> <span class="dv">650</span>, <span class="at">res =</span> <span class="dv">130</span>, <span class="at">bg =</span> <span class="fu">sf_color</span>(<span class="st">"paper"</span>))</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">sf_plot_par</span>(<span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">on.exit</span>({</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">par</span>(op)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dev.off</span>()</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">barplot</span>(</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    calibration<span class="sc">$</span>lambda_paper_scale[ord],</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">names.arg =</span> driver_labels[ord],</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">las =</span> <span class="dv">2</span>,</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">sf_color</span>(<span class="st">"blue"</span>),</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">border =</span> <span class="cn">NA</span>,</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="fu">hat</span>(lambda)),</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Estimated race-time rate per driver"</span>,</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>      <span class="st">"(2023 Qatar GP bookmakers' odds, exponential model)"</span>,</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">sep =</span> <span class="st">"</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="fu">sf_color</span>(<span class="st">"sand"</span>))</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>(file)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The bar heights use the paper’s common scale for visual comparability. A rescaling changes the axis values but not a single predicted win probability or substantive conclusion.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="time-rank-duality-and-table-2" class="level2">
+<h2 data-anchor-id="time-rank-duality-and-table-2">3. Time-rank duality and Table 2</h2>
+<p>The rank model approximates final rank by</p>
+<p><span class="math display">\[r_i\sim N(\mu_i,\sigma^2).\]</span></p>
+<p>Using the continuity-corrected event <span class="math inline">\(r_i\le 1.5\)</span>,</p>
+<p><span class="math display">\[p_i=\Phi\left(\frac{1.5-\mu_i}{\sigma}\right),\]</span></p>
+<p>so</p>
+<p><span class="math display">\[\mu_i=1.5-\sigma\Phi^{-1}(p_i).\]</span></p>
+<p>Because ranks sum to <span class="math inline">\(n(n+1)/2\)</span>, the common standard deviation is</p>
+<p><span class="math display">\[
+\sigma=
+\frac{n-n^2/2}{\sum_i\Phi^{-1}(p_i)}.
+\]</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>implied_rank_params <span class="ot">&lt;-</span> <span class="cf">function</span>(probs) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(probs)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  z <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(probs)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  sigma <span class="ot">&lt;-</span> (n <span class="sc">-</span> n<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="fu">sum</span>(z)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> <span class="fl">1.5</span> <span class="sc">-</span> sigma <span class="sc">*</span> z</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">mu =</span> mu, <span class="at">sigma =</span> sigma)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The reproduction gives</p>
+<pre class="text"><code>sigma_hat = 3.879374
+mu_hat(Max Verstappen) = -0.242969
+mu_hat(Fernando Alonso) = 10.501519</code></pre>
+<p>matching Table 2.</p>
+</section>
+<section id="historical-regression-and-table-3" class="level2">
+<h2 data-anchor-id="historical-regression-and-table-3">4. Historical regression and Table 3</h2>
+<p>The second dataset contains 20 drivers over 25 events in 2022. This follows the paper’s one-season strategy rather than pooling many decades of Formula One history <span class="citation" data-cites="fry2024f1">(<a href="#ref-fry2024f1" role="doc-biblioref">Fry et al. 2024</a>)</span>. It is reshaped to one row per driver-event. The candidate model is</p>
+<p><span class="math display">\[
+\text{position}
+\sim \text{second driver} + \text{constructor indicators},
+\]</span></p>
+<p>with Williams as the omitted baseline. Every candidate model is constrained to keep the second-driver term.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f1 <span class="ot">&lt;-</span> <span class="fu">load_f1_2022</span>(<span class="st">"data/f1_2022_positions.txt"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>models <span class="ot">&lt;-</span> <span class="fu">select_models</span>(f1)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(models<span class="sc">$</span>stepwise)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The selected model reproduces Table 3:</p>
+<pre class="text"><code>                    Estimate  Std. Error  t value
+(Intercept)          13.8420      0.3794   36.484
+second_driver         0.2160      0.4056    0.533
+RedBull               -9.6500      0.7170  -13.459
+Mercedes              -8.2700      0.7170  -11.534
+Ferrari               -7.6900      0.7170  -10.725
+McLaren               -3.5500      0.7170   -4.951
+Alpine                -3.5500      0.7170   -4.951
+AstonMartin           -1.7900      0.7170   -2.496
+
+R-squared = 0.3914</code></pre>
+<p>Forward and both-direction selection return the same smaller model. Backward selection retains three additional constructor terms, but the nested-model F-test has <span class="math inline">\(p\approx0.079\)</span>, so the paper retains the smaller model.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/02_team_effects.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:92.0%" alt="Constructor coefficients from the selected 2022 regression, with confidence intervals."></p>
+</figure>
+</div>
+<p>The bars are the constructor coefficients relative to Williams, the omitted baseline. A negative coefficient means a better expected finishing position. The error bars are 95% intervals based on the fitted linear model.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Show the R code for Figure 2">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show the R code for Figure 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Figure 2: constructor effects from the selected 2022 regression</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param model fitted model returned by select_models()$stepwise</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param file output PNG path</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plot_team_effects <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    model,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">"figures/02_team_effects.png"</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>) {</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  tab <span class="ot">&lt;-</span> <span class="fu">regression_table</span>(model)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  model_terms <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"RedBull"</span>, <span class="st">"Mercedes"</span>, <span class="st">"Ferrari"</span>, <span class="st">"McLaren"</span>, <span class="st">"Alpine"</span>, <span class="st">"AstonMartin"</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  display_names <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">RedBull =</span> <span class="st">"Red Bull"</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">Mercedes =</span> <span class="st">"Mercedes"</span>,</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">Ferrari =</span> <span class="st">"Ferrari"</span>,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">McLaren =</span> <span class="st">"McLaren"</span>,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">Alpine =</span> <span class="st">"Alpine"</span>,</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">AstonMartin =</span> <span class="st">"Aston Martin"</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  rows <span class="ot">&lt;-</span> <span class="fu">match</span>(model_terms, tab<span class="sc">$</span>term)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  est <span class="ot">&lt;-</span> tab<span class="sc">$</span>estimate[rows]</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  se <span class="ot">&lt;-</span> tab<span class="sc">$</span>std_error[rows]</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(est) <span class="ot">&lt;-</span> model_terms</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(se) <span class="ot">&lt;-</span> model_terms</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>  ord <span class="ot">&lt;-</span> <span class="fu">order</span>(est)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">png</span>(file, <span class="at">width =</span> <span class="dv">950</span>, <span class="at">height =</span> <span class="dv">650</span>, <span class="at">res =</span> <span class="dv">130</span>, <span class="at">bg =</span> <span class="fu">sf_color</span>(<span class="st">"paper"</span>))</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">sf_plot_par</span>(<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">on.exit</span>({</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">par</span>(op)</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dev.off</span>()</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">barplot</span>(</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    est[ord],</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">horiz =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">names.arg =</span> <span class="fu">unname</span>(display_names[<span class="fu">names</span>(est)[ord]]),</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">las =</span> <span class="dv">1</span>,</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">sf_color</span>(<span class="st">"blue"</span>),</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">border =</span> <span class="cn">NA</span>,</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fu">min</span>(est <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> se), <span class="dv">1</span>),</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"effect on average finishing position (vs. baseline teams)"</span>,</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Team effect, 2022 season"</span>,</span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>      <span class="st">"(negative = better average finishing position)"</span>,</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>      <span class="at">sep =</span> <span class="st">"</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrows</span>(</span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>    est[ord] <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se[ord], y,</span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>    est[ord] <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se[ord], y,</span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">angle =</span> <span class="dv">90</span>,</span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">code =</span> <span class="dv">3</span>,</span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">length =</span> <span class="fl">0.05</span>,</span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">sf_color</span>(<span class="st">"ink"</span>)</span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="fl">1.4</span>, <span class="at">col =</span> <span class="fu">sf_color</span>(<span class="st">"gold"</span>))</span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>(file)</span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<section id="a-descriptive-check-raw-driver-averages-by-constructor" class="level3">
+<h3 data-anchor-id="a-descriptive-check-raw-driver-averages-by-constructor">A descriptive check: raw driver averages by constructor</h3>
+<p>The next figure summarises the same 2022 data before regression. For each driver, it averages the 25 observed finishing positions and places teammates side by side.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/03_driver_vs_team.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" alt="Each driver's average 2022 finishing position, grouped by constructor."></p>
+</figure>
+</div>
+<p>The plot makes two features visible. First, the large differences across constructors confirm that car quality is the dominant source of variation. Second, the two points within a team are not identical, which motivates the second-driver term. However, these raw means are not adjusted model effects and are <strong>not</strong> the quantities used for the paper’s final 2023 driver comparison.</p>
+<p>The implementation calculates the averages from the long-form data rather than hard-coding the plotted values:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>driver_averages <span class="ot">&lt;-</span> <span class="fu">driver_average_table</span>(f1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Show the R code for Figure 3">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show the R code for Figure 3
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Figure 3: each driver's observed 2022 average, grouped by constructor</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' This is a descriptive plot of the historical dataset. It is useful for</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' seeing the large constructor differences and the within-team spreads, but</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' it is not the Section 5 driver-versus-car calculation. Section 5 uses the</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' 2023 odds-implied expected ranks shown in Figure 4.</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param driver_table output from driver_average_table()</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param file output PNG path</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>plot_driver_vs_team <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    driver_table,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">"figures/03_driver_vs_team.png"</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>) {</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  team_order <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"RedBull"</span>, <span class="st">"Mercedes"</span>, <span class="st">"Ferrari"</span>, <span class="st">"McLaren"</span>, <span class="st">"Alpine"</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AstonMartin"</span>, <span class="st">"Haas"</span>, <span class="st">"AlphaTauri"</span>, <span class="st">"AlfaRomeo"</span>, <span class="st">"Williams"</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  axis_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Red Bull"</span>, <span class="st">"Mercedes"</span>, <span class="st">"Ferrari"</span>, <span class="st">"McLaren"</span>, <span class="st">"Alpine"</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aston Martin"</span>, <span class="st">"Haas"</span>, <span class="st">"AlphaTauri"</span>, <span class="st">"Alfa Romeo"</span>, <span class="st">"Williams"</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  dt <span class="ot">&lt;-</span> driver_table</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  dt<span class="sc">$</span>constructor <span class="ot">&lt;-</span> <span class="fu">factor</span>(dt<span class="sc">$</span>constructor, <span class="at">levels =</span> team_order)</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  dt <span class="ot">&lt;-</span> dt[<span class="fu">order</span>(dt<span class="sc">$</span>constructor, dt<span class="sc">$</span>second_driver), , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>  teammate_number <span class="ot">&lt;-</span> <span class="fu">ave</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(dt)), dt<span class="sc">$</span>constructor, <span class="at">FUN =</span> seq_along)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dt<span class="sc">$</span>constructor) <span class="sc">+</span> <span class="fu">ifelse</span>(teammate_number <span class="sc">==</span> <span class="dv">1</span>, <span class="sc">-</span><span class="fl">0.15</span>, <span class="fl">0.15</span>)</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  last_name <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">"([A-Z][a-z]+)([A-Z].*)"</span>, <span class="st">"\2"</span>, dt<span class="sc">$</span>driver)</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>  y_shift <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fl">0.48</span>, <span class="fu">nrow</span>(dt))</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>  y_shift[last_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Russel"</span>, <span class="st">"Leclerc"</span>, <span class="st">"Bottas"</span>)] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.48</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>  y_shift[last_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Magnussen"</span>, <span class="st">"Schumacher"</span>, <span class="st">"Tsunoda"</span>, <span class="st">"Guanyu"</span>)] <span class="ot">&lt;-</span> <span class="fl">0.62</span></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">png</span>(file, <span class="at">width =</span> <span class="dv">1000</span>, <span class="at">height =</span> <span class="dv">680</span>, <span class="at">res =</span> <span class="dv">130</span>, <span class="at">bg =</span> <span class="fu">sf_color</span>(<span class="st">"paper"</span>))</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">sf_plot_par</span>(<span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">on.exit</span>({</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">par</span>(op)</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dev.off</span>()</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>    x,</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>    dt<span class="sc">$</span>avg_position,</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">sf_color</span>(<span class="st">"rust"</span>),</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">cex =</span> <span class="fl">1.3</span>,</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">xaxt =</span> <span class="st">"n"</span>,</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"average finishing position (2022 season)"</span>,</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fu">min</span>(x) <span class="sc">-</span> <span class="fl">0.4</span>, <span class="fu">max</span>(x) <span class="sc">+</span> <span class="fl">0.3</span>),</span>
+<span id="cb13-52"><a href="#cb13-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fu">min</span>(dt<span class="sc">$</span>avg_position) <span class="sc">-</span> <span class="fl">0.8</span>, <span class="fu">max</span>(dt<span class="sc">$</span>avg_position) <span class="sc">+</span> <span class="fl">1.3</span>),</span>
+<span id="cb13-53"><a href="#cb13-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="fu">paste</span>(</span>
+<span id="cb13-54"><a href="#cb13-54" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Each driver's actual average position, by team"</span>,</span>
+<span id="cb13-55"><a href="#cb13-55" aria-hidden="true" tabindex="-1"></a>      <span class="st">"(teammates plotted side by side)"</span>,</span>
+<span id="cb13-56"><a href="#cb13-56" aria-hidden="true" tabindex="-1"></a>      <span class="at">sep =</span> <span class="st">"</span></span>
+<span id="cb13-57"><a href="#cb13-57" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
+<span id="cb13-58"><a href="#cb13-58" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-59"><a href="#cb13-59" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-60"><a href="#cb13-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-61"><a href="#cb13-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="fu">seq_along</span>(team_order), <span class="at">labels =</span> axis_labels, <span class="at">las =</span> <span class="dv">2</span>)</span>
+<span id="cb13-62"><a href="#cb13-62" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(team_order)) {</span>
+<span id="cb13-63"><a href="#cb13-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">abline</span>(<span class="at">v =</span> i, <span class="at">col =</span> <span class="fu">sf_color</span>(<span class="st">"sand"</span>), <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb13-64"><a href="#cb13-64" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb13-65"><a href="#cb13-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">points</span>(x, dt<span class="sc">$</span>avg_position, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="fu">sf_color</span>(<span class="st">"rust"</span>), <span class="at">cex =</span> <span class="fl">1.3</span>)</span>
+<span id="cb13-66"><a href="#cb13-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(x, dt<span class="sc">$</span>avg_position <span class="sc">+</span> y_shift, <span class="at">labels =</span> last_name, <span class="at">cex =</span> <span class="fl">0.65</span>,</span>
+<span id="cb13-67"><a href="#cb13-67" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">sf_color</span>(<span class="st">"ink"</span>))</span>
+<span id="cb13-68"><a href="#cb13-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-69"><a href="#cb13-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>(file)</span>
+<span id="cb13-70"><a href="#cb13-70" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="the-correct-driver-level-comparison" class="level2">
+<h2 data-anchor-id="the-correct-driver-level-comparison">5. The correct driver-level comparison</h2>
+<p>The second-driver coefficient has the 95% confidence interval</p>
+<p><span class="math display">\[(-0.581,\ 1.013).\]</span></p>
+<p>The upper endpoint is used as the threshold. The next step is often easy to misread: the paper compares the <strong>odds-implied expected ranks from Table 2</strong> within each 2023 constructor.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> <span class="fu">second_driver_ci</span>(models<span class="sc">$</span>stepwise)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>dual <span class="ot">&lt;-</span> <span class="fu">implied_rank_params</span>(odds<span class="sc">$</span>implied_probability)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>gaps <span class="ot">&lt;-</span> <span class="fu">teammate_gaps</span>(odds, dual<span class="sc">$</span>mu, <span class="at">threshold =</span> ci[<span class="st">"upper"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Selected output:</p>
+<pre class="text"><code>team          leading driver       teammate          gap    exceeds 1.013
+Red Bull      Max Verstappen       Sergio Perez      7.669  yes
+Aston Martin  Fernando Alonso      Lance Stroll      2.403  yes
+McLaren       Lando Norris         Oscar Piastri     0.515  no
+Ferrari       Charles Leclerc      Carlos Sainz      0.187  no</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/04_teammate_gaps.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" alt="Odds-implied teammate gaps for Qatar 2023 with the historical threshold marked."></p>
+</figure>
+</div>
+<p>The dashed line is the upper confidence limit from the 2022 second-driver coefficient. The rust-coloured bars are the only 2023 within-team expected-rank gaps that exceed it.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled" title="Show the R code for Figure 4">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Show the R code for Figure 4
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Figure 4: odds-implied teammate gaps compared with the historical threshold</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param gaps output from teammate_gaps()</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param threshold upper endpoint from second_driver_ci()</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param file output PNG path</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>plot_teammate_gaps <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    gaps,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    threshold,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">"figures/04_teammate_gaps.png"</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>) {</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  gaps <span class="ot">&lt;-</span> gaps[<span class="fu">order</span>(<span class="sc">-</span>gaps<span class="sc">$</span>gap), , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  labels <span class="ot">&lt;-</span> <span class="fu">paste0</span>(gaps<span class="sc">$</span>leading_driver, <span class="st">"  ("</span>, gaps<span class="sc">$</span>team, <span class="st">")"</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  cols <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(gaps<span class="sc">$</span>outperforms_car, <span class="fu">sf_color</span>(<span class="st">"rust"</span>), <span class="fu">sf_color</span>(<span class="st">"slate_light"</span>))</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">png</span>(file, <span class="at">width =</span> <span class="dv">1800</span>, <span class="at">height =</span> <span class="dv">1050</span>, <span class="at">res =</span> <span class="dv">180</span>, <span class="at">bg =</span> <span class="fu">sf_color</span>(<span class="st">"paper"</span>))</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">sf_plot_par</span>(<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">3</span>, <span class="dv">2</span>))</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">xpd =</span> <span class="cn">NA</span>)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">on.exit</span>({</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">par</span>(op)</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dev.off</span>()</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>  bp <span class="ot">&lt;-</span> <span class="fu">barplot</span>(</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rev</span>(gaps<span class="sc">$</span>gap),</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">horiz =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">rev</span>(cols),</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">border =</span> <span class="cn">NA</span>,</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">names.arg =</span> <span class="fu">rev</span>(labels),</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">las =</span> <span class="dv">1</span>,</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">cex.names =</span> <span class="fl">0.78</span>,</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(gaps<span class="sc">$</span>gap) <span class="sc">*</span> <span class="fl">1.08</span>),</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"Expected-position gap to team-mate (odds-implied)"</span>,</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">main =</span> <span class="st">"Which drivers outperform their car?"</span></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">v =</span> threshold, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="fu">sf_color</span>(<span class="st">"gold"</span>))</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>    threshold,</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">max</span>(bp),</span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">pos =</span> <span class="dv">4</span>,</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">cex =</span> <span class="fl">0.8</span>,</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="fu">sf_color</span>(<span class="st">"gold"</span>),</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">sprintf</span>(<span class="st">"car-only threshold = %.3f"</span>, threshold)</span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>(file)</span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Why the previous dual-page version produced a contradiction
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It applied the threshold to raw 2022 teammate average positions. That is a different calculation from Section 5 and mixes the 2022 grid with a conclusion based on the 2023 Qatar field. In particular, Alonso drove for Alpine in 2022 but appears for Aston Martin in the 2023 odds. The corrected pipeline keeps those roles and seasons separate.</p>
+</div>
+</div>
+</section>
+<section id="validation-and-limitations" class="level2">
+<h2 data-anchor-id="validation-and-limitations">6. Validation and limitations</h2>
+<p><code>tests/run_tests.R</code> checks the published probability column, Table 1 scaled rates, Table 2 values, Table 3 coefficients and <span class="math inline">\(R^2\)</span>, the confidence interval, the descriptive driver averages, and the final pair of flagged drivers.</p>
+<p>The reproduction validates the arithmetic and code path; it does not remove the modelling assumptions. In particular:</p>
+<ul>
+<li>finishing times are assumed independent in the exponential model;</li>
+<li>ranks use a Gaussian approximation and a common variance;</li>
+<li>bookmaker odds contain market information and are not a pure skill measure;</li>
+<li>stepwise model selection can be unstable and should be interpreted as part of the paper’s specified procedure, not as a universally preferred method;</li>
+<li>retirements and incomplete race distances are not explicitly modelled.</li>
+</ul>
+</section>
+<section id="files-produced" class="level2">
+<h2 data-anchor-id="files-produced">Files produced</h2>
+<pre class="text"><code>output/table1_calibration.csv
+output/table2_rank_parameters.csv
+output/table3_regression.csv
+output/driver_average_positions.csv
+output/section5_teammate_gaps.csv
+figures/01_lambda_estimates.png
+figures/02_team_effects.png
+figures/03_driver_vs_team.png
+figures/04_teammate_gaps.png</code></pre>
+<p>The <a href="https://www.silviofanzon.com/assets/pdf/journal/2024-Fry-Bri-Fan.pdf">published paper</a> contains the theoretical development and complete discussion.</p>
+<div class="resource-actions" aria-label="Resource links">
+<p><a href="https://www.silviofanzon.com/projects/f1-time-rank-duality/" class="primary">← Project overview</a> <a href="https://github.com/sfanzon/F1-Paper-Code">GitHub repository</a> <a href="https://www.silviofanzon.com/assets/pdf/journal/2024-Fry-Bri-Fan.pdf">Published paper</a> <a href="https://www.silviofanzon.com/">Main website</a></p>
+</div>
+</section>
+<section id="references" class="level2 unnumbered">
+<h2 class="unnumbered" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-fry2024f1" class="csl-entry" role="listitem">
+Fry, John, Tom Brighton, and Silvio Fanzon. 2024. <span>“Faster Identification of Faster Formula 1 Drivers via Time-Rank Duality.”</span> <em>Economics Letters</em> 237: 111671. <a href="https://doi.org/10.1016/j.econlet.2024.111671">https://doi.org/10.1016/j.econlet.2024.111671</a>.
+</div>
+<div id="ref-strumbelj2014betting" class="csl-entry" role="listitem">
+Strumbelj, Erik. 2014. <span>“On Determining Probability Forecasts from Betting Odds.”</span> <em>International Journal of Forecasting</em> 30: 934–43.
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer-inner">
+    <div class="site-footer-identity">
+      <strong>Silvio Fanzon</strong>
+      <span>Applied mathematician</span>
+    </div>
+
+    <nav class="site-footer-links" aria-label="Footer">
+      <a href="mailto:silvio.fanzon.work@gmail.com">Email</a>
+      <a href="../../../Silvio_Fanzon_Industry_CV.pdf">CV</a>
+      <a href="https://www.linkedin.com/in/fanzon" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/sfanzon" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://scholar.google.com/citations?user=9yJyLsoAAAAJ" target="_blank" rel="noopener">Scholar</a>
+      <a href="../../../contact.html">Contact</a>
+    </nav>
+
+    <div class="site-footer-meta">
+      <span>© 2026 Silvio Fanzon</span>
+      <span>Designed &amp; developed by Silvio Fanzon</span>
+      <span><a href="https://github.com/sfanzon" target="_blank" rel="noopener">Source code</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  const root = document.documentElement;
+  const body = document.body;
+  function apply(mode){
+    body.classList.remove('quarto-light','quarto-dark');
+    body.classList.add(mode === 'dark' ? 'quarto-dark' : 'quarto-light');
+    root.dataset.theme = mode;
+    localStorage.setItem('sf-theme', mode);
+  }
+  const stored = localStorage.getItem('sf-theme');
+  apply(stored || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  const btn = document.getElementById('light-toggle');
+  if(btn){ btn.addEventListener('click', () => apply(body.classList.contains('quarto-dark') ? 'light' : 'dark')); }
+  const path = window.location.pathname.replace(/index\.html$/, '');
+  document.querySelectorAll('#navbar .nav-item[data-path]').forEach(li => {
+    const href = li.getAttribute('data-path');
+    if((href === '/' && path === '/') || (href !== '/' && path.startsWith(href))){ li.classList.add('active'); }
+  });
+
+  function toggleDetails(button, selector) {
+    const entry = button.closest('.publication-entry');
+    const panel = entry?.querySelector(selector);
+    if (!panel) return;
+    const opening = !panel.classList.contains('open');
+    entry.querySelectorAll('.abstract.open, .bibtex.open').forEach(el => el.classList.remove('open'));
+    entry.querySelectorAll('.abstract-toggle, .bibtex-toggle').forEach(el => el.setAttribute('aria-expanded', 'false'));
+    if (opening) {
+      panel.classList.add('open');
+      button.setAttribute('aria-expanded', 'true');
+      if (selector === '.abstract') {
+        requestAnimationFrame(function () {
+          if (typeof typesetMath === 'function') typesetMath(panel);
+          else if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise([panel]);
+        });
+      }
+    }
+  }
+
+  document.querySelectorAll('.abstract-toggle').forEach(button => {
+    button.setAttribute('aria-expanded', 'false');
+    button.addEventListener('click', () => toggleDetails(button, '.abstract'));
+  });
+  document.querySelectorAll('.bibtex-toggle').forEach(button => {
+    button.setAttribute('aria-expanded', 'false');
+    button.addEventListener('click', () => toggleDetails(button, '.bibtex'));
+  });
+
+  const publicationMoreMenus = [...document.querySelectorAll('.publication-more')];
+  publicationMoreMenus.forEach(details => {
+    const summary = details.querySelector('summary');
+    if (!summary) return;
+    summary.setAttribute('aria-expanded', details.open ? 'true' : 'false');
+    details.addEventListener('toggle', () => {
+      summary.setAttribute('aria-expanded', details.open ? 'true' : 'false');
+      if (details.open) {
+        publicationMoreMenus.forEach(other => { if (other !== details) other.open = false; });
+      }
+    });
+  });
+  document.addEventListener('click', event => {
+    publicationMoreMenus.forEach(details => {
+      if (details.open && !details.contains(event.target)) details.open = false;
+    });
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') publicationMoreMenus.forEach(details => { details.open = false; });
+  });
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function(resolve, reject) {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      try {
+        document.execCommand('copy') ? resolve() : reject(new Error('Copy failed'));
+      } catch (error) { reject(error); }
+      area.remove();
+    });
+  }
+
+  document.querySelectorAll('[data-news-component]').forEach(function(component) {
+    const input = component.querySelector('[data-news-search]');
+    const items = [...component.querySelectorAll('[data-news-item]')];
+    const empty = component.querySelector('.news-search-empty');
+    if (!input) return;
+
+    function filterNews() {
+      const query = input.value.trim().toLowerCase();
+      let matches = 0;
+      items.forEach(function(item) {
+        const visible = !query || item.textContent.toLowerCase().includes(query);
+        item.hidden = !visible;
+        if (visible) matches += 1;
+      });
+      if (empty) empty.hidden = matches !== 0;
+    }
+
+    input.addEventListener('input', filterNews);
+    filterNews();
+  });
+
+  document.querySelectorAll('.publication-entry .bibtex').forEach(function(panel) {
+    const code = panel.querySelector('pre code');
+    if (!code || !code.textContent.trim() || panel.querySelector('.copy-citation')) return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'copy-citation';
+    button.innerHTML = '<i class="fa-regular fa-copy" aria-hidden="true"></i><span>Copy citation</span>';
+    button.addEventListener('click', function() {
+      copyText(code.textContent.trim()).then(function() {
+        const label = button.querySelector('span');
+        label.textContent = 'Copied';
+        button.classList.add('is-copied');
+        window.setTimeout(function() {
+          label.textContent = 'Copy citation';
+          button.classList.remove('is-copied');
+        }, 1600);
+      });
+    });
+    panel.insertBefore(button, panel.firstChild);
+  });
+
+})();
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('[data-carousel]').forEach(function (carousel) {
+    const slides = [...carousel.querySelectorAll('[data-slide]')];
+    const status = carousel.querySelector('.carousel-status');
+    let index = 0;
+    function show(next) {
+      index = (next + slides.length) % slides.length;
+      slides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
+      if (status) status.textContent = `${index + 1} / ${slides.length}`;
+    }
+    carousel.querySelector('.previous')?.addEventListener('click', () => show(index - 1));
+    carousel.querySelector('.next')?.addEventListener('click', () => show(index + 1));
+    let startX = null;
+    carousel.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+    carousel.addEventListener('touchend', e => {
+      if (startX === null) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 45) show(index + (dx < 0 ? 1 : -1));
+      startX = null;
+    }, {passive:true});
+    show(0);
+  });
+
+  document.querySelectorAll('[data-project-carousel]').forEach(function (carousel) {
+    const track = carousel.querySelector('.showcase-track');
+    const originals = [...carousel.querySelectorAll('[data-slide]')];
+    const status = carousel.querySelector('.carousel-status');
+    if (!track || originals.length < 2) return;
+
+    /* Duplicate one complete set at each end.  When the reader reaches a
+       duplicate set, jump to the matching original position without animation.
+       This makes mouse, trackpad and touch swiping continuous in both directions. */
+    const before = document.createDocumentFragment();
+    const after = document.createDocumentFragment();
+    originals.forEach(function (slide) {
+      const leadingClone = slide.cloneNode(true);
+      const trailingClone = slide.cloneNode(true);
+      leadingClone.dataset.carouselClone = 'true';
+      trailingClone.dataset.carouselClone = 'true';
+      before.appendChild(leadingClone);
+      after.appendChild(trailingClone);
+    });
+    track.prepend(before);
+    track.append(after);
+
+    const allSlides = [...track.querySelectorAll('[data-slide]')];
+    const originalStart = originals.length;
+    let current = 0;
+    let scrollTimer = null;
+    let resizeTimer = null;
+    let resetting = false;
+
+    function visibleCount() {
+      if (window.innerWidth <= 680) return 1;
+      if (window.innerWidth <= 1040) return 2;
+      return 3;
+    }
+
+    function targetLeft(slide) {
+      return slide.offsetLeft - track.offsetLeft;
+    }
+
+    function nearestIndex() {
+      const left = track.scrollLeft;
+      return allSlides.reduce(function (best, slide, index) {
+        return Math.abs(targetLeft(slide) - left) < Math.abs(targetLeft(allSlides[best]) - left) ? index : best;
+      }, 0);
+    }
+
+    function logicalIndex(physicalIndex) {
+      return ((physicalIndex - originalStart) % originals.length + originals.length) % originals.length;
+    }
+
+    function updateStatus(physicalIndex = nearestIndex()) {
+      current = logicalIndex(physicalIndex);
+      const visible = Math.min(visibleCount(), originals.length);
+      if (!status) return;
+      if (visible === 1) {
+        status.textContent = `${current + 1} / ${originals.length}`;
+      } else {
+        const labels = Array.from({length: visible}, (_, i) => ((current + i) % originals.length) + 1);
+        status.textContent = `${labels.join('–')} / ${originals.length}`;
+      }
+    }
+
+    function jumpToPhysical(physicalIndex) {
+      resetting = true;
+      track.classList.add('is-resetting');
+      track.scrollLeft = targetLeft(allSlides[physicalIndex]);
+      track.getBoundingClientRect();
+      track.classList.remove('is-resetting');
+      resetting = false;
+      updateStatus(physicalIndex);
+    }
+
+    function normalizePosition() {
+      const physical = nearestIndex();
+      if (physical < originalStart) {
+        jumpToPhysical(physical + originals.length);
+      } else if (physical >= originalStart + originals.length) {
+        jumpToPhysical(physical - originals.length);
+      } else {
+        updateStatus(physical);
+      }
+    }
+
+    function move(direction) {
+      const physical = nearestIndex();
+      const next = physical + direction;
+      allSlides[next]?.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'start'});
+    }
+
+    carousel.querySelector('.previous')?.addEventListener('click', () => move(-1));
+    carousel.querySelector('.next')?.addEventListener('click', () => move(1));
+
+    track.addEventListener('scroll', function () {
+      if (resetting) return;
+      updateStatus();
+      window.clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(normalizePosition, 110);
+    }, {passive: true});
+
+    window.addEventListener('resize', function () {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(function () {
+        jumpToPhysical(originalStart + current);
+      }, 120);
+    });
+
+    requestAnimationFrame(function () {
+      jumpToPhysical(originalStart);
+    });
+  });
+});
+</script>
+<script>
+(function () {
+  const placeholder = 'Search site-wide';
+  function labelPopupSearch(root) {
+    (root || document).querySelectorAll('.aa-DetachedContainer .aa-Input').forEach(function (input) {
+      input.setAttribute('placeholder', placeholder);
+      input.setAttribute('aria-label', placeholder);
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    labelPopupSearch(document);
+    new MutationObserver(function () { labelPopupSearch(document); })
+      .observe(document.body, { childList: true, subtree: true });
+  });
+})();
+</script>
+<!-- Reusable project chapter navigation.
+     Desktop: permanent left rail.
+     Narrow screens: drawer with an attached pull tab.
+     Add body class `project-nav-secondary-bar` for a full-width secondary bar,
+     useful for long lecture notes. -->
+<script>
+(function () {
+  const MOBILE_BREAKPOINT = 1200;
+  const FULL_BAR_HEIGHT = 46;
+
+  function headingText(heading) {
+    const clone = heading.cloneNode(true);
+    clone.querySelectorAll(
+      '.anchorjs-link, .header-section-number, .project-section-number'
+    ).forEach(function (node) {
+      node.remove();
+    });
+    return clone.textContent.replace(/\s+/g, ' ').trim();
+  }
+
+  function initProjectChapterNavigation() {
+    if (!document.body.classList.contains('project-detail-page')) return;
+    if (document.querySelector('[data-project-chapter-rail]')) return;
+
+    const entries = Array.from(document.querySelectorAll('main.content h2'))
+      .map(function (heading) {
+        const fullLabel = headingText(heading);
+        const shortLabel = (heading.getAttribute('data-nav-title') || fullLabel).trim();
+        const section = heading.closest('section.level2[id]');
+        const id = (section && section.id) || heading.id || heading.getAttribute('data-anchor-id');
+        const target = section || heading;
+        const isUnnumbered =
+          heading.classList.contains('unnumbered') ||
+          target.classList.contains('unnumbered');
+        return {
+          heading: heading,
+          section: target,
+          id: id,
+          fullLabel: fullLabel,
+          shortLabel: shortLabel,
+          isUnnumbered: isUnnumbered,
+          number: ''
+        };
+      })
+      .filter(function (entry) {
+        if (!entry.id || !entry.fullLabel) return false;
+        if (/^(show|hide)\b.*\bcode\b/i.test(entry.fullLabel)) return false;
+        if (
+          entry.heading.hasAttribute('data-nav-exclude') ||
+          entry.section.hasAttribute('data-nav-exclude')
+        ) {
+          return false;
+        }
+        return !entry.heading.closest(
+          'details, .cell, .code-fold, .sourceCode, #quarto-margin-sidebar'
+        );
+      });
+
+    if (entries.length < 2) return;
+
+    let numberedIndex = 0;
+    entries.forEach(function (entry) {
+      if (!entry.isUnnumbered) {
+        numberedIndex += 1;
+        entry.number = String(numberedIndex);
+      }
+    });
+
+    entries.forEach(function (entry) {
+      if (entry.isUnnumbered) return;
+      if (entry.heading.querySelector('.project-section-number')) return;
+      const number = document.createElement('span');
+      number.className = 'project-section-number';
+      number.textContent = entry.number;
+      number.setAttribute('aria-hidden', 'true');
+      entry.heading.insertBefore(number, entry.heading.firstChild);
+    });
+
+    const nav = document.createElement('nav');
+    nav.id = 'project-chapter-navigation';
+    nav.className = 'project-chapter-rail';
+    nav.setAttribute('data-project-chapter-rail', '');
+    nav.setAttribute('aria-label', 'Project sections');
+
+    const list = document.createElement('ol');
+    const links = entries.map(function (entry) {
+      const item = document.createElement('li');
+      const link = document.createElement('a');
+      const numberSpan = document.createElement('span');
+      const labelSpan = document.createElement('span');
+
+      link.href = '#' + entry.id;
+      link.title = entry.fullLabel;
+      link.setAttribute(
+        'aria-label',
+        entry.isUnnumbered
+          ? entry.fullLabel
+          : entry.number + '. ' + entry.fullLabel
+      );
+
+      numberSpan.className =
+        'project-chapter-number' + (entry.isUnnumbered ? ' is-empty' : '');
+      numberSpan.textContent = entry.number;
+      numberSpan.setAttribute('aria-hidden', 'true');
+
+      labelSpan.className = 'project-chapter-label';
+      labelSpan.textContent = entry.shortLabel;
+
+      link.appendChild(numberSpan);
+      link.appendChild(labelSpan);
+      item.appendChild(link);
+      list.appendChild(item);
+      return link;
+    });
+
+    const scrollRegion = document.createElement('div');
+    scrollRegion.className = 'project-chapter-scroll';
+    scrollRegion.appendChild(list);
+    nav.appendChild(scrollRegion);
+
+    const toggle = document.createElement('button');
+    toggle.className = 'project-chapter-toggle';
+    toggle.type = 'button';
+    toggle.setAttribute('aria-controls', nav.id);
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open project navigation');
+    toggle.innerHTML =
+      '<i class="bi bi-chevron-right" aria-hidden="true"></i>';
+    nav.appendChild(toggle);
+
+    const currentLabel = document.createElement('span');
+    currentLabel.className = 'project-secondary-nav-label';
+    currentLabel.setAttribute('aria-live', 'polite');
+    nav.appendChild(currentLabel);
+
+    document.body.appendChild(nav);
+
+    const backdrop = document.createElement('div');
+    backdrop.className = 'project-chapter-backdrop';
+    backdrop.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(backdrop);
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const desktopQuery = window.matchMedia(
+      '(min-width: ' + MOBILE_BREAKPOINT + 'px)'
+    );
+
+    function navbarHeight() {
+      const nodes = [
+        document.querySelector('#quarto-header'),
+        document.querySelector('.navbar'),
+        document.querySelector('.navbar-collapse.show')
+      ].filter(Boolean);
+      if (!nodes.length) return 64;
+      return Math.ceil(
+        Math.max.apply(
+          null,
+          nodes.map(function (node) {
+            const rect = node.getBoundingClientRect();
+            return Math.max(rect.height, rect.bottom);
+          })
+        )
+      );
+    }
+
+    function secondaryNavigationHeight() {
+      return document.body.classList.contains('project-nav-secondary-bar')
+        ? FULL_BAR_HEIGHT
+        : 0;
+    }
+
+    function updateNavigationGeometry() {
+      const height = navbarHeight();
+      const secondaryHeight = secondaryNavigationHeight();
+      document.documentElement.style.setProperty(
+        '--project-navbar-height',
+        height + 'px'
+      );
+      document.documentElement.style.setProperty(
+        '--project-secondary-height',
+        FULL_BAR_HEIGHT + 'px'
+      );
+      document.documentElement.style.setProperty(
+        '--project-navigation-stack-height',
+        (height + secondaryHeight) + 'px'
+      );
+    }
+
+    function closeDrawer(restoreFocus) {
+      if (!document.body.classList.contains('project-nav-open')) return;
+      document.body.classList.remove('project-nav-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open project navigation');
+      if (restoreFocus) toggle.focus();
+    }
+
+    function openDrawer() {
+      if (desktopQuery.matches) return;
+      document.body.classList.add('project-nav-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close project navigation');
+    }
+
+    function setActive(index) {
+      links.forEach(function (link, linkIndex) {
+        const active = linkIndex === index;
+        link.classList.toggle('is-active', active);
+        if (active) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+      currentLabel.textContent = entries[index].shortLabel;
+      toggle.title = 'Sections · ' + entries[index].shortLabel;
+    }
+
+    function scrollOffset() {
+      return desktopQuery.matches
+        ? navbarHeight() + 22
+        : navbarHeight() + secondaryNavigationHeight() + 16;
+    }
+
+    function scrollToEntry(entry, index, updateHash) {
+      const top = Math.max(
+        0,
+        entry.section.getBoundingClientRect().top + window.scrollY - scrollOffset()
+      );
+      window.scrollTo({
+        top: top,
+        behavior: reducedMotion.matches ? 'auto' : 'smooth'
+      });
+      setActive(index);
+      if (updateHash && window.history && window.history.pushState) {
+        window.history.pushState(null, '', '#' + entry.id);
+      }
+    }
+
+    links.forEach(function (link, index) {
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        closeDrawer(false);
+        window.requestAnimationFrame(function () {
+          scrollToEntry(entries[index], index, true);
+        });
+      });
+    });
+
+    toggle.addEventListener('click', function () {
+      if (document.body.classList.contains('project-nav-open')) {
+        closeDrawer(false);
+      } else {
+        openDrawer();
+      }
+    });
+
+    backdrop.addEventListener('click', function () {
+      closeDrawer(true);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeDrawer(true);
+    });
+
+    desktopQuery.addEventListener('change', function (event) {
+      updateNavigationGeometry();
+      if (event.matches) closeDrawer(false);
+    });
+
+    let edgeTouch = null;
+    let drawerTouch = null;
+
+    document.addEventListener('touchstart', function (event) {
+      if (desktopQuery.matches || document.body.classList.contains('project-nav-open')) return;
+      const touch = event.touches[0];
+      if (touch && touch.clientX <= 24) {
+        edgeTouch = { x: touch.clientX, y: touch.clientY };
+      }
+    }, { passive: true });
+
+    document.addEventListener('touchend', function (event) {
+      if (!edgeTouch || desktopQuery.matches) return;
+      const touch = event.changedTouches[0];
+      const dx = touch.clientX - edgeTouch.x;
+      const dy = Math.abs(touch.clientY - edgeTouch.y);
+      edgeTouch = null;
+      if (dx >= 58 && dy <= 70) openDrawer();
+    }, { passive: true });
+
+    nav.addEventListener('touchstart', function (event) {
+      if (!document.body.classList.contains('project-nav-open')) return;
+      const touch = event.touches[0];
+      if (touch) drawerTouch = { x: touch.clientX, y: touch.clientY };
+    }, { passive: true });
+
+    nav.addEventListener('touchend', function (event) {
+      if (!drawerTouch) return;
+      const touch = event.changedTouches[0];
+      const dx = touch.clientX - drawerTouch.x;
+      const dy = Math.abs(touch.clientY - drawerTouch.y);
+      drawerTouch = null;
+      if (dx <= -58 && dy <= 70) closeDrawer(false);
+    }, { passive: true });
+
+    let scheduled = false;
+    function updateActiveSection() {
+      scheduled = false;
+      const marker =
+        window.scrollY + scrollOffset() + Math.min(150, window.innerHeight * 0.18);
+      let activeIndex = 0;
+      entries.forEach(function (entry, index) {
+        if (
+          entry.section.getBoundingClientRect().top + window.scrollY <= marker
+        ) {
+          activeIndex = index;
+        }
+      });
+      setActive(activeIndex);
+    }
+
+    function requestUpdate() {
+      if (scheduled) return;
+      scheduled = true;
+      window.requestAnimationFrame(updateActiveSection);
+    }
+
+
+    const geometryNodes = [
+      document.querySelector('#quarto-header'),
+      document.querySelector('.navbar'),
+      document.querySelector('.navbar-collapse')
+    ].filter(Boolean);
+
+    if ('ResizeObserver' in window) {
+      const navigationResizeObserver = new ResizeObserver(function () {
+        updateNavigationGeometry();
+        requestUpdate();
+      });
+      geometryNodes.forEach(function (node) {
+        navigationResizeObserver.observe(node);
+      });
+    }
+
+    const navbarCollapse = document.querySelector('.navbar-collapse');
+    if (navbarCollapse && 'MutationObserver' in window) {
+      const navigationMutationObserver = new MutationObserver(function () {
+        window.requestAnimationFrame(function () {
+          updateNavigationGeometry();
+          requestUpdate();
+        });
+      });
+      navigationMutationObserver.observe(navbarCollapse, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+      });
+    }
+
+    ['show.bs.collapse', 'shown.bs.collapse', 'hide.bs.collapse', 'hidden.bs.collapse']
+      .forEach(function (eventName) {
+        document.addEventListener(eventName, function () {
+          window.setTimeout(function () {
+            updateNavigationGeometry();
+            requestUpdate();
+          }, 0);
+        });
+      });
+
+    const relatedSection = document.querySelector('.project-related');
+    if (relatedSection && 'IntersectionObserver' in window) {
+      const relatedObserver = new IntersectionObserver(function (entries) {
+        const visible = entries.some(function (entry) {
+          return entry.isIntersecting;
+        });
+        document.body.classList.toggle('project-related-in-view', visible);
+      }, {
+        root: null,
+        rootMargin: '0px 0px -28% 0px',
+        threshold: 0
+      });
+      relatedObserver.observe(relatedSection);
+    }
+
+    updateNavigationGeometry();
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', function () {
+      updateNavigationGeometry();
+      requestUpdate();
+    });
+    window.addEventListener('hashchange', requestUpdate);
+
+    if (window.location.hash) {
+      const initialId = decodeURIComponent(window.location.hash.slice(1));
+      const initialIndex = entries.findIndex(function (entry) {
+        return entry.id === initialId;
+      });
+      if (initialIndex >= 0) {
+        window.setTimeout(function () {
+          scrollToEntry(entries[initialIndex], initialIndex, false);
+        }, 0);
+      }
+    }
+
+    updateActiveSection();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener(
+      'DOMContentLoaded',
+      initProjectChapterNavigation
+    );
+  } else {
+    initProjectChapterNavigation();
+  }
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/www\.silviofanzon\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

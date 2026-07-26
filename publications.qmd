@@ -1,0 +1,25 @@
+---
+title: "Publications"
+description: "Selected and complete publication list of Silvio Fanzon"
+toc: false
+page-layout: full
+body-classes: standard-page publications-page show-small-footer
+---
+
+```{=html}
+<header class="page-hero compact-page-hero publications-hero">
+  <h1>Publications</h1>
+  <p>Research in optimisation, inverse problems, partial differential equations and statistical modelling, with applications in imaging and sports analytics.</p>
+</header>
+
+<section class="publication-section all-publications" aria-label="Publication list">
+  <nav class="publication-jump" aria-label="Publication categories">
+    <a href="#journal-publications">Journal publications</a>
+    <a href="#theses">Theses</a>
+    <a href="#miscellaneous">Miscellaneous</a>
+  </nav>
+```
+{{< include includes/publications-all.html >}}
+```{=html}
+</section>
+```
