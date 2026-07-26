@@ -1,6 +1,12 @@
 # Silvio Fanzon — Quarto portfolio website
 
-This repository contains the source and pre-rendered output for **silviofanzon.com**. It is a heavily customised Quarto website designed to present research, technical projects, teaching and professional experience to both academic and industry audiences.
+This repository contains the source and pre-rendered output for **[silviofanzon.com](https://www.silviofanzon.com)**. It is a heavily customised Quarto website designed to present research, technical projects, teaching and professional experience to both academic and industry audiences.
+
+The site is built around a simple positioning principle:
+
+> **Applied mathematics as the foundation; applications as the evidence.**
+
+It combines mathematical depth with inspectable modelling, algorithms, scientific computing, reproducible projects and technical communication.
 
 ## Main structure
 
@@ -9,13 +15,25 @@ This repository contains the source and pre-rendered output for **silviofanzon.c
 - `expertise.qmd` — transferable capabilities
 - `research.qmd` — academic research themes
 - `projects.qmd` — inspectable modelling, software and communication work
+- `publications.qmd` — publication record
+- `teaching.qmd` — teaching activity
+- `news.qmd` / `news/` — news archive and dated entries
 - `data/publications.bib` — single publication source
 - `data/projects.yml` — single source for homepage and Projects-page cards
-- `news/` — dated news entries
 - `scripts/build-content.py` — generates reusable HTML/QMD fragments
 - `styles/main.scss` — site-wide visual system
 - `docs/` — pre-rendered website for deployment
 - `ARCHITECTURE.md` — source ownership and project-page architecture
+- `DESIGN.md` — visual and editorial design rules
+- `AGENTS.md` — concise operating rules for coding agents
+
+The site deliberately separates:
+
+- **Homepage** — identity + selected evidence
+- **Expertise** — capabilities and problem-solving areas
+- **Research** — mathematical and academic depth
+- **Projects** — applied evidence and inspectable work
+- **Publications** — complete research output
 
 ## Build locally
 
@@ -33,7 +51,15 @@ quarto render
 
 The Quarto pre-render hook runs `scripts/build-content.py`, which rebuilds publication, project, teaching and news fragments from their structured sources.
 
+Generated files under `includes/`, `data/projects.generated.json`, and `docs/` should not be edited manually.
+
 ## Test locally
+
+Install the JavaScript test dependencies first:
+
+```bash
+npm ci
+```
 
 While iterating on a small change, run the quick critical-path suite:
 
@@ -47,29 +73,66 @@ Before committing, run the default midrange suite:
 npm test
 ```
 
-It checks every rendered page in Chromium, key interactions and links, navigation
-regressions and visual baselines. Before deployment or after broad structural
-or browser-specific changes, run the complete Chromium, Firefox and WebKit matrix:
+It checks rendered pages in Chromium, key interactions and links, navigation regressions and visual baselines.
+
+Before deployment or after broad structural or browser-specific changes, run the complete Chromium, Firefox and WebKit matrix:
 
 ```bash
 npm run test:full
 ```
 
-Only directly referenced assets are stored under `assets/`. Images are grouped
-by brand, profile and project, while downloadable files are grouped by journal,
-seminar, news, teaching and thesis purpose. Unlinked archive material remains
-outside this lightweight repository snapshot.
+Additional targeted commands:
+
+```bash
+npm run safety:test
+npm run cross-browser:test
+npm run visual:test
+npm run visual:report
+```
+
+Update visual baselines only for an intentional, inspected visual change:
+
+```bash
+npm run visual:baseline
+```
+
+## Responsive targets
+
+Visual and layout work should be checked at:
+
+```text
+Desktop   1440 × 1000
+iPad       820 × 1180
+iPhone     390 × 844
+```
+
+Both light and dark modes are first-class.
+
+Long-form project prose targets a **760 px** readable measure. Figures, code, tables, diagrams and related-project browsing components may break wider where useful.
+
+## Assets
+
+Only directly referenced assets are stored under `assets/`.
+
+Images are grouped by brand, profile and project, while downloadable files are grouped by journal, seminar, news, teaching and thesis purpose.
+
+Unlinked archive material remains outside this lightweight repository snapshot.
 
 ## Design principles
 
+- warm, restrained editorial visual identity;
 - concise homepage with deeper evidence available after the main narrative;
 - separate **Expertise** and **Research** pages;
 - visible project selection rather than hidden carousel content;
-- clear mobile reading order, with section links after the content;
+- clear mobile reading order;
 - academic depth translated into modelling, computation, communication and leadership evidence;
-- maintainable content generated from BibTeX, YAML and dated Markdown.
+- maintainable content generated from BibTeX, YAML and dated Markdown;
+- applied mathematics presented as the foundation, with projects and applications as evidence;
+- no drift toward a generic academic template, data-science portfolio or SaaS/AI landing page.
 
-See `ARCHITECTURE.md` for source ownership, project-page behaviour and design direction.
+See `DESIGN.md` for visual and editorial rules.
+
+See `ARCHITECTURE.md` for source ownership, project-page behaviour and implementation details.
 
 ## Project architecture
 
@@ -93,15 +156,86 @@ projects/
     └── images/
 ```
 
+Project metadata is maintained centrally in:
+
+```text
+data/projects.yml
+```
+
+Long-form project components are rendered through:
+
+```text
+filters/project-components.lua
+```
+
+Shared project presentation includes:
+
+- compact editorial hero;
+- author/publication metadata;
+- external resources;
+- At-a-glance summaries;
+- multiple project views where appropriate;
+- numbered responsive section navigation;
+- related-project discovery.
+
+The standard long-form project hierarchy is:
+
+```text
+category
+title
+subtitle
+author / published
+resources
+at a glance
+explore project
+article
+```
+
+## Standalone project repositories
+
 The substantial R/Python implementations live in separate repositories:
 
 - `sfanzon/F1-Paper-Code`
 - `sfanzon/sparse-gcg-explainer`
 
-The website pages contain explanation, equations, static figures and selected
-annotated code. Expensive experiments run in the project repositories; their
-committed outputs are then incorporated into this site. The F1 project keeps
-three local presentation views while `sfanzon/F1-Paper-Code` remains canonical
-for the implementation, data, tests and independently deployed mini-site.
+The website pages contain explanation, equations, static figures and selected annotated code.
 
-The `docs/` directory is generated output and should not be edited manually.
+Expensive experiments run in the project repositories; their committed outputs are then incorporated into this site.
+
+The F1 project keeps three local presentation views while `sfanzon/F1-Paper-Code` remains canonical for the implementation, data, tests and independently deployed mini-site.
+
+Where a standalone project repository exists, that repository remains canonical for implementation, data, tests and version history. The website owns the communication layer.
+
+## Working with coding agents
+
+Before substantial work, coding agents should read:
+
+```text
+AGENTS.md
+ARCHITECTURE.md
+DESIGN.md
+```
+
+Agents may modify any source required by the task, but should:
+
+1. identify the canonical source;
+2. preserve shared architecture;
+3. preserve the visual identity;
+4. render and test the result;
+5. inspect Desktop, iPad and iPhone for visual changes;
+6. review the final Git diff.
+
+`AGENTS.md` intentionally stays concise; detailed architecture and design rationale belong in `ARCHITECTURE.md` and `DESIGN.md`.
+
+## Documentation roles
+
+- `README.md` — repository orientation, build and testing
+- `ARCHITECTURE.md` — source ownership and implementation mechanics
+- `DESIGN.md` — visual identity, positioning and component design rules
+- `AGENTS.md` — operational rules for coding agents
+
+## Authorship
+
+The website is designed and developed by Silvio Fanzon.
+
+Quarto provides the publishing framework; the design system, content architecture and implementation are custom.
