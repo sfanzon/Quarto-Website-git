@@ -35,6 +35,10 @@
       "width": 1440,
       "height": 1000
     },
+    "ipad": {
+      "width": 820,
+      "height": 1180
+    },
     "mobile": {
       "width": 390,
       "height": 844

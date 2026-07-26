@@ -115,7 +115,7 @@ The complete suite contains 177 checks:
 - 3 static checks covering local targets, URL fragments, retired components and inline styles
 - 9 Chromium critical-path checks, including back-navigation scroll restoration
 - 18 matching critical-path checks in Firefox and WebKit
-- 20 visual comparisons against the original desktop/mobile, light/dark
+- 30 visual comparisons against the original desktop/iPad/mobile, light/dark
   baselines
 
 The validated checkpoint passes all 177 checks without updating the visual
@@ -155,6 +155,7 @@ Use these fixed viewports:
 | Name | Width | Height |
 | --- | ---: | ---: |
 | `desktop` | 1440 | 1000 |
+| `ipad` | 820 | 1180 |
 | `mobile` | 390 | 844 |
 
 Store captures under `tests/visual/baselines/` using:
