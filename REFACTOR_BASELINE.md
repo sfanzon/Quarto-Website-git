@@ -63,15 +63,15 @@ live markup families are:
 - Homepage/project cards: `home-project-card`, `project-summary-card`, and their child regions
 - Shared page framing: `page-hero`, `compact-page-hero`, `section-heading`, and `eyebrow`
 
-One concrete hard-coding hotspot is `presentations.qmd`, which currently has 45
-inline `style` attributes. These should be converted to semantic classes only
-after the existing rendered appearance is captured and reviewed.
+At baseline, `presentations.qmd` had 45 inline `style` attributes. Phase 4
+converted those declarations to semantic classes after visual review; the
+source-markup safety test now prevents inline styles from returning.
 
 ## Prioritized next targets
 
 1. Extract shared tokens and component primitives from the current live rules,
    beginning with buttons/actions, page headings, cards, and metadata rows.
-2. Replace the inline styles in `presentations.qmd` with named classes and
+2. [x] Replace the inline styles in `presentations.qmd` with named classes and
    responsive rules.
 3. Consolidate duplicated theme variables and repeated layout declarations,
    starting in `_03-overrides.scss` and `_04-current-pages.scss`.

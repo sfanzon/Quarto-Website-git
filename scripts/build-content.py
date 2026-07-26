@@ -76,7 +76,7 @@ PUBLICATION_WEBSITE_FIELDS = {
     'category', 'abbr', 'selected', 'preprint', 'arxiv', 'abstract', 'pdf', 'code', 'slides',
     'poster', 'video', 'explainer', 'bibtex_show', 'author+an', 'altmetric',
     'dimensions', 'contribution', 'google_scholar_id', 'scopus', 'sjr', 'themes',
-    'authors', 'periodical', 'badge', 'links', 'bdsk-url-1',
+    'authors', 'periodical', 'links', 'bdsk-url-1',
 }
 
 
@@ -154,42 +154,6 @@ def publication_abstract_html(entry):
         return abstract
     return f'<p>{abstract}</p>'
 
-def publication_links(entry):
-    links = []
-    if entry.get('abstract'):
-        links.append({'label': 'Abs', 'href': '', 'kind': 'abstract'})
-    links.append({'label': 'Bib', 'href': '', 'kind': 'bibtex'})
-
-    # The arXiv action is controlled only by the explicit `preprint` field.
-    # Stored arXiv identifiers remain available on published records but do
-    # not create a button unless preprint is exactly true.
-    if entry['preprint']:
-        arxiv_id = entry.get('arxiv')
-        if not arxiv_id:
-            raise ValueError(f'Publication {entry["id"]} is marked preprint=true but has no arxiv field')
-        arxiv_href = arxiv_id if arxiv_id.startswith(('http://', 'https://')) else f'https://arxiv.org/abs/{arxiv_id}'
-        links.append({'label': 'arXiv', 'href': arxiv_href, 'kind': 'link'})
-    else:
-        # Published records use the ordinary standard BibTeX destination.
-        destination = entry.get('html') or entry.get('url')
-        if destination and 'arxiv.org' in destination.lower():
-            destination = None
-        if not destination and entry.get('doi'):
-            doi = entry['doi']
-            if 'arxiv.org' not in doi.lower():
-                destination = doi if doi.startswith(('http://', 'https://')) else f'https://doi.org/{doi}'
-        if destination:
-            links.append({'label': 'Journal', 'href': destination, 'kind': 'link'})
-
-    for field, label in [
-        ('pdf', 'PDF'), ('code', 'Code'), ('slides', 'Slides'),
-        ('poster', 'Poster'), ('video', 'Video'),
-    ]:
-        if entry.get(field):
-            links.append({'label': label, 'href': entry[field], 'kind': 'link'})
-    return links
-
-
 def load_publications(path):
     records = read_bibtex_entries(path)
     required = {'category', 'abbr', 'title', 'author', 'year', 'selected', 'preprint'}
@@ -216,9 +180,7 @@ def load_publications(path):
         publication_venue(record)
         record['authors'] = publication_authors(record)
         record['periodical'] = publication_periodical(record)
-        record['badge'] = record['abbr']
         record['themes'] = [theme.strip() for theme in record.get('themes', '').split(';') if theme.strip()][:2]
-        record['links'] = publication_links(record)
         record['bibtex'] = publication_bibtex(record)
         publications.append(record)
     return publications
@@ -361,7 +323,7 @@ def load_news():
 def action_icon(label):
     # Journal and arXiv are both official reading destinations, so they share
     # one clean publication icon on the homepage and Publications page.
-    m={'HTML':'fa-arrow-up-right-from-square','Journal':'fa-book-open','Journal page':'fa-book-open','arXiv':'fa-book-open','arXiv page':'fa-book-open','Repository':'fa-building-columns','Repository page':'fa-building-columns','Conference':'fa-arrow-up-right-from-square','Conference page':'fa-arrow-up-right-from-square','Book':'fa-book','Book page':'fa-book','External':'fa-arrow-up-right-from-square','External page':'fa-arrow-up-right-from-square','PDF':'fa-file-pdf','Paper':'fa-file-lines','Code':'fa-code','Slides':'fa-display','Poster':'fa-image','Video':'fa-circle-play'}
+    m={'Journal':'fa-book-open','arXiv':'fa-book-open','Repository':'fa-building-columns','Book':'fa-book','External':'fa-arrow-up-right-from-square','Code':'fa-code','Slides':'fa-display','Poster':'fa-image','Video':'fa-circle-play'}
     return m.get(label,'fa-link')
 
 
@@ -418,21 +380,12 @@ def publication_theme_pills(p):
     return f'<div class="publication-themes" aria-label="Research themes">{pills}</div>'
 
 
-def homepage_pub_actions(p):
-    """Homepage publications use the same compact action hierarchy as the archive."""
-    return pub_actions(p, publications_page=True)
-
-
-def pub_actions(p, toggles=True, publications_page=False):
+def pub_actions(p, toggles=True):
     """Render a compact publication action hierarchy.
 
-    The full archive keeps PDF, the official journal/arXiv destination,
-    Abstract, Cite and Code visible. Presentation material is grouped under
-    More so it does not compete with the primary research outputs.
+    The homepage and full archive use the same visible PDF, official
+    destination, citation, explainer and presentation actions.
     """
-    if not publications_page:
-        return homepage_pub_actions(p)
-
     xs=[]
     paper_href = publication_paper_href(p)
     if paper_href:
@@ -477,6 +430,11 @@ def linked_authors(authors):
         result = result.replace(name, f'<a class="author-link" href="{url}">{name}</a>')
     return result
 
+def render_publication_entry(p, row_id, row_classes, actions):
+    authors = linked_authors(p['authors'])
+    side_meta = publication_side_meta(p)
+    return f'''<article class="{row_classes} publication-entry" id="{html.escape(row_id, quote=True)}"><div class="home-publication-main pub-main"><h3>{p['title']}</h3><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{p['periodical']}</span></div><div class="paper-actions">{actions}</div><div class="abstract hidden">{publication_abstract_html(p)}</div><div class="bibtex hidden"><pre><code>{html.escape(p['bibtex'])}</code></pre></div></div>{side_meta}</article>'''
+
 # Project cards: data/projects.yml is the single source for both the homepage
 # and the Projects archive. Keep card actions deliberately limited to the
 # project destination plus Code when a real repository is available.
@@ -519,11 +477,14 @@ selected=[p for p in pubs if p.get('selected') is True]
 
 home_pub_rows=[]
 for p in selected:
-    authors=linked_authors(p['authors'])
-    side_meta=publication_side_meta(p)
-    home_pub_rows.append(f'''<article class="home-publication-row publication-entry" id="home-list-{p['id']}">
-      <div class="home-publication-main pub-main"><h3>{p['title']}</h3><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{p['periodical']}</span></div><div class="paper-actions">{homepage_pub_actions(p)}</div><div class="abstract hidden">{publication_abstract_html(p)}</div><div class="bibtex hidden"><pre><code>{html.escape(p['bibtex'])}</code></pre></div></div>{side_meta}
-    </article>''')
+    home_pub_rows.append(
+        render_publication_entry(
+            p,
+            f"home-list-{p['id']}",
+            'home-publication-row',
+            pub_actions(p),
+        )
+    )
 (root/'includes/home-publications-list.html').write_text('\n'.join(home_pub_rows))
 
 # Publications page
@@ -533,9 +494,14 @@ allbits=[]
 for group in publication_categories:
     rows=[]
     for p in [x for x in pubs if x['category'] == group]:
-        authors=linked_authors(p['authors'])
-        side_meta=publication_side_meta(p)
-        rows.append(f'''<article class="home-publication-row publication-archive-row publication-entry" id="{p['id']}"><div class="home-publication-main pub-main"><h3>{p['title']}</h3><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{p['periodical']}</span></div><div class="paper-actions">{pub_actions(p, publications_page=True)}</div><div class="abstract hidden">{publication_abstract_html(p)}</div><div class="bibtex hidden"><pre><code>{html.escape(p['bibtex'])}</code></pre></div></div>{side_meta}</article>''')
+        rows.append(
+            render_publication_entry(
+                p,
+                p['id'],
+                'home-publication-row publication-archive-row',
+                pub_actions(p),
+            )
+        )
     if rows:
         group_id=group.lower().replace(' ','-')
         allbits.append(f'''<section class="publication-category" id="{group_id}"><h2>{group}</h2><div class="publication-category-list">{''.join(rows)}</div></section>''')
