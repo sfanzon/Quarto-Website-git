@@ -1,0 +1,117 @@
+---
+title: "About"
+description: "About Silvio Fanzon — academic background, applied mathematics, modelling and professional transition"
+toc: false
+page-layout: full
+body-classes: standard-page about-page show-small-footer
+---
+
+```{=html}
+<header class="page-hero compact-page-hero about-hero">
+  <p class="eyebrow">About</p>
+  <h1>From mathematical research to applied modelling and decision tools.</h1>
+  <p>I am an applied mathematician and statistician with a career spanning research, university teaching and programme leadership. I now bring that background to industry-facing work in data science, optimisation, operational research and scientific computing.</p>
+</header>
+
+<section class="about-opening">
+  <div class="about-opening-lead">
+    <p>I have spent my career learning how to take difficult, ambiguous problems and make them precise: identify the right assumptions, build a defensible model, implement it computationally, test what it can and cannot say, and explain the result clearly.</p>
+    <p>My academic work ranges from optimisation algorithms and dynamic MRI reconstruction to statistical models for Formula 1 and curling. Alongside research, I have led degree programmes, designed data-science teaching, supervised projects and built technical resources for varied audiences.</p>
+  </div>
+  <dl class="about-facts" aria-label="Career at a glance">
+    <div><dt>11</dt><dd>peer-reviewed journal articles</dd></div>
+    <div><dt>21</dt><dd>university modules taught</dd></div>
+    <div><dt>9</dt><dd>research students supervised</dd></div>
+    <div><dt>3</dt><dd>countries in my academic career</dd></div>
+  </dl>
+</section>
+
+<section class="about-career" aria-labelledby="career-title">
+  <div class="about-section-heading">
+    <p class="eyebrow">Academic career</p>
+    <h2 id="career-title">Research, teaching and leadership across three universities</h2>
+  </div>
+  <div class="career-timeline">
+    <article class="career-stage">
+      <div class="career-period">2014–2018</div>
+      <div class="career-copy">
+        <p class="career-place">University of Sussex · UK</p>
+        <h3>EPSRC-funded PhD in Mathematics</h3>
+        <p>Studied variational models, PDEs and material microstructures, graduating with a viva outcome of pass with no corrections. I also worked as an Associate Tutor across analysis, geometry, probability and statistics.</p>
+      </div>
+    </article>
+    <article class="career-stage">
+      <div class="career-period">2018–2021</div>
+      <div class="career-copy">
+        <p class="career-place">University of Graz · Austria</p>
+        <h3>Postdoctoral Researcher</h3>
+        <p>Worked on an Austrian Science Fund project in motion-aware medical imaging, developing mathematical frameworks and optimisation algorithms for dynamic inverse problems under severe noise and undersampling.</p>
+      </div>
+    </article>
+    <article class="career-stage">
+      <div class="career-period">2022–2023</div>
+      <div class="career-copy">
+        <p class="career-place">University of Graz · Austria</p>
+        <h3>Faculty member · University Assistant</h3>
+        <p>Contributed to the Inverse Problems and Mathematical Imaging group through research, undergraduate and postgraduate teaching, supervision and grant-development activity.</p>
+      </div>
+    </article>
+    <article class="career-stage">
+      <div class="career-period">2023–2026</div>
+      <div class="career-copy">
+        <p class="career-place">University of Hull · UK</p>
+        <h3>Permanent Lecturer in Applied Mathematics</h3>
+        <p>This is the UK academic grade closest to Assistant Professor. I combined research with module leadership, PhD and dissertation supervision, and later served as Programme Director for the MSc in Mathematics.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="about-transition">
+  <div>
+    <p class="eyebrow">What comes next</p>
+    <h2>Carrying the strongest parts of academia into industry</h2>
+  </div>
+  <div>
+    <p>In 2026 I chose to leave my permanent academic post and transition toward industry. That career remains the foundation of how I work: rigorous problem formulation, evidence-based reasoning, long-horizon project ownership and the ability to communicate technical ideas to different audiences.</p>
+    <p>I am particularly interested in roles where mathematical modelling, statistics and computation support prediction, operational decisions or scientific discovery.</p>
+  </div>
+</section>
+
+<section class="about-capabilities" aria-label="How I work">
+  <article>
+    <span>01</span>
+    <h3>Frame the problem</h3>
+    <p>Turn an open-ended question into assumptions, objectives, constraints and measurable outcomes.</p>
+  </article>
+  <article>
+    <span>02</span>
+    <h3>Build and test</h3>
+    <p>Move from mathematical formulation to reproducible code, numerical experiments and model evaluation.</p>
+  </article>
+  <article>
+    <span>03</span>
+    <h3>Explain clearly</h3>
+    <p>Produce technical writing, presentations, documentation and teaching materials that preserve substance without unnecessary complexity.</p>
+  </article>
+  <article>
+    <span>04</span>
+    <h3>Lead collaboratively</h3>
+    <p>Coordinate programmes and projects, mentor researchers, build collaborations and connect people with different expertise.</p>
+  </article>
+</section>
+
+<section class="about-international">
+  <div>
+    <p class="eyebrow">International perspective</p>
+    <h2>Experience across the UK, Austria and Italy</h2>
+  </div>
+  <p>I have studied and worked in different university systems, collaborated through international research networks, and taught students from varied educational and cultural backgrounds. This has made me comfortable adapting quickly, communicating across disciplines and working with people whose assumptions and priorities differ from my own.</p>
+</section>
+
+<section class="about-links" aria-label="Related pages">
+  <a href="/expertise.html"><span>Capabilities</span><strong>Explore my expertise →</strong></a>
+  <a href="research.html"><span>Academic work</span><strong>Read about my research →</strong></a>
+  <a href="projects.html"><span>Evidence</span><strong>View selected projects →</strong></a>
+</section>
+```

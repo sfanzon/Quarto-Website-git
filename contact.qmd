@@ -1,0 +1,53 @@
+---
+title: "Contact"
+description: "Contact information"
+toc: false
+page-layout: full
+body-classes: standard-page contact-page
+---
+
+```{=html}
+<header class="page-hero compact-page-hero">
+  <h1>Contact</h1>
+  <p>For professional enquiries, research collaborations, consulting opportunities, talks or teaching-related questions.</p>
+</header>
+
+<section class="contact-details" aria-label="Contact details">
+  <div class="contact-primary">
+    <div class="contact-identity">
+      <p class="contact-person">Silvio Fanzon</p>
+      <p class="contact-credentials">PhD in Mathematics</p>
+    </div>
+    <p class="eyebrow">Email</p>
+    <a class="contact-email" href="mailto:silvio.fanzon.work@gmail.com">silvio.fanzon.work@gmail.com</a>
+    <p>The best way to contact me is by email.</p>
+  </div>
+
+  <nav class="contact-profiles" aria-label="Professional profiles">
+    <a href="https://www.linkedin.com/in/fanzon" target="_blank" rel="noopener">
+      <span>LinkedIn</span><small>Professional profile</small>
+    </a>
+    <a href="https://github.com/sfanzon" target="_blank" rel="noopener">
+      <span>GitHub</span><small>Code and repositories</small>
+    </a>
+    <a href="https://scholar.google.com/citations?user=9yJyLsoAAAAJ" target="_blank" rel="noopener">
+      <span>Google Scholar</span><small>Publications and citations</small>
+    </a>
+    <a href="https://www.researchgate.net/profile/Silvio-Fanzon/" target="_blank" rel="noopener">
+      <span>ResearchGate</span><small>Academic network</small>
+    </a>
+    <a href="https://orcid.org/0000-0003-1974-1434" target="_blank" rel="noopener">
+      <span>ORCID</span><small>Research identifier</small>
+    </a>
+  </nav>
+
+  <nav class="contact-profiles contact-documents" aria-label="Curriculum vitae">
+    <a href="/Silvio_Fanzon_Industry_CV.pdf">
+      <span>Industry résumé</span><small>Professional experience</small>
+    </a>
+    <a href="/Silvio_Fanzon_Academic_CV.pdf">
+      <span>Academic CV</span><small>Research and teaching</small>
+    </a>
+  </nav>
+</section>
+```

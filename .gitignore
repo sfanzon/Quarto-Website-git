@@ -1,0 +1,8 @@
+.DS_Store
+.quarto/
+**/*.quarto_ipynb
+__pycache__/
+*.py[cod]
+_quarto_internal_scss_error.scss
+
+/.quarto/

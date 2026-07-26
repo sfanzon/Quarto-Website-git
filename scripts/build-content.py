@@ -519,23 +519,13 @@ project_archive=[render_project_card(p) for p in projects]
 # Every publication explicitly marked `selected: true` appears on the
 # homepage, in the same order as data/publications.bib.
 selected=[p for p in pubs if p.get('selected') is True]
-pubslides=[]
-visuals=['paper-optimization.svg','paper-transport.svg','paper-pde.svg','paper-materials.svg']
-for i,p in enumerate(selected,1):
-    authors=linked_authors(p['authors'])
-    pubslides.append(f'''<article class="showcase-slide publication-slide publication-entry" id="home-{p['id']}" data-slide>
-      <div class="showcase-copy"><span class="slide-count">{i} of {len(selected)}</span><p class="eyebrow">Selected publication</p><h2>{p['title']}</h2><div class="paper-meta">{authors}<br>{p['periodical']}</div><div class="showcase-actions">{pub_actions(p,False)}</div></div>
-      <img src="assets/img/{visuals[(i-1)%len(visuals)]}" alt="Mathematical visual for {html.escape(p['title'])}">
-    </article>''')
 (root/'includes/home-projects.html').write_text('\n'.join(proj))
-(root/'includes/projects-grid.html').write_text('\n'.join(project_archive))
 (root/'includes/projects-portfolio.html').write_text('''<section class="projects-section project-portfolio">
   <div class="section-heading project-page-heading"><div><p class="eyebrow">Selected work</p><span>Projects, implementations and reproducible outputs</span></div></div>
   <div class="projects-card-grid">
 ''' + '\n'.join(project_archive) + '''
   </div>
 </section>''')
-(root/'includes/home-publications.html').write_text('\n'.join(pubslides))
 
 home_pub_rows=[]
 for p in selected:
@@ -547,11 +537,6 @@ for p in selected:
 (root/'includes/home-publications-list.html').write_text('\n'.join(home_pub_rows))
 
 # Publications page
-sel=[]
-for i,p in enumerate(selected):
-    authors=linked_authors(p['authors'])
-    side_meta=publication_side_meta(p)
-    sel.append(f'''<article class="selected-paper-list home-publication-row publication-entry" id="selected-{p['id']}"><div class="selected-paper-main home-publication-main pub-main"><h2>{p['title']}</h2><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{p['periodical']}</span></div><div class="publication-themes-mobile">{publication_theme_pills(p)}</div><div class="paper-actions">{pub_actions(p, publications_page=True)}</div><div class="abstract hidden">{publication_abstract_html(p)}</div><div class="bibtex hidden"><pre><code>{html.escape(p['bibtex'])}</code></pre></div></div>{side_meta}</article>''')
 publication_categories = list(dict.fromkeys(p['category'] for p in pubs))
 
 allbits=[]
@@ -564,7 +549,6 @@ for group in publication_categories:
     if rows:
         group_id=group.lower().replace(' ','-')
         allbits.append(f'''<section class="publication-category" id="{group_id}"><h2>{group}</h2><div class="publication-category-list">{''.join(rows)}</div></section>''')
-(root/'includes/publications-selected.html').write_text('\n'.join(sel))
 (root/'includes/publications-all.html').write_text('\n'.join(allbits))
 
 # Teaching: retain the original BibDesk bibliographies as the single source.

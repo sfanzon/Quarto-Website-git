@@ -8,7 +8,7 @@ body-classes: home-page show-small-footer
 
 ```{=html}
 <section class="home-hero">
-  <img class="home-portrait" src="assets/img/silvioimg.jpeg" alt="Portrait of Silvio Fanzon">
+  <img class="home-portrait" src="assets/img/profile/silvioimg.png" alt="Portrait of Silvio Fanzon">
   <div class="home-intro">
     <div class="home-name" role="heading" aria-level="1">Silvio Fanzon <span class="home-degree">PhD</span></div>
     <p class="home-role"><span>Applied mathematician · Statistical modeller</span></p>

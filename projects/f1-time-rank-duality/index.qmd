@@ -177,10 +177,8 @@ If the paper or companion code is useful in your work, please cite the published
   doi     = {10.1016/j.econlet.2024.111671}
 }
 ```
-:::
 
 ## References {.unnumbered}
 
 ::: {#refs}
 :::
-

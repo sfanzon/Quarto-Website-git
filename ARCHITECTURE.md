@@ -1,0 +1,67 @@
+# Website architecture
+
+## Source and build
+
+This repository contains the Quarto source and the pre-rendered `docs/` output
+used for deployment. Run `quarto preview` for local development and
+`quarto render` for a complete build.
+
+The pre-render hook runs `scripts/build-content.py`. Structured content is kept
+in:
+
+- `data/publications.bib` for publications;
+- `data/projects.yml` for project cards, metadata and navigation;
+- `data/teaching_lecturer.bib` and `data/teaching_tutor.bib` for teaching;
+- `news/*.md` for dated news entries.
+
+The generated files under `includes/` and `data/projects.generated.json` should
+not be edited manually. The `docs/` directory is generated deployment output.
+
+Directly referenced visual assets are stored under `assets/img/brand/`,
+`assets/img/profile/` and `assets/img/projects/`. The larger PDF library is
+maintained outside this lightweight repository snapshot.
+
+## Project pages
+
+Portfolio explainers live under `projects/` and inherit their defaults from
+`projects/_metadata.yml`. Shared presentation and navigation are implemented by:
+
+- `styles/project-pages.css`;
+- `styles/project-navigation.css`;
+- `includes/project-navigation.html`;
+- `filters/project-components.lua`.
+
+Pages with the `project-detail-page` body class receive the project navigation.
+Level-two headings become navigation entries automatically. Use
+`data-nav-title` for a shorter label, `.unnumbered` to suppress numbering, and
+`data-nav-exclude` to omit a heading.
+
+On wide screens the navigation is a left rail. On narrower screens it becomes
+an accessible drawer positioned below the measured Quarto navbar.
+
+## Formula 1 project
+
+The main website owns three presentation views:
+
+- `projects/f1-time-rank-duality/index.qmd`: industry-facing overview;
+- `projects/f1-time-rank-duality/technical.qmd`: technical walkthrough;
+- `projects/f1-time-rank-duality/code.qmd`: code, data and deployment guide.
+
+The technical and code views include presentation-adapted Markdown snapshots
+from `projects/f1-time-rank-duality/snapshots/`. The standalone
+`sfanzon/F1-Paper-Code` repository remains canonical for code, data, tests,
+version history and its independently deployed technical mini-site.
+
+`projects/f1-time-rank-duality/downloads/F1-Paper-Code.zip` preserves the full
+repository snapshot. To refresh the website views, update the ZIP and adapted
+snapshot files together, then render the main website.
+
+## Design direction
+
+The site presents the academic career as evidence of transferable modelling,
+software, communication and leadership skills. The homepage stays concise,
+while Expertise, Research and Projects provide progressively deeper evidence.
+
+Future portfolio work should prioritise deployable forecasting and operational
+optimisation tools, followed by an interactive Formula 1 data product and
+modernised research software.

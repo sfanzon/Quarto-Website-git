@@ -167,7 +167,7 @@
       "Imaging"
     ],
     "summary": "Algorithms that reconstruct moving sources from incomplete and noisy measurements, supported by theory and numerical experiments.",
-    "image": "assets/img/project-ot.svg",
+    "image": "assets/img/projects/optimal-transport.svg",
     "href": "publications.html#2023-Bre-Car-Fan-Rom",
     "featured": false,
     "code": "https://github.com/sfanzon/DGCG_algorithm",
@@ -201,7 +201,7 @@
       "R"
     ],
     "summary": "A complete R-based learning system combining lectures, worked examples, practical exercises and accessible digital publishing.",
-    "image": "assets/img/project-teaching.svg",
+    "image": "assets/img/projects/teaching.svg",
     "href": "https://www.silviofanzon.com/blog/2026/Statistical-Models/",
     "featured": true,
     "related": [
@@ -234,7 +234,7 @@
       "Materials science"
     ],
     "summary": "Mathematical models explaining how dislocations and elastic energy generate large-scale crystalline structures.",
-    "image": "assets/img/project-poly.svg",
+    "image": "assets/img/projects/polycrystals.svg",
     "href": "publications.html#2019-Fan-Pal-Pon",
     "related": [
       "f1-benchmarking",
@@ -266,7 +266,7 @@
       "Quarto"
     ],
     "summary": "A responsive portfolio that turns publications, projects, teaching and structured data into a coherent story for different audiences.",
-    "image": "assets/img/project-website.svg",
+    "image": "assets/img/projects/website.svg",
     "href": "index.html",
     "code": "https://github.com/sfanzon/sfanzon.github.io",
     "related": [

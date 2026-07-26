@@ -6,14 +6,12 @@ project:
   - '*.qmd'
   - news/*.md
   - projects/**/*.qmd
-  - includes/*.qmd
-  - CHANGES.md
-  - '!github-repos/**'
+  - '!includes/*.qmd'
 website:
   title: Silvio Fanzon
   site-url: https://www.silviofanzon.com
   description: Personal website of Silvio Fanzon
-  favicon: assets/img/favicon.png
+  favicon: assets/img/brand/favicon.png
   navbar:
     title: Silvio Fanzon
     pinned: true
