@@ -367,9 +367,6 @@ body.project-detail-page main.content > details,
 body.project-detail-page main.content > .callout,
 body.project-detail-page main.content > .headline-box,
 body.project-detail-page main.content > .project-role-note,
-body.project-detail-page main.content > .project-output-grid,
-body.project-detail-page main.content > .project-demonstrates,
-body.project-detail-page main.content > .project-closing-actions,
 body.project-detail-page main.content > .f1-source-actions,
 body.project-detail-page main.content > .f1-snapshot-note,
 body.project-detail-page main.content > .project-end-back-link {
@@ -590,30 +587,6 @@ body.project-detail-page main.content .project-related-heading h2 {
   width: min(820px, 100%);
   margin: 1.4rem auto .4rem;
 }
-.project-closing-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .45rem;
-  margin: 0;
-}
-.project-closing-actions a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  padding: .38rem .62rem;
-  border: 1px solid var(--project-line);
-  border-radius: 7px;
-  background: var(--project-surface);
-  color: var(--global-text-color);
-  font-size: .76rem;
-  font-weight: 670;
-  line-height: 1.1;
-  text-decoration: none;
-}
-.project-closing-actions a:hover {
-  border-color: color-mix(in srgb, var(--global-theme-color) 45%, var(--project-line));
-  background: color-mix(in srgb, var(--project-surface) 86%, var(--project-soft-accent));
-}
 
 @media (max-width: 980px) {
   .project-resource-map { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -626,7 +599,6 @@ body.project-detail-page main.content .project-related-heading h2 {
     border-right: 0;
     border-bottom: 1px solid var(--project-line);
   }
-  .project-resource-publication { grid-column: 1; }
   .analysis-pipeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .analysis-pipeline > div:nth-child(2)::after { display: none; }
 }
@@ -817,23 +789,6 @@ body.project-detail-page main.content .project-related-heading h2 {
 }
 
 
-@media (max-width: 720px) {
-  .project-resource-publication {
-    grid-template-columns: 1fr;
-    row-gap: .65rem;
-  }
-  .project-resource-actions {
-    gap: .4rem;
-  }
-}
-
-@media (max-width: 720px) {
-  .project-summary-band .project-resource-publication {
-    grid-template-columns: 1fr;
-    row-gap: .65rem;
-  }
-}
-
 .project-resource-map > .project-resource-intro {
   grid-column: 1 / -1;
 }
@@ -852,12 +807,6 @@ body.project-detail-page main.content .project-related-heading h2 {
 body.gcg-project-page main.content > .project-detail-hero {
   margin-left: auto;
   margin-right: auto;
-}
-body.gcg-project-page .project-summary-band {
-  margin-bottom: 1.55rem;
-}
-body.gcg-project-page .project-summary-band .project-evidence-strip > div {
-  min-height: 5rem;
 }
 
 /* Wide related-project breakout is intentionally isolated.

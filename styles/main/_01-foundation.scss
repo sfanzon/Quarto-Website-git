@@ -42,19 +42,11 @@
   /* Code and inline-code backgrounds */
   --global-code-bg-color: rgba(184, 86, 53, 0.07);
 
-  /* Footer colours */
-  --global-footer-bg-color: #1c1c1d;
-  --global-footer-text-color: #e8e8e8;
-  --global-footer-link-color: #ffffff;
-
   /* Navbar colours */
   --global-navbar-color: #1c1c1d;
   --global-navbar-text-color: #e8e8e8;
   --global-navbar-active-text-color: #e59a7c;
   --global-navbar-hover-color: #efb29a;
-
-  /* Homepage profile box */
-  --global-profile-box-color: #f3eee7;
 
   /* Miscellaneous accents */
   --global-highlight-color: #b71c1c;
@@ -97,19 +89,11 @@ body.quarto-dark {
   /* Code and inline-code backgrounds */
   --global-code-bg-color: #2c2824;
 
-  /* Footer colours */
-  --global-footer-bg-color: #222222;
-  --global-footer-text-color: #f5f5f5;
-  --global-footer-link-color: #f5f5f5;
-
   /* Navbar colours */
   --global-navbar-color: #222222;
   --global-navbar-text-color: #f5f5f5;
   --global-navbar-active-text-color: #9a7650;
   --global-navbar-hover-color: #b8946c;
-
-  /* Homepage profile box */
-  --global-profile-box-color: #2b2723;
 
   /* Miscellaneous accents */
   --global-highlight-color: #b71c1c;
@@ -273,117 +257,6 @@ table.table a:hover {
 }
 
 /* ============================================================
-   HOMEPAGE PROFILE BLOCK
-   ============================================================ */
-
-.profile-layout {
-  display: grid;
-  grid-template-columns: minmax(290px, 390px) minmax(0, 1fr);
-  gap: 3rem;
-  align-items: start;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-.profile-box {
-  background-color: var(--global-profile-box-color);
-  padding: 1.9rem;
-  text-align: center;
-  border-radius: 8px;
-  width: 100%;
-  max-width: 390px;
-  min-width: 0;
-  box-sizing: border-box;
-  transition: all 0.3s ease;
-}
-
-.clearfix {
-  min-width: 0;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow-wrap: break-word;
-  padding-top: 2rem;
-}
-
-.profile-box-photo {
-  width: 83%;
-  max-width: 300px;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-  box-shadow: none;
-}
-
-.profile-box-name {
-  font-size: 1.7rem;
-  font-weight: bold;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  color: var(--global-text-color);
-  border-bottom: none !important;
-}
-
-.profile-box-role {
-  font-size: 1.35rem;
-  margin-top: 0.2rem;
-  margin-bottom: 1rem;
-  color: var(--global-text-color-light);
-}
-
-.profile-box-social-icons {
-  font-size: 1.55rem;
-  display: flex;
-  justify-content: center;
-  gap: 1.05rem;
-  flex-wrap: wrap;
-}
-
-.profile-box-social-icons a {
-  text-decoration: none;
-}
-
-.profile-box-social-icons a i::before {
-  color: var(--global-text-color);
-  transition: all 0.2s ease-in-out;
-}
-
-.profile-box-social-icons a:hover i::before {
-  color: var(--global-theme-color);
-}
-
-.profile-welcome-heading {
-  margin-top: 0 !important;
-  margin-bottom: 1.3rem;
-  padding-bottom: 0 !important;
-  border-bottom: none !important;
-}
-
-.profile-welcome-heading::before,
-.profile-welcome-heading::after {
-  display: none !important;
-  content: none !important;
-  border: 0 !important;
-}
-
-@media (max-width: 900px) {
-  .profile-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .profile-box {
-    max-width: 100%;
-    width: 100%;
-  }
-
-  .clearfix {
-    width: 100%;
-    padding-top: 0;
-  }
-}
-
-/* ============================================================
    PUBLICATIONS, BIBTEX, ABSTRACTS, AND BUTTONS
    ------------------------------------------------------------
    Styles publication lists, year headings, badges, previews,
@@ -529,14 +402,12 @@ a.btn.z-depth-0 {
 }
 
 .abstract.hidden,
-.bibtex.hidden,
-.award.hidden {
+.bibtex.hidden {
   display: none;
 }
 
 .abstract.hidden.open,
-.bibtex.hidden.open,
-.award.hidden.open {
+.bibtex.hidden.open {
   display: block;
   margin-top: .75rem;
   color: var(--global-text-color);
@@ -552,24 +423,6 @@ pre {
   white-space: pre-wrap;
   max-width: 100%;
   overflow-x: auto;
-}
-
-.pub-toolbar {
-  display: flex;
-  gap: .45rem;
-  flex-wrap: wrap;
-  align-items: center;
-  margin: 1.5rem 0 1.2rem;
-}
-
-.pub-toolbar input {
-  flex: 1 1 260px;
-  min-width: 0;
-  padding: .45rem .65rem;
-  border: 1px solid var(--global-divider-color);
-  border-radius: .35rem;
-  background: var(--global-card-bg-color);
-  color: var(--global-text-color);
 }
 
 @media (max-width: 575.98px) {
@@ -613,309 +466,14 @@ pre {
 
 
 /* ============================================================
-   CONTACT PAGE, BIG FOOTER, AND SMALL FOOTER
-   ------------------------------------------------------------
-   Styles the contact/footer two-column layout, map embeds, large
-   optional footer, fixed small footer, and responsive behaviour.
-
-   Behaviour:
-   - ordinary text links in the big footer underline on hover
-   - social icons do NOT underline
-   - social icons are neutral by default and accent-coloured on hover
-   - the footer map is width-first: its column width is bounded,
-     and the iframe derives its own square HEIGHT from that width
-     via aspect-ratio. This matches the Jekyll site's technique
-     and avoids the overflow that height-first (grid/stretch)
-     approaches produce at in-between screen widths.
-   - the small footer's "Contact" link matches navbar link colour
-     and hover behaviour (no underline)
-   ============================================================ */
-
-.contact-flex {
-  display: flex;
-  gap: 2rem;
-  align-items: stretch;
-  justify-content: space-between;
-}
-
-.contact-map {
-  flex: 1;
-  min-width: 280px;
-}
-
-.contact-map iframe {
-  width: 100%;
-  min-height: 340px;
-  height: 100%;
-}
-
-/* ============================================================
-   BIG FOOTER
-   ============================================================ */
-
-.big-footer {
-  display: none;
-  position: static !important;
-  width: 100%;
-  margin-top: 3rem;
-  background: var(--global-bg-color);
-  color: var(--global-text-color);
-  padding: 2rem 0 3rem;
-  border-top: 1px solid var(--global-divider-color);
-  overflow-anchor: none;
-}
-
-body.show-big-footer .big-footer {
-  display: block;
-}
-
-.footer-container {
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-.footer-name {
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-  line-height: 1.2;
-  font-weight: 500;
-}
-
-.footer-flex {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.1rem;
-  align-items: flex-start;
-  text-align: left;
-}
-
-.footer-left {
-  flex: 1 1 300px;
-  min-width: 260px;
-}
-
-.footer-line {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.65rem;
-  margin-bottom: 1.2rem;
-  line-height: 1.45;
-}
-
-.footer-line i {
-  margin-top: 0.15rem;
-  min-width: 1.1rem;
-  color: var(--global-text-color);
-}
-
-/* Ordinary text links in the big footer */
-.big-footer .footer-line a,
-.big-footer .footer-built a,
-.big-footer .footer-line a:visited,
-.big-footer .footer-built a:visited {
-  color: var(--global-theme-color) !important;
-  text-decoration: none !important;
-}
-
-/* Ordinary text links underline on hover */
-.big-footer .footer-line a:hover,
-.big-footer .footer-line a:focus,
-.big-footer .footer-built a:hover,
-.big-footer .footer-built a:focus {
-  color: var(--global-theme-color) !important;
-  text-decoration: underline !important;
-}
-
-/* ============================================================
-   BIG FOOTER SOCIAL ICONS
-   ------------------------------------------------------------
-   The icons keep their own behaviour:
-   - neutral by default
-   - accent on hover
-   - no underline
-   - no hover colour when the mouse is between icons
-   - 0.15s transition to match the navbar nav-link speed
-   ============================================================ */
-
-.footer-contact-icons {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  font-size: 1.9em;
-  line-height: 1;
-  text-align: left;
-  margin-top: 0.8rem;
-  margin-bottom: 0.9rem;
-}
-
-.footer-contact-icons a {
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  width: 1em;
-  height: 1em;
-  margin: 0 !important;
-  padding: 0 !important;
-  line-height: 1;
-  color: var(--global-text-color) !important;
-  text-decoration: none !important;
-  background: transparent !important;
-}
-
-.footer-contact-icons a:hover,
-.footer-contact-icons a:focus {
-  color: var(--global-theme-color) !important;
-  text-decoration: none !important;
-}
-
-.footer-contact-icons a i,
-.footer-contact-icons a i::before {
-  color: inherit !important;
-  line-height: 1;
-  transition: color 0.14s ease-in-out;
-}
-
-.profile-box-social-icons a i::before {
-  color: var(--global-text-color);
-  transition: color 0.2s ease-in-out;
-}
-
-.profile-box-social-icons a:hover i::before {
-  color: var(--global-theme-color);
-}
-
-.footer-built {
-  font-size: 0.9em;
-  margin-top: 0.8rem;
-}
-
-/* ============================================================
-   BIG FOOTER MAP
-   ------------------------------------------------------------
-   Width-first square: the column has a bounded width, and the
-   iframe derives its height from that width via aspect-ratio.
-   margin-top nudges the square down to align its top edge with
-   the identity heading text on the left.
-   ============================================================ */
-
-.footer-map {
-  flex: 1 1 400px;
-  min-width: 340px;
-  max-width: 460px;
-  margin-top: 0.35rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  position: relative;
-}
-
-.footer-map iframe {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  aspect-ratio: 1 / 1;
-  border: 0;
-  border-radius: 12px;
-  filter: grayscale(100%);
-}
-
-/* ============================================================
-   SMALL FOOTER: FIXED VERSION
-   ------------------------------------------------------------
-   Jekyll-like fixed footer pinned to the bottom of the browser.
-   Keep body padding-bottom: 2.4rem when this version is active.
-   ============================================================ */
-
-.small-footer {
-  position: fixed !important;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: var(--global-navbar-color);
-  border-top: 1px solid var(--global-divider-color);
-  color: var(--global-footer-text-color);
-  padding: .40rem 0;
-  z-index: 1030;
-}
-
-/* ============================================================
-   SMALL FOOTER: STATIC VERSION
-   ------------------------------------------------------------
-   Alternative normal footer. To use this:
-   1. Comment out the fixed .small-footer block above.
-   2. Uncomment this block.
-   3. Change body padding-bottom from 2.4rem to 0.
-   ============================================================ */
-
-/*
-.small-footer {
-  position: static !important;
-  width: 100%;
-  background: var(--global-navbar-color);
-  border-top: 1px solid var(--global-divider-color);
-  color: var(--global-footer-text-color);
-  padding: .45rem 0;
-  z-index: auto;
-}
-*/
-
-/* "Contact" link matches navbar link colour/hover — no bright white,
-   no underline on hover, same speed as nav-link */
-.small-footer a {
-  color: var(--global-navbar-text-color);
-  text-decoration: none;
-  transition: color 0.15s ease-in-out;
-}
-
-.small-footer a:hover {
-  color: var(--global-navbar-hover-color);
-  text-decoration: none;
-}
-
-/* ============================================================
-   FOOTER RESPONSIVE BEHAVIOUR
-   ============================================================ */
-
-/* Contact page (name/address column + map column) stacks on mobile */
-@media (max-width: 760px) {
-  .contact-flex {
-    flex-direction: column;
-  }
-}
-
-/* Big footer map: shrink slightly at mid screens */
-@media (max-width: 980px) {
-  .footer-map {
-    flex: 1 1 360px;
-    min-width: 300px;
-  }
-}
-
-/* Big footer map: hide once it can no longer fit alongside the text */
-@media (max-width: 720px) {
-  .footer-map {
-    display: none !important;
-  }
-  .footer-left {
-    flex: 1 1 100% !important;
-    max-width: 100% !important;
-  }
-  .footer-flex {
-    flex-direction: column !important;
-  }
-}
-
-
-
-/* ============================================================
    GENERIC COMPONENT COLOURS
    ------------------------------------------------------------
-   Gives horizontal rules, cards, callouts, and project cards the
+   Gives horizontal rules, cards, and callouts the
    current theme background, border, and text colours.
    ============================================================ */
 
 hr { border-color: var(--global-divider-color); opacity: 1; }
-.card, .callout, .project-card { background: var(--global-card-bg-color); border-color: var(--global-divider-color); color: var(--global-text-color); }
+.card, .callout { background: var(--global-card-bg-color); border-color: var(--global-divider-color); color: var(--global-text-color); }
 
 
 /* ============================================================
@@ -1581,40 +1139,6 @@ body.publications-page main.content {
   box-shadow: 0 0 0 100vmax var(--global-section-bg);
   clip-path: inset(0 -100vmax);
 }
-.project-card-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-}
-.project-card {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  border: 1px solid var(--global-divider-color);
-  background: var(--global-card-bg-color);
-}
-.project-card img {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  padding: 1.25rem;
-  object-fit: contain;
-  background: var(--global-warm-bg);
-  border-bottom: 1px solid var(--global-warm-border);
-}
-.project-card-copy {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 1.35rem;
-}
-.project-card-copy h2 {
-  margin: .25rem 0 .75rem;
-  font-size: clamp(1.2rem, 1.65vw, 1.55rem);
-  line-height: 1.18;
-  letter-spacing: -.025em;
-}
-.project-card-copy > p:not(.eyebrow) { color: var(--global-text-color-light); }
-.project-card-copy .tag-row { margin-top: auto; }
 .section-heading { display:flex; justify-content:space-between; align-items:baseline; gap:1rem; margin-bottom:1rem; }
 .section-heading .eyebrow { margin:0; }
 .section-heading > span { color:var(--global-text-color-light); font-size:.9rem; }
@@ -1634,49 +1158,16 @@ body.publications-page main.content {
   display: none;
   content: none;
 }
-.showcase-carousel { position:relative; }
-.showcase-track { display:grid; }
-.showcase-slide {
-  grid-area:1/1; display:grid; grid-template-columns:minmax(280px,.75fr) minmax(420px,1.45fr);
-  gap:clamp(1.4rem,3vw,3rem); align-items:center; min-height:390px;
-  padding:clamp(1.4rem,3vw,2.5rem); border:1px solid var(--global-divider-color);
-  border-radius:12px; background:var(--global-card-bg-color); opacity:0; pointer-events:none;
-  transform:translateX(12px); transition:opacity .35s ease, transform .35s ease;
-}
-.showcase-slide.is-active { opacity:1; pointer-events:auto; transform:none; }
-.showcase-slide img { width:100%; max-height:300px; object-fit:contain; }
-.publication-slide img {
-  padding: clamp(.75rem, 2vw, 1.35rem);
-  background: var(--global-warm-bg);
-  border: 1px solid var(--global-warm-border);
-}
-.showcase-copy h2 { font-size:clamp(1.55rem,2.6vw,2.45rem); line-height:1.06; letter-spacing:-.035em; margin:.4rem 0 1rem; }
-.slide-count { color:var(--global-theme-color); font-size:.85rem; font-weight:700; }
 .paper-meta { color:var(--global-text-color-light); margin-bottom:1.2rem; }
-.tag-row { display:flex; flex-wrap:wrap; gap:.45rem; margin:1.3rem 0; }
-.tag-row span { padding:.28rem .55rem; border-radius:999px; background:color-mix(in srgb,var(--global-theme-color) 10%,transparent); color:var(--global-theme-color); font-size:.78rem; }
-.showcase-actions,.paper-actions { display:flex; flex-wrap:wrap; gap:.8rem 1.1rem; align-items:center; }
-.showcase-actions a,.paper-action { color:var(--global-theme-color); font-weight:600; }
+.paper-actions { display:flex; flex-wrap:wrap; gap:.8rem 1.1rem; align-items:center; }
+.paper-action { color:var(--global-theme-color); font-weight:600; }
 .paper-action { border:0; background:transparent; padding:0; cursor:pointer; }
-.carousel-button { position:absolute; top:50%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%; border:1px solid var(--global-divider-color); background:var(--global-card-bg-color); color:var(--global-text-color); z-index:3; }
-.carousel-button.previous { left:1rem; }.carousel-button.next { right:1rem; }
-.carousel-status { text-align:center; margin-top:.8rem; color:var(--global-text-color-light); font-size:.85rem; }
-.carousel-hint { display:none; }
 .news-preview { border-top:1px solid var(--global-divider-color); padding-top:2rem; }
 
 .compact-page-hero { padding:clamp(3rem,7vw,6rem) 0 2.5rem; max-width:900px; }
 .compact-page-hero h1 { font-size:clamp(2.6rem,5vw,4.25rem); }
 .compact-page-hero > p:last-child { font-size:1.15rem; color:var(--global-text-color-light); }
 .publication-section { margin-bottom:5rem; }
-.selected-paper { display:grid; grid-template-columns:minmax(240px,.65fr) minmax(0,1.35fr); gap:clamp(2rem,5vw,5rem); align-items:center; padding:clamp(1.5rem,4vw,3.5rem); border:1px solid var(--global-divider-color); border-radius:10px; margin-bottom:1rem; }
-.selected-paper img { width:100%; max-height:300px; object-fit:contain; }
-.selected-paper h2 { font-size:clamp(1.35rem,2.1vw,1.9rem); line-height:1.12; margin:.2rem 0 .7rem; }
-.year-group { border-top:1px solid var(--global-divider-color); }
-.year-group:last-child { border-bottom:1px solid var(--global-divider-color); }
-.year-group summary { display:flex; justify-content:space-between; align-items:center; padding:1.2rem 0; font-size:1.35rem; font-weight:700; cursor:pointer; }
-.year-group summary span { font-size:.85rem; font-weight:400; color:var(--global-text-color-light); }
-.publication-row { display:grid; grid-template-columns:150px 1fr; gap:1.5rem; padding:1.35rem 0; border-top:1px solid color-mix(in srgb,var(--global-divider-color) 65%,transparent); }
-.pub-kind { color:var(--global-theme-color); font-size:.83rem; font-weight:700; }
 .pub-main h3 { margin:0 0 .3rem; font-size:1.08rem; }
 .abstract.hidden,.bibtex.hidden { display:none; }
 .abstract.open,.bibtex.open { display:block; margin-top:1rem; padding:1rem; background:var(--global-code-bg-color); border-radius:6px; }
@@ -1687,21 +1178,6 @@ body.publications-page main.content {
   .home-hero { min-height:auto; grid-template-columns:1fr; gap:1.5rem; padding:2rem 0 3.5rem; }
   .home-portrait { width:min(100%,520px); max-height:none; margin:auto; aspect-ratio:4/3; }
   .home-name { font-size:clamp(2.7rem,14vw,4.4rem); }
-  .showcase-slide { grid-template-columns:1fr; min-height:0; padding:1.25rem; gap:1rem; }
-  .showcase-slide img { grid-row:1; max-height:250px; }
-  .showcase-copy h2 { font-size:1.8rem; }
-  .carousel-button { display:none; }
-  .selected-paper { grid-template-columns:1fr; padding:1.2rem; }
-  .selected-paper img { max-height:220px; }
-  .publication-row { grid-template-columns:1fr; gap:.35rem; }
   .section-heading { align-items:flex-start; }
   .section-heading > a { font-size:.85rem; text-align:right; }
-  .project-card-grid { grid-template-columns: 1fr; }
-  .project-card { display:grid; grid-template-columns:minmax(180px, .7fr) minmax(0, 1.3fr); }
-  .project-card img { height:100%; aspect-ratio:auto; border-bottom:0; border-right:1px solid var(--global-divider-color); }
-}
-
-@media (max-width: 620px) {
-  .project-card { display:flex; }
-  .project-card img { aspect-ratio:16/9; border-right:0; border-bottom:1px solid var(--global-divider-color); }
 }

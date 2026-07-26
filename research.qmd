@@ -3,7 +3,7 @@ title: "Research"
 description: "Research by Silvio Fanzon in optimisation, inverse problems, imaging, PDEs, materials science and statistical modelling"
 toc: false
 page-layout: full
-body-classes: standard-page research-page show-small-footer
+body-classes: standard-page research-page
 ---
 
 ```{=html}

@@ -15,7 +15,7 @@ categories:
 - Python
 - projects
 image: images/convergence.png
-body-classes: standard-page project-detail-page project-custom-hero gcg-project-page show-small-footer
+body-classes: standard-page project-detail-page project-custom-hero gcg-project-page
 format:
   html:
     toc: false

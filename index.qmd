@@ -3,7 +3,7 @@ title: ""
 description: "Silvio Fanzon — applied mathematics, statistical modelling, optimisation and scientific computing"
 toc: false
 page-layout: full
-body-classes: home-page show-small-footer
+body-classes: home-page
 ---
 
 ```{=html}

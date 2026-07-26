@@ -49,35 +49,14 @@
   padding-bottom: clamp(2rem, 4vw, 3.25rem);
 }
 
-/* Homepage publication rhythm and linked venue labels. */
-.home-page .home-publications-list .home-publication-row:first-child {
-  padding-top: 1rem;
-}
-.home-page .home-publications-list .home-publication-row:last-child {
-  padding-bottom: 1rem;
-}
-.home-publication-row .eyebrow,
-.publication-label,
-.publications-page .selected-paper-list .eyebrow {
+.home-publication-row .eyebrow {
   letter-spacing: .045em;
-}
-.venue-link {
-  color: inherit;
-  text-decoration: none;
-}
-.venue-link:hover,
-.venue-link:focus-visible {
-  color: var(--global-hover-color);
-  text-decoration: underline;
-  text-underline-offset: .18em;
 }
 
 
 /* ============================================================
    INLINE PUBLICATION DETAILS — al-folio-style disclosure
    ============================================================ */
-.publications-page .selected-paper + .selected-paper,
-.publications-page .publication-row + .publication-row,
 .home-page .home-publication-row + .home-publication-row {
   border-top: 0 !important;
 }
@@ -114,102 +93,6 @@
 .publication-entry h3 a,
 .publication-entry h4 a {
   text-decoration: none !important;
-}
-
-.publication-modal { display: none !important; }
-
-/* Teaching redesign: compact cards and publication-style material links. */
-.teaching-intro { margin-bottom: 2.25rem; }
-.teaching-jump { margin-bottom: 1rem; }
-.teaching-role { margin-top: clamp(2.75rem, 6vw, 4.75rem); }
-.teaching-role + .teaching-role { margin-top: clamp(4rem, 8vw, 6rem); }
-.teaching-year { margin-top: 2rem; }
-.teaching-year > h3 { margin-bottom: .8rem; }
-.teaching-course-list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: .85rem;
-  border: 0;
-}
-.teaching-course {
-  display: block;
-  min-width: 0;
-  padding: 1.1rem 1.15rem;
-  border: 1px solid var(--global-divider-color);
-  border-radius: 10px;
-  background: var(--global-card-bg-color);
-}
-.teaching-course h4 {
-  margin: 0 0 .35rem;
-  font-size: 1.02rem;
-  line-height: 1.3;
-}
-.teaching-meta {
-  margin: 0;
-  color: var(--global-text-color-light);
-  font-size: .83rem;
-  line-height: 1.45;
-}
-.teaching-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .5rem 1rem;
-  margin-top: .72rem;
-}
-.teaching-action {
-  display: inline-flex;
-  align-items: center;
-  gap: .28rem;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: var(--global-theme-color);
-  font: inherit;
-  font-size: .79rem;
-  font-weight: 600;
-  line-height: 1.3;
-  text-decoration: none;
-  cursor: pointer;
-}
-.teaching-action:hover,
-.teaching-action:focus-visible {
-  color: var(--global-hover-color);
-  text-decoration: underline;
-  text-underline-offset: .18em;
-}
-.teaching-course .abstract.open {
-  margin-top: .85rem;
-  padding: .85rem .9rem;
-  border-radius: 7px;
-  background: var(--global-code-bg-color);
-  color: var(--global-text-color-light);
-  font-size: .84rem;
-  line-height: 1.55;
-}
-
-/* Make the project carousel interaction explicit on every screen size. */
-.projects-carousel .carousel-navigation-note {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: .35rem .75rem;
-  margin-top: .85rem;
-  color: var(--global-text-color-light);
-  font-size: .82rem;
-}
-.projects-carousel .carousel-status,
-.projects-carousel .carousel-hint { margin: 0; }
-.projects-carousel .carousel-hint { display: block; }
-.projects-carousel .carousel-hint::before { content: "·"; margin-right: .75rem; }
-.projects-carousel .carousel-hint span { color: var(--global-theme-color); font-weight: 700; }
-
-@media (max-width: 767.98px) {
-  .teaching-course-list { grid-template-columns: 1fr; }
-  .teaching-course { padding: 1rem; }
-  .projects-carousel .carousel-hint::before { display: none; }
 }
 
 /* ============================================================
@@ -298,31 +181,7 @@
   padding-top: clamp(2.4rem, 6vh, 5rem);
 }
 
-/* Publication venue pills and BibTeX copy control. */
-.publications-page .publication-label {
-  align-self: start;
-  margin-top: .12rem;
-}
-.publications-page .publication-label .venue-link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 1.7rem;
-  padding: .2rem .58rem;
-  border-radius: 999px;
-  color: var(--global-theme-color);
-  background: color-mix(in srgb, var(--global-theme-color) 9%, transparent);
-  font-weight: 650;
-  line-height: 1.15;
-  letter-spacing: .025em;
-  text-decoration: none !important;
-  white-space: nowrap;
-}
-.publications-page .publication-label .venue-link:hover,
-.publications-page .publication-label .venue-link:focus-visible {
-  color: var(--global-hover-color);
-  background: color-mix(in srgb, var(--global-theme-color) 15%, transparent);
-  text-decoration: none !important;
-}
+/* BibTeX copy control. */
 .publication-entry .bibtex.open {
   position: relative;
   padding-top: 3rem;
@@ -367,78 +226,24 @@ body.home-page main.content {
 }
 body.home-page .home-hero {
   margin-top: 0 !important;
-  padding-top: clamp(1.25rem, 3.5vh, 2.5rem) !important;
-}
-body.home-page .home-hero::before {
-  top: 0 !important;
-}
-.home-profile-links a:nth-child(1)::after,
-.home-profile-links a:nth-child(2)::after,
-.home-profile-links a:nth-child(6)::after {
-  content: "";
-}
-
-
-/* 2026 hero alignment and homepage publication parity */
-body.home-page .home-hero {
   min-height: calc(100svh - 58px) !important;
   box-sizing: border-box;
   align-items: center;
   padding-top: clamp(2rem, 5vh, 4rem) !important;
   padding-bottom: clamp(2rem, 5vh, 4rem) !important;
 }
-.home-role {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: .35rem;
+body.home-page .home-hero::before {
+  top: 0 !important;
 }
-.home-credentials { display: none !important; }
+
+/* 2026 hero alignment and homepage publication parity */
 .home-profile-links a::after { content: "" !important; }
-.home-page .home-publications-list .publication-label .venue-link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 1.7rem;
-  padding: .2rem .58rem;
-  border-radius: 999px;
-  color: var(--global-theme-color);
-  background: color-mix(in srgb, var(--global-theme-color) 9%, transparent);
-  font-weight: 650;
-  line-height: 1.15;
-  letter-spacing: .025em;
-  text-decoration: none !important;
-  white-space: nowrap;
-}
-.home-page .home-publications-list .publication-label .venue-link:hover,
-.home-page .home-publications-list .publication-label .venue-link:focus-visible {
-  color: var(--global-hover-color);
-  background: color-mix(in srgb, var(--global-theme-color) 15%, transparent);
-}
 .home-page .home-publications-list .publication-entry {
   border: 0 !important;
 }
 @media (max-width: 767.98px) {
   body.home-page .home-hero { min-height: auto !important; }
 }
-
-
-/* 2026 final homepage identity hierarchy */
-.home-role {
-  display: block;
-  margin: 0 0 .12rem;
-  font-size: clamp(1.15rem, 1.7vw, 1.45rem);
-  font-weight: 650;
-  line-height: 1.25;
-}
-.home-credential {
-  margin: 0 0 1.25rem;
-  color: var(--global-text-color-light);
-  font-size: .94rem;
-  font-weight: 450;
-  line-height: 1.35;
-  letter-spacing: .01em;
-}
-.home-expertise { display: none !important; }
 
 
 /* 2026 mobile hero proportion and type refinement */
@@ -450,17 +255,10 @@ body.home-page .home-hero {
   display: flex !important;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: .35rem;
-  margin: 0 0 1.2rem !important;
+  column-gap: clamp(2.75rem, 5vw, 5rem) !important;
+  row-gap: .25rem !important;
+  margin: 0 0 clamp(1.6rem, 3vw, 2.25rem) !important;
 }
-.home-role-separator,
-.home-credential {
-  color: var(--global-text-color-light);
-  font-size: .82em;
-  font-weight: 450;
-  letter-spacing: .005em;
-}
-.home-credential { margin: 0 !important; }
 .home-lead {
   font-size: clamp(1.12rem, 1.55vw, 1.42rem) !important;
   line-height: 1.42 !important;
@@ -486,7 +284,8 @@ body.home-page .home-portrait {
   }
   .home-role {
     font-size: 1.05rem !important;
-    margin-bottom: 1rem !important;
+    column-gap: 2rem !important;
+    margin-bottom: 1.55rem !important;
   }
   .home-lead {
     font-size: 1.08rem !important;
@@ -495,14 +294,6 @@ body.home-page .home-portrait {
 }
 
 
-/* 2026 homepage spacing refinements */
-.home-role {
-  column-gap: clamp(2.75rem, 5vw, 5rem) !important;
-  row-gap: .25rem !important;
-  margin-bottom: clamp(1.6rem, 3vw, 2.25rem) !important;
-}
-.home-role-separator { display: none !important; }
-
 /* Match the visual rule beneath Selected publications. */
 .home-page .featured-projects-heading {
   padding-bottom: .9rem;
@@ -510,37 +301,13 @@ body.home-page .home-portrait {
   margin-bottom: 1.25rem;
 }
 
-/* Keep Selected publications compact. */
-.home-page .home-section:nth-of-type(3) {
-  padding-top: clamp(.85rem, 1.8vw, 1.35rem) !important;
-  padding-bottom: clamp(.85rem, 1.8vw, 1.35rem) !important;
-  margin-bottom: clamp(1.25rem, 2.5vw, 2rem) !important;
-}
-
-@media (max-width: 767.98px) {
-  .home-role {
-    column-gap: 2rem !important;
-    margin-bottom: 1.55rem !important;
-  }
-  .home-page .home-section:nth-of-type(3) {
-    padding-top: .7rem !important;
-    padding-bottom: .8rem !important;
-    margin-bottom: 1.1rem !important;
-  }
-}
-
-/* 2026: match Selected publications vertical rhythm to Latest news. */
+/* The generated Featured Projects section is the third homepage section. */
 .home-page .home-section:nth-of-type(3) {
   padding-top: clamp(2rem, 4vw, 3.25rem) !important;
   padding-bottom: clamp(2rem, 4vw, 3.25rem) !important;
   margin-bottom: 0 !important;
 }
-.home-page .home-publications-list .home-publication-row:first-child {
-  padding-top: clamp(1.25rem, 2.5vw, 1.8rem);
-}
-.home-page .home-publications-list .home-publication-row:last-child {
-  padding-bottom: clamp(1.25rem, 2.5vw, 1.8rem);
-}
+
 @media (max-width: 767.98px) {
   .home-page .home-section:nth-of-type(3) {
     padding-top: 2rem !important;
@@ -563,51 +330,6 @@ body.home-page .home-portrait {
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--global-divider-color);
 }
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.2rem;
-}
-.portfolio-card {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  overflow: hidden;
-  border: 1px solid var(--global-divider-color);
-  border-radius: 12px;
-  background: var(--global-card-bg-color);
-}
-.portfolio-visual {
-  padding: 1.25rem;
-  background: var(--global-warm-bg);
-  border-bottom: 1px solid var(--global-warm-border);
-}
-.portfolio-visual img {
-  display: block;
-  width: 100%;
-  height: 190px;
-  object-fit: contain;
-}
-.portfolio-copy { padding: clamp(1.2rem, 2.5vw, 1.7rem); }
-.portfolio-copy h2 {
-  margin: .25rem 0 .8rem;
-  font-size: clamp(1.35rem, 2vw, 1.75rem);
-  line-height: 1.15;
-  letter-spacing: -.025em;
-}
-.portfolio-summary { color: var(--global-text-color-light); }
-.portfolio-facts { margin: 1.25rem 0; }
-.portfolio-facts > div {
-  display: grid;
-  grid-template-columns: 72px 1fr;
-  gap: .8rem;
-  padding: .6rem 0;
-  border-top: 1px solid color-mix(in srgb, var(--global-divider-color) 70%, transparent);
-}
-.portfolio-facts dt { font-weight: 700; font-size: .82rem; }
-.portfolio-facts dd { margin: 0; color: var(--global-text-color-light); font-size: .9rem; }
-.portfolio-actions { display: flex; flex-wrap: wrap; gap: .65rem 1rem; }
-.portfolio-actions a { font-weight: 650; text-decoration: none; }
 .project-capabilities { margin-top: clamp(3rem, 6vw, 5rem); }
 .capability-grid {
   display: grid;
@@ -625,19 +347,10 @@ body.home-page .home-portrait {
 }
 .capability-grid strong { font-size: 1.05rem; }
 .capability-grid span { color: var(--global-text-color-light); font-size: .9rem; }
-.projects-cta {
-  margin: clamp(3rem, 6vw, 5rem) 0 0;
-  padding-top: 1.4rem;
-  border-top: 1px solid var(--global-divider-color);
-  color: var(--global-text-color-light);
-}
 @media (max-width: 860px) {
-  .portfolio-grid { grid-template-columns: 1fr; }
   .capability-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 520px) {
-  .portfolio-visual img { height: 150px; }
-  .portfolio-facts > div { grid-template-columns: 1fr; gap: .15rem; }
   .capability-grid { grid-template-columns: 1fr; }
 }
 
@@ -678,21 +391,46 @@ body.home-page .home-portrait {
   }
 }
 
-/* Year headings: mirror the restrained section-heading treatment. */
-.teaching-year > h3 {
-  margin: 0 0 1rem;
-  padding: 0;
-  border: 0;
-  color: var(--global-text-color);
-  font-size: clamp(1.25rem, 2.1vw, 1.55rem);
-  font-weight: 400;
-  letter-spacing: normal;
-  line-height: 1.25;
-  text-transform: none;
+/* Teaching: authoritative open-list layout with compact material links. */
+.teaching-intro {
+  margin: 0 0 2.25rem;
 }
 
-/* Academic-year dividers: thin rule, then a quiet right-aligned year beneath it. */
+.teaching-intro > div {
+  max-width: 48rem;
+}
+
+.teaching-intro p {
+  margin: 0;
+  color: var(--global-text-color-light);
+}
+
+.teaching-intro p + p {
+  margin-top: .55rem;
+}
+
+.teaching-jump {
+  margin-bottom: 1rem;
+}
+
+.teaching-role {
+  margin-top: clamp(2.75rem, 6vw, 4.75rem);
+}
+
+.teaching-role + .teaching-role {
+  margin-top: clamp(4rem, 8vw, 6rem);
+}
+
+.teaching-role > h2 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: clamp(1.55rem, 2.7vw, 2.1rem);
+  letter-spacing: -.025em;
+}
+
 .teaching-year {
+  margin-top: 2rem;
   border-top: 1px solid var(--global-divider-color);
   padding-top: .55rem;
 }
@@ -702,20 +440,14 @@ body.home-page .home-portrait {
   padding: 0 !important;
   border: 0 !important;
   color: var(--global-text-color-light) !important;
-  font-size: .9rem !important;
+  font-size: 1.1rem !important;
   font-weight: 400 !important;
   letter-spacing: normal !important;
-  line-height: 1.25 !important;
+  line-height: 1.3 !important;
   text-align: right;
   text-transform: none !important;
 }
 
-/* The year divider itself supplies the opening rule. */
-.teaching-year .teaching-course-list {
-  border-top: 0 !important;
-}
-
-/* Teaching: open one-column list with whitespace between entries. */
 .teaching-course-list {
   position: relative;
   display: grid !important;
@@ -723,7 +455,7 @@ body.home-page .home-portrait {
   gap: .9rem !important;
   margin-left: 0 !important;
   padding-left: 0 !important;
-  border-top: 0 !important;
+  border: 0 !important;
 }
 
 .teaching-course-list::before,
@@ -734,8 +466,9 @@ body.home-page .home-portrait {
 
 .teaching-course {
   position: relative;
-  width: 100%;
   display: block;
+  width: 100%;
+  min-width: 0;
   padding: 1.1rem 0 1.6rem;
   border: 0;
   border-bottom: 0 !important;
@@ -744,23 +477,64 @@ body.home-page .home-portrait {
   box-shadow: none;
 }
 
-/* Larger Teaching year labels. */
-.teaching-year > h3 {
-  font-size: 1.1rem !important;
-  line-height: 1.3 !important;
-}
-
 .teaching-course h4 {
   margin: 0 0 .35rem;
+  padding: 0;
+  border: 0;
   font-size: 1.05rem;
   line-height: 1.3;
 }
+
+.teaching-meta {
+  margin: 0;
+  color: var(--global-text-color-light);
+  font-size: .83rem;
+  line-height: 1.45;
+}
+
+.teaching-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1rem;
+  margin-top: .72rem;
+}
+
+.teaching-action {
+  display: inline-flex;
+  align-items: center;
+  gap: .28rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--global-theme-color);
+  font: inherit;
+  font-size: .79rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.teaching-action:hover,
+.teaching-action:focus-visible {
+  border-color: var(--global-theme-color);
+  color: var(--global-hover-color);
+  text-decoration: underline;
+  text-underline-offset: .18em;
+}
+
 .teaching-course .abstract.open {
   margin-top: .9rem;
   padding: .9rem 0 0;
+  border: 0;
   border-top: 1px dashed var(--global-divider-color);
   border-radius: 0;
   background: transparent;
+  color: var(--global-text-color-light);
+  font-size: .84rem;
+  line-height: 1.55;
 }
 
 .teaching-course + .teaching-course {
@@ -770,12 +544,6 @@ body.home-page .home-portrait {
 @media (max-width: 767.98px) {
   .teaching-course { padding: 1rem 0 1.4rem; }
   .teaching-course + .teaching-course { margin-top: .3rem; }
-}
-
-/* Seamless, bidirectional project carousel. */
-.projects-carousel .showcase-track.is-resetting {
-  scroll-behavior: auto !important;
-  scroll-snap-type: none;
 }
 
 /* ============================================================
@@ -1030,18 +798,7 @@ body.quarto-dark {
 }
 
 
-/* Restrained personal introduction and About page. */
-.home-about-link {
-  display: inline-block;
-  margin: .15rem 0 .95rem;
-  color: var(--global-text-color);
-  font-size: .9rem;
-  font-weight: 600;
-  text-decoration: none;
-  border-bottom: 1px solid color-mix(in srgb, var(--global-theme-color) 55%, transparent);
-}
-.home-about-link:hover { color: var(--global-theme-color); }
-
+/* Restrained About page. */
 .about-hero { max-width: 920px; }
 .about-hero .eyebrow {
   margin: 0 0 .65rem;
@@ -1054,42 +811,6 @@ body.quarto-dark {
 .about-hero h1 { max-width: 780px; }
 .about-hero > p:last-child { max-width: 720px; }
 
-.about-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
-  gap: clamp(3rem, 7vw, 7rem);
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: clamp(1.5rem, 4vw, 3.5rem) 0 clamp(4rem, 8vw, 7rem);
-}
-.about-introduction p {
-  margin: 0 0 1.35rem;
-  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
-  line-height: 1.65;
-  letter-spacing: -.015em;
-}
-.about-sections section {
-  padding: 0 0 1.6rem;
-  border-bottom: 1px solid var(--global-divider-color);
-}
-.about-sections section + section { padding-top: 1.6rem; }
-.about-sections h2 {
-  margin: 0 0 .65rem;
-  font-size: 1rem;
-  letter-spacing: -.01em;
-}
-.about-sections p {
-  margin: 0;
-  color: var(--global-text-color-light);
-  font-size: .96rem;
-  line-height: 1.7;
-}
-@media (max-width: 767.98px) {
-  .about-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-  .about-introduction p { font-size: 1.08rem; }
-}
-
-
 /* ============================================================
    PUBLICATIONS — CURATED EDITORIAL HIERARCHY
    ============================================================ */
@@ -1097,64 +818,8 @@ body.quarto-dark {
   max-width: 56rem;
 }
 
-.publications-page .publication-section-heading {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(16rem, 28rem);
-  gap: 2rem;
-  align-items: end;
-  margin-bottom: 1.5rem;
-}
-
-.publications-page .publication-section-heading h2 {
-  margin: 0;
-}
-
-.publications-page .publication-section-heading p {
-  margin: 0 0 .15rem;
-  color: var(--global-text-color-light);
-  font-size: .94rem;
-  line-height: 1.55;
-}
-
-.publications-page .featured-publications {
-  margin-top: .25rem;
-}
-
-.publications-page .selected-publications-list {
-  padding-top: 1.2rem;
-  border-top: 1px solid var(--global-divider-color) !important;
-}
-
-.publications-page .selected-paper-list {
-  padding: 0 0 2rem;
-}
-
-.publications-page .selected-paper-list + .selected-paper-list {
-  padding-top: .15rem;
-}
-
-.publications-page .selected-paper-list h2 {
-  max-width: 58rem;
-  margin: 0 0 .5rem;
-  font-size: clamp(1.08rem, 1.65vw, 1.34rem);
-  line-height: 1.35;
-  letter-spacing: -.012em;
-  font-weight: 600;
-}
-
-.publications-page .all-publications {
-  margin-top: clamp(4rem, 8vw, 7rem);
-}
-
 .publications-page .publication-jump {
   margin-top: .2rem;
-}
-
-@media (max-width: 767.98px) {
-  .publications-page .publication-section-heading {
-    grid-template-columns: 1fr;
-    gap: .55rem;
-  }
 }
 
 
@@ -1162,7 +827,7 @@ body.quarto-dark {
    PUBLICATIONS — FINAL RESTRAINED HIERARCHY
    ============================================================ */
 
-/* The archive is the publication page: no separate featured tier. */
+/* The publication archive begins after a deliberate editorial pause. */
 .publications-page .all-publications {
   margin-top: clamp(2.25rem, 4vw, 3.5rem);
 }
@@ -1193,48 +858,6 @@ body.quarto-dark {
 /* 2026: compact Featured Projects on the homepage.
    Preserve the three-card editorial layout while avoiding a near full-viewport block. */
 @media (min-width: 1041px) {
-  .home-page .projects-carousel .project-slide {
-    min-height: 400px;
-  }
-
-  .home-page .projects-carousel .project-slide img {
-    height: 145px;
-    padding: .75rem;
-  }
-
-  .home-page .projects-carousel .project-card-copy {
-    padding: 1rem 1.05rem .95rem;
-  }
-
-  .home-page .projects-carousel .project-card-copy h2 {
-    margin-bottom: .55rem;
-    font-size: clamp(1.12rem, 1.45vw, 1.35rem);
-    line-height: 1.18;
-  }
-
-  .home-page .projects-carousel .project-card-copy > p:not(.eyebrow) {
-    margin-bottom: .8rem;
-    font-size: .9rem;
-    line-height: 1.48;
-  }
-
-  .home-page .projects-carousel .project-card-copy .tag-row {
-    margin-top: auto;
-    margin-bottom: .7rem;
-  }
-
-  .home-page .projects-carousel .showcase-actions {
-    gap: .45rem .8rem;
-  }
-
-  .home-page .projects-carousel .carousel-button {
-    top: 72px;
-  }
-
-  .home-page .projects-carousel .carousel-navigation-note {
-    margin-top: .55rem;
-  }
-
   .home-page .home-section:has(.featured-projects-heading) {
     padding-top: clamp(1.7rem, 3vw, 2.5rem);
     padding-bottom: clamp(1.45rem, 2.5vw, 2rem);
@@ -1362,19 +985,8 @@ body.quarto-dark {
 .expertise-preview-item .expertise-index,
 .expertise-area-heading > span,
 .expertise-index-nav a,
-.publications-page .publication-label,
 .home-publication-row .eyebrow {
   color: var(--global-blue-accent) !important;
-}
-
-.publications-page .publication-label .venue-link {
-  color: var(--global-blue-accent) !important;
-  background: color-mix(in srgb, var(--global-blue-accent) 10%, transparent) !important;
-}
-.publications-page .publication-label .venue-link:hover,
-.publications-page .publication-label .venue-link:focus-visible {
-  color: var(--global-blue-accent-deep) !important;
-  background: color-mix(in srgb, var(--global-blue-accent) 17%, transparent) !important;
 }
 
 :where(a, button, summary, input, select, textarea):focus-visible {
@@ -1401,7 +1013,6 @@ html[data-bs-theme="dark"] .home-hero::after {
   letter-spacing: -.008em !important;
 }
 
-.publications-page .publication-row h3,
 .publications-page .publication-archive-row h3,
 .publications-page .publication-entry .title,
 .publications-page .publication-entry h2,
@@ -1411,17 +1022,6 @@ html[data-bs-theme="dark"] .home-hero::after {
   line-height: 1.38 !important;
   font-weight: 600 !important;
   letter-spacing: -.008em !important;
-}
-
-/* 2026 homepage publication venue pills: match the blue Publications-page treatment. */
-.home-page .home-publications-list .publication-label .venue-link {
-  color: var(--global-blue-accent) !important;
-  background: color-mix(in srgb, var(--global-blue-accent) 10%, transparent) !important;
-}
-.home-page .home-publications-list .publication-label .venue-link:hover,
-.home-page .home-publications-list .publication-label .venue-link:focus-visible {
-  color: var(--global-blue-accent-deep) !important;
-  background: color-mix(in srgb, var(--global-blue-accent) 17%, transparent) !important;
 }
 
 /* 2026: compact publication rhythm and smaller editorial titles. */
@@ -1863,211 +1463,28 @@ body.home-page .expertise-preview-header h2 {
 }
 
 /* ============================================================
-   2026 publication hierarchy: themes, quieter authors, fewer actions
+   2026 PUBLICATION LAYOUT
+   Editorial research labels sit left of each publication on desktop and
+   lead each item on mobile.
    ============================================================ */
 .paper-meta .publication-authors,
 .paper-meta .publication-periodical {
   display: block;
 }
-.home-page .home-publication-row .publication-authors,
-.publications-page .publication-archive-row .publication-authors {
-  color: color-mix(in srgb, var(--global-text-color-light) 86%, transparent);
-  font-size: .76rem;
-  line-height: 1.42;
-}
-.home-page .home-publication-row .publication-periodical,
-.publications-page .publication-archive-row .publication-periodical {
-  margin-top: .08rem;
-  color: var(--global-text-color-light);
-  font-size: .8rem;
-  line-height: 1.4;
-}
-.publication-themes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .32rem;
-  margin: .42rem 0 .5rem;
-}
-.publication-theme {
-  display: inline-flex;
-  align-items: center;
-  min-height: 1.45rem;
-  padding: .16rem .48rem;
-  border: 1px solid color-mix(in srgb, var(--global-text-color) 12%, transparent);
-  border-radius: 999px;
-  color: var(--global-text-color-light);
-  background: color-mix(in srgb, var(--global-text-color) 4%, var(--global-bg-color));
-  font-size: .64rem;
-  font-weight: 650;
-  letter-spacing: .055em;
-  line-height: 1.1;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
+
 .home-page .selected-publications-section .paper-actions {
   margin-top: .02rem !important;
 }
+
 .home-page .selected-publications-section .paper-action {
   font-size: .8rem;
   font-weight: 680;
   letter-spacing: .005em;
 }
-.publications-page .publication-archive-row .publication-themes {
-  margin-bottom: .52rem;
-}
-@media (max-width: 680px) {
-  .publication-themes { gap: .28rem; margin-top: .38rem; }
-  .publication-theme { font-size: .61rem; }
-}
 
-
-/* ============================================================
-   PUBLICATION ACTION HIERARCHY: PDF / OFFICIAL / CODE / MORE
-   ============================================================ */
-.publication-more {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-}
-.publication-more > summary {
-  display: inline-flex;
-  align-items: center;
-  gap: .32rem;
-  list-style: none;
-  white-space: nowrap;
-}
-.publication-more > summary::-webkit-details-marker { display: none; }
-.publication-more-toggle .publication-more-chevron {
-  margin-left: .04rem;
-  font-size: .58em;
-  transition: transform .16s ease;
-}
-.publication-more[open] .publication-more-chevron { transform: rotate(180deg); }
-.publication-more-menu {
-  position: absolute;
-  z-index: 30;
-  top: calc(100% + .5rem);
-  right: 0;
-  min-width: 9.5rem;
-  padding: .38rem;
-  border: 1px solid color-mix(in srgb, var(--global-text-color) 14%, transparent);
-  border-radius: .55rem;
-  background: var(--global-bg-color);
-  box-shadow: 0 .65rem 1.8rem color-mix(in srgb, #000 14%, transparent);
-}
-.publication-more-menu a {
-  display: flex;
-  align-items: center;
-  gap: .55rem;
-  width: 100%;
-  padding: .48rem .58rem;
-  border-radius: .35rem;
-  color: var(--global-text-color) !important;
-  font-size: .76rem;
-  font-weight: 600;
-  line-height: 1.2;
-  text-decoration: none !important;
-}
-.publication-more-menu a i {
-  width: 1rem;
-  color: var(--global-theme-color);
-  text-align: center;
-}
-.publication-more-menu a:hover,
-.publication-more-menu a:focus-visible {
-  background: color-mix(in srgb, var(--global-theme-color) 9%, transparent);
-  color: var(--global-theme-color) !important;
-}
-
-/* ============================================================
-   2026 publication metadata rail: prominent themes on the left
-   ============================================================ */
 .home-page .home-publication-row,
-.publications-page .publication-archive-row,
-.publications-page .selected-paper-list.home-publication-row {
-  grid-template-columns: minmax(142px, 190px) minmax(0, 1fr);
-  align-items: start;
-}
-
-.publication-side-meta {
-  min-width: 0;
-  padding-top: .08rem;
-}
-
-.publication-side-meta .publication-themes {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: .34rem;
-  margin: 0;
-}
-
-/* Keep the restored theme-pill appearance; moving it into the left rail
-   gives it prominence without turning the pills into buttons. */
-.publication-side-meta .publication-theme {
-  max-width: 100%;
-}
-
-.home-page .home-publication-main > .publication-label,
-.publications-page .home-publication-main > .publication-label,
-.publications-page .selected-paper-main > .publication-label {
-  display: inline-flex;
-  width: fit-content;
-  margin: 0 0 .42rem;
-}
-
-/* One accent treatment for every venue abbreviation, on both pages. */
-.home-page .home-publication-main > .publication-label .venue-link,
-.publications-page .home-publication-main > .publication-label .venue-link,
-.publications-page .selected-paper-main > .publication-label .venue-link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 1.7rem;
-  padding: .2rem .58rem;
-  border: 1px solid color-mix(in srgb, var(--global-warm-accent) 34%, transparent);
-  border-radius: 999px;
-  color: color-mix(in srgb, var(--global-warm-accent) 78%, var(--global-text-color));
-  background: color-mix(in srgb, var(--global-warm-accent) 12%, var(--global-bg-color));
-  font-weight: 680;
-  line-height: 1.15;
-  letter-spacing: .025em;
-  text-decoration: none !important;
-  white-space: nowrap;
-}
-
-.home-page .home-publication-main > .publication-label .venue-link:hover,
-.home-page .home-publication-main > .publication-label .venue-link:focus-visible,
-.publications-page .home-publication-main > .publication-label .venue-link:hover,
-.publications-page .home-publication-main > .publication-label .venue-link:focus-visible,
-.publications-page .selected-paper-main > .publication-label .venue-link:hover,
-.publications-page .selected-paper-main > .publication-label .venue-link:focus-visible {
-  color: var(--global-hover-color);
-  background: color-mix(in srgb, var(--global-warm-accent) 19%, var(--global-bg-color));
-}
-
-@media (max-width: 680px) {
-  .home-page .home-publication-row,
-  .publications-page .publication-archive-row,
-  .publications-page .selected-paper-list.home-publication-row {
-    grid-template-columns: 1fr;
-    gap: .52rem;
-  }
-
-  .publication-side-meta .publication-themes {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-}
-
-/* ============================================================
-   FINAL PUBLICATION METADATA RAIL
-   One accent venue pill first, then the restored theme pills.
-   No nested/double venue pill and no publication separators.
-   ============================================================ */
-.home-page .home-publication-row,
-.publications-page .publication-archive-row,
-.publications-page .selected-paper-list.home-publication-row {
-  grid-template-columns: minmax(150px, 195px) minmax(0, 1fr) !important;
+.publications-page .publication-archive-row {
+  grid-template-columns: minmax(145px, 190px) minmax(0, 1fr) !important;
   gap: clamp(1.15rem, 2.4vw, 1.9rem) !important;
   align-items: start !important;
   border-top: 0 !important;
@@ -2076,92 +1493,25 @@ body.home-page .expertise-preview-header h2 {
 }
 
 .publications-page .publication-archive-row + .publication-archive-row,
-.publications-page .selected-paper-list + .selected-paper-list,
 .publications-page .home-publication-row + .home-publication-row,
 .home-page .home-publication-row + .home-publication-row {
   border-top: 0 !important;
   border-bottom: 0 !important;
 }
 
-.publication-side-meta {
+.publication-theme-rail {
   display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  gap: .58rem !important;
   min-width: 0;
-  padding-top: .08rem;
-}
-
-/* Exactly one venue pill. It is the accent anchor of the rail. */
-.publication-side-meta > .publication-label {
-  display: inline-flex !important;
-  align-items: center !important;
-  width: fit-content !important;
-  max-width: 100%;
-  min-height: 1.7rem !important;
-  margin: 0 !important;
-  padding: .2rem .58rem !important;
-  border: 1px solid color-mix(in srgb, var(--global-warm-accent) 42%, transparent) !important;
-  border-radius: 999px !important;
-  background: color-mix(in srgb, var(--global-warm-accent) 17%, var(--global-bg-color)) !important;
-  color: color-mix(in srgb, var(--global-warm-accent) 84%, var(--global-text-color)) !important;
-  font-size: .67rem !important;
-  font-weight: 730 !important;
-  line-height: 1.1 !important;
-  letter-spacing: .035em !important;
-  text-decoration: none !important;
-  white-space: nowrap;
-}
-
-.publication-side-meta > a.publication-label:hover,
-.publication-side-meta > a.publication-label:focus-visible {
-  background: color-mix(in srgb, var(--global-warm-accent) 24%, var(--global-bg-color)) !important;
-  color: var(--global-hover-color) !important;
-}
-
-/* Restore the existing theme-pill treatment, but stack it beneath venue. */
-.publication-side-meta .publication-themes {
-  display: flex !important;
   flex-direction: column !important;
+  grid-column: 1 !important;
+  grid-row: 1 !important;
   align-items: flex-start !important;
-  gap: .34rem !important;
-  margin: 0 !important;
-}
-.publication-side-meta .publication-theme {
-  max-width: 100%;
-}
-
-/* The main column starts with the title—no venue pill above it. */
-.home-publication-main > .publication-label,
-.selected-paper-main > .publication-label {
-  display: none !important;
-}
-
-@media (max-width: 680px) {
-  .home-page .home-publication-row,
-  .publications-page .publication-archive-row,
-  .publications-page .selected-paper-list.home-publication-row {
-    grid-template-columns: 1fr !important;
-    gap: .62rem !important;
-  }
-  .publication-side-meta {
-    gap: .42rem !important;
-  }
-  .publication-side-meta .publication-themes {
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-  }
-}
-
-/* ============================================================
-   FINAL CALMER PUBLICATION RAIL
-   Venue remains the accent pill; themes become editorial labels.
-   ============================================================ */
-.publication-side-meta {
   gap: .48rem !important;
+  text-align: left !important;
+  padding-top: .16rem !important;
 }
 
-.publication-side-meta .publication-themes {
+.publication-theme-rail .publication-themes {
   display: flex !important;
   flex-direction: column !important;
   align-items: flex-start !important;
@@ -2169,7 +1519,7 @@ body.home-page .expertise-preview-header h2 {
   margin: 0 !important;
 }
 
-.publication-side-meta .publication-theme {
+.publication-theme-rail .publication-theme {
   display: block !important;
   min-height: 0 !important;
   max-width: 100% !important;
@@ -2182,154 +1532,28 @@ body.home-page .expertise-preview-header h2 {
   font-weight: 720 !important;
   letter-spacing: .075em !important;
   line-height: 1.35 !important;
+  text-align: left !important;
   text-transform: uppercase !important;
   white-space: normal !important;
 }
 
-@media (max-width: 680px) {
-  .publication-side-meta .publication-themes {
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    column-gap: .62rem !important;
-    row-gap: .18rem !important;
-  }
+.home-publication-main {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
 }
 
-/* ============================================================
-   MOBILE PUBLICATION SEPARATION
-   Dot-separated theme labels and subtle row dividers only when
-   the two-column publication layout collapses.
-   ============================================================ */
 @media (max-width: 680px) {
-  .publication-side-meta .publication-themes {
-    column-gap: 0 !important;
-    row-gap: .18rem !important;
-  }
-
-  .publication-side-meta .publication-theme + .publication-theme::before {
-    content: "·";
-    display: inline-block;
-    margin: 0 .42rem;
-    color: var(--global-text-color-light);
-    font-weight: 700;
-  }
-
   .home-page .home-publication-row,
-  .publications-page .publication-archive-row,
-  .publications-page .selected-paper-list.home-publication-row {
+  .publications-page .publication-archive-row {
+    grid-template-columns: 1fr !important;
+    gap: .62rem !important;
     padding-bottom: 1.35rem !important;
   }
 
   .home-page .home-publication-row + .home-publication-row,
-  .publications-page .publication-archive-row + .publication-archive-row,
-  .publications-page .selected-paper-list.home-publication-row + .selected-paper-list.home-publication-row {
+  .publications-page .publication-archive-row + .publication-archive-row {
     padding-top: 1.35rem !important;
     border-top: 1px solid color-mix(in srgb, var(--global-text-color) 13%, transparent) !important;
-  }
-}
-
-/* ============================================================
-   PUBLICATION THEMES — RIGHT RAIL ON DESKTOP
-   Publication content leads on the left; themes classify on right.
-   On mobile, themes move below venue/year and above actions.
-   ============================================================ */
-.home-page .home-publication-row,
-.publications-page .publication-archive-row,
-.publications-page .selected-paper-list.home-publication-row {
-  grid-template-columns: minmax(0, 1fr) minmax(135px, 185px) !important;
-  gap: clamp(1.25rem, 2.8vw, 2.25rem) !important;
-}
-.publication-theme-rail {
-  grid-column: 2 !important;
-  grid-row: 1 !important;
-  align-items: flex-end !important;
-  text-align: right !important;
-  padding-top: .16rem !important;
-}
-.publication-theme-rail .publication-themes {
-  align-items: flex-end !important;
-}
-.publication-themes-mobile { display: none !important; }
-.publication-theme-rail .publication-theme {
-  text-align: right !important;
-}
-@media (max-width: 680px) {
-  .home-page .home-publication-row,
-  .publications-page .publication-archive-row,
-  .publications-page .selected-paper-list.home-publication-row {
-    grid-template-columns: 1fr !important;
-  }
-  .publication-theme-rail { display: none !important; }
-  .publication-themes-mobile {
-    display: block !important;
-    margin-top: .48rem !important;
-    margin-bottom: .62rem !important;
-  }
-  .publication-themes-mobile .publication-themes {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    align-items: center !important;
-    gap: 0 !important;
-    margin: 0 !important;
-  }
-  .publication-themes-mobile .publication-theme {
-    display: inline !important;
-    text-align: left !important;
-  }
-  .publication-themes-mobile .publication-theme + .publication-theme::before {
-    content: "·";
-    display: inline-block;
-    margin: 0 .42rem;
-    color: var(--global-text-color-light);
-    font-weight: 700;
-  }
-}
-
-/* ============================================================
-   FINAL PUBLICATION LAYOUT — LABEL RAIL LEFT
-   Desktop: editorial research labels on the left, publication on right.
-   Mobile: labels lead the item horizontally; publication dividers remain.
-   ============================================================ */
-.home-page .home-publication-row,
-.publications-page .publication-archive-row,
-.publications-page .selected-paper-list.home-publication-row {
-  grid-template-columns: minmax(145px, 190px) minmax(0, 1fr) !important;
-  gap: clamp(1.15rem, 2.4vw, 1.9rem) !important;
-}
-
-.publication-theme-rail {
-  grid-column: 1 !important;
-  grid-row: 1 !important;
-  align-items: flex-start !important;
-  text-align: left !important;
-  padding-top: .16rem !important;
-}
-
-.publication-theme-rail .publication-themes {
-  align-items: flex-start !important;
-}
-
-.publication-theme-rail .publication-theme {
-  text-align: left !important;
-}
-
-.home-publication-main,
-.selected-paper-main {
-  grid-column: 2 !important;
-  grid-row: 1 !important;
-}
-
-.publication-themes-mobile {
-  display: none !important;
-}
-
-@media (max-width: 680px) {
-  .home-page .home-publication-row,
-  .publications-page .publication-archive-row,
-  .publications-page .selected-paper-list.home-publication-row {
-    grid-template-columns: 1fr !important;
-    gap: .62rem !important;
   }
 
   .publication-theme-rail {
@@ -2363,8 +1587,7 @@ body.home-page .expertise-preview-header h2 {
     font-weight: 700;
   }
 
-  .home-publication-main,
-  .selected-paper-main {
+  .home-publication-main {
     grid-column: 1 !important;
     grid-row: 2 !important;
   }

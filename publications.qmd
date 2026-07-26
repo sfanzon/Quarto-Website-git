@@ -3,7 +3,7 @@ title: "Publications"
 description: "Selected and complete publication list of Silvio Fanzon"
 toc: false
 page-layout: full
-body-classes: standard-page publications-page show-small-footer
+body-classes: standard-page publications-page
 ---
 
 ```{=html}

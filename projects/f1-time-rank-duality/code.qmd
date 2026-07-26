@@ -9,7 +9,7 @@ categories:
 - sports analytics
 - R
 - projects
-body-classes: standard-page project-detail-page project-custom-hero f1-project-page f1-code-page show-small-footer
+body-classes: standard-page project-detail-page project-custom-hero f1-project-page f1-code-page
 format:
   html:
     toc: false
@@ -70,4 +70,3 @@ If the paper or companion code is useful in your work, please cite the published
 
 ::: {#refs}
 :::
-

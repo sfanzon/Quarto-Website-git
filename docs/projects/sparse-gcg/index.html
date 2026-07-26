@@ -101,9 +101,9 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-6950cc3e07206ad85a2506caf1757a01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-543f11fa0fae524dda03518ab66d9cf4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-6950cc3e07206ad85a2506caf1757a01.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-7908bfd6298c9fba1e6acca4a0ead83e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e532bee3b51b42990cddfb53f6c1dd48.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-7908bfd6298c9fba1e6acca4a0ead83e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -167,7 +167,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../styles/project-navigation.css">
 </head>
 
-<body class="nav-fixed standard-page project-detail-page project-custom-hero gcg-project-page show-small-footer fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed standard-page project-detail-page project-custom-hero gcg-project-page fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -658,6 +658,45 @@ window.Quarto = {
     if((href === '/' && path === '/') || (href !== '/' && path.startsWith(href))){ li.classList.add('active'); }
   });
 
+  const scrollPositionKey = `scroll-position:${window.location.pathname}${window.location.search}`;
+
+  function saveScrollPosition() {
+    try {
+      window.sessionStorage.setItem(scrollPositionKey, JSON.stringify({
+        x: window.scrollX,
+        y: window.scrollY
+      }));
+    } catch (_) {
+      // Storage can be unavailable in private or locked-down browser contexts.
+    }
+  }
+
+  window.addEventListener('pagehide', saveScrollPosition);
+  document.addEventListener('click', function(event) {
+    if (!(event.target instanceof Element)) return;
+    const link = event.target.closest('a[href]');
+    if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
+    saveScrollPosition();
+  }, true);
+
+  window.addEventListener('pageshow', function(event) {
+    const navigation = window.performance.getEntriesByType('navigation')[0];
+    if (!event.persisted && navigation?.type !== 'back_forward') return;
+
+    let position;
+    try {
+      position = JSON.parse(window.sessionStorage.getItem(scrollPositionKey));
+    } catch (_) {
+      return;
+    }
+    if (!position || !Number.isFinite(position.x) || !Number.isFinite(position.y)) return;
+
+    // Quarto's Safari color-scheme workaround scrolls to the top after 40 ms.
+    window.setTimeout(function() {
+      window.scrollTo(position.x, position.y);
+    }, 80);
+  });
+
   function toggleDetails(button, selector) {
     const entry = button.closest('.publication-entry');
     const panel = entry?.querySelector(selector);
@@ -684,27 +723,6 @@ window.Quarto = {
   document.querySelectorAll('.bibtex-toggle').forEach(button => {
     button.setAttribute('aria-expanded', 'false');
     button.addEventListener('click', () => toggleDetails(button, '.bibtex'));
-  });
-
-  const publicationMoreMenus = [...document.querySelectorAll('.publication-more')];
-  publicationMoreMenus.forEach(details => {
-    const summary = details.querySelector('summary');
-    if (!summary) return;
-    summary.setAttribute('aria-expanded', details.open ? 'true' : 'false');
-    details.addEventListener('toggle', () => {
-      summary.setAttribute('aria-expanded', details.open ? 'true' : 'false');
-      if (details.open) {
-        publicationMoreMenus.forEach(other => { if (other !== details) other.open = false; });
-      }
-    });
-  });
-  document.addEventListener('click', event => {
-    publicationMoreMenus.forEach(details => {
-      if (details.open && !details.contains(event.target)) details.open = false;
-    });
-  });
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') publicationMoreMenus.forEach(details => { details.open = false; });
   });
 
   function copyText(text) {
@@ -786,142 +804,6 @@ window.Quarto = {
   });
 
 })();
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('[data-carousel]').forEach(function (carousel) {
-    const slides = [...carousel.querySelectorAll('[data-slide]')];
-    const status = carousel.querySelector('.carousel-status');
-    let index = 0;
-    function show(next) {
-      index = (next + slides.length) % slides.length;
-      slides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
-      if (status) status.textContent = `${index + 1} / ${slides.length}`;
-    }
-    carousel.querySelector('.previous')?.addEventListener('click', () => show(index - 1));
-    carousel.querySelector('.next')?.addEventListener('click', () => show(index + 1));
-    let startX = null;
-    carousel.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
-    carousel.addEventListener('touchend', e => {
-      if (startX === null) return;
-      const dx = e.changedTouches[0].clientX - startX;
-      if (Math.abs(dx) > 45) show(index + (dx < 0 ? 1 : -1));
-      startX = null;
-    }, {passive:true});
-    show(0);
-  });
-
-  document.querySelectorAll('[data-project-carousel]').forEach(function (carousel) {
-    const track = carousel.querySelector('.showcase-track');
-    const originals = [...carousel.querySelectorAll('[data-slide]')];
-    const status = carousel.querySelector('.carousel-status');
-    if (!track || originals.length < 2) return;
-
-    /* Duplicate one complete set at each end.  When the reader reaches a
-       duplicate set, jump to the matching original position without animation.
-       This makes mouse, trackpad and touch swiping continuous in both directions. */
-    const before = document.createDocumentFragment();
-    const after = document.createDocumentFragment();
-    originals.forEach(function (slide) {
-      const leadingClone = slide.cloneNode(true);
-      const trailingClone = slide.cloneNode(true);
-      leadingClone.dataset.carouselClone = 'true';
-      trailingClone.dataset.carouselClone = 'true';
-      before.appendChild(leadingClone);
-      after.appendChild(trailingClone);
-    });
-    track.prepend(before);
-    track.append(after);
-
-    const allSlides = [...track.querySelectorAll('[data-slide]')];
-    const originalStart = originals.length;
-    let current = 0;
-    let scrollTimer = null;
-    let resizeTimer = null;
-    let resetting = false;
-
-    function visibleCount() {
-      if (window.innerWidth <= 680) return 1;
-      if (window.innerWidth <= 1040) return 2;
-      return 3;
-    }
-
-    function targetLeft(slide) {
-      return slide.offsetLeft - track.offsetLeft;
-    }
-
-    function nearestIndex() {
-      const left = track.scrollLeft;
-      return allSlides.reduce(function (best, slide, index) {
-        return Math.abs(targetLeft(slide) - left) < Math.abs(targetLeft(allSlides[best]) - left) ? index : best;
-      }, 0);
-    }
-
-    function logicalIndex(physicalIndex) {
-      return ((physicalIndex - originalStart) % originals.length + originals.length) % originals.length;
-    }
-
-    function updateStatus(physicalIndex = nearestIndex()) {
-      current = logicalIndex(physicalIndex);
-      const visible = Math.min(visibleCount(), originals.length);
-      if (!status) return;
-      if (visible === 1) {
-        status.textContent = `${current + 1} / ${originals.length}`;
-      } else {
-        const labels = Array.from({length: visible}, (_, i) => ((current + i) % originals.length) + 1);
-        status.textContent = `${labels.join('–')} / ${originals.length}`;
-      }
-    }
-
-    function jumpToPhysical(physicalIndex) {
-      resetting = true;
-      track.classList.add('is-resetting');
-      track.scrollLeft = targetLeft(allSlides[physicalIndex]);
-      track.getBoundingClientRect();
-      track.classList.remove('is-resetting');
-      resetting = false;
-      updateStatus(physicalIndex);
-    }
-
-    function normalizePosition() {
-      const physical = nearestIndex();
-      if (physical < originalStart) {
-        jumpToPhysical(physical + originals.length);
-      } else if (physical >= originalStart + originals.length) {
-        jumpToPhysical(physical - originals.length);
-      } else {
-        updateStatus(physical);
-      }
-    }
-
-    function move(direction) {
-      const physical = nearestIndex();
-      const next = physical + direction;
-      allSlides[next]?.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'start'});
-    }
-
-    carousel.querySelector('.previous')?.addEventListener('click', () => move(-1));
-    carousel.querySelector('.next')?.addEventListener('click', () => move(1));
-
-    track.addEventListener('scroll', function () {
-      if (resetting) return;
-      updateStatus();
-      window.clearTimeout(scrollTimer);
-      scrollTimer = window.setTimeout(normalizePosition, 110);
-    }, {passive: true});
-
-    window.addEventListener('resize', function () {
-      window.clearTimeout(resizeTimer);
-      resizeTimer = window.setTimeout(function () {
-        jumpToPhysical(originalStart + current);
-      }, 120);
-    });
-
-    requestAnimationFrame(function () {
-      jumpToPhysical(originalStart);
-    });
-  });
-});
 </script>
 <script>
 (function () {

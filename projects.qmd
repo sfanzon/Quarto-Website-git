@@ -3,7 +3,7 @@ title: "Projects"
 description: "Selected modelling, optimisation, research software, documentation and communication projects by Silvio Fanzon"
 toc: false
 page-layout: full
-body-classes: standard-page projects-page show-small-footer
+body-classes: standard-page projects-page
 ---
 
 ```{=html}

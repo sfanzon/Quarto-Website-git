@@ -6,7 +6,6 @@ root=Path(__file__).resolve().parents[1]
 pubs = []  # Loaded from data/publications.bib below.
 projects=yaml.safe_load((root/'data/projects.yml').read_text())
 (root/'data/projects.generated.json').write_text(json.dumps(projects, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-venues=yaml.safe_load((root/'data/venues.yml').read_text()) or {}
 coauthor_urls=yaml.safe_load((root/'data/coauthors.yml').read_text()) or {}
 
 def read_front_matter(path):
@@ -467,18 +466,9 @@ def pub_actions(p, toggles=True, publications_page=False):
 
 COAUTHOR_URLS = coauthor_urls
 
-def venue_badge(badge, css_class='publication-label'):
-    """Render exactly one venue pill (never a pill nested inside another pill)."""
-    label = html.escape(badge)
-    url = venues.get(badge)
-    if url:
-        return f'<a class="{css_class} venue-link" href="{html.escape(url, quote=True)}" target="_blank" rel="noopener">{label}</a>'
-    return f'<span class="{css_class}">{label}</span>'
-
-
 def publication_side_meta(p):
-    """Research-theme labels for the right-hand desktop rail."""
-    return f'<div class="publication-side-meta publication-theme-rail">{publication_theme_pills(p)}</div>'
+    """Research-theme labels for the responsive publication rail."""
+    return f'<div class="publication-theme-rail">{publication_theme_pills(p)}</div>'
 
 
 def linked_authors(authors):
@@ -532,7 +522,7 @@ for p in selected:
     authors=linked_authors(p['authors'])
     side_meta=publication_side_meta(p)
     home_pub_rows.append(f'''<article class="home-publication-row publication-entry" id="home-list-{p['id']}">
-      <div class="home-publication-main pub-main"><h3>{p['title']}</h3><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{p['periodical']}</span></div><div class="publication-themes-mobile">{publication_theme_pills(p)}</div><div class="paper-actions">{homepage_pub_actions(p)}</div><div class="abstract hidden">{publication_abstract_html(p)}</div><div class="bibtex hidden"><pre><code>{html.escape(p['bibtex'])}</code></pre></div></div>{side_meta}
+      <div class="home-publication-main pub-main"><h3>{p['title']}</h3><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{p['periodical']}</span></div><div class="paper-actions">{homepage_pub_actions(p)}</div><div class="abstract hidden">{publication_abstract_html(p)}</div><div class="bibtex hidden"><pre><code>{html.escape(p['bibtex'])}</code></pre></div></div>{side_meta}
     </article>''')
 (root/'includes/home-publications-list.html').write_text('\n'.join(home_pub_rows))
 
@@ -545,7 +535,7 @@ for group in publication_categories:
     for p in [x for x in pubs if x['category'] == group]:
         authors=linked_authors(p['authors'])
         side_meta=publication_side_meta(p)
-        rows.append(f'''<article class="home-publication-row publication-archive-row publication-entry" id="{p['id']}"><div class="home-publication-main pub-main"><h3>{p['title']}</h3><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{p['periodical']}</span></div><div class="publication-themes-mobile">{publication_theme_pills(p)}</div><div class="paper-actions">{pub_actions(p, publications_page=True)}</div><div class="abstract hidden">{publication_abstract_html(p)}</div><div class="bibtex hidden"><pre><code>{html.escape(p['bibtex'])}</code></pre></div></div>{side_meta}</article>''')
+        rows.append(f'''<article class="home-publication-row publication-archive-row publication-entry" id="{p['id']}"><div class="home-publication-main pub-main"><h3>{p['title']}</h3><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{p['periodical']}</span></div><div class="paper-actions">{pub_actions(p, publications_page=True)}</div><div class="abstract hidden">{publication_abstract_html(p)}</div><div class="bibtex hidden"><pre><code>{html.escape(p['bibtex'])}</code></pre></div></div>{side_meta}</article>''')
     if rows:
         group_id=group.lower().replace(' ','-')
         allbits.append(f'''<section class="publication-category" id="{group_id}"><h2>{group}</h2><div class="publication-category-list">{''.join(rows)}</div></section>''')

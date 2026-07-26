@@ -3,7 +3,7 @@ title: "About"
 description: "About Silvio Fanzon — academic background, applied mathematics, modelling and professional transition"
 toc: false
 page-layout: full
-body-classes: standard-page about-page show-small-footer
+body-classes: standard-page about-page
 ---
 
 ```{=html}

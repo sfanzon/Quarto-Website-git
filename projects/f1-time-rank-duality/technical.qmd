@@ -9,7 +9,7 @@ categories:
 - sports analytics
 - R
 - projects
-body-classes: standard-page project-detail-page project-custom-hero f1-project-page f1-technical-page show-small-footer
+body-classes: standard-page project-detail-page project-custom-hero f1-project-page f1-technical-page
 bibliography: f1-references.bib
 link-citations: true
 citations-hover: true

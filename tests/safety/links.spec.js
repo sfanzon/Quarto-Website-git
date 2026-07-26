@@ -83,3 +83,28 @@ test("all generated HTML and CSS references resolve locally", async () => {
 
   expect([...missing].sort(), "missing local HTML/CSS targets").toEqual([]);
 });
+
+test("retired component classes remain absent from the rendered site", async () => {
+  const retiredClasses = [
+    "publication-side-meta",
+    "publication-themes-mobile",
+    "project-closing-actions",
+    "project-demonstrates",
+    "project-output-grid",
+    "project-resource-actions",
+    "project-resource-publication",
+    "project-summary-band"
+  ];
+  const renderedFiles = [
+    ...htmlPages.map((page) => page.relativePath),
+    ...fs.globSync("**/*.css", { cwd: docsRoot })
+  ];
+  const rendered = renderedFiles
+    .map((relativePath) => fs.readFileSync(path.join(docsRoot, relativePath), "utf8"))
+    .join("\n");
+
+  for (const className of retiredClasses) {
+    expect(rendered, `retired class still rendered: ${className}`)
+      .not.toContain(className);
+  }
+});

@@ -3,7 +3,7 @@ title: "Teaching"
 description: "Teaching, course materials and student supervision"
 toc: false
 page-layout: full
-body-classes: standard-page teaching-page show-small-footer
+body-classes: standard-page teaching-page
 ---
 
 ```{=html}

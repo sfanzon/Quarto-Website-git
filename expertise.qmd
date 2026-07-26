@@ -3,7 +3,7 @@ title: "Expertise"
 description: "Capabilities in statistical modelling, optimisation, decision science, scientific computing, inverse problems, communication and leadership"
 toc: false
 page-layout: full
-body-classes: standard-page expertise-page show-small-footer
+body-classes: standard-page expertise-page
 ---
 
 ```{=html}
