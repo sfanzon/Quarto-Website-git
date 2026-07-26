@@ -129,13 +129,13 @@ The pre-render hook runs `scripts/build-content.py`.
 
 ## Tests
 
-Small iteration (interactions + static checks, ~10 tests):
+Small iteration (interactions + static checks, 11 tests):
 
 ```bash
 npm run test:quick
 ```
 
-Normal pre-commit validation (smoke + interactions + links + critical regressions, ~59 tests):
+Normal pre-commit validation (smoke + interactions + links + critical regressions, 60 tests):
 
 ```bash
 npm test
@@ -147,7 +147,7 @@ Visual regression suite (30 Chromium screenshot comparisons):
 npm run test:visual
 ```
 
-Broad structural or browser-sensitive changes (full matrix, ~187 tests):
+Broad structural or browser-sensitive changes (full matrix, 188 tests):
 
 ```bash
 npm run test:full

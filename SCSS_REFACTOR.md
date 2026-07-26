@@ -17,7 +17,7 @@ ordered partials.
 - [x] Consolidate active correction layers component by component.
 - [x] Remove legacy selectors absent from source, generated pages and runtime code.
 - [x] Harden generated publication markup and standalone project styles.
-- [x] Complete the 40-page render and 177-check safety matrix.
+- [x] Complete the 40-page render and 188-check safety matrix.
 
 The baseline suite passes after the consolidation without updating the saved
 screenshots.
@@ -96,11 +96,11 @@ Lua-generated `project-at-a-glance-N` variant unmatched in static source.
 
 ## Safety test matrix
 
-Run `npm run test:quick` while iterating on focused changes. Its ~10 Chromium
+Run `npm run test:quick` while iterating on focused changes. Its 11 Chromium
 checks cover interactions and static/link regressions.
 
 Run `npm test` before committing after a complete `quarto render`. This default
-midrange suite contains ~59 Chromium checks: all-page smoke coverage,
+midrange suite contains 60 Chromium checks: all-page smoke coverage,
 interactions, links and critical navigation regressions. It does not run visual
 screenshots.
 
@@ -109,12 +109,12 @@ Run `npm run test:visual` after CSS, layout, responsive or theme work. It runs
 
 Run `npm run test:full` before deployment or after broad structural,
 accessibility or browser-specific changes.
-The complete suite contains ~187 checks:
+The complete suite contains 188 checks:
 
 - 40 Chromium smoke tests covering every generated page, document structure,
   images, browser errors and failed same-origin resources
 - 80 WCAG A/AA checks covering every page in light and dark mode
-- 7 Chromium interaction checks for navigation, themes, search, publication
+- 8 Chromium interaction checks for navigation, themes, search, publication
   panels and news controls
 - 3 static checks covering local targets, URL fragments, retired components and inline styles
 - 9 Chromium critical-path checks, including back-navigation scroll restoration

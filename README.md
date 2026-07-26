@@ -61,13 +61,13 @@ Install the JavaScript test dependencies first:
 npm ci
 ```
 
-While iterating on a focused change, run the quick interaction and static-link suite (~10 tests):
+While iterating on a focused change, run the quick interaction and static-link suite (11 tests):
 
 ```bash
 npm run test:quick
 ```
 
-Before committing after a full `quarto render`, run the normal pre-commit validation (~59 tests):
+Before committing after a full `quarto render`, run the normal pre-commit validation (60 tests):
 
 ```bash
 npm test
@@ -81,7 +81,7 @@ After CSS, layout, responsive or theme work, run the explicit visual regression 
 npm run test:visual
 ```
 
-Before deployment or after broad structural, accessibility or browser-specific changes, run the complete Chromium, Firefox and WebKit matrix (~187 tests):
+Before deployment or after broad structural, accessibility or browser-specific changes, run the complete Chromium, Firefox and WebKit matrix (188 tests):
 
 ```bash
 npm run test:full
