@@ -1,5 +1,16 @@
 /* Final navbar behaviour: aligned tools, overlay menu, reliable burger/X state */
+/* Full-width navbar with constrained inner content */
+#quarto-header,
+#quarto-header .navbar,
+#quarto-header .navbar > .container,
+#quarto-header .navbar > .container-fluid,
 #navbar .container,
+.navbar > .container,
+.navbar > .container-fluid {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
 #quarto-header .navbar .container,
 #quarto-header .navbar .container-fluid {
   max-width: 1240px;
@@ -227,11 +238,11 @@ body.standard-page #title-block-header {
    FINAL EDITORIAL REFINEMENTS
    ============================================================ */
 
-/* Keep the brand and homepage name on one line. */
+/* Navbar brand: slightly larger for better visual hierarchy */
 .navbar-brand .navbar-title,
 .navbar-title,
 .home-name {
-  white-space: nowrap;
+  font-size: 1.15rem !important;
 }
 
 .home-name {
