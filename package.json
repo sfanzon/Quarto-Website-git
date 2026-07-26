@@ -1,0 +1,20 @@
+{
+  "name": "quarto-website-git",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Quarto source and visual regression tests for silviofanzon.com",
+  "scripts": {
+    "visual:baseline": "playwright test tests/visual/capture.spec.js --update-snapshots",
+    "visual:test": "playwright test tests/visual/capture.spec.js",
+    "visual:report": "playwright show-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sfanzon/Quarto-Website-git.git"
+  },
+  "type": "commonjs",
+  "homepage": "https://github.com/sfanzon/Quarto-Website-git#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.0"
+  }
+}

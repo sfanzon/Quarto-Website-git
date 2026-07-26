@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "baseline": {
+    "commit": "e319c4c079d7159283719f3beddcd8d0abba9bf6",
+    "quartoVersion": "1.9.38",
+    "scss": {
+      "path": "styles/main.scss",
+      "lines": 7583,
+      "bytes": 210650,
+      "sha256": "75f1533f999b45721a2cffc51fa34c92f33f7c8875a42e74b65c5088160a7a13"
+    },
+    "compiledCss": {
+      "light": {
+        "path": "docs/site_libs/bootstrap/bootstrap-9e96ab43fd0d283596a4e48396a529b5.min.css",
+        "sha256": "4ff9ff6c8c244e4515bd3346d86bad23a325bd64e5171906f3cb7fc92689b720"
+      },
+      "dark": {
+        "path": "docs/site_libs/bootstrap/bootstrap-dark-3bae2923977e871cd45f382312f2c49b.min.css",
+        "sha256": "ba349ace7c8e8bd45abd424f698e9fd78b7aa26301dc9f9b3de6502c6ebeb8ba"
+      }
+    }
+  },
+  "capture": {
+    "baseUrl": "http://127.0.0.1:4321/",
+    "outputDirectory": "tests/visual/baselines",
+    "fullPage": true,
+    "waitForFonts": true,
+    "reducedMotion": "reduce",
+    "disableAnimations": true,
+    "settleMilliseconds": 250,
+    "fileNamePattern": "<page>--<theme>--<viewport>.png"
+  },
+  "viewports": {
+    "desktop": {
+      "width": 1440,
+      "height": 1000
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844
+    }
+  },
+  "themes": {
+    "light": {
+      "storageKey": "quarto-color-scheme",
+      "storageValue": "default",
+      "bodyClass": "quarto-light"
+    },
+    "dark": {
+      "storageKey": "quarto-color-scheme",
+      "storageValue": "alternate",
+      "bodyClass": "quarto-dark"
+    }
+  },
+  "pages": [
+    {
+      "name": "home",
+      "path": "index.html"
+    },
+    {
+      "name": "publications",
+      "path": "publications.html"
+    },
+    {
+      "name": "teaching",
+      "path": "teaching.html"
+    },
+    {
+      "name": "projects",
+      "path": "projects.html"
+    },
+    {
+      "name": "f1-project",
+      "path": "projects/f1-time-rank-duality/index.html"
+    }
+  ]
+}
