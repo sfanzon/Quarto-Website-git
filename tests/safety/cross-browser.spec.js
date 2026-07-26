@@ -59,9 +59,13 @@ test.describe("cross-browser critical pages", () => {
 
       const nativeScrollTo = window.scrollTo.bind(window);
       const calls = [];
-      window.scrollTo = (x, y) => {
-        calls.push({ x, y });
-        nativeScrollTo(x, y);
+      window.scrollTo = (...args) => {
+        if (args.length === 1 && typeof args[0] === "object") {
+          calls.push({ x: args[0].left, y: args[0].top });
+        } else {
+          calls.push({ x: args[0], y: args[1] });
+        }
+        nativeScrollTo(...args);
       };
 
       window.setTimeout(() => window.scrollTo(0, 0), 40);

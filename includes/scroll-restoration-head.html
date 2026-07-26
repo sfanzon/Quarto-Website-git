@@ -1,0 +1,16 @@
+<script>
+(function () {
+  const navigation = window.performance.getEntriesByType('navigation')[0];
+  if (navigation?.type !== 'back_forward') return;
+
+  const key = `scroll-position:${window.location.pathname}${window.location.search}`;
+  try {
+    const position = JSON.parse(window.sessionStorage.getItem(key));
+    if (!position || !Number.isFinite(position.x) || !Number.isFinite(position.y)) return;
+    document.documentElement.dataset.sfRestoringScroll = 'true';
+    document.documentElement.style.visibility = 'hidden';
+  } catch (_) {
+    // Storage can be unavailable in private or locked-down browser contexts.
+  }
+})();
+</script>

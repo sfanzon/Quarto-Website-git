@@ -65,6 +65,8 @@ format:
     smooth-scroll: true
     link-external-newwindow: true
     link-external-icon: false
+    include-in-header:
+    - includes/scroll-restoration-head.html
     include-after-body:
     - includes/site-footer.html
     - includes/after-body.html

@@ -75,6 +75,22 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script>
+(function () {
+  const navigation = window.performance.getEntriesByType('navigation')[0];
+  if (navigation?.type !== 'back_forward') return;
+
+  const key = `scroll-position:${window.location.pathname}${window.location.search}`;
+  try {
+    const position = JSON.parse(window.sessionStorage.getItem(key));
+    if (!position || !Number.isFinite(position.x) || !Number.isFinite(position.y)) return;
+    document.documentElement.dataset.sfRestoringScroll = 'true';
+    document.documentElement.style.visibility = 'hidden';
+  } catch (_) {
+    // Storage can be unavailable in private or locked-down browser contexts.
+  }
+})();
+</script>
 
 
 <link rel="stylesheet" href="styles/project-pages.css">
@@ -476,7 +492,10 @@ ul.task-list li input[type="checkbox"] {
     }
   }
 
-  window.addEventListener('pagehide', saveScrollPosition);
+  window.addEventListener('pagehide', function(event) {
+    saveScrollPosition();
+    if (event.persisted) document.documentElement.style.visibility = 'hidden';
+  });
   document.addEventListener('click', function(event) {
     if (!(event.target instanceof Element)) return;
     const link = event.target.closest('a[href]');
@@ -496,9 +515,14 @@ ul.task-list li input[type="checkbox"] {
     }
     if (!position || !Number.isFinite(position.x) || !Number.isFinite(position.y)) return;
 
-    // Quarto's Safari color-scheme workaround scrolls to the top after 40 ms.
+    // Quarto's Safari workaround scrolls to the top after 40 ms.
     window.setTimeout(function() {
-      window.scrollTo(position.x, position.y);
+      const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = 'auto';
+      window.scrollTo({left: position.x, top: position.y, behavior: 'auto'});
+      document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      document.documentElement.style.visibility = '';
+      delete document.documentElement.dataset.sfRestoringScroll;
     }, 80);
   });
 
