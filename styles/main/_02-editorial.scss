@@ -7,15 +7,6 @@ body.standard-page #title-block-header {
   display: none;
 }
 
-.projects-hero,
-.publications-hero {
-  padding-top: clamp(2.5rem, 6vw, 4.75rem);
-  padding-bottom: clamp(1.75rem, 4vw, 3rem);
-}
-.projects-hero h1,
-.publications-hero h1 {
-  font-size: clamp(2.65rem, 5vw, 4.35rem);
-}
 .projects-section,
 .publication-section {
   margin-bottom: clamp(3.5rem, 7vw, 5.75rem);
