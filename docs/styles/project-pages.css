@@ -357,7 +357,9 @@ body.project-detail-page .project-detail-hero h1 {
 
 
 /* The page shell remains 1180px wide, while the readable article column stays
-   at 820px and is centered inside it. */
+   at 820px and is centered inside it.
+   Sustained prose (sections, paragraphs, lists, details) uses the narrower
+   720px prose width for comfortable reading. */
 body.project-detail-page main.content > section.level2,
 body.project-detail-page main.content > p,
 body.project-detail-page main.content > ol,
@@ -374,6 +376,13 @@ body.project-detail-page main.content > .project-end-back-link {
   margin-right: auto;
 }
 body.project-detail-page main.content > section.level2,
+body.project-detail-page main.content > p,
+body.project-detail-page main.content > ol,
+body.project-detail-page main.content > ul,
+body.project-detail-page main.content > details {
+  width: min(var(--site-prose-width), 100%);
+}
+body.project-detail-page main.content > figure,
 body.project-detail-page main.content > .callout,
 body.project-detail-page main.content > .headline-box,
 body.project-detail-page main.content > .project-role-note,
@@ -407,7 +416,7 @@ body.project-detail-page main.content h2 {
   font-size: clamp(1.38rem, 2.15vw, 1.85rem);
 }
 body.project-detail-page main.content h3 {
-  max-width: var(--site-reading-width);
+  max-width: var(--site-prose-width);
   margin-top: 2rem;
   font-size: 1.08rem;
   letter-spacing: -.015em;
@@ -817,8 +826,8 @@ body.project-detail-page main.content > .references,
 body.project-detail-page main.content > .csl-bib-body,
 body.project-detail-page main.content .references,
 body.project-detail-page main.content .csl-bib-body {
-  width: min(var(--site-reading-width), 100%);
-  max-width: var(--site-reading-width);
+  width: min(var(--site-prose-width), 100%);
+  max-width: var(--site-prose-width);
   margin-left: auto;
   margin-right: auto;
 }

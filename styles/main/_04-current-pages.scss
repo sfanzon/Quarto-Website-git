@@ -739,9 +739,11 @@ body.project-detail-page main.content > section:not(.project-evidence-strip):not
 body.project-detail-page main.content > p,
 body.project-detail-page main.content > ol,
 body.project-detail-page main.content > ul,
-body.project-detail-page main.content > figure,
 body.project-detail-page main.content > details {
   max-width: var(--site-prose-width);
+}
+body.project-detail-page main.content > figure {
+  max-width: var(--site-reading-width);
 }
 body.project-detail-page main.content h2 {
   max-width: var(--site-prose-width);

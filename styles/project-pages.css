@@ -821,7 +821,7 @@ body.gcg-project-page main.content > .project-detail-hero {
 /* Wide related-project breakout is intentionally isolated.
    Bibliographies and the F1 completion explorer remain part of the readable
    article column even when main.content expands for `.column-page`. */
-  body.project-detail-page main.content > #refs,
+body.project-detail-page main.content > #refs,
 body.project-detail-page main.content > .references,
 body.project-detail-page main.content > .csl-bib-body,
 body.project-detail-page main.content .references,

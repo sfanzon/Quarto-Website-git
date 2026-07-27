@@ -136,19 +136,19 @@ Use spacing, grouping and contrast before increasing type size.
 
 ### Body
 
-Target roughly 17 px-equivalent body text with generous line height.
+Target roughly 15–16 px-equivalent body text, with 16 px preferred for sustained prose.
 
 Never shrink body text merely to look minimalist.
 
 ## 6. Width system
 
-Project pages separate readable prose from wider visual content.
+The site uses three content widths, distinguished by content type rather than page name:
 
-- outer project shell may remain wide;
-- hero may be wider than prose;
-- standard prose measure: **760 px**;
-- figures, code, tables, diagrams and pipelines may break wider where useful;
-- related-project navigation may use the wider shell.
+- **site shell: 1180 px (`--site-content-width`)** — the overall outer measure for every page, containing the header, footer and maximal content area.
+- **general reading / mixed content: 820 px (`--site-reading-width`)** — for introductions, summaries, callouts, mixed text/visual content, supporting material, figures, code, tables and other technical/visual elements.
+- **sustained prose: 720 px (`--site-prose-width`)** — for long-form article prose, technical narrative, explanatory sections, and other contexts where comfortable line length benefits sustained reading.
+
+Figures, code, tables, diagrams and other technical/visual elements may use the 820 px reading width or wider where useful.
 
 Do not widen prose because one visual component needs extra room.
 
@@ -278,7 +278,7 @@ Do not let navigation unnecessarily reduce article width.
 
 Related projects mark the transition from reading to browsing.
 
-They may be wider than the 760 px prose column.
+They may be wider than the 720 px prose column.
 
 Keep the section:
 
@@ -387,7 +387,7 @@ Preferred authorship:
 
 A source-code link is appropriate.
 
-Do not promote the framework with “Built with Quarto” unless explicitly requested.
+Do not promote the framework with "Built with Quarto" unless explicitly requested.
 
 ## 17. Components and surfaces
 
@@ -430,11 +430,10 @@ Appropriate:
 Avoid:
 
 - parallax;
-- animated gradients;
 - decorative entrance animation;
 - movement that slows reading.
 
-Respect `prefers-reduced-motion`.
+Respect `prefers-reduced-motion` for any motion that does exist.
 
 ## 20. Accessibility
 
