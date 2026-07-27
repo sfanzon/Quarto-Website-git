@@ -1,5 +1,14 @@
-/* Final navbar behaviour: aligned tools, overlay menu, reliable burger/X state */
-/* Full-width navbar with constrained inner content */
+/* ============================================================
+   SHARED CHROME DIMENSIONS
+   ============================================================ */
+:root {
+  --site-chrome-width: 1240px;
+  --site-chrome-padding: 1.5rem;
+}
+
+/* ============================================================
+   FULL-WIDTH NAVBAR — constrained inner content
+   ============================================================ */
 #quarto-header,
 #quarto-header .navbar,
 .navbar {
@@ -10,14 +19,16 @@
 }
 
 #quarto-header .navbar .navbar-container,
+#navbar .container,
 #quarto-header .navbar .container,
 #quarto-header .navbar .container-fluid {
-  max-width: 1240px;
+  width: min(calc(100% - 2 * var(--site-chrome-padding)), var(--site-chrome-width));
+  max-width: var(--site-chrome-width);
   margin-left: auto;
   margin-right: auto;
-  padding-left: clamp(1rem, 3vw, 2.25rem) !important;
-  padding-right: clamp(1rem, 3vw, 2.25rem) !important;
+  min-height: 58px;
 }
+
 @media (max-width: 991.98px) {
   #quarto-header .navbar .navbar-container,
   #quarto-header .navbar .container,
@@ -57,7 +68,7 @@
 
 
 /* ============================================================
-   MINIMAL PROFESSIONAL FOOTER + COMPACT EDITORIAL CARDS
+   MINIMAL PROFESSIONAL FOOTER
    ============================================================ */
 .site-footer {
   width: 100%;
@@ -67,8 +78,10 @@
   color: var(--global-navbar-text-color);
 }
 .site-footer-inner {
-  width: min(100% - 2rem, 1240px);
-  margin: 0 auto;
+  width: min(calc(100% - 2 * var(--site-chrome-padding)), var(--site-chrome-width));
+  max-width: var(--site-chrome-width);
+  margin-left: auto;
+  margin-right: auto;
   padding: 1.5rem 0;
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -150,16 +163,6 @@ body.standard-page #title-block-header {
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.07) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-}
-
-#navbar .container,
-#quarto-header .navbar .container,
-#quarto-header .navbar .container-fluid {
-  min-height: 58px;
-  width: min(100% - 3rem, 1240px);
-  max-width: 1240px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .navbar-brand,
@@ -325,7 +328,6 @@ body.standard-page #title-block-header {
 }
 
 @media (max-width: 767.98px) {
-  .navbar-title { font-size: 1rem !important; }
   .home-name { font-size: clamp(2.25rem, 11vw, 3.35rem); }
 }
 
@@ -690,19 +692,6 @@ body.publications-page main.content {
   padding-inline: clamp(1rem, 3vw, 2.25rem) !important;
 }
 
-#navbar .container,
-#quarto-header .navbar .container,
-#quarto-header .navbar .container-fluid {
-  width: 100%;
-  max-width: 1240px !important;
-  padding-inline: clamp(1rem, 3vw, 2.25rem) !important;
-}
-
-.site-footer-inner {
-  width: min(calc(100% - 2rem), 1240px);
-  max-width: 1240px;
-}
-
 /* File-generated news: compact accordions at home, expanded archive by year. */
 .news-preview {
   border-top: 1px solid var(--global-divider-color);
@@ -861,4 +850,22 @@ body.home-page main.content {
   .navbar-collapse .dropdown-item {
     color: var(--global-navbar-text-color);
   }
+}
+
+
+/* ============================================================
+   MOBILE — navbar and footer share identical horizontal margins
+   ============================================================ */
+@media (max-width: 767.98px) {
+
+  #navbar .container,
+  #quarto-header .navbar .container,
+  #quarto-header .navbar .container-fluid,
+  .site-footer-inner {
+    width: calc(100% - 2rem);
+    max-width: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
 }
