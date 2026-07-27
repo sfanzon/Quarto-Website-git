@@ -58,6 +58,42 @@ Examples requiring a plan:
 
 Generated files under `includes/`, `data/projects.generated.json`, and `docs/` are not canonical sources.
 
+## Source Files vs Generated Output (Mandatory)
+
+This repository contains generated website output. Agents must always modify the source files that generate the website, not the rendered output.
+
+Before making any website change:
+
+1. Identify the real source of the behaviour:
+   - Jekyll includes;
+   - layouts;
+   - SCSS/CSS source;
+   - Quarto configuration;
+   - content files.
+
+2. Never directly edit generated files as the implementation:
+   - `docs/*.html`;
+   - generated Quarto output;
+   - hashed CSS/JS bundles;
+   - generated Bootstrap assets.
+
+3. After modifying source files:
+   - run the appropriate render/build command;
+   - allow generated output to update;
+   - commit generated files only if this repository workflow requires them.
+
+A successful implementation must contain changes to the source files responsible for the behaviour. A commit containing only regenerated HTML/assets is not considered a valid implementation.
+
+When reviewing your own work:
+- first confirm the source files changed;
+- then confirm rendered output changed;
+- do not assume that regenerated files mean the feature was implemented.
+
+For layout/CSS changes, explicitly report:
+- which source SCSS/template files were modified;
+- why those files control the requested behaviour;
+- which generated files changed after rendering.
+
 ## Scope discipline
 
 Fix closely related issues when necessary for the requested result.
