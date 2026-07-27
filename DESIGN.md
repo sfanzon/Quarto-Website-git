@@ -387,7 +387,7 @@ Preferred authorship:
 
 A source-code link is appropriate.
 
-Do not promote the framework with "Built with Quarto" unless explicitly requested.
+Do not promote the framework with “Built with Quarto” unless explicitly requested.
 
 ## 17. Components and surfaces
 
