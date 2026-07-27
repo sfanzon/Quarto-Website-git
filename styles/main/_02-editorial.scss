@@ -42,6 +42,20 @@ body.standard-page #title-block-header {
    FINAL EDITORIAL REFINEMENTS
    ============================================================ */
 
+.home-name {
+  margin-bottom: 0.3rem;
+  font-size: clamp(2.55rem, 5.1vw, 4.8rem);
+}
+
+.home-role {
+  margin: 0 0 1.25rem;
+  color: var(--global-theme-color);
+  font-size: clamp(0.92rem, 1.2vw, 1.05rem);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: none;
+}
+
 /* Smaller, consistent editorial page titles. */
 .compact-page-hero h1,
 .publications-hero h1,
@@ -101,9 +115,23 @@ body.standard-page #title-block-header {
   display: none !important;
 }
 
+@media (max-width: 767.98px) {
+  .home-name { font-size: clamp(2.25rem, 11vw, 3.35rem); }
+}
+
+
 /* ============================================================
    PUBLICATION LIST — QUIET EDITORIAL REVISION
    ============================================================ */
+
+/* The homepage identity remains explicit and never wraps. */
+.home-name {
+  white-space: nowrap;
+}
+
+.home-lead strong {
+  font-weight: 600;
+}
 
 /* Publications are a continuous typographic list, not cards. */
 .publications-page .publication-category-list {
@@ -157,12 +185,80 @@ body.standard-page #title-block-header {
   margin-top: 0.55rem;
 }
 
+@media (max-width: 767.98px) {
+  .home-name {
+    font-size: clamp(2rem, 10.5vw, 3.15rem) !important;
+  }
+
+}
+
+/* ============================================================
+   FINAL IDENTITY + PUBLICATION RHYTHM PASS
+   ============================================================ */
+
+/* Clear author-style hierarchy beside the portrait. */
+.home-name {
+  margin: 0 0 0.28rem !important;
+  font-size: clamp(3.6rem, 6.2vw, 5.6rem) !important;
+  line-height: 0.96 !important;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+
+.home-role {
+  margin: 0 0 1.65rem !important;
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem) !important;
+  line-height: 1.25;
+}
+
 .publications-page .paper-actions {
   margin-top: 0.78rem !important;
 }
 
 .publications-page .publication-category-list {
   display: block !important;
+}
+
+@media (max-width: 767.98px) {
+  .home-name {
+    font-size: clamp(2.65rem, 13vw, 4rem) !important;
+    letter-spacing: -0.04em;
+  }
+
+  .home-role {
+    margin-bottom: 1.3rem !important;
+  }
+
+}
+
+/* ============================================================
+   FINAL SITE-WIDE EDITORIAL PASS
+   ============================================================ */
+
+.home-lead,
+.home-summary {
+  max-width: 42rem;
+}
+
+.home-name {
+  display: block !important;
+  margin: 0 0 0.32rem !important;
+  font-size: clamp(3rem, 5.2vw, 4.6rem) !important;
+  line-height: 0.96 !important;
+  font-weight: 650 !important;
+  letter-spacing: -0.045em !important;
+  white-space: nowrap;
+}
+
+.home-intro .home-role {
+  display: block !important;
+  margin: 0 0 .32rem !important;
+}
+
+@media (max-width: 767.98px) {
+  .home-name {
+    font-size: clamp(2.35rem, 10.5vw, 3.2rem) !important;
+  }
 }
 
 /* ============================================================
@@ -372,10 +468,6 @@ body.home-page main.content {
   margin-bottom: 0 !important;
 }
 
-.home-summary {
-  max-width: 42rem;
-}
-
 @media (max-width: 680px) {
   .home-page .section-heading {
     flex-direction: column;
@@ -384,3 +476,4 @@ body.home-page main.content {
   }
   .home-page .section-heading > a { text-align: left; }
 }
+

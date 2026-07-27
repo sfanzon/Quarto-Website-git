@@ -50,6 +50,92 @@
   text-decoration: none !important;
 }
 
+/* ============================================================
+   2026 ANIMATED HOMEPAGE HERO
+   A restrained, full-width gradient confined to the bio area.
+   ============================================================ */
+.home-hero {
+  position: relative;
+  isolation: isolate;
+}
+
+.home-hero::before,
+.home-hero::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 100vw;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.home-hero::before {
+  inset-block: 0;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(circle at 16% 30%, rgba(196, 112, 74, .11), transparent 40%),
+    radial-gradient(circle at 82% 38%, rgba(188, 154, 103, .09), transparent 38%),
+    linear-gradient(180deg, #fdfaf6 0%, #f7f1e9 58%, var(--global-bg-color) 100%);
+  background-size: 115% 115%, 120% 120%, 100% 100%;
+  animation: home-hero-gradient-drift 22s ease-in-out infinite alternate;
+}
+
+.home-hero::after {
+  top: 8%;
+  bottom: 10%;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(circle at 27% 44%, rgba(196, 112, 74, .065), transparent 30%),
+    radial-gradient(circle at 72% 52%, rgba(188, 154, 103, .055), transparent 29%);
+  filter: blur(42px);
+  animation: home-hero-glow-drift 18s ease-in-out infinite alternate;
+}
+
+.home-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes home-hero-gradient-drift {
+  from { background-position: 0% 0%, 100% 5%, 0 0; }
+  to   { background-position: 8% 5%, 91% 0%, 0 0; }
+}
+
+@keyframes home-hero-glow-drift {
+  from { transform: translateX(-52%) scale(1); }
+  to   { transform: translateX(-48%) scale(1.07); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero::before,
+  .home-hero::after {
+    animation: none;
+  }
+}
+
+[data-mode="dark"] .home-hero::before,
+.quarto-dark .home-hero::before {
+  background:
+    radial-gradient(circle at 16% 30%, rgba(193, 95, 60, .12), transparent 40%),
+    radial-gradient(circle at 82% 38%, rgba(169, 132, 82, .08), transparent 38%),
+    linear-gradient(180deg, #26211d 0%, #29241f 58%, var(--global-bg-color) 100%);
+}
+
+
+/* ============================================================
+   FINAL HERO + PUBLICATION CLEANUP
+   ============================================================ */
+/* The empty Quarto title header must not create a white strip above the hero. */
+.home-page #title-block-header {
+  display: none !important;
+}
+
+/* Pull the full-width animated background flush against the fixed navbar. */
+.home-page .home-hero {
+  margin-top: 0 !important;
+  padding-top: clamp(2.4rem, 6vh, 5rem);
+}
+
 /* BibTeX copy control. */
 .publication-entry .bibtex.open {
   position: relative;
@@ -81,6 +167,85 @@
 @media (max-width: 560px) {
   .publication-entry .bibtex.open { padding-top: 3.15rem; }
   .copy-citation { left: .7rem; right: auto; }
+}
+
+
+/* 2026 homepage flush-top and profile-link refinements */
+body.home-page {
+  padding-top: 58px !important;
+}
+body.home-page #quarto-content,
+body.home-page main.content {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+body.home-page .home-hero {
+  margin-top: 0 !important;
+  min-height: calc(100svh - 58px) !important;
+  box-sizing: border-box;
+  align-items: center;
+  padding-top: clamp(2rem, 5vh, 4rem) !important;
+  padding-bottom: clamp(2rem, 5vh, 4rem) !important;
+}
+body.home-page .home-hero::before {
+  top: 0 !important;
+}
+
+/* 2026 hero alignment and homepage publication parity */
+.home-profile-links a::after { content: "" !important; }
+.home-page .home-publications-list .publication-entry {
+  border: 0 !important;
+}
+@media (max-width: 767.98px) {
+  body.home-page .home-hero { min-height: auto !important; }
+}
+
+
+/* 2026 mobile hero proportion and type refinement */
+.home-name {
+  font-size: clamp(2.8rem, 5.2vw, 4.45rem) !important;
+  line-height: 1 !important;
+}
+.home-role {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: clamp(2.75rem, 5vw, 5rem) !important;
+  row-gap: .25rem !important;
+  margin: 0 0 clamp(1.6rem, 3vw, 2.25rem) !important;
+}
+.home-lead {
+  font-size: clamp(1.12rem, 1.55vw, 1.42rem) !important;
+  line-height: 1.42 !important;
+}
+body.home-page .home-portrait {
+  object-position: center 24%;
+}
+@media (max-width: 767.98px) {
+  .home-hero { gap: 1.35rem !important; }
+  .home-portrait {
+    width: min(78vw, 330px) !important;
+    height: auto !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    margin-inline: auto !important;
+  }
+  .home-name {
+    font-size: clamp(2.25rem, 11vw, 3rem) !important;
+    letter-spacing: -.04em !important;
+    white-space: normal !important;
+  }
+  .home-role {
+    font-size: 1.05rem !important;
+    column-gap: 2rem !important;
+    margin-bottom: 1.55rem !important;
+  }
+  .home-lead {
+    font-size: 1.08rem !important;
+    line-height: 1.44 !important;
+  }
 }
 
 
@@ -614,12 +779,120 @@
   line-height: 1.48 !important;
 }
 
+/* restrained hero typography */
+.home-name{font-size:2.35rem!important;font-weight:600;letter-spacing:-0.02em;}
+.home-role{margin-top:.35rem;margin-bottom:1.5rem!important;}
+.home-lead,.home-summary{font-size:1.08rem!important;line-height:1.75;max-width:42rem;}
+.home-summary{margin-top:.9rem;}
+
 /* 2026: compact Featured Projects on the homepage.
    Preserve the three-card editorial layout while avoiding a near full-viewport block. */
 @media (min-width: 1041px) {
   .home-page .home-section:has(.featured-projects-heading) {
     padding-top: clamp(1.7rem, 3vw, 2.5rem);
     padding-bottom: clamp(1.45rem, 2.5vw, 2rem);
+  }
+}
+
+/* ============================================================
+   FINAL HOMEPAGE BIO TYPOGRAPHY — authoritative override
+   ============================================================ */
+body.home-page .home-name {
+  margin: 0 !important;
+  font-size: clamp(2rem, 3.35vw, 3rem) !important;
+  line-height: 1.04 !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.028em !important;
+  white-space: nowrap;
+}
+
+body.home-page .home-role {
+  margin: .45rem 0 0 !important;
+  color: var(--global-theme-color);
+  font-size: .96rem !important;
+  line-height: 1.35 !important;
+  font-weight: 500 !important;
+  letter-spacing: .015em !important;
+}
+
+body.home-page .home-bio-copy {
+  max-width: 43rem;
+  margin-top: 1.65rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--global-divider-color);
+}
+
+body.home-page .home-bio-copy .home-lead,
+body.home-page .home-bio-copy .home-summary {
+  max-width: none;
+  margin: 0 !important;
+  color: var(--global-text-color) !important;
+  font-size: clamp(1.02rem, 1.25vw, 1.12rem) !important;
+  line-height: 1.65 !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+}
+
+body.home-page .home-bio-copy .home-summary {
+  margin-top: 1rem !important;
+}
+
+@media (max-width: 767.98px) {
+  body.home-page .home-name {
+    font-size: clamp(1.9rem, 9.2vw, 2.65rem) !important;
+  }
+  body.home-page .home-bio-copy {
+    margin-top: 1.35rem;
+    padding-top: 1.15rem;
+  }
+}
+
+
+/* 2026 restrained homepage scroll cue */
+body.home-page .home-hero { position: relative; }
+.home-scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 2rem;
+  z-index: 3;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .12rem;
+  color: var(--global-text-color-light);
+  font-size: .72rem;
+  font-weight: 650;
+  letter-spacing: .12em;
+  line-height: 1;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  opacity: .78;
+  transition: color .2s ease, opacity .2s ease;
+}
+.home-scroll-cue:hover,
+.home-scroll-cue:focus-visible {
+  color: var(--global-theme-color);
+  opacity: 1;
+}
+.home-scroll-arrow {
+  font-size: 1.05rem;
+  font-weight: 400;
+  animation: home-scroll-nudge 2.2s ease-in-out infinite;
+}
+@keyframes home-scroll-nudge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-scroll-arrow { animation: none; }
+}
+@media (max-width: 767px) {
+  .home-scroll-cue {
+    position: static;
+    grid-column: 1 / -1;
+    margin: 0 auto;
+    transform: none;
   }
 }
 
@@ -633,6 +906,18 @@
 
 :where(a, button, summary, input, select, textarea):focus-visible {
   outline-color: var(--global-blue-accent) !important;
+}
+
+/* A faint cool counterpoint in one corner of the warm hero. */
+.home-hero::after {
+  background: radial-gradient(circle at center,
+    color-mix(in srgb, var(--global-blue-accent-soft) 72%, transparent) 0%,
+    transparent 70%) !important;
+  opacity: .42;
+}
+body.quarto-dark .home-hero::after,
+html[data-bs-theme="dark"] .home-hero::after {
+  opacity: .2;
 }
 
 /* Publication titles should read as editorial list items, not section headings. */
@@ -1075,6 +1360,63 @@ body.home-page .expertise-preview-header h2 {
 /* ============================================================
    COLE-LYONS-INSPIRED EDITORIAL DETAILS
    ============================================================ */
+
+/* ============================================================
+   2026 PUBLICATION LAYOUT
+   Editorial research labels sit left of each publication on desktop and
+   lead each item on mobile.
+   ============================================================ */
+.paper-meta .publication-authors,
+.paper-meta .publication-periodical {
+  display: block;
+}
+
+.home-page .selected-publications-section .paper-actions {
+  margin-top: .02rem !important;
+}
+
+.home-page .selected-publications-section .paper-action {
+  font-size: .8rem;
+  font-weight: 680;
+  letter-spacing: .005em;
+}
+
+.home-page .home-publication-row,
+.publications-page .publication-archive-row {
+  grid-template-columns: minmax(145px, 190px) minmax(0, 1fr) !important;
+  gap: clamp(1.15rem, 2.4vw, 1.9rem) !important;
+  align-items: start !important;
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+}
+
+.publications-page .publication-archive-row + .publication-archive-row,
+.publications-page .home-publication-row + .home-publication-row,
+.home-page .home-publication-row + .home-publication-row {
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+
+.publication-theme-rail {
+  display: flex !important;
+  min-width: 0;
+  flex-direction: column !important;
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  align-items: flex-start !important;
+  gap: .48rem !important;
+  text-align: left !important;
+  padding-top: .16rem !important;
+}
+
+.publication-theme-rail .publication-themes {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: .22rem !important;
+  margin: 0 !important;
+}
 
 .publication-theme-rail .publication-theme {
   display: block !important;
