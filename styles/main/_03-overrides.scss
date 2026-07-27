@@ -202,10 +202,6 @@ body.home-page .home-hero::before {
 
 
 /* 2026 mobile hero proportion and type refinement */
-.home-name {
-  font-size: clamp(2.8rem, 5.2vw, 4.45rem) !important;
-  line-height: 1 !important;
-}
 .home-role {
   display: flex !important;
   flex-wrap: wrap;
@@ -768,11 +764,6 @@ body.home-page .home-portrait {
   line-height: 1.48 !important;
 }
 
-/* restrained hero typography */
-.home-name{font-size:2.35rem!important;font-weight:600;letter-spacing:-0.02em;}
-.home-role{margin-top:.35rem;margin-bottom:1.5rem!important;}
-.home-lead,.home-summary{font-size:1.08rem!important;line-height:1.75;max-width:42rem;}
-.home-summary{margin-top:.9rem;}
 
 /* 2026: compact Featured Projects on the homepage.
    Preserve the three-card editorial layout while avoiding a near full-viewport block. */
@@ -838,7 +829,6 @@ body.home-page .home-bio-copy .home-summary {
 
 
 /* 2026 restrained homepage scroll cue */
-body.home-page .home-hero { position: relative; }
 .home-scroll-cue {
   position: absolute;
   left: 50%;

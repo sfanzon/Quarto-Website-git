@@ -448,15 +448,6 @@ body.publications-page main.content {
   letter-spacing: .12em;
   text-transform: uppercase;
 }
-.home-name,
-.page-hero h1 {
-  margin: 0 0 1.25rem;
-  font-size: clamp(3rem, 7vw, 6.2rem);
-  line-height: .98;
-  letter-spacing: -.055em;
-}
-.home-lead { font-size: clamp(1.25rem, 2vw, 1.8rem); line-height: 1.35; max-width: 760px; }
-.home-summary { max-width: 720px; color: var(--global-text-color-light); font-size: 1.05rem; }
 .home-profile-links {
   display: flex;
   flex-wrap: wrap;

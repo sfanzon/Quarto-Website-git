@@ -33,20 +33,6 @@ body.standard-page #title-block-header {
    FINAL EDITORIAL REFINEMENTS
    ============================================================ */
 
-.home-name {
-  margin-bottom: 0.3rem;
-  font-size: clamp(2.55rem, 5.1vw, 4.8rem);
-}
-
-.home-role {
-  margin: 0 0 1.25rem;
-  color: var(--global-theme-color);
-  font-size: clamp(0.92rem, 1.2vw, 1.05rem);
-  font-weight: 500;
-  letter-spacing: 0.03em;
-  text-transform: none;
-}
-
 .compact-page-hero h1 {
   margin-bottom: 0.8rem;
 }
@@ -91,19 +77,9 @@ body.standard-page #title-block-header {
   display: none !important;
 }
 
-@media (max-width: 767.98px) {
-  .home-name { font-size: clamp(2.25rem, 11vw, 3.35rem); }
-}
-
-
 /* ============================================================
    PUBLICATION LIST — QUIET EDITORIAL REVISION
    ============================================================ */
-
-/* The homepage identity remains explicit and never wraps. */
-.home-name {
-  white-space: nowrap;
-}
 
 .home-lead strong {
   font-weight: 600;
@@ -177,12 +153,6 @@ body.standard-page #title-block-header {
   white-space: nowrap;
 }
 
-.home-role {
-  margin: 0 0 1.65rem !important;
-  font-size: clamp(1.15rem, 1.8vw, 1.45rem) !important;
-  line-height: 1.25;
-}
-
 .publications-page .publication-category-list {
   display: block !important;
 }
@@ -191,10 +161,6 @@ body.standard-page #title-block-header {
   .home-name {
     font-size: clamp(2.65rem, 13vw, 4rem) !important;
     letter-spacing: -0.04em;
-  }
-
-  .home-role {
-    margin-bottom: 1.3rem !important;
   }
 
 }
