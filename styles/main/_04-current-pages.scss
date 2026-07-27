@@ -664,9 +664,6 @@ body.home-page .home-role span {
 .capability-grid > article h3 { margin: 0; font-size: 1.05rem; }
 .capability-grid > article p { margin: 0; color: var(--global-text-color-light); font-size: .9rem; line-height: 1.55; }
 
-body.project-detail-page main.content {
-  padding-top: clamp(1.5rem, 4vw, 3rem);
-}
 body.project-detail-page #title-block-header { display: none; }
 .project-detail-hero {
   max-width: 920px;

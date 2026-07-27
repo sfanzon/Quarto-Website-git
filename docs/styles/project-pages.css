@@ -39,7 +39,7 @@ body.project-detail-page main.content {
   width: min(var(--site-content-width), 100%);
   max-width: var(--site-content-width);
   margin-inline: auto;
-  padding-top: clamp(.7rem, 1.5vw, 1.2rem);
+  padding-top: clamp(1.5rem, 4vw, 3rem);
   padding-inline: var(--site-content-gutter);
   background: transparent;
   box-sizing: border-box;
