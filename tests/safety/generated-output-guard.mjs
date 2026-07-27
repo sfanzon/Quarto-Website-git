@@ -18,21 +18,6 @@
 
 import { execSync } from "child_process";
 
-/**
- * Paths outside docs/ that are generated output, not canonical source.
- * See SOURCE_MAP.md for the full distinction.
- */
-const GENERATED_OUTSIDE_DOCS = new Set([
-  "data/projects.generated.json",
-  "includes/home-news.qmd",
-  "includes/home-projects.html",
-  "includes/home-publications-list.html",
-  "includes/news-all.qmd",
-  "includes/projects-portfolio.html",
-  "includes/publications-all.html",
-  "includes/teaching-list.html",
-]);
-
 const GENERATED_PATHS = new Set([
   "data/projects.generated.json",
   "includes/home-news.qmd",
@@ -43,12 +28,6 @@ const GENERATED_PATHS = new Set([
   "includes/publications-all.html",
   "includes/teaching-list.html",
 ]);
-
-function isCanonicalSource(path) {
-  if (path.startsWith("docs/")) return false;
-  if (GENERATED_OUTSIDE_DOCS.has(path)) return false;
-  return true;
-}
 
 /**
  * Pure check. Returns { passed: boolean, message: string }.
