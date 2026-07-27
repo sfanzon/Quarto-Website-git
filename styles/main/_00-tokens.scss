@@ -57,6 +57,10 @@
 
   /* Homepage editorial accent */
   --homepage-orange-accent: #9b4828;
+
+  /* Shared site chrome */
+  --site-chrome-width: 1240px;
+  --site-chrome-padding: 1.5rem;
 }
 
 body.quarto-dark {
@@ -113,3 +117,4 @@ body.quarto-dark {
   /* Homepage editorial accent */
   --homepage-orange-accent: #e49472;
 }
+
