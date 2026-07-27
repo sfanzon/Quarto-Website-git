@@ -37,15 +37,3 @@ main.content,
   box-sizing: border-box;
   min-width: 0;
 }
-
-/* Page-scoped reinforcement of the canonical outer measure.
-   These ensure that body-class-specific overrides (such as
-   historical homepage/projects/publications widths) do not
-   accidentally escape the global shell. */
-body.home-page main.content,
-body.projects-page main.content,
-body.publications-page main.content {
-  width: 100%;
-  max-width: 1180px !important;
-  padding-inline: clamp(1rem, 3vw, 2.25rem) !important;
-}
