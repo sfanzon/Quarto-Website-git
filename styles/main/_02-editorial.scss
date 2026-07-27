@@ -153,15 +153,19 @@ body.standard-page #title-block-header {
 }
 
 #navbar .container,
-#quarto-header .navbar .container {
+#quarto-header .navbar .container,
+#quarto-header .navbar .container-fluid {
   min-height: 58px;
-  max-width: 1040px;
+  width: min(100% - 3rem, 1240px);
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .navbar-brand,
 .navbar-brand.title,
 .navbar-title {
-  font-size: 1.12rem !important;
+  font-size: 1.3rem !important;
   font-weight: 550 !important;
   letter-spacing: 0.02em;
 }
@@ -244,7 +248,7 @@ body.standard-page #title-block-header {
 .navbar-brand .navbar-title,
 .navbar-title,
 .home-name {
-  font-size: 1.12rem !important;
+  font-size: 1.3rem !important;
 }
 
 .home-name {
@@ -690,13 +694,13 @@ body.publications-page main.content {
 #quarto-header .navbar .container,
 #quarto-header .navbar .container-fluid {
   width: 100%;
-  max-width: 1180px !important;
+  max-width: 1240px !important;
   padding-inline: clamp(1rem, 3vw, 2.25rem) !important;
 }
 
 .site-footer-inner {
-  width: min(calc(100% - 2rem), 1180px);
-  max-width: 1180px;
+  width: min(calc(100% - 2rem), 1240px);
+  max-width: 1240px;
 }
 
 /* File-generated news: compact accordions at home, expanded archive by year. */
