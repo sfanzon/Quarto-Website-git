@@ -989,12 +989,7 @@ html[data-bs-theme="dark"] .home-hero::after {
 /* ============================================================
    RESTRAINED PAGE HEADINGS + COMPACT EXPERTISE PAGE
    ============================================================ */
-body.standard-page .compact-page-hero h1,
-body.standard-page .projects-hero h1,
-body.standard-page .publications-hero h1,
-body.standard-page .teaching-hero h1,
-body.standard-page .about-hero h1,
-body.standard-page .expertise-hero h1 {
+body.standard-page .compact-page-hero h1 {
   font-size: clamp(2rem, 3.4vw, 3rem) !important;
   line-height: 1.08 !important;
   letter-spacing: -.035em !important;
