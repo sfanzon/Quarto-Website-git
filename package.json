@@ -11,6 +11,7 @@
     "safety:test": "playwright test tests/safety --project=chromium",
     "cross-browser:test": "playwright test tests/safety/cross-browser.spec.js --project=firefox --project=webkit",
     "visual:baseline": "playwright test tests/visual/capture.spec.js --project=chromium --update-snapshots",
+    "test:generated": "node tests/safety/generated-output-guard.mjs",
     "visual:report": "playwright show-report"
   },
   "repository": {
