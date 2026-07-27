@@ -1,0 +1,711 @@
+/* ==========================================================================
+   NAVBAR — canonical stylesheet
+   ------------------------------------------------------------
+   All navbar styling lives here. Do not add navbar selectors to
+   _01-foundation.scss, _02-editorial.scss, or _03-overrides.scss.
+
+   Light/dark token variables are defined in _00-tokens.scss.
+   ========================================================================== */
+
+/* ==========================================================================
+   Shell
+   ========================================================================== */
+
+#navbar,
+#quarto-header nav.navbar,
+.navbar {
+  width: 100% !important;
+  max-width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  min-height: 56px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  background: color-mix(in srgb, var(--global-navbar-color) 94%, transparent) !important;
+  color: var(--global-navbar-text-color) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--global-navbar-text-color) 12%, transparent) !important;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.07) !important;
+  opacity: 1.0;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Container: constrained inner content */
+
+#quarto-header .navbar .navbar-container,
+#navbar .container,
+#quarto-header .navbar .container,
+#quarto-header .navbar .container-fluid {
+  width: min(calc(100% - 2 * var(--site-chrome-padding)), var(--site-chrome-width));
+  max-width: var(--site-chrome-width);
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 56px !important;
+}
+
+.navbar a,
+.navbar a:hover,
+.navbar a:focus {
+  text-decoration: none !important;
+}
+
+/* ==========================================================================
+   Brand
+   ========================================================================== */
+
+.navbar-brand,
+.navbar-brand.title,
+.navbar-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--global-navbar-text-color) !important;
+  font-size: 1.3rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+  visibility: visible !important;
+  padding: .5rem .9rem !important;
+  min-height: 42px;
+  margin: 0 .15rem 0 0;
+  border-radius: 7px;
+  transition: color .15s ease, background-color .15s ease;
+}
+
+.navbar-brand:hover,
+.navbar-brand:focus,
+.navbar-brand:hover .navbar-title,
+.navbar-brand:focus .navbar-title {
+  color: var(--global-navbar-hover-color) !important;
+}
+
+.navbar-brand:hover,
+.navbar-brand:focus-visible {
+  background: color-mix(in srgb, var(--global-navbar-hover-color) 14%, transparent) !important;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+   Navigation links
+   ========================================================================== */
+
+.navbar-nav {
+  margin-left: auto;
+}
+
+.navbar .nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--global-navbar-text-color) !important;
+  font-size: 0.84rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em;
+  padding: 0 0.5rem !important;
+  border-radius: 7px;
+  transition: color .15s ease, background-color .15s ease;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+  color: var(--global-navbar-hover-color) !important;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus-visible {
+  background: color-mix(in srgb, var(--global-navbar-hover-color) 14%, transparent) !important;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.navbar .nav-link:focus,
+.navbar .dropdown-toggle.show {
+  outline: 0;
+  box-shadow: none !important;
+}
+
+/* Active link */
+
+.navbar .nav-item.active > .nav-link,
+.navbar .nav-link.active,
+.navbar .navbar-nav .nav-item.active > .nav-link {
+  background-color: inherit !important;
+  font-weight: 500 !important;
+  color: var(--global-navbar-active-text-color) !important;
+  text-decoration-line: underline !important;
+  text-decoration-color: currentColor !important;
+  text-decoration-thickness: 1.5px !important;
+  text-underline-offset: .48em !important;
+}
+
+.navbar .nav-item.active > .nav-link::after,
+.navbar .nav-link.active::after {
+  content: none;
+}
+
+.navbar .nav-item.active > .nav-link:hover,
+.navbar .nav-link.active:hover {
+  color: var(--global-navbar-hover-color) !important;
+}
+
+/* ==========================================================================
+   Dropdowns
+   ========================================================================== */
+
+.navbar .dropdown-menu {
+  margin-top: 0 !important;
+  padding: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 10px;
+  background: var(--global-navbar-color) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.navbar .dropdown-item {
+  border-radius: 7px;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.84rem;
+  color: var(--global-navbar-text-color) !important;
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus,
+.navbar .dropdown-item:focus-visible {
+  color: var(--global-navbar-hover-color) !important;
+  background: color-mix(in srgb, var(--global-navbar-hover-color) 14%, transparent) !important;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+   Controls — theme toggle, search
+   ========================================================================== */
+
+.navbar .quarto-color-scheme-toggle,
+.navbar #quarto-search,
+.navbar #quarto-search button,
+.navbar .aa-DetachedSearchButton,
+.navbar .aa-DetachedSearchButtonIcon,
+.navbar .quarto-search-button,
+.navbar .quarto-search-button i {
+  color: var(--global-navbar-text-color) !important;
+  text-decoration: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.navbar .quarto-color-scheme-toggle:hover,
+.navbar .quarto-color-scheme-toggle:focus,
+.navbar #quarto-search:hover,
+.navbar #quarto-search:focus,
+.navbar #quarto-search button:hover,
+.navbar #quarto-search button:focus,
+.navbar .aa-DetachedSearchButton:hover,
+.navbar .aa-DetachedSearchButton:focus,
+.navbar .quarto-search-button:hover,
+.navbar .quarto-search-button:focus {
+  color: var(--global-navbar-hover-color) !important;
+  text-decoration: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Make SVG search icons inherit the same colour */
+.navbar #quarto-search svg,
+.navbar .aa-DetachedSearchButtonIcon svg,
+.navbar .quarto-search-button svg {
+  color: inherit !important;
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+
+/* Colour-scheme toggle (moon/sun) — custom icon */
+
+.navbar .quarto-color-scheme-toggle {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding-left: 0.5rem;
+  padding-right: 0.25rem;
+  margin-left: 1.25rem;
+  margin-right: 0.35rem;
+  color: var(--global-navbar-text-color) !important;
+  text-decoration: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 7px;
+  transition: color .15s ease, background-color .15s ease;
+}
+
+.navbar .quarto-color-scheme-toggle:hover,
+.navbar .quarto-color-scheme-toggle:focus {
+  color: var(--global-navbar-hover-color) !important;
+  text-decoration: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.navbar .quarto-color-scheme-toggle:hover,
+.navbar .quarto-color-scheme-toggle:focus-visible {
+  background: color-mix(in srgb, var(--global-navbar-hover-color) 14%, transparent) !important;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+/* Kill the Bootstrap Icons font glyph completely */
+.navbar .quarto-color-scheme-toggle .bi,
+.navbar .quarto-color-scheme-toggle:hover .bi,
+.navbar .quarto-color-scheme-toggle:focus .bi {
+  font-size: 0 !important;
+  line-height: 0 !important;
+  width: 1.3rem;
+  height: 1.5rem;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+/* Base custom icon container */
+.navbar .quarto-color-scheme-toggle .bi::before,
+.navbar .quarto-color-scheme-toggle:hover .bi::before,
+.navbar .quarto-color-scheme-toggle:focus .bi::before {
+  content: "" !important;
+  font-family: initial !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  display: inline-block !important;
+  background-color: currentColor !important;
+  background-image: none !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+  mask-repeat: no-repeat !important;
+  mask-position: center !important;
+  mask-size: contain !important;
+  -webkit-mask-repeat: no-repeat !important;
+  -webkit-mask-position: center !important;
+  -webkit-mask-size: contain !important;
+}
+
+/* Light mode: filled moon */
+body.quarto-light .navbar .quarto-color-scheme-toggle .bi::before,
+body.quarto-light .navbar .quarto-color-scheme-toggle:hover .bi::before,
+body.quarto-light .navbar .quarto-color-scheme-toggle:focus .bi::before,
+.navbar .quarto-color-scheme-toggle:not(.alternate) .bi::before,
+.navbar .quarto-color-scheme-toggle:not(.alternate):hover .bi::before,
+.navbar .quarto-color-scheme-toggle:not(.alternate):focus .bi::before {
+  width: 1.1rem !important;
+  height: 1.1rem !important;
+  position: relative;
+  top: 0.12rem;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z'/%3E%3C/svg%3E") !important;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z'/%3E%3C/svg%3E") !important;
+}
+
+/* Dark mode: filled sun */
+body.quarto-dark .navbar .quarto-color-scheme-toggle .bi::before,
+body.quarto-dark .navbar .quarto-color-scheme-toggle:hover .bi::before,
+body.quarto-dark .navbar .quarto-color-scheme-toggle:focus .bi::before,
+.navbar .quarto-color-scheme-toggle.alternate .bi::before,
+.navbar .quarto-color-scheme-toggle.alternate:hover .bi::before,
+.navbar .quarto-color-scheme-toggle.alternate:focus .bi::before {
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  position: relative;
+  top: 0.16rem;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z'/%3E%3Cpath d='M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 16 8zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z'/%3E%3C/svg%3E") !important;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z'/%3E%3Cpath d='M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 16 8zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.414a.5.5 0 1 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z'/%3E%3C/svg%3E") !important;
+}
+
+/* Toggle icon mobile alignment */
+@media (max-width: 991.98px) {
+  body.quarto-light .navbar .quarto-color-scheme-toggle .bi::before,
+  body.quarto-light .navbar .quarto-color-scheme-toggle:hover .bi::before,
+  body.quarto-light .navbar .quarto-color-scheme-toggle:focus .bi::before,
+  .navbar .quarto-color-scheme-toggle:not(.alternate) .bi::before,
+  .navbar .quarto-color-scheme-toggle:not(.alternate):hover .bi::before,
+  .navbar .quarto-color-scheme-toggle:not(.alternate):focus .bi::before {
+    top: 0.05rem;
+  }
+
+  body.quarto-dark .navbar .quarto-color-scheme-toggle .bi::before,
+  body.quarto-dark .navbar .quarto-color-scheme-toggle:hover .bi::before,
+  body.quarto-dark .navbar .quarto-color-scheme-toggle:focus .bi::before,
+  .navbar .quarto-color-scheme-toggle.alternate .bi::before,
+  .navbar .quarto-color-scheme-toggle.alternate:hover .bi::before,
+  .navbar .quarto-color-scheme-toggle.alternate:focus .bi::before {
+    top: 0.09rem;
+  }
+}
+
+/* Search icon consistency */
+
+.navbar .aa-DetachedSearchButton,
+.navbar .aa-DetachedSearchButtonIcon,
+.navbar .aa-DetachedSearchButtonIcon svg,
+.navbar .aa-SubmitIcon,
+.navbar .aa-SubmitIcon svg,
+.navbar .bi-search,
+.navbar .bi-search::before,
+.navbar #quarto-search,
+.navbar #quarto-search button,
+.navbar #quarto-search svg {
+  color: var(--global-navbar-text-color) !important;
+  fill: currentColor !important;
+  stroke: currentColor !important;
+  text-decoration: none !important;
+}
+
+.navbar .aa-DetachedSearchButton:hover,
+.navbar .aa-DetachedSearchButton:focus,
+.navbar .aa-DetachedSearchButton:hover .aa-DetachedSearchButtonIcon,
+.navbar .aa-DetachedSearchButton:focus .aa-DetachedSearchButtonIcon,
+.navbar .aa-DetachedSearchButton:hover .aa-DetachedSearchButtonIcon svg,
+.navbar .aa-DetachedSearchButton:focus .aa-DetachedSearchButtonIcon svg,
+.navbar .aa-SubmitIcon:hover,
+.navbar .aa-SubmitIcon:focus,
+.navbar .bi-search:hover,
+.navbar .bi-search:focus,
+.navbar #quarto-search:hover,
+.navbar #quarto-search:focus,
+.navbar #quarto-search button:hover,
+.navbar #quarto-search button:focus,
+.navbar #quarto-search:hover svg,
+.navbar #quarto-search:focus svg {
+  color: var(--global-navbar-hover-color) !important;
+  fill: currentColor !important;
+  stroke: currentColor !important;
+  text-decoration: none !important;
+}
+
+.navbar #quarto-search:hover,
+.navbar #quarto-search:focus-within {
+  background: color-mix(in srgb, var(--global-navbar-hover-color) 14%, transparent) !important;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+   Collapsed / mobile navigation
+   ========================================================================== */
+
+@media (max-width: 991.98px) {
+  #quarto-header .navbar > .container,
+  #quarto-header .navbar > .container-fluid,
+  #navbar .container,
+  #navbar .container-fluid,
+  .navbar > .container,
+  .navbar > .container-fluid {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    width: 100%;
+  }
+
+  /* Brand/title on the left */
+  #quarto-header .navbar-brand,
+  .navbar-brand {
+    order: 1 !important;
+    flex: 0 1 auto !important;
+    min-width: 0;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    white-space: nowrap;
+  }
+
+  #quarto-header .navbar-title,
+  .navbar-title {
+    margin: 0 !important;
+  }
+
+  /* Quarto tools wrapper: push sun/search to the right */
+  #quarto-header .quarto-navbar-tools,
+  .navbar .quarto-navbar-tools,
+  .quarto-navbar-tools {
+    order: 2 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    flex: 0 0 auto !important;
+    margin-left: auto !important;
+    margin-right: 0.55rem !important;
+    gap: 0.55rem !important;
+  }
+
+  /* Individual theme/search controls */
+  #quarto-header .quarto-color-scheme-toggle,
+  #quarto-header #quarto-search,
+  #quarto-header .quarto-search-button,
+  #quarto-header .aa-DetachedSearchButton,
+  .navbar .quarto-color-scheme-toggle,
+  .navbar #quarto-search,
+  .navbar .quarto-search-button,
+  .navbar .aa-DetachedSearchButton {
+    position: static !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+  }
+
+  /* Search wrapper sometimes carries extra layout width */
+  #quarto-header #quarto-search,
+  .navbar #quarto-search {
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  /* Hamburger at the far right */
+  #quarto-header .navbar-toggler,
+  .navbar-toggler {
+    order: 3 !important;
+    flex: 0 0 auto !important;
+    margin-left: .9rem !important;
+    margin-right: 0 !important;
+    position: static !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    border-radius: 7px;
+    transition: color .15s ease, background-color .15s ease;
+  }
+
+  /* Collapsed navigation below — absolute positioning */
+  #quarto-header .navbar-collapse,
+  .navbar-collapse {
+    order: 10 !important;
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    flex: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: var(--global-navbar-color) !important;
+    border-top: 1px solid var(--global-divider-color);
+    border-top: 0 !important;
+    z-index: 1050;
+    transform: none !important;
+  }
+
+  #quarto-header .navbar-collapse.show,
+  .navbar-collapse.show {
+    margin-top: 0 !important;
+  }
+
+  #quarto-header .navbar-collapse .navbar-nav,
+  .navbar-collapse .navbar-nav {
+    width: 100%;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    align-items: stretch !important;
+    padding: .75rem 1rem 1rem;
+  }
+
+  #quarto-header .navbar-collapse .nav-link,
+  .navbar-collapse .nav-link {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding: .62rem .75rem !important;
+    text-align: left !important;
+    width: 100%;
+  }
+
+  .navbar-collapse .navbar-nav > .nav-item,
+  .navbar-collapse .navbar-nav > .nav-item > .nav-link,
+  .navbar-collapse .dropdown-menu,
+  .navbar-collapse .dropdown-item {
+    width: 100%;
+  }
+
+  /* Shell and container shrink in height */
+  #navbar,
+  #quarto-header nav.navbar,
+  .navbar,
+  #navbar .container,
+  #quarto-header .navbar .container {
+    min-height: 56px !important;
+  }
+
+  #quarto-header .navbar > .container,
+  #quarto-header .navbar > .container-fluid,
+  .navbar > .container,
+  .navbar > .container-fluid {
+    position: static !important;
+  }
+
+  #navbar,
+  #quarto-header nav.navbar,
+  .navbar {
+    position: relative;
+  }
+
+  .navbar .nav-link {
+    min-height: auto;
+    width: 100%;
+    padding: 0.62rem 0 !important;
+    font-size: 0.92rem !important;
+  }
+
+  /* Dropdown inside mobile menu */
+  .navbar .dropdown-menu {
+    width: 100%;
+    margin: 0.15rem 0 0.35rem !important;
+    padding: 0 0 0 0.8rem;
+    border: 0;
+    border-left: 1px solid var(--global-divider-color);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .navbar-collapse .dropdown-menu {
+    padding-left: .8rem;
+  }
+
+  .navbar-collapse .dropdown-item {
+    color: var(--global-navbar-text-color);
+  }
+}
+
+/* ==========================================================================
+   Mobile container width for very small viewports
+   ========================================================================== */
+
+@media (max-width: 767.98px) {
+  #navbar .container,
+  #quarto-header .navbar .container,
+  #quarto-header .navbar .container-fluid {
+    width: calc(100% - 2rem);
+    max-width: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* ==========================================================================
+   Desktop navigation refinements
+   ========================================================================== */
+
+@media (min-width: 992px) {
+  .navbar .navbar-nav {
+    align-items: center;
+    gap: .12rem;
+  }
+
+  .navbar .nav-link {
+    min-height: 38px;
+    padding-inline: .65rem !important;
+  }
+}
+
+/* ==========================================================================
+   Navbar toggler (hamburger / X icon)
+   ========================================================================== */
+
+@media (max-width: 991.98px) {
+  /* Burger button: same colour behaviour as moon/sun */
+  .navbar .navbar-toggler {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    color: var(--global-navbar-text-color) !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .navbar .navbar-toggler:hover,
+  .navbar .navbar-toggler:focus {
+    color: var(--global-navbar-hover-color) !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .navbar .navbar-toggler:hover,
+  .navbar .navbar-toggler:focus-visible {
+    background: color-mix(in srgb, var(--global-navbar-hover-color) 14%, transparent) !important;
+    outline: 0;
+    box-shadow: none !important;
+  }
+
+  /*
+   * Three-bar burger.
+   * The centre bar is the background gradient.
+   * ::before and ::after are the top and bottom bars.
+   */
+  .navbar .navbar-toggler-icon {
+    position: relative;
+    display: inline-block;
+    width: 22px;
+    height: 14px;
+    background-image:
+      linear-gradient(currentColor, currentColor) !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 22px 2px !important;
+    transition: background-size 0.2s ease;
+  }
+
+  .navbar .navbar-toggler-icon::before,
+  .navbar .navbar-toggler-icon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: currentColor;
+    border-radius: 1px;
+    transition: transform 0.2s ease;
+  }
+
+  .navbar .navbar-toggler-icon::before {
+    top: 0;
+    transform-origin: center;
+  }
+
+  .navbar .navbar-toggler-icon::after {
+    bottom: 0;
+    transform-origin: center;
+  }
+
+  /* Open menu: turn the burger into an X */
+  .navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+    background-size: 0 2px !important;
+  }
+
+  .navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+    top: 6px;
+    transform: rotate(45deg);
+  }
+
+  .navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+    top: 6px;
+    bottom: auto;
+    transform: rotate(-45deg);
+  }
+
+  /* Closed menu: restore the three bars */
+  .navbar .navbar-toggler[aria-expanded="false"] .navbar-toggler-icon {
+    background-size: 22px 2px !important;
+  }
+
+  .navbar .navbar-toggler[aria-expanded="false"] .navbar-toggler-icon::before,
+  .navbar .navbar-toggler[aria-expanded="false"] .navbar-toggler-icon::after {
+    transform: rotate(0);
+  }
+}

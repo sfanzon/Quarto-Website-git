@@ -1,48 +1,3 @@
-/* ===== ChatGPT navbar fixes ===== */
-
-/* Navbar dropdown matches navbar */
-.navbar .dropdown-menu,
-.navbar-nav .dropdown-menu{
-  background: var(--global-navbar-color) !important;
-  border: 1px solid rgba(255,255,255,.08);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
-/* Brand height matches nav items */
-.navbar-brand{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:.5rem .9rem !important;
-  min-height:42px;
-  line-height:1;
-  margin:0 .15rem 0 0;
-}
-
-.navbar-nav .nav-link{
-  display:flex;
-  align-items:center;
-  min-height:42px;
-}
-
-/* ===== Final requested refinements ===== */
-
-/* Keep dropdown text consistent with the main navbar links. */
-.navbar .dropdown-menu .dropdown-item,
-.navbar-nav .dropdown-menu .dropdown-item {
-  color: var(--global-navbar-text-color) !important;
-}
-
-.navbar .dropdown-menu .dropdown-item:hover,
-.navbar .dropdown-menu .dropdown-item:focus,
-.navbar .dropdown-menu .dropdown-item:focus-visible,
-.navbar-nav .dropdown-menu .dropdown-item:hover,
-.navbar-nav .dropdown-menu .dropdown-item:focus,
-.navbar-nav .dropdown-menu .dropdown-item:focus-visible {
-  color: var(--global-navbar-hover-color) !important;
-}
-
 /* Give the homepage news band matching space above and below. */
 .home-page .news-preview {
   padding-top: clamp(2rem, 4vw, 3.25rem);
@@ -1405,14 +1360,6 @@ body.home-page .expertise-preview-header h2 {
 /* ============================================================
    COLE-LYONS-INSPIRED EDITORIAL DETAILS
    ============================================================ */
-
-/* A slightly lower, more deliberate active navigation underline. */
-.navbar .nav-item.active > .nav-link,
-.navbar .nav-link.active,
-.navbar .navbar-nav .nav-item.active > .nav-link {
-  text-underline-offset: .48em !important;
-  text-decoration-thickness: 1.5px !important;
-}
 
 /* ============================================================
    2026 PUBLICATION LAYOUT
