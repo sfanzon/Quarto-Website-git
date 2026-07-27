@@ -129,7 +129,8 @@ body.home-page .home-role span {
 }
 
 /* Three visible projects: no hidden carousel content. */
-.home-project-grid {
+.home-project-grid,
+.projects-card-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(1rem, 2vw, 1.4rem);
@@ -575,7 +576,8 @@ body.home-page .home-role span {
 
 /* Mobile: section destinations come after content, never before it. */
 @media (max-width: 767.98px) {
-  .home-project-grid { grid-template-columns: 1fr; }
+  .home-project-grid,
+  .projects-card-grid { grid-template-columns: 1fr; }
   .home-project-visual { min-height: 150px; }
   .home-project-visual img { height: 135px; }
   body.home-page .home-editorial-section,
@@ -742,10 +744,10 @@ body.project-detail-page main.content > ol,
 body.project-detail-page main.content > ul,
 body.project-detail-page main.content > figure,
 body.project-detail-page main.content > details {
-  max-width: 820px;
+  max-width: var(--site-reading-width);
 }
 body.project-detail-page main.content h2 {
-  max-width: 820px;
+  max-width: var(--site-reading-width);
   margin-top: clamp(2.8rem, 6vw, 4.8rem);
   margin-bottom: 1rem;
   padding-top: .95rem;
@@ -792,7 +794,7 @@ body.project-detail-page .quarto-navigation-tool { display: none; }
 
 /* F1 dual-page project presentation and visible archive — July 2026 */
 .headline-box {
-  max-width: 820px;
+  max-width: var(--site-reading-width);
   margin: 1.4rem 0 2rem;
   padding: 1rem 1.25rem;
   border-left: 4px solid var(--global-theme-color);
@@ -804,7 +806,7 @@ body.project-detail-page .quarto-navigation-tool { display: none; }
 .headline-box p { margin: 0; }
 .project-workflow {
   display: grid;
-  max-width: 820px;
+  max-width: var(--site-reading-width);
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1px;
   margin: 1.6rem 0 2.2rem;
@@ -876,12 +878,6 @@ body.archived-project-page .project-detail-hero {
 }
 /* Shared YAML-driven project cards — July 2026
    Homepage and Projects page use the exact same card component and visual rules. */
-.projects-card-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1rem, 2vw, 1.4rem);
-}
-
 body.projects-page .projects-positioning {
   margin-bottom: clamp(1.8rem, 3.5vw, 2.8rem);
 }
@@ -910,6 +906,3 @@ body.project-detail-page .project-detail-hero .eyebrow {
   letter-spacing: .105em;
 }
 
-@media (max-width: 767.98px) {
-  .projects-card-grid { grid-template-columns: 1fr; }
-}

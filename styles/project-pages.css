@@ -36,11 +36,11 @@ body.project-detail-page nav#TOC {
 }
 
 body.project-detail-page main.content {
-  width: min(1180px, 100%);
-  max-width: 1180px;
+  width: min(var(--site-content-width), 100%);
+  max-width: var(--site-content-width);
   margin-inline: auto;
   padding-top: clamp(.7rem, 1.5vw, 1.2rem);
-  padding-inline: clamp(1rem, 3vw, 2.25rem);
+  padding-inline: var(--site-content-gutter);
   background: transparent;
   box-sizing: border-box;
 }
@@ -379,7 +379,7 @@ body.project-detail-page main.content > .headline-box,
 body.project-detail-page main.content > .project-role-note,
 body.project-detail-page main.content > .f1-source-actions,
 body.project-detail-page main.content > .f1-snapshot-note {
-  width: min(820px, 100%);
+  width: min(var(--site-reading-width), 100%);
 }
 body.project-detail-page .project-evidence-strip,
 body.project-detail-page .project-resource-map {
@@ -407,7 +407,7 @@ body.project-detail-page main.content h2 {
   font-size: clamp(1.38rem, 2.15vw, 1.85rem);
 }
 body.project-detail-page main.content h3 {
-  max-width: 820px;
+  max-width: var(--site-reading-width);
   margin-top: 2rem;
   font-size: 1.08rem;
   letter-spacing: -.015em;
@@ -547,7 +547,7 @@ body.project-detail-page main.content .project-related-heading h2 {
 .project-related-label {
   align-self: start;
   color: var(--homepage-orange-accent, var(--global-theme-color));
-  font-size: .5rem;
+  font-size: .54rem;
   font-weight: 760;
   letter-spacing: .085em;
   line-height: 1.2;
@@ -555,9 +555,9 @@ body.project-detail-page main.content .project-related-heading h2 {
 }
 .project-related-card strong {
   align-self: start;
-  font-size: .82rem;
+  font-size: .94rem;
   font-weight: 680;
-  line-height: 1.24;
+  line-height: 1.25;
   letter-spacing: -.01em;
 }
 .project-related-card small {
@@ -565,8 +565,8 @@ body.project-detail-page main.content .project-related-heading h2 {
   align-self: start;
   overflow: hidden;
   color: var(--project-ink-muted);
-  font-size: .67rem;
-  line-height: 1.35;
+  font-size: .76rem;
+  line-height: 1.42;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
@@ -574,17 +574,17 @@ body.project-detail-page main.content .project-related-heading h2 {
   align-self: end;
   margin-top: .45rem;
   color: var(--homepage-orange-accent, var(--global-theme-color));
-  font-size: .62rem;
+  font-size: .7rem;
   font-weight: 700;
 }
 
 .project-end-footer {
-  width: min(820px, 100%);
+  width: min(var(--site-reading-width), 100%);
   margin: .75rem auto .4rem;
 }
 
 .project-page-end {
-  width: min(820px, 100%);
+  width: min(var(--site-reading-width), 100%);
   margin: 1.4rem auto .4rem;
 }
 
@@ -817,43 +817,26 @@ body.project-detail-page main.content > .references,
 body.project-detail-page main.content > .csl-bib-body,
 body.project-detail-page main.content .references,
 body.project-detail-page main.content .csl-bib-body {
-  width: min(820px, 100%);
-  max-width: 820px;
+  width: min(var(--site-reading-width), 100%);
+  max-width: var(--site-reading-width);
   margin-left: auto;
   margin-right: auto;
 }
 
 body.project-detail-page main.content > .project-page-end,
 body.project-detail-page .project-page-end {
-  width: min(820px, 100%) !important;
-  max-width: 820px !important;
+  width: min(var(--site-reading-width), 100%) !important;
+  max-width: var(--site-reading-width) !important;
   margin-left: auto !important;
   margin-right: auto !important;
 }
 
 body.project-detail-page .project-page-end .project-resource-map,
 body.project-detail-page .project-resource-map-end {
-  width: min(820px, 100%) !important;
-  max-width: 820px !important;
+  width: min(var(--site-reading-width), 100%) !important;
+  max-width: var(--site-reading-width) !important;
   margin-left: auto !important;
   margin-right: auto !important;
-}
-
-/* The related cards now have enough room to read like recommendations rather
-   than metadata. Their geometry remains unchanged. */
-.project-related-label {
-  font-size: .54rem;
-}
-.project-related-card strong {
-  font-size: .94rem;
-  line-height: 1.25;
-}
-.project-related-card small {
-  font-size: .76rem;
-  line-height: 1.42;
-}
-.project-related-action {
-  font-size: .7rem;
 }
 
 @media (max-width: 720px) {

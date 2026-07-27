@@ -61,6 +61,11 @@
   /* Shared site chrome */
   --site-chrome-width: 1240px;
   --site-chrome-padding: 1.5rem;
+
+  /* Site layout */
+  --site-content-width: 1180px;
+  --site-reading-width: 820px;
+  --site-content-gutter: clamp(1rem, 3vw, 2.25rem);
 }
 
 body.quarto-dark {

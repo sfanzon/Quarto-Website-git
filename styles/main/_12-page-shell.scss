@@ -30,10 +30,10 @@ main.content,
 .page-columns .content {
   display: block !important;
   width: 100%;
-  max-width: 1180px !important;
+  max-width: var(--site-content-width) !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  padding-inline: clamp(1rem, 3vw, 2.25rem) !important;
+  padding-inline: var(--site-content-gutter) !important;
   box-sizing: border-box;
   min-width: 0;
 }
