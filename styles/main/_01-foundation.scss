@@ -512,7 +512,7 @@ body.publications-page main.content {
   content: none;
 }
 .paper-meta { color:var(--global-text-color-light); margin-bottom:1.2rem; }
-.paper-actions { display:flex; flex-wrap:wrap; gap:.8rem 1.1rem; align-items:center; }
+.paper-actions { display:flex; flex-wrap:wrap; align-items:center; }
 .paper-action { color:var(--global-theme-color); font-weight:600; }
 .paper-action { border:0; background:transparent; padding:0; cursor:pointer; }
 .news-preview { border-top:1px solid var(--global-divider-color); padding-top:2rem; }
