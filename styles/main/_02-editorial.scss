@@ -105,10 +105,6 @@ body.standard-page #title-block-header {
    PUBLICATION LIST — QUIET EDITORIAL REVISION
    ============================================================ */
 
-.home-lead strong {
-  font-weight: 600;
-}
-
 /* Publications are a continuous typographic list, not cards. */
 .publications-page .publication-category-list {
   border: 0 !important;
@@ -376,7 +372,6 @@ body.home-page main.content {
   margin-bottom: 0 !important;
 }
 
-.home-lead,
 .home-summary {
   max-width: 42rem;
 }
