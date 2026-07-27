@@ -1,11 +1,6 @@
 /* ============================================================
    PROJECTS + PUBLICATIONS PAGES — COMPACT EDITORIAL LAYOUT
    ============================================================ */
-body.standard-page main.content {
-  max-width: 1180px;
-  padding-inline: clamp(1rem, 3vw, 2.25rem) !important;
-}
-
 /* Standard pages provide one shared editorial header. Quarto's automatic
    title block would otherwise repeat the page title above it. */
 body.standard-page #title-block-header {
@@ -455,17 +450,6 @@ body.standard-page #title-block-header {
   }
 }
 
-/* One shared Apple-like content measure: full-width bars, aligned interiors. */
-main.content,
-.page-columns .content,
-body.home-page main.content,
-body.projects-page main.content,
-body.publications-page main.content {
-  width: 100%;
-  max-width: 1180px !important;
-  padding-inline: clamp(1rem, 3vw, 2.25rem) !important;
-}
-
 /* File-generated news: compact accordions at home, expanded archive by year. */
 .news-preview {
   border-top: 1px solid var(--global-divider-color);
@@ -483,8 +467,6 @@ body.home-page main.content {
   flex-direction: column;
   margin-bottom: 0 !important;
 }
-
-.news-page main.content { max-width: 1180px !important; }
 
 @media (max-width: 680px) {
   .home-page .section-heading {

@@ -1,0 +1,51 @@
+/* ==========================================================================
+   PAGE SHELL — canonical stylesheet
+   ------------------------------------------------------------
+   Owns the global outer Quarto content measure and viewport gutters.
+   Component and reading/prose widths belong elsewhere.
+   ========================================================================== */
+
+/* ==========================================================================
+   Outer Quarto fluid containers
+   ========================================================================== */
+
+/* Make Quarto behave like a fluid page container (unconstrained outer shell) */
+#quarto-content,
+.page-columns {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* ==========================================================================
+   Main content measure
+   ------------------------------------------------------------
+   The canonical outer page width and horizontal gutter for every page.
+   Component-level reading/prose measures are narrower and belong elsewhere.
+   ========================================================================== */
+
+main.content,
+.page-columns .content {
+  display: block !important;
+  width: 100%;
+  max-width: 1180px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-inline: clamp(1rem, 3vw, 2.25rem) !important;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+/* Page-scoped reinforcement of the canonical outer measure.
+   These ensure that body-class-specific overrides (such as
+   historical homepage/projects/publications widths) do not
+   accidentally escape the global shell. */
+body.home-page main.content,
+body.projects-page main.content,
+body.publications-page main.content {
+  width: 100%;
+  max-width: 1180px !important;
+  padding-inline: clamp(1rem, 3vw, 2.25rem) !important;
+}

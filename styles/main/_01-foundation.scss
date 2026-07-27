@@ -2,8 +2,8 @@
    CSS RULES START HERE
    ------------------------------------------------------------
    Everything below is normal CSS emitted into the final website.
-   These rules control the al-folio-like layout, navbar, cards,
-   footer, and the native Quarto light/dark toggle.
+   These rules control the al-folio-like layout and typography.
+   Page shell ownership lives in _12-page-shell.scss.
    ============================================================ */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');
 @import url('https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css');
@@ -14,9 +14,8 @@
    PAGE SHELL AND GLOBAL LAYOUT
    ------------------------------------------------------------
    Makes the page fill the viewport, keeps the footer at the bottom,
-   sets the global background/text colours, constrains the main
-   Quarto content area, and prevents anchors from hiding behind the
-   fixed navbar.
+   sets the global background/text colours, and prevents anchors from
+   hiding behind the fixed navbar.
    ============================================================ */
 
 html {
@@ -102,43 +101,11 @@ b {
 
 
 /* ============================================================
-   LINKS AND MAIN CONTENT WIDTH
+   LINKS
    ------------------------------------------------------------
-   Applies the accent colour to links and keeps the central content
-   column at the same width as the navbar container.
+   Applies the accent colour to links.
    ============================================================ */
 
-/* Make Quarto behave like a normal Jekyll/al-folio page container */
-#quarto-content,
-.page-columns {
-  display: block !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-/* Main content column: old Jekyll-style centered container */
-main.content,
-.page-columns .content {
-  display: block !important;
-  max-width: 960px;
-  width: 100%;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  padding-left: 15px !important;
-  padding-right: 15px !important;
-  box-sizing: border-box;
-  min-width: 0;
-}
-
-/* Optional wider homepage, closer to your old homepage feel */
-body.home-page main.content,
-body.home-page .page-columns .content {
-  max-width: 1040px;
-}
-
-/* Links */
 a,
 table.table a {
   color: var(--global-theme-color);
@@ -149,6 +116,13 @@ a:hover,
 table.table a:hover {
   color: var(--global-hover-color);
   text-decoration: none;
+}
+
+body.standard-page .page-hero p a,
+body.project-detail-page main.content p a.uri {
+  text-decoration: underline;
+  text-decoration-thickness: .08em;
+  text-underline-offset: .16em;
 }
 
 /* ============================================================
@@ -177,13 +151,6 @@ table.table a:hover {
   text-align: right;
   font-size: 1.65rem;
   font-weight: 400;
-}
-
-body.standard-page .page-hero p a,
-body.project-detail-page main.content p a.uri {
-  text-decoration: underline;
-  text-decoration-thickness: .08em;
-  text-underline-offset: .16em;
 }
 
 .publication-entry.row {
