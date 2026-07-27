@@ -128,7 +128,10 @@ For project pages, preserve the intended hierarchy:
 7. Explore Project navigation where applicable;
 8. article.
 
-Standard project prose width: **760 px**. Wider figures, code, tables and diagrams are allowed when useful.
+Site shell: 1180 px.
+General reading / mixed content: 820 px.
+Sustained prose: 720 px.
+Use the width appropriate to the content type, not mechanically to the page name.
 
 ## CSS / Quarto
 
