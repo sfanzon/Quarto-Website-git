@@ -1,0 +1,289 @@
+/* ==========================================================================
+   HOMEPAGE HERO — canonical stylesheet
+   ------------------------------------------------------------
+   Owns only the opening homepage identity/portrait hero.
+   Other homepage sections belong elsewhere.
+   ========================================================================== */
+
+/* ==========================================================================
+   Homepage shell interaction
+   ========================================================================== */
+
+/* Remove default Quarto title-block gap above the hero */
+.home-page #title-block-header {
+  display: none !important;
+}
+
+body.home-page {
+  padding-top: 58px !important;
+}
+
+body.home-page #quarto-content,
+body.home-page main.content {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* ==========================================================================
+   Hero layout
+   ========================================================================== */
+
+.home-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.86fr) minmax(360px, 1.35fr);
+  gap: clamp(3rem, 7vw, 7rem);
+  align-items: center;
+}
+
+body.home-page .home-hero {
+  margin-top: 0 !important;
+  min-height: calc(100svh - 58px) !important;
+  box-sizing: border-box;
+  padding-top: clamp(2rem, 5vh, 4rem) !important;
+  padding-bottom: clamp(2rem, 5vh, 4rem) !important;
+}
+
+body.home-page .home-hero::before {
+  top: 0 !important;
+}
+
+/* Make hero children layer above the animated pseudos */
+.home-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Animated background
+   ========================================================================== */
+
+.home-hero::before,
+.home-hero::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 100vw;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.home-hero::before {
+  inset-block: 0;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(circle at 16% 30%, rgba(196, 112, 74, .11), transparent 40%),
+    radial-gradient(circle at 82% 38%, rgba(188, 154, 103, .09), transparent 38%),
+    linear-gradient(180deg, #fdfaf6 0%, #f7f1e9 58%, var(--global-bg-color) 100%);
+  background-size: 115% 115%, 120% 120%, 100% 100%;
+  animation: home-hero-gradient-drift 22s ease-in-out infinite alternate;
+}
+
+.home-hero::after {
+  top: 8%;
+  bottom: 10%;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(circle at 27% 44%, rgba(196, 112, 74, .065), transparent 30%),
+    radial-gradient(circle at 72% 52%, rgba(188, 154, 103, .055), transparent 29%);
+  filter: blur(42px);
+  animation: home-hero-glow-drift 18s ease-in-out infinite alternate;
+}
+
+@keyframes home-hero-gradient-drift {
+  from { background-position: 0% 0%, 100% 5%, 0 0; }
+  to   { background-position: 8% 5%, 91% 0%, 0 0; }
+}
+
+@keyframes home-hero-glow-drift {
+  from { transform: translateX(-52%) scale(1); }
+  to   { transform: translateX(-48%) scale(1.07); }
+}
+
+/* ==========================================================================
+   Portrait
+   ========================================================================== */
+
+.home-portrait {
+  width: 100%;
+  max-height: 68vh;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+body.home-page .home-portrait {
+  object-position: center 24%;
+}
+
+/* ==========================================================================
+   Identity — name
+   ========================================================================== */
+
+.home-name {
+  display: block !important;
+  margin: 0 !important;
+  font-size: clamp(2rem, 3.35vw, 3rem) !important;
+  line-height: 1.04 !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.028em !important;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Identity — role
+   ========================================================================== */
+
+.home-role {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: clamp(2.75rem, 5vw, 5rem) !important;
+  row-gap: .25rem !important;
+  margin: .45rem 0 0 !important;
+}
+
+.home-role,
+.home-role span {
+  color: var(--homepage-orange-accent) !important;
+  font-size: clamp(1rem, 1.35vw, 1.22rem) !important;
+  font-weight: 620 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -.01em !important;
+  text-transform: none !important;
+}
+
+/* ==========================================================================
+   Identity — degree
+   ========================================================================== */
+
+.home-degree {
+  display: inline;
+  margin-left: .38rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--global-text-color-light);
+  font-size: .36em !important;
+  font-weight: 540 !important;
+  letter-spacing: .045em;
+  line-height: 1;
+  vertical-align: .42em !important;
+}
+
+/* ==========================================================================
+   Identity — lead
+   ========================================================================== */
+
+.home-lead {
+  font-size: 1.08rem !important;
+  line-height: 1.75;
+  max-width: 42rem;
+}
+
+/* ==========================================================================
+   Profile links
+   ========================================================================== */
+
+.home-profile-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem 1.35rem;
+  margin-top: 1.15rem !important;
+  margin-bottom: 0 !important;
+  padding-top: 1.15rem;
+  padding-bottom: 0 !important;
+  border-top: 1px solid var(--global-divider-color);
+  border-bottom: 0 !important;
+  font-size: .92rem;
+}
+
+.home-profile-links a {
+  color: var(--global-text-color);
+  font-weight: 600 !important;
+  text-decoration: none;
+  font-size: .92rem !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.home-profile-links a::after {
+  content: "" !important;
+}
+
+.home-profile-links a:hover {
+  color: var(--global-theme-color);
+}
+
+/* ==========================================================================
+   Dark mode
+   ========================================================================== */
+
+[data-mode="dark"] .home-hero::before,
+.quarto-dark .home-hero::before {
+  background:
+    radial-gradient(circle at 16% 30%, rgba(193, 95, 60, .12), transparent 40%),
+    radial-gradient(circle at 82% 38%, rgba(169, 132, 82, .08), transparent 38%),
+    linear-gradient(180deg, #26211d 0%, #29241f 58%, var(--global-bg-color) 100%);
+}
+
+/* ==========================================================================
+   Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero::before,
+  .home-hero::after {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   Responsive — 767.98px
+   ========================================================================== */
+
+@media (max-width: 767.98px) {
+  .home-hero {
+    gap: 1.35rem !important;
+  }
+
+  body.home-page .home-hero {
+    min-height: auto !important;
+  }
+
+  .home-portrait {
+    width: min(78vw, 330px) !important;
+    height: auto !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    margin-inline: auto !important;
+  }
+
+  .home-name {
+    font-size: clamp(1.9rem, 9.2vw, 2.65rem) !important;
+    letter-spacing: -.04em !important;
+    white-space: normal !important;
+  }
+
+  .home-role {
+    column-gap: 2rem !important;
+    margin-bottom: 1.55rem !important;
+  }
+
+  .home-lead {
+    font-size: 1.08rem !important;
+    line-height: 1.44 !important;
+  }
+
+  .home-degree {
+    margin-left: .28rem;
+    font-size: .34em !important;
+  }
+
+  .home-profile-links a {
+    font-size: .9rem !important;
+  }
+}

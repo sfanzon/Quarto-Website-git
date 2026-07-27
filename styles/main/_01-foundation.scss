@@ -2,8 +2,11 @@
    CSS RULES START HERE
    ------------------------------------------------------------
    Everything below is normal CSS emitted into the final website.
-   These rules control the al-folio-like layout and typography.
-   Page shell ownership lives in _12-page-shell.scss.
+   These rules control generic layout, typography, links,
+   publications, callouts and editorial components.
+   Component ownership lives in dedicated stylesheets:
+     _10-navbar.scss, _11-footer.scss, _12-page-shell.scss,
+     _13-home-hero.scss.
    ============================================================ */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');
 @import url('https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css');
@@ -131,9 +134,6 @@ body.project-detail-page main.content p a.uri {
    Styles publication lists, year headings, badges, previews,
    author/venue metadata, abstract/bibtex reveal blocks, code blocks,
    and the publication search/filter toolbar.
-
-   Also prevents Bootstrap .row publication entries from overflowing
-   the page on desktop and mobile.
    ============================================================ */
 
 .publications {
@@ -418,7 +418,10 @@ blockquote.block-danger h6 {
   color: var(--global-danger-block-title);
 }
 /* ============================================================
-   2026 EDITORIAL HOMEPAGE + PUBLICATIONS
+   HOMEPAGE SECTION SHARED RULES
+   ------------------------------------------------------------
+   Eyebrow labels, section layout, compact heroes.
+   (The opening hero itself is owned by _13-home-hero.scss.)
    ============================================================ */
 body.home-page main.content,
 body.publications-page main.content {
@@ -426,21 +429,6 @@ body.publications-page main.content {
   padding-inline: clamp(1rem, 3vw, 2.5rem) !important;
 }
 
-.home-hero {
-  min-height: calc(100vh - 110px);
-  display: grid;
-  grid-template-columns: minmax(280px, 0.86fr) minmax(360px, 1.35fr);
-  gap: clamp(3rem, 7vw, 7rem);
-  align-items: center;
-  padding: clamp(3rem, 7vh, 6rem) 0;
-}
-.home-portrait {
-  width: 100%;
-  max-height: 68vh;
-  object-fit: cover;
-  object-position: center 35%;
-  border-radius: 10px;
-}
 .eyebrow {
   margin: 0 0 .7rem;
   color: var(--global-theme-color);
@@ -449,39 +437,8 @@ body.publications-page main.content {
   letter-spacing: .12em;
   text-transform: uppercase;
 }
-.home-name,
-.page-hero h1 {
-  margin: 0 0 1.25rem;
-  font-size: clamp(3rem, 7vw, 6.2rem);
-  line-height: .98;
-  letter-spacing: -.055em;
-}
-.home-lead { font-size: clamp(1.25rem, 2vw, 1.8rem); line-height: 1.35; max-width: 760px; }
+
 .home-summary { max-width: 720px; color: var(--global-text-color-light); font-size: 1.05rem; }
-.home-profile-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .55rem 1.35rem;
-  margin-top: 1.55rem;
-  padding-top: 1.15rem;
-  border-top: 1px solid var(--global-divider-color);
-  font-size: .92rem;
-}
-.home-profile-links a {
-  color: var(--global-text-color);
-  font-weight: 600;
-  text-decoration: none;
-}
-.home-profile-links a::after {
-  content: " ↗";
-  color: var(--global-theme-color);
-  font-size: .78em;
-}
-.home-profile-links a:first-child::after,
-.home-profile-links a:nth-child(2)::after {
-  content: "";
-}
-.home-profile-links a:hover { color: var(--global-theme-color); }
 .home-section { margin: 0 0 clamp(3rem, 6vw, 5rem); }
 .home-page .home-section {
   padding-block: clamp(2rem, 4vw, 3.25rem);
@@ -529,9 +486,6 @@ body.publications-page main.content {
 
 @media (max-width: 900px) {
   body.home-page main.content, body.publications-page main.content { padding-inline:1rem !important; }
-  .home-hero { min-height:auto; grid-template-columns:1fr; gap:1.5rem; padding:2rem 0 3.5rem; }
-  .home-portrait { width:min(100%,520px); max-height:none; margin:auto; aspect-ratio:4/3; }
-  .home-name { font-size:clamp(2.7rem,14vw,4.4rem); }
   .section-heading { align-items:flex-start; }
   .section-heading > a { font-size:.85rem; text-align:right; }
 }

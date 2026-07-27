@@ -81,53 +81,6 @@
    Authoritative styles for homepage, About, Expertise and Research.
    ============================================================ */
 
-/* Hero: the opening remains concise; the fuller career appears at the end. */
-body.home-page .home-profile-links {
-  margin-top: 1.15rem !important;
-  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-  border-bottom: 0 !important;
-}
-body.home-page .home-profile-links a {
-  font-size: .92rem !important;
-  font-weight: 600 !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-}
-body.home-page .home-degree {
-  display: inline;
-  margin-left: .38rem;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
-  color: var(--global-text-color-light);
-  font-size: .36em !important;
-  font-weight: 540 !important;
-  letter-spacing: .045em;
-  line-height: 1;
-  vertical-align: .42em !important;
-}
-body.home-page .home-role,
-body.home-page .home-role span {
-  color: var(--homepage-orange-accent) !important;
-  font-size: clamp(1rem, 1.35vw, 1.22rem) !important;
-  font-weight: 620 !important;
-  line-height: 1.25 !important;
-  letter-spacing: -.01em !important;
-  text-transform: none !important;
-}
-
-@media (max-width: 767.98px) {
-  body.home-page .home-degree {
-    margin-left: .28rem;
-    font-size: .34em !important;
-  }
-  body.home-page .home-profile-links a {
-    font-size: .9rem !important;
-  }
-}
-
 /* Three visible projects: no hidden carousel content. */
 .home-project-grid {
   display: grid;
