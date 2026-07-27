@@ -1,0 +1,150 @@
+/* ==========================================================================
+   FOOTER — canonical stylesheet
+   ------------------------------------------------------------
+   All site footer styling lives here.
+   Shared chrome dimensions are defined in _00-tokens.scss.
+   ========================================================================== */
+
+/* ==========================================================================
+   Shell
+   ========================================================================== */
+
+.site-footer {
+  width: 100%;
+  margin-top: clamp(3rem, 7vw, 6rem);
+  border-top: 1px solid color-mix(in srgb, var(--global-navbar-text-color) 18%, transparent);
+  background: var(--global-navbar-color);
+  color: var(--global-navbar-text-color);
+}
+
+.home-page .site-footer {
+  margin-top: 0;
+}
+
+/* ==========================================================================
+   Inner layout
+   ========================================================================== */
+
+.site-footer-inner {
+  width: min(calc(100% - 2 * var(--site-chrome-padding)), var(--site-chrome-width));
+  max-width: var(--site-chrome-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.5rem 2.5rem;
+}
+
+/* ==========================================================================
+   Identity
+   ========================================================================== */
+
+.site-footer-identity {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.site-footer-identity strong {
+  font-size: .95rem;
+  font-weight: 650;
+}
+
+.site-footer-identity span,
+.site-footer-meta {
+  color: color-mix(in srgb, var(--global-navbar-text-color) 72%, transparent);
+  font-size: .78rem;
+}
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+
+.site-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .55rem 1.25rem;
+}
+
+.site-footer-links a,
+.site-footer-meta a {
+  color: var(--global-navbar-text-color);
+  text-decoration: none;
+  font-size: .82rem;
+}
+
+.site-footer-links a:hover,
+.site-footer-meta a:hover {
+  color: var(--global-navbar-hover-color);
+}
+
+/* ==========================================================================
+   Metadata
+   ========================================================================== */
+
+.site-footer-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Responsive — 760px breakpoint
+   ========================================================================== */
+
+@media (max-width: 760px) {
+  .site-footer-inner {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .site-footer-links {
+    justify-content: center;
+  }
+
+  .site-footer-meta {
+    align-items: center;
+  }
+}
+
+/* ==========================================================================
+   Responsive — 760px breakpoint (detailed grid layout)
+   ========================================================================== */
+
+@media (max-width: 760px) {
+  .site-footer-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: .95rem;
+    padding-block: 1.1rem 1.2rem;
+    text-align: left;
+  }
+
+  .site-footer-links {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .5rem .9rem;
+    justify-content: stretch;
+  }
+
+  .site-footer-links a {
+    display: block;
+  }
+
+  .site-footer-meta {
+    width: 100%;
+    padding-top: .8rem;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: .8rem;
+    border-top: 1px solid color-mix(in srgb, var(--global-navbar-text-color) 18%, transparent);
+    white-space: normal;
+  }
+}
