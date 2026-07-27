@@ -66,7 +66,3 @@ snapshot files together, then render the main website.
 The site presents the academic career as evidence of transferable modelling,
 software, communication and leadership skills. The homepage stays concise,
 while Expertise, Research and Projects provide progressively deeper evidence.
-
-Future portfolio work should prioritise deployable forecasting and operational
-optimisation tools, followed by an interactive Formula 1 data product and
-modernised research software.

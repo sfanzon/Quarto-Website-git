@@ -61,27 +61,27 @@ Install the JavaScript test dependencies first:
 npm ci
 ```
 
-While iterating on a focused change, run the quick interaction and static-link suite (11 tests):
+Use the smallest validation set that gives meaningful confidence for the change.
+
+For focused local changes:
 
 ```bash
 npm run test:quick
 ```
 
-Before committing after a full `quarto render`, run the normal pre-commit validation (60 tests):
+For broader functional changes or normal pre-release validation:
 
 ```bash
 npm test
 ```
 
-It checks all rendered pages in Chromium (smoke, interactions, links and critical navigation regressions). It does not run visual screenshots.
-
-After CSS, layout, responsive or theme work, run the explicit visual regression suite (30 Chromium comparisons):
+For CSS, layout, responsive or theme changes where rendered appearance may have changed materially:
 
 ```bash
 npm run test:visual
 ```
 
-Before deployment or after broad structural, accessibility or browser-specific changes, run the complete Chromium, Firefox and WebKit matrix (188 tests):
+For broad structural, accessibility or browser-sensitive changes, or before deployment when appropriate:
 
 ```bash
 npm run test:full
@@ -90,11 +90,12 @@ npm run test:full
 Additional targeted commands:
 
 ```bash
-npm run safety:test         # all safety checks in Chromium
 npm run cross-browser:test  # critical page regressions in Firefox + WebKit
 npm run visual:baseline     # update saved screenshots (intentional visual changes only)
 npm run visual:report       # open the last Playwright HTML report
 ```
+
+Do not run every available test merely because a source file changed. Use the validation level appropriate to the scope of the change.
 
 ## Responsive targets
 
@@ -108,7 +109,13 @@ iPhone     390 × 844
 
 Both light and dark modes are first-class.
 
-Long-form project prose targets a **760 px** readable measure. Figures, code, tables, diagrams and related-project browsing components may break wider where useful.
+The site uses a three-level width system:
+
+- **1180 px** site shell;
+- **820 px** general reading / mixed content;
+- **720 px** sustained prose.
+
+Use the width appropriate to the content type rather than mechanically to the page name. Figures, code, tables, diagrams and related-project browsing components may use the 820 px reading width or break wider where useful.
 
 ## Assets
 
@@ -221,9 +228,11 @@ Agents may modify any source required by the task, but should:
 1. identify the canonical source;
 2. preserve shared architecture;
 3. preserve the visual identity;
-4. render and test the result;
-5. inspect Desktop, iPad and iPhone for visual changes;
-6. review the final Git diff.
+4. validate proportionally to the scope of the change;
+5. render when the task affects the rendered site, generated content or build pipeline;
+6. inspect the changed component and directly affected layout for visual work, using representative viewports and themes when relevant;
+7. review the final Git diff;
+8. stop when the requested task is complete.
 
 `AGENTS.md` intentionally stays concise; detailed architecture and design rationale belong in `ARCHITECTURE.md` and `DESIGN.md`.
 

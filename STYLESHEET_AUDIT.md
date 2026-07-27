@@ -1,5 +1,8 @@
 # Stylesheet Architecture Audit
 
+> **Historical pre-refactor audit.** This document records the stylesheet state and recommendations as assessed on 27 July 2026 before the subsequent SCSS consolidation and cleanup work. It is retained as a historical reference, not as the current architecture guide. For current ownership and implementation, use `SOURCE_MAP.md`, `ARCHITECTURE.md`, and `SCSS_REFACTOR.md`.
+
+
 **Date:** 27 July 2026
 **Scope:** All stylesheets under `styles/`
 **Total `!important` declarations:** ~602 (across all files)
