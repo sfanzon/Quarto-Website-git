@@ -161,9 +161,9 @@ body.standard-page #title-block-header {
 .navbar-brand,
 .navbar-brand.title,
 .navbar-title {
-  font-size: 0.92rem !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.025em;
+  font-size: 1.12rem !important;
+  font-weight: 550 !important;
+  letter-spacing: 0.02em;
 }
 
 .navbar .nav-link {
@@ -240,11 +240,11 @@ body.standard-page #title-block-header {
    FINAL EDITORIAL REFINEMENTS
    ============================================================ */
 
-/* Navbar brand: slightly larger for better visual hierarchy */
+/* Navbar brand: professional identity/logo sizing */
 .navbar-brand .navbar-title,
 .navbar-title,
 .home-name {
-  font-size: 1.15rem !important;
+  font-size: 1.12rem !important;
 }
 
 .home-name {
@@ -321,7 +321,7 @@ body.standard-page #title-block-header {
 }
 
 @media (max-width: 767.98px) {
-  .navbar-title { font-size: .92rem !important; }
+  .navbar-title { font-size: 1rem !important; }
   .home-name { font-size: clamp(2.25rem, 11vw, 3.35rem); }
 }
 
