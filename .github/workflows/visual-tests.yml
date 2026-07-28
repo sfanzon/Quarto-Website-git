@@ -67,19 +67,17 @@ jobs:
         run: |
           quarto render 2>&1
 
+          # Emit annotations for CI visibility
+          while IFS= read -r line; do
+            echo "::warning title=Render change::$line"
+          done < <(git status --short -- docs/)
+
           STALE=$(git status --porcelain -- docs/ | grep -v 'docs/sitemap.xml')
 
           if [ -n "$STALE" ]; then
-            echo "" >> "$GITHUB_STEP_SUMMARY"
-            echo "## ❌ docs freshness guard — stale output" >> "$GITHUB_STEP_SUMMARY"
-            echo "" >> "$GITHUB_STEP_SUMMARY"
-            echo '```' >> "$GITHUB_STEP_SUMMARY"
-            echo "$STALE" >> "$GITHUB_STEP_SUMMARY"
-            echo "" >> "$GITHUB_STEP_SUMMARY"
-            git diff --name-only -- docs/ >> "$GITHUB_STEP_SUMMARY" 2>/dev/null
-            echo "" >> "$GITHUB_STEP_SUMMARY"
-            git ls-files --others --exclude-standard -- docs/ >> "$GITHUB_STEP_SUMMARY" 2>/dev/null
-            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            while IFS= read -r line; do
+              echo "::error title=Stale docs/$line"
+            done <<< "$STALE"
             echo ""
             echo "❌  FAIL: committed docs/ is stale."
             echo "   Run 'quarto render' and commit the generated output."
