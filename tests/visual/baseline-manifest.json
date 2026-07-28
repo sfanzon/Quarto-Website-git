@@ -15,12 +15,12 @@
     },
     "compiledCss": {
       "light": {
-        "path": "docs/site_libs/bootstrap/bootstrap-da404df0e1b8268b12241edc034b054f.min.css",
-        "sha256": "5928e84ee6a2ee9a642a808b1ed0ed2012c347db0ee3d8c4b513170f5617818a"
+        "path": "docs/site_libs/bootstrap/bootstrap-33a4ccbae5bbf734a06806f2f87839a9.min.css",
+        "sha256": "860945007aa22e8dfa70ecfbcc472b958e28df3dbb38feb4c15cab810c64ae25"
       },
       "dark": {
-        "path": "docs/site_libs/bootstrap/bootstrap-dark-41c92b1a8ec59b8f680be4b3580a336c.min.css",
-        "sha256": "f47c088021a0a675260ef913b8e6a12d0e82616b1fea6448a515e85c8692e47d"
+        "path": "docs/site_libs/bootstrap/bootstrap-dark-2080093c3646e31cc5346446ca4cabdc.min.css",
+        "sha256": "23608292e60b141fcdd7a0522e302f5946575c3f6f5542ee891f3a860922faaf"
       }
     }
   },
