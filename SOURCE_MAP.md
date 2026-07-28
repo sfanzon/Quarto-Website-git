@@ -78,10 +78,10 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/main/_01-foundation.scss` | Base element styles, typography, layout primitives |
 | `styles/main/_02-editorial.scss` | Editorial components (hero, publications, teaching, news, etc.) |
 | `styles/main/_03-overrides.scss` | Quarto/Bootstrap overrides |
-| `styles/main/_04-current-pages.scss` | Page-specific rules for current site pages |
 | `styles/main/_10-navbar.scss` | Navigation bar styles |
 | `styles/main/_11-footer.scss` | Footer styles |
 | `styles/main/_12-page-shell.scss` | Page shell and layout container styles |
+| `styles/main/_04-current-pages.scss` | Page-specific rules for current site pages; imported last |
 
 `styles/project-pages.css` and `styles/project-navigation.css` are standalone CSS files loaded separately on project pages. They are **not** part of the `styles/main.scss` SCSS import chain.
 
