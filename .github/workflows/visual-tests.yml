@@ -1,0 +1,64 @@
+name: Visual Regression Tests
+
+# ── When ──────────────────────────────────────────────────────────
+# Manual trigger or when styles/content/data/filters change in a PR.
+# Does NOT run on every push — visual tests are expensive and should
+# be intentional.
+# ───────────────────────────────────────────────────────────────────
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'styles/**'
+      - '_quarto.yml'
+      - 'data/**'
+      - 'filters/**'
+      - 'scripts/**'
+      - 'projects/**'
+      - 'news/**'
+      - '*.qmd'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/visual-tests.yml'
+
+jobs:
+  visual:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium (with system deps)
+        run: npx playwright install --with-deps chromium
+
+      - name: Install deterministic fonts
+        # Roboto is the first cross-platform fallback in the site's font stack
+        # after the macOS/Windows-specific entries. Installing it ensures
+        # consistent font rendering across CI runs.
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-roboto
+
+      - name: Run visual regression tests
+        run: npm run test:visual
+
+      - name: Upload diffs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-regression-diffs
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14

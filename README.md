@@ -81,6 +81,8 @@ For CSS, layout, responsive or theme changes where rendered appearance may have 
 npm run test:visual
 ```
 
+**Visual regression tests are CI-gated.** Local screenshot comparisons depend on system fonts (macOS San Francisco vs Linux Roboto) and will differ from the authoritative CI baselines. See `TESTING.md` for the visual-test architecture.
+
 For broad structural, accessibility or browser-sensitive changes, or before deployment when appropriate:
 
 ```bash
@@ -242,6 +244,7 @@ Agents may modify any source required by the task, but should:
 - `ARCHITECTURE.md` — source ownership and implementation mechanics
 - `DESIGN.md` — visual identity, positioning and component design rules
 - `AGENTS.md` — operational rules for coding agents
+- `TESTING.md` — test architecture and visual regression environment
 
 ## Authorship
 
