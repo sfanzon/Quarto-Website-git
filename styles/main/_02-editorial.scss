@@ -133,40 +133,12 @@ body.standard-page #title-block-header {
   scroll-margin-top: 5rem;
 }
 
-@media (max-width: 767.98px) {
-  .home-name {
-    font-size: clamp(2rem, 10.5vw, 3.15rem) !important;
-  }
-
-}
-
-/* ============================================================
-   FINAL IDENTITY + PUBLICATION RHYTHM PASS
-   ============================================================ */
-
-/* Clear author-style hierarchy beside the portrait. */
-.home-name {
-  margin: 0 0 0.28rem !important;
-  font-size: clamp(3.6rem, 6.2vw, 5.6rem) !important;
-  line-height: 0.96 !important;
-  letter-spacing: -0.045em;
-  white-space: nowrap;
-}
-
 .publications-page .publication-category-list {
   display: block !important;
 }
 
-@media (max-width: 767.98px) {
-  .home-name {
-    font-size: clamp(2.65rem, 13vw, 4rem) !important;
-    letter-spacing: -0.04em;
-  }
-
-}
-
 /* ============================================================
-   FINAL SITE-WIDE EDITORIAL PASS
+   HOMEPAGE TYPOGRAPHY
    ============================================================ */
 
 .home-lead,

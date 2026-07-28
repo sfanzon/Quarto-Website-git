@@ -77,7 +77,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/main/_00-tokens.scss` | Design tokens (CSS custom properties, colours, spacing, typography) |
 | `styles/main/_01-foundation.scss` | Base element styles, typography, layout primitives |
 | `styles/main/_02-editorial.scss` | Editorial components (hero, publications, teaching, news, etc.) |
-| `styles/main/_03-overrides.scss` | Quarto/Bootstrap overrides |
+| `styles/main/_03-overrides.scss` | Late cascade/integration layer — Quarto/Bootstrap overrides plus retained component corrections (Expertise, Teaching, About, News, search popup) whose ordering still matters |
 | `styles/main/_04-current-pages.scss` | Page-specific rules for current site pages |
 | `styles/main/_10-navbar.scss` | Navigation bar styles |
 | `styles/main/_11-footer.scss` | Footer styles |
