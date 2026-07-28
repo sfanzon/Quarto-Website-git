@@ -1,0 +1,60 @@
+name: Update Visual Baselines
+
+# ── When ──────────────────────────────────────────────────────────
+# Manual trigger ONLY. Baselines must never update automatically.
+# Use after an intentional visual change that has been reviewed.
+# ───────────────────────────────────────────────────────────────────
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Why baselines are being updated (e.g. intentional design change, font update)'
+        required: true
+        type: string
+
+jobs:
+  update-baselines:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium (with system deps)
+        run: npx playwright install --with-deps chromium
+
+      - name: Install deterministic fonts
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-roboto
+
+      - name: Regenerate visual baselines
+        run: npm run visual:baseline
+
+      - name: Upload new baselines
+        uses: actions/upload-artifact@v4
+        with:
+          name: updated-visual-baselines
+          path: tests/visual/baselines/
+          retention-days: 7
+
+      - name: Instructions
+        run: |
+          echo "=============================================="
+          echo "  Baselines regenerated."
+          echo "  Reason: ${{ inputs.reason }}"
+          echo ""
+          echo "  Download the 'updated-visual-baselines'"
+          echo "  artifact, review the screenshots, and commit"
+          echo "  them to tests/visual/baselines/."
+          echo "=============================================="
