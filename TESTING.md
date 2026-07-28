@@ -62,13 +62,9 @@ Baselines must never update automatically. When an intentional visual change occ
 
 ### Current baseline state
 
-The existing baselines were captured on macOS with San Francisco font rendering. They are **not compatible** with the Linux CI environment and will fail until regenerated.
+The baselines were regenerated in the controlled CI environment on 2026-07-28 and committed as part of the visual baseline migration. They use the Linux CI environment (ubuntu-22.04, Chromium, Roboto font) and are compatible with the CI visual regression workflow.
 
-To make visual tests pass in CI:
-
-1. Trigger the "Update Visual Baselines" workflow
-2. Review and commit the new Linux baselines
-3. Future visual comparisons will use these CI baselines
+To regenerate baselines after an intentional visual change, trigger the "Update Visual Baselines" workflow, review the artifacts, and commit the result.
 
 ### Local development workflow
 
