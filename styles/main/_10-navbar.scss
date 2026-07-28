@@ -481,10 +481,6 @@ body.quarto-dark .navbar .quarto-color-scheme-toggle:focus .bi::before,
   #quarto-header .navbar-collapse,
   .navbar-collapse {
     order: 10 !important;
-    flex: 0 0 100% !important;
-    width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
     position: absolute !important;
     top: 100% !important;
     left: 0 !important;
@@ -494,7 +490,6 @@ body.quarto-dark .navbar .quarto-color-scheme-toggle:focus .bi::before,
     margin: 0 !important;
     padding: 0 !important;
     background: var(--global-navbar-color) !important;
-    border-top: 1px solid var(--global-divider-color);
     border-top: 0 !important;
     z-index: 1050;
     transform: none !important;
@@ -516,8 +511,6 @@ body.quarto-dark .navbar .quarto-color-scheme-toggle:focus .bi::before,
 
   #quarto-header .navbar-collapse .nav-link,
   .navbar-collapse .nav-link {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
     padding: .62rem .75rem !important;
     text-align: left !important;
     width: 100%;

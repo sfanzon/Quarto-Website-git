@@ -99,26 +99,6 @@
 
 @media (max-width: 760px) {
   .site-footer-inner {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    text-align: center;
-  }
-
-  .site-footer-links {
-    justify-content: center;
-  }
-
-  .site-footer-meta {
-    align-items: center;
-  }
-}
-
-/* ==========================================================================
-   Responsive — 760px breakpoint (detailed grid layout)
-   ========================================================================== */
-
-@media (max-width: 760px) {
-  .site-footer-inner {
     grid-template-columns: minmax(0, 1fr);
     gap: .95rem;
     padding-block: 1.1rem 1.2rem;

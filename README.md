@@ -25,7 +25,7 @@ It combines mathematical depth with inspectable modelling, algorithms, scientifi
 - `docs/` — pre-rendered website for deployment
 - `ARCHITECTURE.md` — source ownership and project-page architecture
 - `DESIGN.md` — visual and editorial design rules
-- `AGENTS.md` — concise operating rules for coding agents
+- `AGENTS.md` — operating rules for coding agents
 
 The site deliberately separates:
 
@@ -234,7 +234,7 @@ Agents may modify any source required by the task, but should:
 7. review the final Git diff;
 8. stop when the requested task is complete.
 
-`AGENTS.md` intentionally stays concise; detailed architecture and design rationale belong in `ARCHITECTURE.md` and `DESIGN.md`.
+`AGENTS.md` contains the operational rules for coding agents; architecture and design rationale belong in `ARCHITECTURE.md` and `DESIGN.md`.
 
 ## Documentation roles
 
