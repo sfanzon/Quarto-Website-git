@@ -99,5 +99,5 @@ Local visual test results are informative but not authoritative. The CI run is t
 | `tests/safety/cross-browser.spec.js` | Critical path checks in Firefox + WebKit |
 | `tests/safety/accessibility.spec.js` | WCAG A/AA checks |
 | `tests/safety/generated-output-guard.mjs` | Static guard for retired components and inline styles |
-| `.github/workflows/visual-tests.yml` | CI: visual regression tests |
+| `.github/workflows/visual-tests.yml` | CI: visual regression tests (includes docs freshness guard) |
 | `.github/workflows/update-visual-baselines.yml` | CI: manual baseline regeneration |

@@ -50,6 +50,26 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-roboto
 
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: '1.9.38'
+
+      - name: Guard — docs freshness check
+        # Fail fast if committed docs/ is stale relative to source.
+        # Renders the site and exits non-zero if docs/ would change.
+        run: |
+          quarto render 2>&1
+          if ! git diff --exit-code --quiet docs/; then
+            echo ""
+            echo "❌  FAIL: committed docs/ is stale."
+            echo "   Run 'quarto render' and commit the generated output."
+            echo ""
+            git diff --stat docs/
+            exit 1
+          fi
+          echo "✅  PASS: docs/ is fresh"
+
       - name: Run visual regression tests
         run: npm run test:visual
 
