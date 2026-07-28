@@ -58,14 +58,15 @@ jobs:
       - name: Guard — docs freshness check
         # Fail fast if committed docs/ is stale relative to source.
         # Renders the site and exits non-zero if docs/ would change.
+        # Uses git status --porcelain to catch new/untracked files too.
         run: |
           quarto render 2>&1
-          if ! git diff --exit-code --quiet docs/; then
+          if [ -n "$(git status --porcelain -- docs/)" ]; then
             echo ""
             echo "❌  FAIL: committed docs/ is stale."
             echo "   Run 'quarto render' and commit the generated output."
             echo ""
-            git diff --stat docs/
+            git status --short -- docs/
             exit 1
           fi
           echo "✅  PASS: docs/ is fresh"
