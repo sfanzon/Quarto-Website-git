@@ -65,24 +65,8 @@ jobs:
         run: |
           quarto render 2>&1
 
-          CHANGES=$(git status --porcelain -- docs/)
-
-          if [ -z "$CHANGES" ]; then
-            echo "✅  PASS: docs/ is fresh"
-            exit 0
-          fi
-
-          # If only docs/sitemap.xml changed, check it's just timestamp drift
-          SITEMAP_ONLY=true
-          while IFS= read -r line; do
-            if ! echo "$line" | grep -q 'docs/sitemap.xml'; then
-              SITEMAP_ONLY=false
-              break
-            fi
-          done <<< "$CHANGES"
-
-          if $SITEMAP_ONLY; then
-            # Verify only <lastmod> values differ (non-semantic drift)
+          # If sitemap.xml changed, verify it is only timestamp drift
+          if git status --porcelain -- docs/ | grep -q 'docs/sitemap.xml'; then
             if git diff docs/sitemap.xml | grep '^[+-]' | grep -v '^[+-][+-][+-]' | grep -v '<lastmod>' > /dev/null 2>&1; then
               echo ""
               echo "❌  FAIL: docs/sitemap.xml has structural changes."
@@ -91,16 +75,21 @@ jobs:
               git status --short -- docs/
               exit 1
             fi
-            echo "✅  PASS: docs/ is fresh (ignored sitemap timestamp drift)"
-            exit 0
+            # Only <lastmod> drifted — restore committed version
+            git checkout HEAD -- docs/sitemap.xml
           fi
 
-          echo ""
-          echo "❌  FAIL: committed docs/ is stale."
-          echo "   Run 'quarto render' and commit the generated output."
-          echo ""
-          git status --short -- docs/
-          exit 1
+          # Check for any remaining stale output
+          if [ -n "$(git status --porcelain -- docs/)" ]; then
+            echo ""
+            echo "❌  FAIL: committed docs/ is stale."
+            echo "   Run 'quarto render' and commit the generated output."
+            echo ""
+            git status --short -- docs/
+            exit 1
+          fi
+
+          echo "✅  PASS: docs/ is fresh"
 
       - name: Run visual regression tests
         run: npm run test:visual
