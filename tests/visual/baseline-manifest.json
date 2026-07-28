@@ -1,8 +1,12 @@
 {
   "schemaVersion": 1,
   "baseline": {
-    "commit": "e319c4c079d7159283719f3beddcd8d0abba9bf6",
+    "commit": "e251d7ba1aeb9412e6375ae1d3307550704a6d4e",
     "quartoVersion": "1.9.38",
+    "playwright": "1.62.0",
+    "browser": "chromium",
+    "environment": "GitHub Actions ubuntu-22.04 with fonts-roboto",
+    "workflowRun": "https://github.com/sfanzon/Quarto-Website-git/actions/runs/30323327799",
     "scss": {
       "path": "styles/main.scss",
       "lines": 7583,
