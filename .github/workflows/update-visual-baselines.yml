@@ -38,6 +38,14 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-roboto
 
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: '1.9.38'
+
+      - name: Render site from source
+        run: quarto render
+
       - name: Regenerate visual baselines
         run: npm run visual:baseline
 
