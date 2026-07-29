@@ -38,9 +38,29 @@ Visual tests run in GitHub Actions on `ubuntu-22.04` with:
 - **Node**: 22
 - **Playwright**: 1.62.0 (exact, pinned in `package.json`)
 - **Chromium**: version bundled with Playwright 1.62.0
+- **Quarto**: 1.9.38 (site is rendered from source in CI before screenshots)
 - **Fonts**: `fonts-roboto` installed explicitly for deterministic rendering
 
 The CI environment is the **single source of truth** for visual baselines.
+
+### Build workflow
+
+Both the visual regression workflow and the baseline-update workflow now follow
+the same recipe:
+
+```
+source
+  ↓
+quarto render
+  ↓
+docs/
+  ↓
+Playwright screenshots
+```
+
+This ensures that baselines and visual comparisons exercise the same artifact —
+a site freshly rendered from source in the same controlled environment. Visual
+regression and generated-output reproducibility are treated as separate concerns.
 
 ### When visual tests run
 
