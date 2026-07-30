@@ -85,6 +85,48 @@ body-classes: home-page
   </div>
 </section>
 
+<div class="home-section home-editorial-section home-approach-section" role="region" aria-labelledby="home-approach-title">
+  <div class="section-heading home-editorial-heading">
+    <div>
+      <p class="eyebrow">Approach</p>
+      <h2 class="section-title" id="home-approach-title">From a difficult question to a defensible result</h2>
+      <p class="section-intro">I work from problem formulation through modelling, implementation and validation to clear communication. The standard is consistent across the work: make assumptions visible, build reproducibly, test what the evidence supports and explain the result clearly.</p>
+    </div>
+    <a href="/about.html">About how I work →</a>
+  </div>
+  <div class="about-capabilities" aria-label="How I work">
+    <article>
+      <span>01</span>
+      <h3>Frame the problem</h3>
+      <p>Turn an open-ended question into assumptions, objectives, constraints and measurable outcomes.</p>
+    </article>
+    <article>
+      <span>02</span>
+      <h3>Build and test</h3>
+      <p>Translate mathematical and statistical ideas into models, algorithms and reproducible computational experiments.</p>
+    </article>
+    <article>
+      <span>03</span>
+      <h3>Explain clearly</h3>
+      <p>Communicate the substance for technical, professional and wider audiences without hiding assumptions or unnecessary complexity.</p>
+    </article>
+    <article>
+      <span>04</span>
+      <h3>Lead collaboratively</h3>
+      <p>Coordinate programmes and projects, mentor researchers, build collaborations and connect people with different expertise.</p>
+    </article>
+  </div>
+</div>
+
+<div class="home-background-section home-ai-workflow" role="region" aria-labelledby="home-ai-workflow-title">
+  <div class="home-background-copy">
+    <p class="eyebrow">Workflow</p>
+    <h2 id="home-ai-workflow-title">How I use AI</h2>
+    <p>AI is part of how I research, build scientific software and communicate technical work. I use it to search, test, review and implement faster—while keeping mathematical judgment, experimental design and final validation anchored to evidence.</p>
+  </div>
+  <a class="home-background-link" href="/notes/how-i-use-ai.html">Read my approach →</a>
+</div>
+
 <section class="home-section selected-publications-section home-editorial-section">
   <div class="section-heading home-editorial-heading">
     <div>

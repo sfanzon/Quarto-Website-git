@@ -87,12 +87,12 @@ body-classes: standard-page about-page
   <article>
     <span>02</span>
     <h3>Build and test</h3>
-    <p>Move from mathematical formulation to reproducible code, numerical experiments and model evaluation.</p>
+    <p>Translate mathematical and statistical ideas into models, algorithms and reproducible computational experiments.</p>
   </article>
   <article>
     <span>03</span>
     <h3>Explain clearly</h3>
-    <p>Produce technical writing, presentations, documentation and teaching materials that preserve substance without unnecessary complexity.</p>
+    <p>Communicate the substance for technical, professional and wider audiences without hiding assumptions or unnecessary complexity.</p>
   </article>
   <article>
     <span>04</span>
