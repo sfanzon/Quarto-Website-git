@@ -1,26 +1,27 @@
 {
   "schemaVersion": 1,
   "baseline": {
-    "commit": "e251d7ba1aeb9412e6375ae1d3307550704a6d4e",
+    "commit": "d1923062b85f57d3d95b85b6527658f262884609",
     "quartoVersion": "1.9.38",
     "playwright": "1.62.0",
     "browser": "chromium",
     "environment": "GitHub Actions ubuntu-22.04 with fonts-roboto",
-    "workflowRun": "https://github.com/sfanzon/Quarto-Website-git/actions/runs/30323327799",
+    "workflowRun": null,
+    "workflowRunStatus": "Pending next controlled CI visual capture",
     "scss": {
       "path": "styles/main.scss",
-      "lines": 7583,
-      "bytes": 210650,
-      "sha256": "75f1533f999b45721a2cffc51fa34c92f33f7c8875a42e74b65c5088160a7a13"
+      "lines": 28,
+      "bytes": 1059,
+      "sha256": "1d5dcadd01e5deacce031e1722b4344db990db1088caf4b4f3b3643ca36febdd"
     },
     "compiledCss": {
       "light": {
-        "path": "docs/site_libs/bootstrap/bootstrap-9e96ab43fd0d283596a4e48396a529b5.min.css",
-        "sha256": "4ff9ff6c8c244e4515bd3346d86bad23a325bd64e5171906f3cb7fc92689b720"
+        "path": "docs/site_libs/bootstrap/bootstrap-37206e91b54f028524c3c82c5e4a55ed.min.css",
+        "sha256": "de0fc578411f2442d0237c11e5efda699051ce9f19094805f2a545c54ac62de7"
       },
       "dark": {
-        "path": "docs/site_libs/bootstrap/bootstrap-dark-3bae2923977e871cd45f382312f2c49b.min.css",
-        "sha256": "ba349ace7c8e8bd45abd424f698e9fd78b7aa26301dc9f9b3de6502c6ebeb8ba"
+        "path": "docs/site_libs/bootstrap/bootstrap-dark-264d4da634d41d9ed8843045e742d713.min.css",
+        "sha256": "c4474eaf747e15ae519e9e97d94d97c688af97958f28e98868203fc426d9e29e"
       }
     }
   },

@@ -1,5 +1,9 @@
 # Main SCSS refactor
 
+> This document records a historical refactor checkpoint. Current commands,
+> test counts, and baseline provenance are maintained in `TESTING.md` and
+> `tests/visual/baseline-manifest.json`.
+
 ## Status
 
 Phases 1 through 4 are complete. The cascade is
@@ -17,7 +21,7 @@ ordered partials.
 - [x] Consolidate active correction layers component by component.
 - [x] Remove legacy selectors absent from source, generated pages and runtime code.
 - [x] Harden generated publication markup and standalone project styles.
-- [x] Complete the 40-page render and 188-check safety matrix.
+- [x] Record the historical 40-page render and 188-check safety matrix.
 
 The baseline suite passes after the consolidation without updating the saved
 screenshots.
@@ -113,20 +117,20 @@ Lua-generated `project-at-a-glance-N` variant unmatched in static source.
 
 ## Safety test matrix
 
-Run `npm run test:quick` while iterating on focused changes. Its 11 Chromium
-checks cover interactions and static/link regressions.
+The counts below describe the historical refactor checkpoint and are not the
+current repository test counts. See `TESTING.md` for the maintained matrix.
 
-Run `npm test` before committing after a complete `quarto render`. This default
-midrange suite contains 60 Chromium checks: all-page smoke coverage,
+At that checkpoint, `npm run test:quick` ran 11 Chromium checks covering
+interactions and static/link regressions.
+
+At that checkpoint, `npm test` contained 60 Chromium checks: all-page smoke coverage,
 interactions, links and critical navigation regressions. It does not run visual
 screenshots.
 
-Run `npm run test:visual` after CSS, layout, responsive or theme work. It runs
-30 Chromium screenshot comparisons (5 pages × 2 themes × 3 viewports).
+The historical visual suite contained 30 Chromium screenshot comparisons (5
+pages × 2 themes × 3 viewports).
 
-Run `npm run test:full` before deployment or after broad structural,
-accessibility or browser-specific changes.
-The complete suite contains 188 checks:
+The historical complete suite contained 188 checks:
 
 - 40 Chromium smoke tests covering every generated page, document structure,
   images, browser errors and failed same-origin resources
