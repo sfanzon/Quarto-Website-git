@@ -9,7 +9,7 @@
       "R"
     ],
     "summary": "An industry-facing explanation of how 2022 race results and 2023 betting odds separate driver performance from constructor advantage.",
-    "image": "projects/f1-time-rank-duality/figures/04_teammate_gaps.png",
+    "image": "assets/img/projects/f1-benchmarking.svg",
     "href": "projects/f1-time-rank-duality/index.html",
     "featured": true,
     "code": "https://github.com/sfanzon/F1-Paper-Code",
@@ -116,7 +116,7 @@
       "Python"
     ],
     "summary": "A visual pedagogical implementation showing how fully-corrective conditional gradients build sparse solutions one atom at a time.",
-    "image": "projects/sparse-gcg/images/convergence.png",
+    "image": "assets/img/projects/sparse-gcg.svg",
     "href": "projects/sparse-gcg/index.html",
     "featured": true,
     "code": "https://github.com/sfanzon/sparse-gcg-paper-explainer",

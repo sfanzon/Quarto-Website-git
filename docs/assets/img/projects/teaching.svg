@@ -1,9 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" role="img" aria-labelledby="title desc">
+  <title id="title">Statistical regression model</title>
+  <desc id="desc">Observed data points, residuals, a fitted regression line and its uncertainty band.</desc>
   <rect width="800" height="440" fill="none"/>
-  <g fill="none" stroke-linecap="round">
-    <path d="M118 325 C174 276 190 158 265 128 C338 99 373 302 443 277 C512 253 518 112 596 105 C650 100 681 166 703 218" stroke="#a8522f" stroke-width="5"/>
-    <path d="M105 335 H710 M135 350 V88" stroke="#9a5f4d" stroke-width="3" opacity=".55"/>
-    <path d="M180 313 L180 332 M250 210 L250 332 M320 174 L320 332 M390 273 L390 332 M460 260 L460 332 M530 157 L530 332 M600 106 L600 332 M670 176 L670 332" stroke="#9a5f4d" stroke-width="2" opacity=".38"/>
+  <g fill="none" stroke="#55778a" stroke-width="2" opacity=".15">
+    <path d="M110 95H705M110 160H705M110 225H705M110 290H705M110 355H705"/>
+    <path d="M200 75V355M300 75V355M400 75V355M500 75V355M600 75V355M700 75V355"/>
   </g>
-  <g fill="#a8522f"><circle cx="180" cy="313" r="7"/><circle cx="250" cy="210" r="7"/><circle cx="320" cy="174" r="7"/><circle cx="390" cy="273" r="7"/><circle cx="460" cy="260" r="7"/><circle cx="530" cy="157" r="7"/><circle cx="600" cy="106" r="7"/><circle cx="670" cy="176" r="7"/></g>
+  <path d="M125 319C260 282 396 226 535 164C600 135 656 111 700 96L700 164C646 179 586 202 524 228C387 286 255 327 125 359Z"
+        fill="#a8522f" opacity=".09"/>
+  <g stroke="#55778a" stroke-width="2" opacity=".35">
+    <path d="M155 330V300"/><path d="M205 315V325"/><path d="M250 300V270"/>
+    <path d="M295 283V285"/><path d="M340 265V230"/><path d="M385 245V250"/>
+    <path d="M430 225V190"/><path d="M475 205V210"/><path d="M520 183V155"/>
+    <path d="M565 163V170"/><path d="M610 145V110"/><path d="M655 135V140"/>
+  </g>
+  <path d="M125 339C260 302 396 256 530 196C596 167 653 141 700 128"
+        fill="none" stroke="#a8522f" stroke-width="6" stroke-linecap="round"/>
+  <g fill="#55778a">
+    <circle cx="155" cy="300" r="8"/><circle cx="205" cy="325" r="8"/>
+    <circle cx="250" cy="270" r="8"/><circle cx="295" cy="285" r="8"/>
+    <circle cx="340" cy="230" r="8"/><circle cx="385" cy="250" r="8"/>
+    <circle cx="430" cy="190" r="8"/><circle cx="475" cy="210" r="8"/>
+    <circle cx="520" cy="155" r="8"/><circle cx="565" cy="170" r="8"/>
+    <circle cx="610" cy="110" r="8"/><circle cx="655" cy="140" r="8"/>
+  </g>
+  <path d="M105 355H710M110 365V78" fill="none" stroke="#55778a" stroke-width="3" stroke-linecap="round" opacity=".55"/>
 </svg>
