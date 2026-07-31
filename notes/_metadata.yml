@@ -6,4 +6,5 @@ body-classes: notes-detail-page
 format:
   html:
     anchor-sections: true
-
+    include-after-body:
+      - ../includes/mermaid-svg-ids.html

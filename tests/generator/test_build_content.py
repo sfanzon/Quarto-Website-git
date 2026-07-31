@@ -109,6 +109,49 @@ class BuildContentTests(unittest.TestCase):
         self.assertIn("Example project", rendered)
         self.assertIn("assets/img/projects/example.svg", rendered)
 
+    def test_featured_notes_are_validated_sorted_and_rendered(self):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        fixture_root = Path(directory.name)
+        notes_dir = fixture_root / "notes"
+        image_dir = fixture_root / "assets" / "img" / "notes"
+        notes_dir.mkdir(parents=True)
+        image_dir.mkdir(parents=True)
+        (image_dir / "first.svg").write_text("<svg/>", encoding="utf-8")
+        (image_dir / "second.svg").write_text("<svg/>", encoding="utf-8")
+        template = """---
+title: "{title}"
+description: "{description}"
+date: 2026-07-{day}
+image: ../assets/img/notes/{image}
+image-alt: "{alt}"
+featured: true
+featured-order: {order}
+categories: [AI, Workflow]
+---
+Body text.
+"""
+        (notes_dir / "second.qmd").write_text(
+            template.format(title="Second", description="Second note.", day=20, image="second.svg", alt="Second visual", order=2),
+            encoding="utf-8",
+        )
+        (notes_dir / "first.qmd").write_text(
+            template.format(title="First", description="First note.", day=21, image="first.svg", alt="First visual", order=1),
+            encoding="utf-8",
+        )
+        original_root = build_content.root
+        build_content.root = fixture_root
+        try:
+            notes = build_content.load_featured_notes(notes_dir)
+            self.assertEqual([note["title"] for note in notes], ["First", "Second"])
+            self.assertEqual(notes[0]["href"], "/notes/first.html")
+            self.assertEqual(notes[0]["image_url"], "/assets/img/notes/first.svg")
+            rendered = build_content.render_featured_note(notes[0])
+            self.assertIn("First note.", rendered)
+            self.assertIn('alt="First visual"', rendered)
+        finally:
+            build_content.root = original_root
+
     def test_local_asset_validation_checks_assets_and_skips_external_urls(self):
         directory = tempfile.TemporaryDirectory()
         self.addCleanup(directory.cleanup)

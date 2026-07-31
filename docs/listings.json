@@ -2,7 +2,10 @@
   {
     "listing": "/notes.html",
     "items": [
-      "/notes/how-i-use-ai.html"
+      "/notes/portable-ai-rules-workflow.html",
+      "/notes/ai-real-project-lessons.html",
+      "/notes/how-i-use-ai.html",
+      "/notes/ai-agents-practical-stack-2026-qwen9-128k-copilot-opencode-no-gemini-free.html"
     ]
   }
 ]

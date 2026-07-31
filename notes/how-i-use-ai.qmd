@@ -2,6 +2,10 @@
 title: "How I use AI in technical work"
 subtitle: "Accelerating research, scientific software and communication without outsourcing judgment."
 description: "A practical account of how I use AI across research, scientific computing and technical communication: where it adds leverage, where I retain control, and how I verify what matters."
+image: ../assets/img/notes/ai-agent-stack.svg
+image-alt: "A five-layer diagram of an AI agent workflow, from model to human review"
+featured: true
+featured-order: 1
 author: "Silvio Fanzon"
 date: 2026-07-30
 categories:
@@ -9,7 +13,7 @@ categories:
   - Workflow
   - Research
   - Scientific computing
-body-classes: standard-page note-page
+body-classes: standard-page note-page notes-detail-page
 page-layout: article
 toc: true
 toc-depth: 2

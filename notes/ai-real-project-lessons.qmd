@@ -9,6 +9,10 @@ categories:
   - Research
   - Software
 description: "A practical framework for using AI on serious technical work without losing control of the problem."
+image: ../assets/img/notes/scope-control.svg
+image-alt: "A bounded technical task contrasted with expanding scope and complexity"
+featured: true
+featured-order: 2
 toc: true
 toc-depth: 2
 ---

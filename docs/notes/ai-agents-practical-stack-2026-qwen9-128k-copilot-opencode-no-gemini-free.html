@@ -1,0 +1,3782 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Silvio Fanzon">
+<meta name="dcterms.date" content="2026-07-26">
+<meta name="description" content="A practical account of how I moved from using ChatGPT as a chatbot to building a working stack around Codex, OpenCode, DeepSeek, OpenClaw and automation.">
+
+<title>From Chatbots to Agents: How I Built My AI Stack in 2026 – Silvio Fanzon</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9f472a194059986da6871ead8bce770c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-f227ee9038f4d87a6be96a658522a019.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-9f472a194059986da6871ead8bce770c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+(function () {
+  const navigation = window.performance.getEntriesByType('navigation')[0];
+  if (navigation?.type !== 'back_forward') return;
+
+  const key = `scroll-position:${window.location.pathname}${window.location.search}`;
+  try {
+    const position = JSON.parse(window.sessionStorage.getItem(key));
+    if (!position || !Number.isFinite(position.x) || !Number.isFinite(position.y)) return;
+    document.documentElement.dataset.sfRestoringScroll = 'true';
+    document.documentElement.style.visibility = 'hidden';
+  } catch (_) {
+    // Storage can be unavailable in private or locked-down browser contexts.
+  }
+})();
+</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-fixed notes-detail-page quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Silvio Fanzon</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../projects.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../expertise.html"> 
+<span class="menu-text">Expertise</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../Silvio_Fanzon_Academic_CV.pdf"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../teaching.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../news.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-more" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">More</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-more">    
+        <li>
+    <a class="dropdown-item" href="../notes.html">
+ <span class="dropdown-text">Notes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../research.html">
+ <span class="dropdown-text">Research</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../presentations.html">
+ <span class="dropdown-text">Presentations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../supervision.html">
+ <span class="dropdown-text">Supervision</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../contact.html">
+ <span class="dropdown-text">Contact</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#i-thought-ai-meant-chatgpt" id="toc-i-thought-ai-meant-chatgpt" class="nav-link active" data-scroll-target="#i-thought-ai-meant-chatgpt">1. I thought AI meant ChatGPT</a>
+  <ul class="collapse">
+  <li><a href="#the-distinction-i-was-missing-a-model-is-not-an-agent" id="toc-the-distinction-i-was-missing-a-model-is-not-an-agent" class="nav-link" data-scroll-target="#the-distinction-i-was-missing-a-model-is-not-an-agent">The distinction I was missing: a model is not an agent</a></li>
+  <li><a href="#chat-work-and-agents-solve-different-problems" id="toc-chat-work-and-agents-solve-different-problems" class="nav-link" data-scroll-target="#chat-work-and-agents-solve-different-problems">Chat, Work and agents solve different problems</a></li>
+  </ul></li>
+  <li><a href="#the-breakthrough-was-letting-ai-act-on-the-real-project" id="toc-the-breakthrough-was-letting-ai-act-on-the-real-project" class="nav-link" data-scroll-target="#the-breakthrough-was-letting-ai-act-on-the-real-project">2. The breakthrough was letting AI act on the real project</a>
+  <ul class="collapse">
+  <li><a href="#codex" id="toc-codex" class="nav-link" data-scroll-target="#codex">Codex</a></li>
+  <li><a href="#ordinary-chatgpt-can-also-work-with-vs-code" id="toc-ordinary-chatgpt-can-also-work-with-vs-code" class="nav-link" data-scroll-target="#ordinary-chatgpt-can-also-work-with-vs-code">Ordinary ChatGPT can also work with VS Code</a></li>
+  <li><a href="#two-different-github-connections-in-chatgpt" id="toc-two-different-github-connections-in-chatgpt" class="nav-link" data-scroll-target="#two-different-github-connections-in-chatgpt">Two different “GitHub” connections in ChatGPT</a></li>
+  <li><a href="#chatgpt-work-removes-another-old-limitation" id="toc-chatgpt-work-removes-another-old-limitation" class="nav-link" data-scroll-target="#chatgpt-work-removes-another-old-limitation">ChatGPT Work removes another old limitation</a></li>
+  <li><a href="#claude-code-excellent-but-not-part-of-my-default-stack" id="toc-claude-code-excellent-but-not-part-of-my-default-stack" class="nav-link" data-scroll-target="#claude-code-excellent-but-not-part-of-my-default-stack">Claude Code: excellent, but not part of my default stack</a></li>
+  <li><a href="#why-a-subscription-doesnt-pay-for-itself-yet" id="toc-why-a-subscription-doesnt-pay-for-itself-yet" class="nav-link" data-scroll-target="#why-a-subscription-doesnt-pay-for-itself-yet">Why a subscription doesn’t pay for itself yet</a></li>
+  </ul></li>
+  <li><a href="#i-tried-too-many-coding-tools-before-the-stack-simplified" id="toc-i-tried-too-many-coding-tools-before-the-stack-simplified" class="nav-link" data-scroll-target="#i-tried-too-many-coding-tools-before-the-stack-simplified">3. I tried too many coding tools before the stack simplified</a>
+  <ul class="collapse">
+  <li><a href="#codex-the-premium-openai-coding-route" id="toc-codex-the-premium-openai-coding-route" class="nav-link" data-scroll-target="#codex-the-premium-openai-coding-route">Codex: the premium OpenAI coding route</a></li>
+  <li><a href="#opencode-the-cheap-model-independent-route" id="toc-opencode-the-cheap-model-independent-route" class="nav-link" data-scroll-target="#opencode-the-cheap-model-independent-route">OpenCode: the cheap, model-independent route</a>
+  <ul class="collapse">
+  <li><a href="#opencode-works-inside-vs-code" id="toc-opencode-works-inside-vs-code" class="nav-link" data-scroll-target="#opencode-works-inside-vs-code">OpenCode works inside VS Code</a></li>
+  <li><a href="#then-i-installed-the-opencode-desktop-app" id="toc-then-i-installed-the-opencode-desktop-app" class="nav-link" data-scroll-target="#then-i-installed-the-opencode-desktop-app">Then I installed the OpenCode desktop app</a></li>
+  <li><a href="#other-harnesses-like-opencode" id="toc-other-harnesses-like-opencode" class="nav-link" data-scroll-target="#other-harnesses-like-opencode">Other harnesses like OpenCode</a></li>
+  <li><a href="#the-useful-lesson-is-about-layers-not-another-tool-migration" id="toc-the-useful-lesson-is-about-layers-not-another-tool-migration" class="nav-link" data-scroll-target="#the-useful-lesson-is-about-layers-not-another-tool-migration">The useful lesson is about layers, not another tool migration</a></li>
+  </ul></li>
+  <li><a href="#codex-opencode-is-the-useful-pair" id="toc-codex-opencode-is-the-useful-pair" class="nav-link" data-scroll-target="#codex-opencode-is-the-useful-pair">Codex + OpenCode is the useful pair</a></li>
+  <li><a href="#cline-still-useful-when-i-want-a-visual-plan-act-workflow" id="toc-cline-still-useful-when-i-want-a-visual-plan-act-workflow" class="nav-link" data-scroll-target="#cline-still-useful-when-i-want-a-visual-plan-act-workflow">Cline: still useful when I want a visual Plan → Act workflow</a></li>
+  <li><a href="#continue-useful-history-but-not-a-new-setup" id="toc-continue-useful-history-but-not-a-new-setup" class="nav-link" data-scroll-target="#continue-useful-history-but-not-a-new-setup">Continue: useful history, but not a new setup</a></li>
+  <li><a href="#cursor-polished-but-optional" id="toc-cursor-polished-but-optional" class="nav-link" data-scroll-target="#cursor-polished-but-optional">Cursor: polished, but optional</a></li>
+  <li><a href="#kilo-code-tested-not-my-default" id="toc-kilo-code-tested-not-my-default" class="nav-link" data-scroll-target="#kilo-code-tested-not-my-default">Kilo Code: tested, not my default</a></li>
+  <li><a href="#native-from-scratch-editors-not-yet-a-shortcut" id="toc-native-from-scratch-editors-not-yet-a-shortcut" class="nav-link" data-scroll-target="#native-from-scratch-editors-not-yet-a-shortcut">Native, from-scratch editors: not yet a shortcut</a></li>
+  </ul></li>
+  <li><a href="#cost-changed-the-problem" id="toc-cost-changed-the-problem" class="nav-link" data-scroll-target="#cost-changed-the-problem">4. Cost changed the problem</a>
+  <ul class="collapse">
+  <li><a href="#then-i-realised-codex-and-work-need-their-own-model-ladder" id="toc-then-i-realised-codex-and-work-need-their-own-model-ladder" class="nav-link" data-scroll-target="#then-i-realised-codex-and-work-need-their-own-model-ladder">Then I realised Codex and Work need their own model ladder</a>
+  <ul class="collapse">
+  <li><a href="#the-openai-model-ladder-i-actually-have" id="toc-the-openai-model-ladder-i-actually-have" class="nav-link" data-scroll-target="#the-openai-model-ladder-i-actually-have">The OpenAI model ladder I actually have</a></li>
+  <li><a href="#my-practical-codex-routing-rule" id="toc-my-practical-codex-routing-rule" class="nav-link" data-scroll-target="#my-practical-codex-routing-rule">My practical Codex routing rule</a></li>
+  <li><a href="#an-illustrative-agent-turn" id="toc-an-illustrative-agent-turn" class="nav-link" data-scroll-target="#an-illustrative-agent-turn">An illustrative agent turn</a></li>
+  <li><a href="#the-other-ways-to-preserve-agentic-allowance" id="toc-the-other-ways-to-preserve-agentic-allowance" class="nav-link" data-scroll-target="#the-other-ways-to-preserve-agentic-allowance">The other ways to preserve agentic allowance</a></li>
+  <li><a href="#work-follows-the-same-strategic-rule" id="toc-work-follows-the-same-strategic-rule" class="nav-link" data-scroll-target="#work-follows-the-same-strategic-rule">Work follows the same strategic rule</a></li>
+  </ul></li>
+  <li><a href="#july-2026-deepseek-v4-changes-the-value-ladder" id="toc-july-2026-deepseek-v4-changes-the-value-ladder" class="nav-link" data-scroll-target="#july-2026-deepseek-v4-changes-the-value-ladder">July 2026: DeepSeek V4 changes the value ladder</a>
+  <ul class="collapse">
+  <li><a href="#why-v4-pro-may-be-the-sweet-spot" id="toc-why-v4-pro-may-be-the-sweet-spot" class="nav-link" data-scroll-target="#why-v4-pro-may-be-the-sweet-spot">Why V4 Pro may be the sweet spot</a></li>
+  <li><a href="#a-practical-model-ladder" id="toc-a-practical-model-ladder" class="nav-link" data-scroll-target="#a-practical-model-ladder">A practical model ladder</a></li>
+  </ul></li>
+  <li><a href="#cheap-capacity-inside-the-coding-environment" id="toc-cheap-capacity-inside-the-coding-environment" class="nav-link" data-scroll-target="#cheap-capacity-inside-the-coding-environment">Cheap capacity inside the coding environment</a></li>
+  <li><a href="#the-escalation-ladder-now-exists-inside-a-single-vendor-too" id="toc-the-escalation-ladder-now-exists-inside-a-single-vendor-too" class="nav-link" data-scroll-target="#the-escalation-ladder-now-exists-inside-a-single-vendor-too">The escalation ladder now exists inside a single vendor too</a></li>
+  <li><a href="#qwen-is-not-only-a-local-model" id="toc-qwen-is-not-only-a-local-model" class="nav-link" data-scroll-target="#qwen-is-not-only-a-local-model">Qwen is not only a local model</a></li>
+  <li><a href="#antigravity-one-extra-free-agent-platform" id="toc-antigravity-one-extra-free-agent-platform" class="nav-link" data-scroll-target="#antigravity-one-extra-free-agent-platform">Antigravity: one extra free agent platform</a></li>
+  </ul></li>
+  <li><a href="#local-ai-taught-me-what-free-really-means" id="toc-local-ai-taught-me-what-free-really-means" class="nav-link" data-scroll-target="#local-ai-taught-me-what-free-really-means">5. Local AI taught me what “free” really means</a>
+  <ul class="collapse">
+  <li><a href="#my-current-local-stack-three-qwens" id="toc-my-current-local-stack-three-qwens" class="nav-link" data-scroll-target="#my-current-local-stack-three-qwens">My current local stack: three Qwens</a>
+  <ul class="collapse">
+  <li><a href="#why-27b-rather-than-35b" id="toc-why-27b-rather-than-35b" class="nav-link" data-scroll-target="#why-27b-rather-than-35b">Why 27B rather than 35B?</a></li>
+  </ul></li>
+  <li><a href="#quantisation-matters-but-only-up-to-a-point" id="toc-quantisation-matters-but-only-up-to-a-point" class="nav-link" data-scroll-target="#quantisation-matters-but-only-up-to-a-point">Quantisation matters, but only up to a point</a></li>
+  <li><a href="#the-localcloud-rule-i-ended-up-with" id="toc-the-localcloud-rule-i-ended-up-with" class="nav-link" data-scroll-target="#the-localcloud-rule-i-ended-up-with">The local/cloud rule I ended up with</a></li>
+  </ul></li>
+  <li><a href="#the-website-refactor-taught-me-what-agents-actually-need" id="toc-the-website-refactor-taught-me-what-agents-actually-need" class="nav-link" data-scroll-target="#the-website-refactor-taught-me-what-agents-actually-need">6. The website refactor taught me what agents actually need</a>
+  <ul class="collapse">
+  <li><a href="#stronger-reasoning-cheaper-execution-when-the-task-allows-it" id="toc-stronger-reasoning-cheaper-execution-when-the-task-allows-it" class="nav-link" data-scroll-target="#stronger-reasoning-cheaper-execution-when-the-task-allows-it">Stronger reasoning; cheaper execution when the task allows it</a></li>
+  <li><a href="#small-phases-beat-one-giant-autonomous-task" id="toc-small-phases-beat-one-giant-autonomous-task" class="nav-link" data-scroll-target="#small-phases-beat-one-giant-autonomous-task">Small phases beat one giant autonomous task</a></li>
+  <li><a href="#the-prompt-should-constrain-the-search-space" id="toc-the-prompt-should-constrain-the-search-space" class="nav-link" data-scroll-target="#the-prompt-should-constrain-the-search-space">The prompt should constrain the <em>search space</em></a></li>
+  <li><a href="#never-let-generated-output-become-the-implementation" id="toc-never-let-generated-output-become-the-implementation" class="nav-link" data-scroll-target="#never-let-generated-output-become-the-implementation">Never let generated output become the implementation</a></li>
+  <li><a href="#diff-first-review-is-better-than-re-reading-the-whole-repository" id="toc-diff-first-review-is-better-than-re-reading-the-whole-repository" class="nav-link" data-scroll-target="#diff-first-review-is-better-than-re-reading-the-whole-repository">Diff-first review is better than re-reading the whole repository</a></li>
+  <li><a href="#commit-source-refactors-separately-from-render-output-when-useful" id="toc-commit-source-refactors-separately-from-render-output-when-useful" class="nav-link" data-scroll-target="#commit-source-refactors-separately-from-render-output-when-useful">Commit source refactors separately from render output when useful</a></li>
+  <li><a href="#validation-should-match-the-size-of-the-change" id="toc-validation-should-match-the-size-of-the-change" class="nav-link" data-scroll-target="#validation-should-match-the-size-of-the-change">Validation should match the size of the change</a></li>
+  <li><a href="#stop-cheap-models-before-they-loop" id="toc-stop-cheap-models-before-they-loop" class="nav-link" data-scroll-target="#stop-cheap-models-before-they-loop">Stop cheap models before they loop</a></li>
+  <li><a href="#capability-ladder" id="toc-capability-ladder" class="nav-link" data-scroll-target="#capability-ladder">Capability ladder</a></li>
+  <li><a href="#the-repository-itself-became-part-of-the-agent-system" id="toc-the-repository-itself-became-part-of-the-agent-system" class="nav-link" data-scroll-target="#the-repository-itself-became-part-of-the-agent-system">The repository itself became part of the agent system</a></li>
+  </ul></li>
+  <li><a href="#i-stopped-trying-to-make-one-agent-do-everything" id="toc-i-stopped-trying-to-make-one-agent-do-everything" class="nav-link" data-scroll-target="#i-stopped-trying-to-make-one-agent-do-everything">7. I stopped trying to make one agent do everything</a>
+  <ul class="collapse">
+  <li><a href="#sequential-pipeline" id="toc-sequential-pipeline" class="nav-link" data-scroll-target="#sequential-pipeline">Sequential pipeline</a></li>
+  <li><a href="#builderreviewer-loop" id="toc-builderreviewer-loop" class="nav-link" data-scroll-target="#builderreviewer-loop">Builder–reviewer loop</a></li>
+  <li><a href="#specialist-and-manager-agents" id="toc-specialist-and-manager-agents" class="nav-link" data-scroll-target="#specialist-and-manager-agents">Specialist and manager agents</a></li>
+  </ul></li>
+  <li><a href="#then-the-bigger-idea-clicked-agents-are-not-just-for-code" id="toc-then-the-bigger-idea-clicked-agents-are-not-just-for-code" class="nav-link" data-scroll-target="#then-the-bigger-idea-clicked-agents-are-not-just-for-code">8. Then the bigger idea clicked: agents are not just for code</a>
+  <ul class="collapse">
+  <li><a href="#chatgpt-chat-and-work-start-here" id="toc-chatgpt-chat-and-work-start-here" class="nav-link" data-scroll-target="#chatgpt-chat-and-work-start-here">ChatGPT Chat and Work: start here</a></li>
+  <li><a href="#persistent-general-agents-openclaw" id="toc-persistent-general-agents-openclaw" class="nav-link" data-scroll-target="#persistent-general-agents-openclaw">Persistent general agents: OpenClaw</a>
+  <ul class="collapse">
+  <li><a href="#openclaw-deepseek" id="toc-openclaw-deepseek" class="nav-link" data-scroll-target="#openclaw-deepseek">OpenClaw + DeepSeek</a></li>
+  <li><a href="#openclaw-openai" id="toc-openclaw-openai" class="nav-link" data-scroll-target="#openclaw-openai">OpenClaw + OpenAI</a></li>
+  </ul></li>
+  <li><a href="#n8n-use-it-when-the-process-becomes-known" id="toc-n8n-use-it-when-the-process-becomes-known" class="nav-link" data-scroll-target="#n8n-use-it-when-the-process-becomes-known">n8n: use it when the process becomes known</a>
+  <ul class="collapse">
+  <li><a href="#openclaw-and-n8n-can-work-together" id="toc-openclaw-and-n8n-can-work-together" class="nav-link" data-scroll-target="#openclaw-and-n8n-can-work-together">OpenClaw and n8n can work together</a></li>
+  </ul></li>
+  <li><a href="#openai-agents-sdk-when-building-the-agent-becomes-the-project" id="toc-openai-agents-sdk-when-building-the-agent-becomes-the-project" class="nav-link" data-scroll-target="#openai-agents-sdk-when-building-the-agent-becomes-the-project">OpenAI Agents SDK: when building the agent becomes the project</a></li>
+  <li><a href="#a-job-search-agent-the-best-first-openclaw-project" id="toc-a-job-search-agent-the-best-first-openclaw-project" class="nav-link" data-scroll-target="#a-job-search-agent-the-best-first-openclaw-project">A job-search agent: the best first OpenClaw project</a>
+  <ul class="collapse">
+  <li><a href="#phase-1-one-url-manually" id="toc-phase-1-one-url-manually" class="nav-link" data-scroll-target="#phase-1-one-url-manually">Phase 1 — one URL, manually</a></li>
+  <li><a href="#phase-2-let-the-agent-search" id="toc-phase-2-let-the-agent-search" class="nav-link" data-scroll-target="#phase-2-let-the-agent-search">Phase 2 — let the agent search</a></li>
+  <li><a href="#phase-3-persistent-profile-comparison" id="toc-phase-3-persistent-profile-comparison" class="nav-link" data-scroll-target="#phase-3-persistent-profile-comparison">Phase 3 — persistent profile comparison</a></li>
+  <li><a href="#phase-4-recurring-execution" id="toc-phase-4-recurring-execution" class="nav-link" data-scroll-target="#phase-4-recurring-execution">Phase 4 — recurring execution</a></li>
+  <li><a href="#phase-5-structured-tracker" id="toc-phase-5-structured-tracker" class="nav-link" data-scroll-target="#phase-5-structured-tracker">Phase 5 — structured tracker</a></li>
+  <li><a href="#phase-6-application-material-after-approval" id="toc-phase-6-application-material-after-approval" class="nav-link" data-scroll-target="#phase-6-application-material-after-approval">Phase 6 — application material after approval</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#once-i-saw-the-pattern-it-applied-everywhere" id="toc-once-i-saw-the-pattern-it-applied-everywhere" class="nav-link" data-scroll-target="#once-i-saw-the-pattern-it-applied-everywhere">9. Once I saw the pattern, it applied everywhere</a>
+  <ul class="collapse">
+  <li><a href="#writing-and-professional-work" id="toc-writing-and-professional-work" class="nav-link" data-scroll-target="#writing-and-professional-work">Writing and professional work</a></li>
+  <li><a href="#email-calendar-and-personal-administration" id="toc-email-calendar-and-personal-administration" class="nav-link" data-scroll-target="#email-calendar-and-personal-administration">Email, calendar and personal administration</a></li>
+  <li><a href="#data-and-spreadsheets" id="toc-data-and-spreadsheets" class="nav-link" data-scroll-target="#data-and-spreadsheets">Data and spreadsheets</a></li>
+  <li><a href="#buying-things-and-doing-research" id="toc-buying-things-and-doing-research" class="nav-link" data-scroll-target="#buying-things-and-doing-research">Buying things and doing research</a></li>
+  <li><a href="#visual-and-home-projects" id="toc-visual-and-home-projects" class="nav-link" data-scroll-target="#visual-and-home-projects">Visual and home projects</a></li>
+  <li><a href="#knowledge-management-chats-are-scratchpads-markdown-is-memory" id="toc-knowledge-management-chats-are-scratchpads-markdown-is-memory" class="nav-link" data-scroll-target="#knowledge-management-chats-are-scratchpads-markdown-is-memory">Knowledge management: chats are scratchpads, Markdown is memory</a>
+  <ul class="collapse">
+  <li><a href="#what-each-file-does" id="toc-what-each-file-does" class="nav-link" data-scroll-target="#what-each-file-does">What each file does</a></li>
+  <li><a href="#the-rule-after-a-useful-ai-conversation" id="toc-the-rule-after-a-useful-ai-conversation" class="nav-link" data-scroll-target="#the-rule-after-a-useful-ai-conversation">The rule after a useful AI conversation</a></li>
+  <li><a href="#periodic-compression" id="toc-periodic-compression" class="nav-link" data-scroll-target="#periodic-compression">Periodic compression</a></li>
+  </ul></li>
+  <li><a href="#decision-making" id="toc-decision-making" class="nav-link" data-scroll-target="#decision-making">Decision making</a></li>
+  </ul></li>
+  <li><a href="#the-hierarchy-i-ended-up-with" id="toc-the-hierarchy-i-ended-up-with" class="nav-link" data-scroll-target="#the-hierarchy-i-ended-up-with">10. The hierarchy I ended up with</a>
+  <ul class="collapse">
+  <li><a href="#how-i-think-about-cost-now" id="toc-how-i-think-about-cost-now" class="nav-link" data-scroll-target="#how-i-think-about-cost-now">How I think about cost now</a></li>
+  </ul></li>
+  <li><a href="#what-i-wish-i-had-known-at-the-start" id="toc-what-i-wish-i-had-known-at-the-start" class="nav-link" data-scroll-target="#what-i-wish-i-had-known-at-the-start">11. What I wish I had known at the start</a>
+  <ul class="collapse">
+  <li><a href="#use-chat-to-think-use-agents-to-act" id="toc-use-chat-to-think-use-agents-to-act" class="nav-link" data-scroll-target="#use-chat-to-think-use-agents-to-act">Use chat to think; use agents to act</a></li>
+  <li><a href="#keep-the-real-project-in-git" id="toc-keep-the-real-project-in-git" class="nav-link" data-scroll-target="#keep-the-real-project-in-git">Keep the real project in Git</a></li>
+  <li><a href="#give-agents-persistent-instructions" id="toc-give-agents-persistent-instructions" class="nav-link" data-scroll-target="#give-agents-persistent-instructions">Give agents persistent instructions</a></li>
+  <li><a href="#use-the-cheapest-model-that-can-complete-the-task-reliably" id="toc-use-the-cheapest-model-that-can-complete-the-task-reliably" class="nav-link" data-scroll-target="#use-the-cheapest-model-that-can-complete-the-task-reliably">Use the cheapest model that can complete the task reliably</a></li>
+  <li><a href="#verify-actions-not-eloquence" id="toc-verify-actions-not-eloquence" class="nav-link" data-scroll-target="#verify-actions-not-eloquence">Verify actions, not eloquence</a></li>
+  <li><a href="#do-not-optimise-hardware-around-todays-models" id="toc-do-not-optimise-hardware-around-todays-models" class="nav-link" data-scroll-target="#do-not-optimise-hardware-around-todays-models">Do not optimise hardware around today’s models</a></li>
+  <li><a href="#turn-useful-chats-into-durable-knowledge" id="toc-turn-useful-chats-into-durable-knowledge" class="nav-link" data-scroll-target="#turn-useful-chats-into-durable-knowledge">Turn useful chats into durable knowledge</a></li>
+  </ul></li>
+  <li><a href="#the-stack-i-use-now" id="toc-the-stack-i-use-now" class="nav-link" data-scroll-target="#the-stack-i-use-now">12. The stack I use now</a>
+  <ul class="collapse">
+  <li><a href="#coding-core" id="toc-coding-core" class="nav-link" data-scroll-target="#coding-core">Coding core</a></li>
+  <li><a href="#coding-models" id="toc-coding-models" class="nav-link" data-scroll-target="#coding-models">Coding models</a></li>
+  <li><a href="#coding-alternatives-worth-keeping-available" id="toc-coding-alternatives-worth-keeping-available" class="nav-link" data-scroll-target="#coding-alternatives-worth-keeping-available">Coding alternatives worth keeping available</a></li>
+  <li><a href="#general-agentic-core" id="toc-general-agentic-core" class="nav-link" data-scroll-target="#general-agentic-core">General agentic core</a></li>
+  <li><a href="#the-current-map" id="toc-the-current-map" class="nav-link" data-scroll-target="#the-current-map">The current map</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">From Chatbots to Agents: How I Built My AI Stack in 2026</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">AI</div>
+    <div class="quarto-category">Tools</div>
+    <div class="quarto-category">Workflow</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A practical account of how I moved from using ChatGPT as a chatbot to building a working stack around Codex, OpenCode, DeepSeek, OpenClaw and automation.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Silvio Fanzon </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 26, 2026</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">July 27, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>For a long time, my mental model of AI was simple:</p>
+<blockquote class="blockquote">
+<p>Open ChatGPT, ask a question, get an answer.</p>
+</blockquote>
+<p>That was already useful. I used it to understand mathematics, write code, compare hardware, work on papers, plan projects and redesign my website. But the interaction was still fundamentally conversational: I asked, the model answered, and I carried the answer back into the real world.</p>
+<p>The thing that changed my view was not a new benchmark or a larger model. It was trying to make AI <strong>act on the work itself</strong>.</p>
+<p>My website became the test case.</p>
+<p>I had a real Quarto repository, a growing pile of CSS, generated output, a design I did not want agents to casually change, and lots of apparently tiny requests:</p>
+<blockquote class="blockquote">
+<p>Make the navbar wider.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Fix the mobile footer.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Move these styles into the right place.</p>
+</blockquote>
+<p>Those requests sounded trivial. They were not. Agents would inspect too much, edit the wrong layer, stack another override on top of old overrides, render the site, fail to change the thing I meant, then start another expensive loop.</p>
+<p>At the same time I was experimenting with local models. Running Qwen through Ollama sounded attractive: private, local and effectively free per token. In practice, making a powerful Mac run hot just to summarise a one-page file was a useful reality check. I was optimising for zero API cost while ignoring time, heat, latency and the fact that very cheap cloud models were becoming dramatically better.</p>
+<p>Then I tried coding-agent interfaces. Cline made the agent loop tangible. Kilo looked promising but did not work reliably enough for me. DeepSeek changed the economics. The website refactor taught me that repository architecture and task scoping mattered as much as model quality. Codex and OpenCode eventually simplified the coding stack. And once that pattern became clear, I realised that coding was only one example of a much larger idea: persistent agents, workflows and automation could apply to research, job search, email, writing and everyday administration.</p>
+<p>This post is the map I wish I had at the beginning. It is not a survey of every AI product. It is the path from:</p>
+<pre class="text"><code>chatbot
+   ↓
+coding assistant
+   ↓
+agent
+   ↓
+reliable agent workflow
+   ↓
+persistent agent
+   ↓
+automation</code></pre>
+<p>and the practical stack I ended up with after trying the alternatives rather than choosing them from feature lists.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A moving target
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Products, models, limits and prices change extremely quickly. Specific product details below are a snapshot checked in <strong>July 2026</strong>. The workflow itself should age better than the model names.</p>
+</div>
+</div>
+<section id="i-thought-ai-meant-chatgpt" class="level1">
+<h1>1. I thought AI meant ChatGPT</h1>
+<p>The first conceptual shift was realising that I had been mixing together four different things: <strong>models, chats, agents and tools</strong>.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["ChatGPT&lt;br/&gt;ask and answer"] --&gt; B["Local models&lt;br/&gt;privacy / cost experiment"]
+    B --&gt; C["Cline / Kilo&lt;br/&gt;discover the agent loop"]
+    C --&gt; D["DeepSeek&lt;br/&gt;cheap capable cloud"]
+    D --&gt; E["Website refactor&lt;br/&gt;architecture + bounded tasks"]
+    E --&gt; F["Codex + OpenCode&lt;br/&gt;simplified coding stack"]
+    F --&gt; G["OpenClaw + n8n&lt;br/&gt;persistent agents + workflows"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<section id="the-distinction-i-was-missing-a-model-is-not-an-agent" class="level2">
+<h2 class="anchored" data-anchor-id="the-distinction-i-was-missing-a-model-is-not-an-agent">The distinction I was missing: a model is not an agent</h2>
+<p>A language model produces responses.</p>
+<p>An <strong>agent</strong> wraps a model in a system that can observe its environment, use tools, take actions, inspect the result and continue.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Goal"] --&gt; B["Model reasons"]
+    B --&gt; C["Agent chooses an action"]
+    C --&gt; D["Read files / search / run commands / use apps"]
+    D --&gt; E["Observe result"]
+    E --&gt; F{"Finished?"}
+    F -- No --&gt; B
+    F -- Yes --&gt; G["Deliver result"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>That loop is the important part.</p>
+<p>A normal chat might tell me how to fix a bug.</p>
+<p>A coding agent can:</p>
+<pre class="text"><code>inspect repository
+      ↓
+find relevant files
+      ↓
+edit code
+      ↓
+run tests
+      ↓
+read failure
+      ↓
+edit again
+      ↓
+run tests
+      ↓
+show final diff</code></pre>
+<p>This is what people mean by <strong>agentic AI</strong> in practice. It is not necessarily a fundamentally different model. It is a model given tools, context, permissions and an iterative loop.</p>
+<p>The same idea applies outside coding.</p>
+</section>
+<section id="chat-work-and-agents-solve-different-problems" class="level2">
+<h2 class="anchored" data-anchor-id="chat-work-and-agents-solve-different-problems">Chat, Work and agents solve different problems</h2>
+<p>My current mental model is:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mode</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Chat</strong></td>
+<td>Thinking, explaining, learning, discussing, small edits</td>
+</tr>
+<tr class="even">
+<td><strong>Agent</strong></td>
+<td>Acting on files, tools or systems over multiple steps</td>
+</tr>
+<tr class="odd">
+<td><strong>Automation</strong></td>
+<td>Repeating an agent workflow later or when a condition occurs</td>
+</tr>
+</tbody>
+</table>
+<p>The distinction matters because throwing an agent at every problem is wasteful.</p>
+<p>If I want to understand an algorithm, I want a conversation.</p>
+<p>If I want twelve files changed consistently and the project rebuilt afterwards, I want an agent.</p>
+<p>If I want the same analysis performed every Monday, I want automation.</p>
+</section>
+</section>
+<section id="the-breakthrough-was-letting-ai-act-on-the-real-project" class="level1">
+<h1>2. The breakthrough was letting AI act on the real project</h1>
+<p>The first real breakthrough was moving from <strong>asking for code</strong> to letting an agent operate on the repository.</p>
+<p>That sounds like a small distinction, but it changed what I cared about. A good answer was no longer enough. The system had to find the right file, make the change, run the build, notice failure and show me a trustworthy diff.</p>
+<p>That is when the difference between a model and an agent harness stopped being theoretical.</p>
+<p>The coding market looks complicated because two different things are mixed together:</p>
+<ol type="1">
+<li><strong>the model</strong> — GPT, Claude, Qwen, Gemini, etc.;</li>
+<li><strong>the agent harness</strong> — Codex, Claude Code, Cline, OpenCode, Continue, etc.</li>
+</ol>
+<p>The harness determines what the model can actually do.</p>
+<section id="codex" class="level2">
+<h2 class="anchored" data-anchor-id="codex">Codex</h2>
+<p><strong>Codex</strong> is OpenAI’s dedicated software-engineering agent. It can navigate a repository, edit files, run commands and tests, and work through a task rather than merely suggest code.</p>
+<p>For difficult work, this remains my default.</p>
+<pre class="text"><code>architecture
+hard bug
+large refactor
+unfamiliar codebase
+important final review
+        ↓
+      CODEX</code></pre>
+</section>
+<section id="ordinary-chatgpt-can-also-work-with-vs-code" class="level2">
+<h2 class="anchored" data-anchor-id="ordinary-chatgpt-can-also-work-with-vs-code">Ordinary ChatGPT can also work with VS Code</h2>
+<p>One of the more useful discoveries is that normal ChatGPT on macOS can work with code open in VS Code.</p>
+<p>That makes ordinary ChatGPT useful as a <strong>pair programmer</strong>:</p>
+<pre class="text"><code>VS Code                         ChatGPT
+
+styles.scss  ────────────────►  "Why is this breaking
+                                 on mobile?"
+
+             ◄────────────────  explanation + edit</code></pre>
+<p>This is ideal for:</p>
+<ul>
+<li>discussing design choices;</li>
+<li>debugging a particular function;</li>
+<li>editing a few related files;</li>
+<li>asking questions about code I am already looking at;</li>
+<li>iterating interactively.</li>
+</ul>
+<p>Codex is better when the task is more autonomous:</p>
+<blockquote class="blockquote">
+<p>Find the cause, fix it, rebuild the site and verify the result.</p>
+</blockquote>
+</section>
+<section id="two-different-github-connections-in-chatgpt" class="level2">
+<h2 class="anchored" data-anchor-id="two-different-github-connections-in-chatgpt">Two different “GitHub” connections in ChatGPT</h2>
+<p>Easy to conflate, worth keeping separate:</p>
+<pre class="text"><code>GitHub connector (Settings → Connectors)
+   │
+   ├── read-only
+   ├── good for: "explain this repo", cited answers, deep research
+   └── cannot edit, commit, or open a PR
+
+Codex's GitHub App (ChatGPT desktop → Codex tab)
+   │
+   ├── write access, its own isolated container per task
+   ├── point it at a repo, describe the change
+   └── opens a pull request when done — never pushes to main directly</code></pre>
+<p>The second one is the actual answer to <em>“can I just point GPT at the git repo and get edits back?”</em> — yes, that is exactly Codex’s job, and the PR-not-direct-push behaviour keeps the same review discipline as every other agent in this note. The trade-off is that it draws down Codex allowance rather than pennies of BYOK spend, so it earns the same “genuinely autonomous, worth the premium cost” bar as the rest of this section, not every small tweak.</p>
+</section>
+<section id="chatgpt-work-removes-another-old-limitation" class="level2">
+<h2 class="anchored" data-anchor-id="chatgpt-work-removes-another-old-limitation">ChatGPT Work removes another old limitation</h2>
+<p>A general-purpose agent that can operate directly on a local project removes one particularly bad workflow:</p>
+<pre class="text"><code>old workflow
+
+local repo
+   ↓
+ZIP
+   ↓
+upload to chat
+   ↓
+AI edits copy
+   ↓
+download ZIP
+   ↓
+reconcile with real repo</code></pre>
+<p>The better principle is:</p>
+<blockquote class="blockquote">
+<p><strong>Keep one Git repository and put the AI tools around it.</strong></p>
+</blockquote>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+    R["Git repository"] --&gt; V["VS Code"]
+    R --&gt; C["Codex"]
+    R --&gt; W["ChatGPT Work"]
+    R --&gt; L["Local agent"]
+    V --&gt; R
+    C --&gt; R
+    W --&gt; R
+    L --&gt; R
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The repository remains the source of truth.</p>
+</section>
+<section id="claude-code-excellent-but-not-part-of-my-default-stack" class="level2">
+<h2 class="anchored" data-anchor-id="claude-code-excellent-but-not-part-of-my-default-stack">Claude Code: excellent, but not part of my default stack</h2>
+<p>Claude Code is a genuine Codex-class coding agent, but another frontier subscription does not solve my main problem: <strong>routine coding should not consume scarce premium-agent allowance</strong>.</p>
+<p>I therefore keep Claude/Sonnet as an occasional independent fallback rather than another everyday platform.</p>
+</section>
+<section id="why-a-subscription-doesnt-pay-for-itself-yet" class="level2">
+<h2 class="anchored" data-anchor-id="why-a-subscription-doesnt-pay-for-itself-yet">Why a subscription doesn’t pay for itself yet</h2>
+<p>The honest way to decide is to compare the flat subscription against what the same work costs pay-as-you-go, at the scale I actually operate at — a Jekyll/Quarto site, not full-time software engineering.</p>
+<p>The insight that matters more than any price in the table below:</p>
+<blockquote class="blockquote">
+<p><strong>The expensive part of agentic coding is iteration count, not raw token price.</strong> A cheap model that edits the wrong file and needs three correction rounds can cost more — in time and in tokens — than a stronger model that gets it right once.</p>
+</blockquote>
+<pre class="text"><code>cheap model, wrong file
+prompt → wrong edit → render → nothing changes → debug → repeat
+
+capable model, right file
+prompt → understands the templating architecture → edits the
+         right partial/layout → render → done</code></pre>
+<p>Rough illustrative costs for tasks at the scale of a site redesign (these will drift — the shape of the comparison is the durable part):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Task</th>
+<th>Cheap BYOK (DeepSeek/Gemini)</th>
+<th>Mid BYOK (Haiku)</th>
+<th>Sonnet, pay-per-token</th>
+<th>Sonnet, flat subscription</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Small CSS tweak</td>
+<td>pennies</td>
+<td>small</td>
+<td>small</td>
+<td>£0 marginal, inside the flat fee</td>
+</tr>
+<tr class="even">
+<td>Navbar/footer change</td>
+<td>small</td>
+<td>small–moderate</td>
+<td>moderate</td>
+<td>£0 marginal</td>
+</tr>
+<tr class="odd">
+<td>Homepage/section redesign</td>
+<td>small</td>
+<td>moderate</td>
+<td>moderate–high</td>
+<td>£0 marginal</td>
+</tr>
+<tr class="even">
+<td>Full repo audit/refactor</td>
+<td>moderate</td>
+<td>moderate–high</td>
+<td>high</td>
+<td>£0 marginal, most likely tier to hit the plan’s rolling usage limit</td>
+</tr>
+</tbody>
+</table>
+<p>A flat Claude subscription only pays for itself once monthly usage is consistently heavy enough that the pay-per-token total would exceed the subscription price on its own — in practice, several large redesigns or audits in the same month, not the occasional navbar tweak. Below that volume, BYOK Sonnet through Cline/OpenCode (pay only for what I use) is cheaper than adding a second flat subscription alongside the ChatGPT one I already have.</p>
+<p>The one thing a subscription buys that BYOK doesn’t: not having to think about it. Worth revisiting if usage volume changes, or if a Claude-specific harness feature (native subagents, very large context) becomes something I actually need rather than something that’s merely available.</p>
+</section>
+</section>
+<section id="i-tried-too-many-coding-tools-before-the-stack-simplified" class="level1">
+<h1>3. I tried too many coding tools before the stack simplified</h1>
+<p>Once I understood that the harness mattered, I did what everyone does with a fast-moving tool category: I started comparing too many of them.</p>
+<p>Cursor, Cline, Kilo, Continue, OpenCode, Codex, Claude Code — on paper they all overlap. In practice the important question turned out to be much simpler:</p>
+<blockquote class="blockquote">
+<p><strong>Which interface reliably works against my real Git repository, with the model I want to use, without creating another layer of friction?</strong></p>
+</blockquote>
+<p>Cline was useful because Plan → Act made the loop visible. Kilo was attractive in theory but did not work reliably enough in my setup. Continue looked like a strong VS Code alternative, but later became a poor foundation for a new workflow when its official repository went read-only. OpenCode became more interesting when I realised it could live inside VS Code and switch providers cleanly. Codex remained the strongest integrated OpenAI route.</p>
+<p>The result was not one winner. It was a pair: <strong>Codex for premium coding work, OpenCode for cheap model-flexible work</strong>.</p>
+<p>The most useful conclusion from trying several coding agents is that I should not search for one universal winner. I need two complementary routes around the same Git repository:</p>
+<pre class="text"><code>premium / strongest route
+    → Codex
+
+cheap / provider-flexible route
+    → OpenCode + DeepSeek</code></pre>
+<p>ChatGPT remains the place where I think through architecture, formulate bounded tasks and independently review the resulting diff.</p>
+<p>My current ranking is therefore:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Interface</th>
+<th>Best at</th>
+<th>Current role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Codex</strong></td>
+<td>High-capability software-engineering agent with tight OpenAI integration</td>
+<td><strong>Premium/default route for difficult code work</strong></td>
+</tr>
+<tr class="even">
+<td><strong>OpenCode</strong></td>
+<td>Multi-provider coding agent, direct DeepSeek support, terminal/IDE/desktop workflow</td>
+<td><strong>Best cheap and model-flexible route</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Cline in VS Code</strong></td>
+<td>Visual Plan → Act workflow, approvals, checkpoints, BYOK</td>
+<td>Useful GUI alternative</td>
+</tr>
+<tr class="even">
+<td><strong>Cursor</strong></td>
+<td>Highly integrated editor + agent experience</td>
+<td>Optional if I want to leave stock VS Code</td>
+</tr>
+<tr class="odd">
+<td><strong>Continue</strong></td>
+<td>Final 2.0 release remains usable</td>
+<td>Legacy option; <strong>not a new-workflow recommendation</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Kilo Code</strong></td>
+<td>Cline-lineage alternative</td>
+<td>Tested, but not reliable enough in my setup</td>
+</tr>
+</tbody>
+</table>
+<section id="codex-the-premium-openai-coding-route" class="level2">
+<h2 class="anchored" data-anchor-id="codex-the-premium-openai-coding-route">Codex: the premium OpenAI coding route</h2>
+<p><strong>Codex</strong> is the tool I should reach for when the task itself is difficult:</p>
+<pre class="text"><code>understand unfamiliar architecture
+      ↓
+decide what should change
+      ↓
+edit repository
+      ↓
+run commands / tests
+      ↓
+review the result</code></pre>
+<p>It is designed specifically for software development and technical work. It is also included with ChatGPT plans, so there is no reason to pay OpenAI API prices through another harness before using the Codex allowance already available to me.</p>
+<p>That gives Codex a very clear role:</p>
+<pre class="text"><code>hard bug
+architecture
+large refactor
+important implementation
+independent code review
+        ↓
+      CODEX</code></pre>
+<p>Source: <a href="https://help.openai.com/en/articles/11369540">Using Codex with your ChatGPT plan</a>, <a href="https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex">ChatGPT Work and Codex</a>.</p>
+</section>
+<section id="opencode-the-cheap-model-independent-route" class="level2">
+<h2 class="anchored" data-anchor-id="opencode-the-cheap-model-independent-route">OpenCode: the cheap, model-independent route</h2>
+<p><strong>OpenCode</strong> is the strongest complement to Codex because the harness is not tied to one model vendor.</p>
+<p>It supports more than 75 providers and local models. That means the same coding workflow can use:</p>
+<pre class="text"><code>DeepSeek
+MiniMax
+Qwen
+Claude
+OpenAI
+local models</code></pre>
+<p>without changing the agent harness.</p>
+<p>The most useful setup for me is:</p>
+<pre class="text"><code>OpenCode
+   ├── DeepSeek V4 Flash → exact/mechanical work
+   ├── DeepSeek V4 Pro   → serious daily agent work
+   └── premium model     → escalation only when needed</code></pre>
+<p>This is the coding equivalent of separating the <strong>agent harness</strong> from the <strong>model</strong>.</p>
+<p>Source: <a href="https://opencode.ai/docs/providers/">OpenCode providers</a>.</p>
+<section id="opencode-works-inside-vs-code" class="level3">
+<h3 class="anchored" data-anchor-id="opencode-works-inside-vs-code">OpenCode works inside VS Code</h3>
+<p>I originally thought of OpenCode as terminal-first and therefore separate from the editor. That is no longer accurate.</p>
+<p>OpenCode has a VS Code integration. Running <code>opencode</code> from the integrated terminal can install the extension automatically, and the IDE integration can pass file/selection references into the agent.</p>
+<p>So the practical layout is:</p>
+<pre class="text"><code>VS Code
+
+┌─────────────────────────────────┐
+│ code                            │
+│                                 │
+│ styles/main/_12-page-shell.scss │
+│                                 │
+├─────────────────────────────────┤
+│ OpenCode                        │
+│ &gt; implement this bounded phase  │
+└─────────────────────────────────┘</code></pre>
+<p>That gives me the benefits of stock VS Code while keeping OpenCode’s provider flexibility.</p>
+<p>Source: <a href="https://opencode.ai/docs/ide/">OpenCode IDE integration</a>.</p>
+</section>
+<section id="then-i-installed-the-opencode-desktop-app" class="level3">
+<h3 class="anchored" data-anchor-id="then-i-installed-the-opencode-desktop-app">Then I installed the OpenCode desktop app</h3>
+<p>This was another small conceptual correction.</p>
+<p>I had been treating OpenCode mainly as a <strong>terminal harness that could also live inside VS Code</strong>. The desktop app made the product boundary much clearer: OpenCode is the agent environment itself, and the terminal, IDE integration and desktop app are simply different front ends onto that environment.</p>
+<p>OpenCode now describes itself as an open-source coding agent available in:</p>
+<pre class="text"><code>terminal
+IDE
+desktop app</code></pre>
+<p>and the desktop version can manage multiple active agent sessions as tabs.</p>
+<p>More importantly, the app does not require me to arrive with an API key before it becomes useful. OpenCode advertises <strong>free models included</strong>, while still allowing connection to more than 75 providers and local models.</p>
+<p>In my own model picker I found, among others:</p>
+<pre class="text"><code>DeepSeek V4 Flash
+Laguna S 2.1</code></pre>
+<p>That was useful because it changed the first-run experience from:</p>
+<pre class="text"><code>install harness
+   ↓
+create provider account
+   ↓
+buy API credits
+   ↓
+configure key
+   ↓
+choose model
+   ↓
+finally try the agent</code></pre>
+<p>to:</p>
+<pre class="text"><code>install OpenCode
+   ↓
+open repository
+   ↓
+choose an available model
+   ↓
+try the agent</code></pre>
+<p>The exact free-model list is not something I should hard-code into the workflow. OpenCode builds its picker from available providers, integrations and configuration, so models can appear or disappear. The durable point is that <strong>a harness can now bundle enough inference to be useful immediately</strong>, while still letting me attach my own provider later.</p>
+<p>Sources: <a href="https://opencode.ai/">OpenCode</a>, <a href="https://opencode.ai/download">OpenCode desktop download</a>, <a href="https://opencode.ai/v2/docs/models">OpenCode models</a>.</p>
+<section id="laguna-s-2.1-was-also-new-to-me" class="level4">
+<h4 class="anchored" data-anchor-id="laguna-s-2.1-was-also-new-to-me">Laguna S 2.1 was also new to me</h4>
+<p>Laguna S 2.1 is Poolside’s 118B-parameter mixture-of-experts coding model, with 8B parameters active per token and a 1M-token context window. Poolside describes it as a model for agentic coding and long-horizon work.</p>
+<p>Poolside also provides its own harness, <code>pool</code>, and says Laguna models are trained inside that agent environment and perform best there, although they can also be used from other compatible clients.</p>
+<p>That makes Laguna interesting for a different reason from DeepSeek:</p>
+<pre class="text"><code>DeepSeek
+   → cheap general model inside many harnesses
+
+Laguna
+   → coding model developed together with an agent harness</code></pre>
+<p>Poolside currently says Laguna is free to use for a limited time, so I should treat that as an experiment rather than a permanent zero-cost tier.</p>
+<p>Source: <a href="https://poolside.ai/models">Poolside models</a>.</p>
+</section>
+</section>
+<section id="other-harnesses-like-opencode" class="level3">
+<h3 class="anchored" data-anchor-id="other-harnesses-like-opencode">Other harnesses like OpenCode</h3>
+<p>Once I saw OpenCode as the <strong>agent harness</strong> rather than merely a coding UI, several other products became easier to classify.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Harness</th>
+<th>Form</th>
+<th>Model flexibility</th>
+<th>What is distinctive</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>OpenCode</strong></td>
+<td>Desktop + terminal + IDE</td>
+<td>Very high</td>
+<td>Coding-focused, 75+ providers, bundled free models</td>
+</tr>
+<tr class="even">
+<td><strong>goose</strong></td>
+<td>Desktop + CLI + API</td>
+<td>High</td>
+<td>Open-source general-purpose agent, not limited to coding</td>
+</tr>
+<tr class="odd">
+<td><strong>Aider</strong></td>
+<td>Terminal</td>
+<td>Very high</td>
+<td>Git-centric pair programming, repo maps, automatic lint/test loops</td>
+</tr>
+<tr class="even">
+<td><strong>Gemini CLI</strong></td>
+<td>Terminal</td>
+<td>Gemini-focused</td>
+<td>Open source, generous Google free tier, files/shell/search/MCP</td>
+</tr>
+<tr class="odd">
+<td><strong>pool</strong></td>
+<td>Terminal/agent client</td>
+<td>Poolside-focused</td>
+<td>Harness used to train Laguna; strongest fit for Laguna models</td>
+</tr>
+<tr class="even">
+<td><strong>Cline</strong></td>
+<td>VS Code</td>
+<td>High</td>
+<td>Visual Plan → Act workflow and explicit approvals</td>
+</tr>
+<tr class="odd">
+<td><strong>Cursor</strong></td>
+<td>Full editor</td>
+<td>Curated multi-model</td>
+<td>Most integrated editor/agent experience</td>
+</tr>
+</tbody>
+</table>
+<p>I do <strong>not</strong> need to adopt all of these. They are useful because they show the same architecture appearing in different forms.</p>
+<section id="goose-the-closest-broader-analogue" class="level4">
+<h4 class="anchored" data-anchor-id="goose-the-closest-broader-analogue">goose: the closest broader analogue</h4>
+<p>The most interesting one outside pure coding is <strong>goose</strong>.</p>
+<p>It is an open-source agent with:</p>
+<pre class="text"><code>desktop app
+CLI
+API</code></pre>
+<p>and it is explicitly positioned for:</p>
+<pre class="text"><code>coding
+research
+writing
+automation
+data analysis</code></pre>
+<p>It supports multiple model providers, MCP extensions, subagents and reusable workflow recipes. It can also operate as an ACP client/server, which points toward a future where agents and front ends become more interchangeable.</p>
+<p>Conceptually:</p>
+<pre class="text"><code>OpenCode
+    → developer-focused agent harness
+
+goose
+    → general-purpose local agent harness</code></pre>
+<p>That does not replace OpenClaw in my stack: OpenClaw’s role is still the <strong>persistent personal-agent layer</strong>. goose is relevant because it shows how far a local desktop harness can go before I need a persistent service.</p>
+<p>Source: <a href="https://block.github.io/goose/">goose</a>.</p>
+</section>
+<section id="aider-narrower-older-still-useful" class="level4">
+<h4 class="anchored" data-anchor-id="aider-narrower-older-still-useful">Aider: narrower, older, still useful</h4>
+<p><strong>Aider</strong> is a terminal-first coding harness built around a Git repository.</p>
+<p>Its strengths are unusually concrete:</p>
+<pre class="text"><code>repo map
+file editing
+Git integration
+automatic commits
+linting
+testing
+cloud or local models</code></pre>
+<p>It is less of a desktop “AI workspace” than OpenCode, but architecturally it is the same idea: put an agent loop around the repository and let different models provide the reasoning engine.</p>
+<p>For pure code work, especially Python/R/LaTeX projects, it remains a useful reference implementation of a simple harness.</p>
+<p>Source: <a href="https://aider.chat/">Aider</a>.</p>
+</section>
+<section id="gemini-cli-a-harness-with-a-useful-free-tier" class="level4">
+<h4 class="anchored" data-anchor-id="gemini-cli-a-harness-with-a-useful-free-tier">Gemini CLI: a harness with a useful free tier</h4>
+<p>Google’s <strong>Gemini CLI</strong> is another open-source terminal agent. It combines Gemini with:</p>
+<pre class="text"><code>file operations
+shell commands
+web fetching
+Google Search grounding
+MCP extensions</code></pre>
+<p>Google currently advertises a personal-account free tier of up to <strong>1,000 requests per day</strong>, subject to its current limits.</p>
+<p>That makes it worth knowing about even if I do not change my main coding setup: it is another way to obtain a genuinely agentic coding loop without immediately adding API spend.</p>
+<p>Source: <a href="https://github.com/google-gemini/gemini-cli">Gemini CLI</a>.</p>
+</section>
+<section id="pool-model-and-harness-designed-together" class="level4">
+<h4 class="anchored" data-anchor-id="pool-model-and-harness-designed-together">pool: model and harness designed together</h4>
+<p>Poolside’s <code>pool</code> is especially interesting because the Laguna models were trained to operate inside it.</p>
+<p>This suggests another distinction:</p>
+<pre class="text"><code>model-agnostic harness
+OpenCode / Aider / goose
+        ↓
+choose whichever model works best
+
+vertically integrated harness
+pool + Laguna
+        ↓
+model and agent environment designed together</code></pre>
+<p>Neither architecture is automatically better.</p>
+<p>A model-agnostic harness gives me competition and cheap routing.</p>
+<p>A vertically integrated harness may extract better behaviour from a model because its training and tools match the environment it will actually use.</p>
+<p>For now, this is something to <strong>test</strong>, not a reason to change the workflow that already works.</p>
+</section>
+</section>
+<section id="the-useful-lesson-is-about-layers-not-another-tool-migration" class="level3">
+<h3 class="anchored" data-anchor-id="the-useful-lesson-is-about-layers-not-another-tool-migration">The useful lesson is about layers, not another tool migration</h3>
+<p>Installing the desktop app could easily have triggered another round of:</p>
+<blockquote class="blockquote">
+<p>Should OpenCode replace VS Code? Should goose replace OpenClaw? Should I move to pool because Laguna is trained there?</p>
+</blockquote>
+<p>That is exactly the kind of churn I want to stop.</p>
+<p>The better conclusion is simply:</p>
+<pre class="text"><code>MODEL
+DeepSeek / Laguna / GPT / Claude / Gemini / ...
+
+        ↓ runs inside
+
+HARNESS
+OpenCode / Codex / Cline / Aider / goose / pool / ...
+
+        ↓ acts on
+
+ENVIRONMENT
+repository / shell / browser / apps / services</code></pre>
+<p>I can test a new harness without redesigning the whole system.</p>
+<p>My existing workflow therefore stays unchanged. OpenCode desktop is another interface onto the OpenCode role I had already chosen; the other harnesses are alternatives and experiments, not a new stack.</p>
+</section>
+</section>
+<section id="codex-opencode-is-the-useful-pair" class="level2">
+<h2 class="anchored" data-anchor-id="codex-opencode-is-the-useful-pair">Codex + OpenCode is the useful pair</h2>
+<p>This is the simplified coding stack I actually want:</p>
+<pre class="text"><code>                   ChatGPT
+           architecture / review
+                       │
+             precise bounded task
+                       ▼
+        ┌──────────────────────────┐
+        │          VS Code         │
+        │                          │
+        │ Codex        OpenCode    │
+        │ premium      cheap/BYOK  │
+        └──────────────┬───────────┘
+                       │
+                       ▼
+                      Git
+                       │
+                       ▼
+                 GitHub diff
+                       │
+                       ▼
+               ChatGPT review</code></pre>
+<p>The decision rule is simple:</p>
+<pre class="text"><code>task is hard / ambiguous
+    → Codex
+
+task is well specified and routine
+    → OpenCode + DeepSeek
+
+task is cheap but starts looping
+    → escalate the model rather than letting it thrash</code></pre>
+</section>
+<section id="cline-still-useful-when-i-want-a-visual-plan-act-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="cline-still-useful-when-i-want-a-visual-plan-act-workflow">Cline: still useful when I want a visual Plan → Act workflow</h2>
+<p>Cline remains a capable VS Code agent and its explicit Plan / Act split is genuinely useful.</p>
+<pre class="text"><code>PLAN
+read / search / understand / propose
+            ↓
+human review
+            ↓
+ACT
+edit / run commands / test / show diff</code></pre>
+<p>It also supports direct BYOK providers, including DeepSeek.</p>
+<p>I no longer need to treat it as the centre of the stack, however. OpenCode gives me a cleaner multi-provider route, while Codex gives me the premium OpenAI route. Cline stays valuable when I specifically prefer the visual side-panel experience, checkpoints and explicit permission flow.</p>
+<p>Source: <a href="https://docs.cline.bot/core-workflows/plan-and-act">Cline Plan &amp; Act</a>.</p>
+</section>
+<section id="continue-useful-history-but-not-a-new-setup" class="level2">
+<h2 class="anchored" data-anchor-id="continue-useful-history-but-not-a-new-setup">Continue: useful history, but not a new setup</h2>
+<p>Continue previously looked like the cleanest Cline alternative because of its separate Plan, Chat and Agent modes.</p>
+<p>The important update is that the official Continue documentation now says:</p>
+<blockquote class="blockquote">
+<p>the <code>continuedev/continue</code> repository is no longer actively maintained and is read-only.</p>
+</blockquote>
+<p>A final 2.0.0 release was shipped for the VS Code extension, CLI and JetBrains plugin.</p>
+<p>That means Continue can still be useful software, but I would <strong>not build a new 2026 workflow around it</strong>. For a new setup:</p>
+<pre class="text"><code>want stock VS Code + visual agent
+    → Cline
+
+want stock VS Code + provider-flexible agent
+    → OpenCode
+
+want premium OpenAI coding agent
+    → Codex</code></pre>
+<p>Source: <a href="https://docs.continue.dev/">Continue documentation</a>.</p>
+</section>
+<section id="cursor-polished-but-optional" class="level2">
+<h2 class="anchored" data-anchor-id="cursor-polished-but-optional">Cursor: polished, but optional</h2>
+<p>Cursor remains a polished integrated editor, but I no longer need an editor migration merely to obtain strong agentic coding.</p>
+<pre class="text"><code>VS Code
++ Codex
++ OpenCode
++ Git</code></pre>
+<p>already gives me the workflow I need.</p>
+</section>
+<section id="kilo-code-tested-not-my-default" class="level2">
+<h2 class="anchored" data-anchor-id="kilo-code-tested-not-my-default">Kilo Code: tested, not my default</h2>
+<p>Kilo Code looked attractive on paper because it inherited the Cline-style agent model and emphasised structured workflows.</p>
+<p>In practice, it did not work reliably enough in my setup. The useful lesson is:</p>
+<blockquote class="blockquote">
+<p><strong>Do not choose an agent harness from feature lists. Choose the one that reliably edits, tests and shows the right diff in the repository I actually use.</strong></p>
+</blockquote>
+</section>
+<section id="native-from-scratch-editors-not-yet-a-shortcut" class="level2">
+<h2 class="anchored" data-anchor-id="native-from-scratch-editors-not-yet-a-shortcut">Native, from-scratch editors: not yet a shortcut</h2>
+<p>Separately from the agent-harness question, there is a family of editors (<strong>Zed</strong>, <strong>CodeEdit</strong>) built natively rather than on Electron/VS Code, optimised for raw startup and input speed rather than AI depth.</p>
+<pre class="text"><code>Electron / VS Code fork
+   ↓
+mature ecosystem, deep AI integration
+   ↓
+Cursor, Windsurf, VS Code + Cline/Continue
+
+native (Rust / Swift)
+   ↓
+fast, lightweight, AI still catching up
+   ↓
+Zed, CodeEdit</code></pre>
+<p>Worth trying if editor speed itself is the bottleneck. Not currently a shortcut to a <em>better</em> free agentic workflow — the editors ahead on AI depth are the VS Code-family tools above, and the fastest natively-built free option (CodeEdit) is still behind them on AI maturity. I keep this as a “watch, don’t switch yet” category.</p>
+</section>
+</section>
+<section id="cost-changed-the-problem" class="level1">
+<h1>4. Cost changed the problem</h1>
+<p>At first I thought the cost question was mostly:</p>
+<blockquote class="blockquote">
+<p>Can I make this free?</p>
+</blockquote>
+<p>That pushed me toward local models and free hosted endpoints. But coding agents changed the economics because they do not make one model call. They read files, reason, edit, inspect, call tools, retry and sometimes loop.</p>
+<p>A model that costs almost nothing per token can still be expensive if it needs five bad iterations. The metric that started to matter was <strong>successful completion per pound</strong>, not price per million tokens.</p>
+<section id="then-i-realised-codex-and-work-need-their-own-model-ladder" class="level2">
+<h2 class="anchored" data-anchor-id="then-i-realised-codex-and-work-need-their-own-model-ladder">Then I realised Codex and Work need their own model ladder</h2>
+<p>There was a second cost lesson I nearly missed.</p>
+<p>I had been comparing Codex with cheap API models as if “Codex” were one fixed-cost product. It is not. The model choice inside Codex matters enormously, and <strong>Codex and ChatGPT Work can draw from the same agentic usage allowance on Plus and Pro</strong>.</p>
+<p>That changes the way I should use the OpenAI stack.</p>
+<p>The first rule is almost embarrassingly simple:</p>
+<blockquote class="blockquote">
+<p><strong>Do the thinking in ordinary ChatGPT when I can; spend agentic allowance when I actually need an agent to act.</strong></p>
+</blockquote>
+<p>For example, instead of asking Work or Codex to explore a vague problem for twenty minutes, I can first use a normal ChatGPT conversation to decide:</p>
+<pre class="text"><code>what is the task?
+what is the likely architecture?
+which files or sources matter?
+what must not change?
+what counts as success?</code></pre>
+<p>Then I hand the agent a bounded job.</p>
+<p>That is the same lesson the website refactor taught me, now applied directly to credits.</p>
+<section id="the-openai-model-ladder-i-actually-have" class="level3">
+<h3 class="anchored" data-anchor-id="the-openai-model-ladder-i-actually-have">The OpenAI model ladder I actually have</h3>
+<p>In July 2026, the useful models in Codex/Work include the GPT-5.6 family:</p>
+<pre class="text"><code>Luna  → fastest / lowest-cost GPT-5.6
+Terra → balance of capability, speed and cost
+Sol   → flagship capability</code></pre>
+<p>OpenAI explicitly describes Luna as the fastest and lowest-cost member of GPT-5.6, Terra as the balanced everyday option, and Sol as the flagship. On eligible Plus plans, Sol, Terra and Luna are available in Work and Codex.</p>
+<p>Source: <a href="https://help.openai.com/en/articles/20001354-gpt-56-in-chatgpt">GPT-5.6 in ChatGPT</a>.</p>
+<p>The current Codex token-credit rates make the differences concrete:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th style="text-align: right;">Input credits / 1M</th>
+<th style="text-align: right;">Cached input / 1M</th>
+<th style="text-align: right;">Output / 1M</th>
+<th>Relative role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>GPT-5.4 Mini</strong></td>
+<td style="text-align: right;">18.75</td>
+<td style="text-align: right;">1.875</td>
+<td style="text-align: right;">113</td>
+<td>cheapest option when available</td>
+</tr>
+<tr class="even">
+<td><strong>GPT-5.6 Luna</strong></td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">150</td>
+<td>cheap default for real agent work</td>
+</tr>
+<tr class="odd">
+<td><strong>GPT-5.6 Terra</strong></td>
+<td style="text-align: right;">62.5</td>
+<td style="text-align: right;">6.25</td>
+<td style="text-align: right;">375</td>
+<td>stronger everyday reasoning</td>
+</tr>
+<tr class="even">
+<td><strong>GPT-5.6 Sol</strong></td>
+<td style="text-align: right;">125</td>
+<td style="text-align: right;">12.5</td>
+<td style="text-align: right;">750</td>
+<td>difficult / high-value tasks</td>
+</tr>
+<tr class="odd">
+<td><strong>GPT-5.5</strong></td>
+<td style="text-align: right;">125</td>
+<td style="text-align: right;">12.5</td>
+<td style="text-align: right;">750</td>
+<td>same credit rate as Sol</td>
+</tr>
+</tbody>
+</table>
+<p>Source: <a href="https://help.openai.com/en/articles/20001106-codex-rate-card">Codex rate card</a>.</p>
+<p>The relative costs are more useful than the raw numbers:</p>
+<pre class="text"><code>Mini
+  ↓  about 1.33×
+Luna
+  ↓  2.5×
+Terra
+  ↓  2×
+Sol
+
+Sol ≈ GPT-5.5 in credit rate</code></pre>
+<p>So, purely for preserving agentic allowance, <strong>GPT-5.5 is not an economical middle step</strong>. It currently costs the same token credits as Sol. Unless I specifically prefer GPT-5.5’s behaviour for a task, I would choose Sol when I am already willing to pay that tier.</p>
+</section>
+<section id="my-practical-codex-routing-rule" class="level3">
+<h3 class="anchored" data-anchor-id="my-practical-codex-routing-rule">My practical Codex routing rule</h3>
+<p>The default should not be “always use the strongest model”.</p>
+<p>It should be:</p>
+<pre class="text"><code>tiny / mechanical / already specified
+        ↓
+GPT-5.4 Mini
+
+routine agent work
+        ↓
+GPT-5.6 Luna
+
+needs architectural judgement,
+debugging or several interacting files
+        ↓
+GPT-5.6 Terra
+
+genuinely difficult,
+high-risk or expensive-to-get-wrong
+        ↓
+GPT-5.6 Sol</code></pre>
+<p>GPT-5.5 is not part of the normal escalation ladder because its current Codex credit rate is the same as Sol.</p>
+<p>For the kind of website work that taught me this lesson:</p>
+<pre class="text"><code>"move these exact selectors"
+        → Mini or Luna
+
+"implement this bounded phase from an approved prompt"
+        → Luna
+
+"work out which rules are actually winning and refactor safely"
+        → Terra
+
+"untangle a difficult architectural bug after cheaper models failed"
+        → Sol</code></pre>
+</section>
+<section id="an-illustrative-agent-turn" class="level3">
+<h3 class="anchored" data-anchor-id="an-illustrative-agent-turn">An illustrative agent turn</h3>
+<p>Suppose a task used 100K uncached input tokens and produced 20K output tokens.</p>
+<p>At the current Codex credit rates, the rough consumption would be:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th style="text-align: right;">Approx. credits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GPT-5.4 Mini</td>
+<td style="text-align: right;">4.1</td>
+</tr>
+<tr class="even">
+<td>GPT-5.6 Luna</td>
+<td style="text-align: right;">5.5</td>
+</tr>
+<tr class="odd">
+<td>GPT-5.6 Terra</td>
+<td style="text-align: right;">13.8</td>
+</tr>
+<tr class="even">
+<td>GPT-5.6 Sol</td>
+<td style="text-align: right;">27.5</td>
+</tr>
+<tr class="odd">
+<td>GPT-5.5</td>
+<td style="text-align: right;">27.5</td>
+</tr>
+</tbody>
+</table>
+<p>This is only an illustration; real tasks vary substantially in context, cached input, output length and tool loops.</p>
+<p>But it shows why the routing decision matters. A routine task on Luna can use roughly one fifth of the credits of the same token mix on Sol.</p>
+</section>
+<section id="the-other-ways-to-preserve-agentic-allowance" class="level3">
+<h3 class="anchored" data-anchor-id="the-other-ways-to-preserve-agentic-allowance">The other ways to preserve agentic allowance</h3>
+<p>Model choice is only part of it.</p>
+<p><strong>1. Keep routine work out of the shared pool where practical.</strong></p>
+<p>Codex and Work share agentic usage. Ordinary ChatGPT is therefore the better place for preliminary thinking, prompt design, explanation and review that does not require the agent to act on files or tools.</p>
+<p><strong>2. Give the agent the smallest useful scope.</strong></p>
+<pre class="text"><code>bad:
+"review the repo and improve the CSS"
+
+better:
+"edit only these two files; preserve appearance;
+run render + quick tests; stop if ownership is ambiguous"</code></pre>
+<p>Less wandering means less input, less output and fewer loops.</p>
+<p><strong>3. Prefer Luna over Sol as the normal starting point.</strong></p>
+<p>Luna is not merely a “cheap emergency model”. It is the cost-efficient member of the current flagship family. Terra is the escalation when the task genuinely needs more judgement.</p>
+<p><strong>4. Use Mini for genuinely mechanical work.</strong></p>
+<p>Mini is cheaper than Luna on the current rate card. I should use it when the task has already been fully reasoned through and failure is easy to detect.</p>
+<p><strong>5. Avoid Fast mode unless latency is worth the extra credits.</strong></p>
+<p>OpenAI says Fast mode consumes credits at a higher rate on supported models.</p>
+<p><strong>6. Keep outputs short when long prose is not useful.</strong></p>
+<p>Output tokens are the expensive side of the rate card. For coding agents, I want:</p>
+<pre class="text"><code>make the change
+run the checks
+show the diff
+report only what matters</code></pre>
+<p>not a long essay after every edit.</p>
+<p><strong>7. Exploit stable context rather than making the agent rediscover architecture.</strong></p>
+<p>Cached input is charged at one tenth of normal input for the current GPT-5.6 models. Files such as <code>AGENTS.md</code>, <code>SOURCE_MAP.md</code> and a clean canonical architecture therefore help twice: they reduce reasoning mistakes and make repeated context cheaper.</p>
+<p><strong>8. Stop cheap agents when they start looping.</strong></p>
+<p>Three failed Luna attempts can be worse than one Terra attempt. The correct optimisation target is still:</p>
+<blockquote class="blockquote">
+<p><strong>credits per successful task, not credits per model call.</strong></p>
+</blockquote>
+</section>
+<section id="work-follows-the-same-strategic-rule" class="level3">
+<h3 class="anchored" data-anchor-id="work-follows-the-same-strategic-rule">Work follows the same strategic rule</h3>
+<p>OpenAI says Codex, ChatGPT Work and other supported agentic features can draw from the same agentic allowance. The public Plus/Pro documentation does not give me a simple fixed “Work task = N credits” table, because consumption depends on the task and model.</p>
+<p>So I use the same conservative routing idea:</p>
+<pre class="text"><code>simple research / file handling
+        → Luna
+
+multi-source synthesis / judgement
+        → Terra
+
+difficult, long, high-value workflow
+        → Sol</code></pre>
+<p>And before launching Work, I ask whether the task actually needs Work at all.</p>
+<p>If ordinary ChatGPT can produce the plan, comparison or draft without acting across files/tools, I save the agentic pool for the part that genuinely benefits from an agent.</p>
+<p>The old toolkit summary had the right principle but was too tied to specific promotional model names and prices.</p>
+<p>The durable strategy is:</p>
+<pre class="text"><code>routine, non-sensitive
+        ↓
+best current FREE hosted model
+
+need more reliability
+        ↓
+strong economical cloud model
+
+genuinely hard
+        ↓
+frontier model / Codex</code></pre>
+<p>Specific free endpoints change quickly. Rather than permanently standardising on one Gemini, DeepSeek or other promotional model, I should use the strongest current free option exposed by the interface I am using.</p>
+</section>
+</section>
+<section id="july-2026-deepseek-v4-changes-the-value-ladder" class="level2">
+<h2 class="anchored" data-anchor-id="july-2026-deepseek-v4-changes-the-value-ladder">July 2026: DeepSeek V4 changes the value ladder</h2>
+<p>The most important new finding is that <strong>DeepSeek V4 Flash and V4 Pro are cheap enough to change how I route agent work</strong>.</p>
+<p>As of 27 July 2026, the official API prices are:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th style="text-align: right;">Input, cache miss / 1M</th>
+<th style="text-align: right;">Output / 1M</th>
+<th style="text-align: right;">Context</th>
+<th>Practical role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>DeepSeek V4 Flash</strong></td>
+<td style="text-align: right;">$0.14</td>
+<td style="text-align: right;">$0.28</td>
+<td style="text-align: right;">1M</td>
+<td>extremely cheap default worker</td>
+</tr>
+<tr class="even">
+<td><strong>DeepSeek V4 Pro</strong></td>
+<td style="text-align: right;">$0.435</td>
+<td style="text-align: right;">$0.87</td>
+<td style="text-align: right;">1M</td>
+<td>capability/value default for harder agent work</td>
+</tr>
+<tr class="odd">
+<td><strong>MiniMax M3</strong> (≤512K input)</td>
+<td style="text-align: right;">$0.30</td>
+<td style="text-align: right;">$1.20</td>
+<td style="text-align: right;">up to 1M</td>
+<td>strong multimodal challenger</td>
+</tr>
+<tr class="even">
+<td><strong>GPT-5.4 mini</strong></td>
+<td style="text-align: right;">$0.75</td>
+<td style="text-align: right;">$4.50</td>
+<td style="text-align: right;">400K</td>
+<td>premium economical escalation</td>
+</tr>
+<tr class="odd">
+<td><strong>Claude Sonnet 5</strong> (intro price through 31 Aug 2026)</td>
+<td style="text-align: right;">$2.00</td>
+<td style="text-align: right;">$10.00</td>
+<td style="text-align: right;">—</td>
+<td>frontier fallback</td>
+</tr>
+</tbody>
+</table>
+<p>Sources: <a href="https://api-docs.deepseek.com/quick_start/pricing">DeepSeek pricing</a>, <a href="https://platform.minimax.io/subscribe/token-plan?tab=api-enterprise">MiniMax M3 pricing</a>, <a href="https://openai.com/index/introducing-gpt-5-4-mini-and-nano/">GPT-5.4 mini</a>, <a href="https://www.anthropic.com/news/claude-sonnet-5">Claude Sonnet 5</a>.</p>
+<p>MiniMax M3’s pay-as-you-go price doubles to $0.60/M input and $2.40/M output when the input context is above 512K tokens, so its long-context headline capability is not priced uniformly.</p>
+<p>The DeepSeek comparison is especially useful because it is not merely a cheap model versus an expensive model. DeepSeek says <strong>V4 Flash approaches V4 Pro in reasoning and performs on par with Pro on simple agent tasks</strong>, while Pro is the stronger option for harder work.</p>
+<p>So my practical routing becomes:</p>
+<pre class="text"><code>exact, mechanical task
+        ↓
+DeepSeek V4 Flash
+
+task requires deciding what should be changed
+        ↓
+DeepSeek V4 Pro
+
+DeepSeek struggles / visual or multimodal context matters
+        ↓
+MiniMax M3 or GPT-5.4 mini
+
+genuinely difficult / high-value failure
+        ↓
+frontier GPT / Claude / Codex</code></pre>
+<section id="why-v4-pro-may-be-the-sweet-spot" class="level3">
+<h3 class="anchored" data-anchor-id="why-v4-pro-may-be-the-sweet-spot">Why V4 Pro may be the sweet spot</h3>
+<p>V4 Pro costs about <strong>3.1× Flash</strong> on uncached input and output, but both are still very inexpensive in absolute terms.</p>
+<p>For an illustrative agent turn using 100K uncached input tokens and 20K output tokens:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th style="text-align: right;">Approximate token cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DeepSeek V4 Flash</td>
+<td style="text-align: right;">$0.0196</td>
+</tr>
+<tr class="even">
+<td>MiniMax M3</td>
+<td style="text-align: right;">$0.054</td>
+</tr>
+<tr class="odd">
+<td>DeepSeek V4 Pro</td>
+<td style="text-align: right;">$0.0609</td>
+</tr>
+<tr class="even">
+<td>GPT-5.4 mini</td>
+<td style="text-align: right;">$0.165</td>
+</tr>
+<tr class="odd">
+<td>Claude Sonnet 5 (intro price)</td>
+<td style="text-align: right;">$0.40</td>
+</tr>
+</tbody>
+</table>
+<p>This makes an important point:</p>
+<blockquote class="blockquote">
+<p><strong>A stronger cheap model that finishes in one pass can be cheaper than a cheaper model that loops three times.</strong></p>
+</blockquote>
+<p>The dominant cost in agentic coding is often not the published price per million tokens. It is the repeated cycle of:</p>
+<pre class="text"><code>read many files
+→ make wrong assumption
+→ edit
+→ render
+→ inspect failure
+→ reread context
+→ try again</code></pre>
+<p>That is why better prompts, cleaner repository architecture and explicit stop conditions matter as much as model price.</p>
+</section>
+<section id="a-practical-model-ladder" class="level3">
+<h3 class="anchored" data-anchor-id="a-practical-model-ladder">A practical model ladder</h3>
+<p>My working judgement, not a universal benchmark ranking:</p>
+<pre class="text"><code>DeepSeek V4 Flash
+    → extreme value, scoped agent work
+
+DeepSeek V4 Pro
+    → best capability/value balance for serious daily agent work
+
+MiniMax M3
+    → interesting alternative when multimodality or long-context agent work matters
+
+GPT-5.4 mini
+    → premium step-up without immediately paying full frontier prices
+
+Sonnet 5 / full frontier GPT / Codex
+    → escalation when failure costs more than tokens</code></pre>
+<p>I would therefore start most well-specified repository tasks on Flash, use Pro when the agent has to determine the architecture or debug interactions, and escalate only when the cheaper levels stop being reliable.</p>
+</section>
+</section>
+<section id="cheap-capacity-inside-the-coding-environment" class="level2">
+<h2 class="anchored" data-anchor-id="cheap-capacity-inside-the-coding-environment">Cheap capacity inside the coding environment</h2>
+<p>My view changed here as I kept experimenting:</p>
+<ul>
+<li><strong>Codex</strong> is the premium OpenAI route, but I should route its tasks through Mini → Luna → Terra → Sol rather than defaulting to the strongest model.</li>
+<li><strong>OpenCode</strong> is the main cheap/provider-flexible complement to Codex, and it can run comfortably from VS Code.</li>
+<li><strong>Cline</strong> remains useful when I specifically want the visual Plan → Act workflow.</li>
+<li><strong>Continue</strong> is no longer a new-workflow recommendation because its official repository is now read-only.</li>
+<li><strong>Cursor</strong> remains worth testing for its integrated UX, but I do not need an editor migration to get serious agentic coding.</li>
+</ul>
+<p>The important distinction is now:</p>
+<pre class="text"><code>included OpenAI agentic allowance
+        → spend carefully through Codex / Work
+
+cheap BYOK execution
+        → OpenCode + DeepSeek
+
+ordinary thinking / planning
+        → ChatGPT</code></pre>
+<p>The useful idea from the older summary is the <strong>escalation ladder</strong>, not the exact model names:</p>
+<pre class="text"><code>FREE
+  ↓
+CHEAP / VALUE
+  ↓
+FRONTIER</code></pre>
+</section>
+<section id="the-escalation-ladder-now-exists-inside-a-single-vendor-too" class="level2">
+<h2 class="anchored" data-anchor-id="the-escalation-ladder-now-exists-inside-a-single-vendor-too">The escalation ladder now exists inside a single vendor too</h2>
+<p>The FREE → CHEAP/VALUE → FRONTIER ladder above used to mean <em>switching vendors</em>. That is changing: major labs now ship the same underlying model as several <strong>named capability tiers</strong>, trading reasoning depth against speed and cost within one family.</p>
+<pre class="text"><code>fastest / cheapest tier   → high-volume, low-stakes, latency-sensitive
+balanced tier             → the everyday default for most tasks
+flagship tier              → hardest reasoning, slowest, most expensive</code></pre>
+<p>The practical implication is the same routing discipline as before, just one level more granular: default to the balanced tier, drop to the fast tier for trivial high-volume work, and reserve the flagship tier for the genuinely hard cases — rather than sending every request to the most capable (and slowest) option out of habit. The specific tier names will change with each model generation; the pattern of “one family, three depths” looks durable.</p>
+</section>
+<section id="qwen-is-not-only-a-local-model" class="level2">
+<h2 class="anchored" data-anchor-id="qwen-is-not-only-a-local-model">Qwen is not only a local model</h2>
+<p>The local Qwen models described later in this note are one branch of a much larger family. Alibaba also serves Qwen as a hosted API, and the coding/cost-efficient variants are genuinely competitive with Western frontier pricing rather than merely “cheap but worse”:</p>
+<pre class="text"><code>Qwen hosted API
+  │
+  ├── small/cheap coding-tuned tier   → near-DeepSeek pricing, coding-focused
+  ├── mid tier (dense or MoE)         → strong general + coding balance
+  └── reasoning-native flagship       → frontier-adjacent quality at a
+                                         fraction of Western frontier cost</code></pre>
+<p>The flagship hosted tier is the interesting one: independent benchmarks put it ahead of a GPT-4-class model on agentic coding/terminal tasks at roughly a quarter of the price. That makes it a genuine “capable but still cheap” escalation step — one I’d reach for <em>before</em> a frontier subscription model, not just before nothing.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>“Free” needs a definition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Several providers advertise free tiers that turn out to be a one-time signup token grant rather than a standing allowance — after the grant, they’re simply cheap, not free. Before I standardise on a provider as “the free option,” I check whether that’s a recurring daily quota or a one-time credit, since the practical routing decision differs.</p>
+</div>
+</div>
+</section>
+<section id="antigravity-one-extra-free-agent-platform" class="level2">
+<h2 class="anchored" data-anchor-id="antigravity-one-extra-free-agent-platform">Antigravity: one extra free agent platform</h2>
+<p>My one extra agent platform is <strong>Google Antigravity</strong>.</p>
+<p>Its free Individual tier provides a separate pool of autonomous-agent capacity and access to multiple model families. It is useful when I want:</p>
+<ul>
+<li>free overflow after coding-agent limits;</li>
+<li>larger autonomous tasks;</li>
+<li>browser/tool workflows;</li>
+<li>subagents and parallel work;</li>
+<li>a platform broader than a code editor.</li>
+</ul>
+<pre class="text"><code>Cursor / Cline
+      ↓
+daily development
+
+Antigravity
+      ↓
+free autonomous overflow
+broader workflows
+
+Codex
+      ↓
+rare premium escalation</code></pre>
+<p>Free cloud endpoints are for <strong>non-sensitive</strong> material. Private code, unpublished research and sensitive personal documents stay local.</p>
+</section>
+</section>
+<section id="local-ai-taught-me-what-free-really-means" class="level1">
+<h1>5. Local AI taught me what “free” really means</h1>
+<p>Local inference was one of the most useful experiments precisely because it was less magical than I expected.</p>
+<p>With 48 GB of unified memory I can run serious local models. But when Qwen through Ollama made the machine noticeably hot for a trivial document task, the trade-off became concrete:</p>
+<pre class="text"><code>zero API bill
+≠
+zero cost</code></pre>
+<p>There is still latency, power, heat, memory pressure and the opportunity cost of using a weaker or slower model.</p>
+<p>That did not make local AI pointless. It clarified its role: <strong>privacy and independence</strong>, not routine penny-saving.</p>
+<p>Running a model locally gives privacy and zero marginal inference cost, but on a laptop it also means slower generation, substantial memory use, heat and battery/power consumption.</p>
+<p>I therefore no longer use local AI merely to save money.</p>
+<pre class="text"><code>private code
+confidential documents
+unpublished research
+sensitive personal data
+        ↓
+local model</code></pre>
+<p>For ordinary non-sensitive work, hosted free or inexpensive models are faster and more convenient.</p>
+<p>The mistake is assuming:</p>
+<blockquote class="blockquote">
+<p>bigger model = better setup.</p>
+</blockquote>
+<p>A local coding agent needs enough memory not only for model weights but also for context, the inference runtime, macOS, VS Code, browsers, compilers and everything else running alongside it.</p>
+<section id="my-current-local-stack-three-qwens" class="level2">
+<h2 class="anchored" data-anchor-id="my-current-local-stack-three-qwens">My current local stack: three Qwens</h2>
+<p>With <strong>48 GB unified memory</strong>, I do not need one local model for everything. I keep three clearly separated roles:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Qwen3.5 9B</strong></td>
+<td>Trivial sensitive work: small summaries, private forms, simple extraction or rewriting</td>
+</tr>
+<tr class="even">
+<td><strong>Qwen3.6 27B</strong></td>
+<td>Serious private general work: documents, maths, reasoning, research and analysis</td>
+</tr>
+<tr class="odd">
+<td><strong>Qwen3.6 27B Coding NVFP4</strong></td>
+<td>Local coding and repository work</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull the three base models</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull qwen3.5:9b</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull qwen3.6:27b</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull qwen3.6:27b-coding-nvfp4</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep the custom Modelfiles together</span></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/ollama-modelfiles</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/ollama-modelfiles</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Lightweight general model with a larger working context</span></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> Modelfile-qwen9-128k <span class="op">&lt;&lt;'EOF'</span></span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a><span class="st">FROM qwen3.5:9b</span></span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a><span class="st">PARAMETER num_ctx 131072</span></span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> create qwen9-128k <span class="at">-f</span> Modelfile-qwen9-128k</span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Main general + maths model</span></span>
+<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> Modelfile-qwen27-64k <span class="op">&lt;&lt;'EOF'</span></span>
+<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a><span class="st">FROM qwen3.6:27b</span></span>
+<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a><span class="st">PARAMETER num_ctx 65536</span></span>
+<span id="cb51-21"><a href="#cb51-21" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span>
+<span id="cb51-22"><a href="#cb51-22" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> create qwen27-64k <span class="at">-f</span> Modelfile-qwen27-64k</span>
+<span id="cb51-23"><a href="#cb51-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-24"><a href="#cb51-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Coding / repository agent model</span></span>
+<span id="cb51-25"><a href="#cb51-25" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> Modelfile-qwen27-code-64k <span class="op">&lt;&lt;'EOF'</span></span>
+<span id="cb51-26"><a href="#cb51-26" aria-hidden="true" tabindex="-1"></a><span class="st">FROM qwen3.6:27b-coding-nvfp4</span></span>
+<span id="cb51-27"><a href="#cb51-27" aria-hidden="true" tabindex="-1"></a><span class="st">PARAMETER num_ctx 65536</span></span>
+<span id="cb51-28"><a href="#cb51-28" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span>
+<span id="cb51-29"><a href="#cb51-29" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> create qwen27-code-64k <span class="at">-f</span> Modelfile-qwen27-code-64k</span>
+<span id="cb51-30"><a href="#cb51-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-31"><a href="#cb51-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the custom models</span></span>
+<span id="cb51-32"><a href="#cb51-32" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The 9B model is not my default for difficult work. Its point is speed and low overhead when the task is simple but the material is sensitive. For anything important, I move straight to one of the 27B models.</p>
+<p>I give the 9B model a <strong>128K working context</strong>, while keeping both 27B models at <strong>64K</strong>. The smaller model can afford the extra context more comfortably, which makes it more useful for long documents, larger repository reads and agent sessions without giving up its main advantage: lower memory and compute overhead. The 27B models stay at 64K to preserve more headroom for their much larger weights, the inference runtime and the rest of the Mac.</p>
+<section id="why-27b-rather-than-35b" class="level3">
+<h3 class="anchored" data-anchor-id="why-27b-rather-than-35b">Why 27B rather than 35B?</h3>
+<p>Counter-intuitively, the bigger number does not make the 35B version the obvious upgrade.</p>
+<p>Qwen3.6-27B is a dense 27B model, while the 35B variant is a mixture-of-experts model. I therefore keep the 27B models as the serious local tier rather than adding 35B simply because it is larger.</p>
+<p>The practical rule is:</p>
+<pre class="text"><code>tiny + sensitive      → qwen9-128k
+maths / general       → qwen27-64k
+local coding          → qwen27-code-64k
+hardest work          → strong cloud model / Codex</code></pre>
+</section>
+</section>
+<section id="quantisation-matters-but-only-up-to-a-point" class="level2">
+<h2 class="anchored" data-anchor-id="quantisation-matters-but-only-up-to-a-point">Quantisation matters, but only up to a point</h2>
+<p>There are higher-precision versions of the same model.</p>
+<p>For Qwen3.6-27B, the useful hierarchy is roughly:</p>
+<pre class="text"><code>Q4_K_M             ~17 GB
+NVFP4 coding       ~20 GB   ← sweet spot
+MXFP8 coding       ~31 GB
+BF16               ~55 GB</code></pre>
+<p>Higher precision recovers capability lost during quantisation.</p>
+<p>It does <strong>not</strong> turn a 27B model into a frontier datacentre model.</p>
+<pre class="text"><code>same underlying model
+
+BF16
+ ↑
+FP8
+ ↑
+NVFP4
+ ↑
+Q4</code></pre>
+<p>For an agent, I would rather have a good 20 GB model with room for context, VS Code and fast iteration than consume almost all system memory chasing a small precision gain.</p>
+</section>
+<section id="the-localcloud-rule-i-ended-up-with" class="level2">
+<h2 class="anchored" data-anchor-id="the-localcloud-rule-i-ended-up-with">The local/cloud rule I ended up with</h2>
+<p>Buying enough laptop memory to run huge models locally is usually poor value compared with using cloud models selectively.</p>
+<p>My split is:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    T["Task"] --&gt; P{"Sensitive?"}
+    P -- Yes --&gt; L["Local Qwen"]
+    P -- No --&gt; R{"Routine?"}
+    R -- Yes --&gt; F["Free hosted model / Antigravity"]
+    R -- No --&gt; H{"Hard?"}
+    H -- No --&gt; C["Strong economical cloud model"]
+    H -- Yes --&gt; X["Codex / frontier model"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>This keeps the Mac cool, makes routine work cheap or free, and reserves frontier allowance for tasks where it actually changes the outcome.</p>
+</section>
+</section>
+<section id="the-website-refactor-taught-me-what-agents-actually-need" class="level1">
+<h1>6. The website refactor taught me what agents actually need</h1>
+<p>The website refactor was where all of these ideas stopped being abstract.</p>
+<p>The repository had accumulated years of design changes, legacy rules and generated output. A request like “make the navbar wider” could touch several competing selectors. One agent might edit the obvious rule, render the site and discover that a later override still won. Another might append a new “final fix”, making the next task even harder.</p>
+<p>The important discovery was that better prompting alone was not enough. I had to improve the <strong>environment the agent was reasoning over</strong>.</p>
+<p>We started consolidating ownership:</p>
+<pre class="text"><code>navbar question
+    → one navbar file
+
+footer question
+    → one footer file
+
+global page-width question
+    → one page-shell file</code></pre>
+<p>Then the workflow itself became disciplined:</p>
+<pre class="text"><code>audit
+  ↓
+one bounded phase
+  ↓
+render
+  ↓
+cheap targeted tests
+  ↓
+commit + push
+  ↓
+diff review
+  ↓
+next phase</code></pre>
+<p>That was the point where agents started feeling less like unpredictable collaborators and more like tools I could engineer around.</p>
+<p>The website refactor produced a more concrete workflow than any model benchmark.</p>
+<p>The winning pattern is:</p>
+<pre class="text"><code>ChatGPT / strong reasoning
+      ↓
+scope the task precisely
+      ↓
+Codex OR OpenCode executes
+      ↓
+render / test locally
+      ↓
+commit + push
+      ↓
+review the diff
+      ↓
+next small phase</code></pre>
+<p>The important part is not which harness performs every step. It is the separation between <strong>reasoning, bounded execution, validation and independent review</strong>.</p>
+<section id="stronger-reasoning-cheaper-execution-when-the-task-allows-it" class="level2">
+<h2 class="anchored" data-anchor-id="stronger-reasoning-cheaper-execution-when-the-task-allows-it">Stronger reasoning; cheaper execution when the task allows it</h2>
+<p>For an ambiguous task, the first job is to understand the architecture.</p>
+<p>That planning step can happen in:</p>
+<pre class="text"><code>ChatGPT
+Codex
+DeepSeek V4 Pro
+GPT-5.4 mini / frontier model</code></pre>
+<p>It should answer:</p>
+<ul>
+<li>what is the canonical source?</li>
+<li>which files actually participate?</li>
+<li>what currently wins in the cascade or build pipeline?</li>
+<li>what must remain unchanged?</li>
+<li>what is the smallest safe implementation phase?</li>
+</ul>
+<p>Once that is known, a cheaper worker can execute an exact prompt:</p>
+<pre class="text"><code>reasoning / architecture
+        ↓
+ChatGPT / Codex / V4 Pro
+
+approved bounded implementation
+        ↓
+OpenCode + V4 Flash</code></pre>
+<p>For a difficult coding task, there is no requirement to split planning and acting between tools. Codex can own the whole implementation loop. The split matters when the task is already understood and I want to minimise routine agent cost.</p>
+</section>
+<section id="small-phases-beat-one-giant-autonomous-task" class="level2">
+<h2 class="anchored" data-anchor-id="small-phases-beat-one-giant-autonomous-task">Small phases beat one giant autonomous task</h2>
+<p>The website cleanup made this concrete.</p>
+<p>Instead of:</p>
+<pre class="text"><code>"clean up the CSS architecture"</code></pre>
+<p>the useful sequence was closer to:</p>
+<pre class="text"><code>Phase 1
+audit only
+no edits
+
+Phase 2A
+consolidate navbar into one canonical stylesheet
+
+Phase 2A.1
+move two shared chrome variables into the token file
+
+Phase 2B
+consolidate footer into one canonical stylesheet</code></pre>
+<p>Each task had:</p>
+<ul>
+<li>an explicit objective;</li>
+<li>an allow-list of files;</li>
+<li>explicit files that must not change;</li>
+<li>values that must remain identical;</li>
+<li>cheap validation commands;</li>
+<li>stop conditions when the agent discovers unexpected architecture;</li>
+<li>a concise required final report.</li>
+</ul>
+<p>This is much cheaper and safer than letting an agent discover the entire repository and refactor it in one run.</p>
+</section>
+<section id="the-prompt-should-constrain-the-search-space" class="level2">
+<h2 class="anchored" data-anchor-id="the-prompt-should-constrain-the-search-space">The prompt should constrain the <em>search space</em></h2>
+<p>A good implementation prompt is not merely detailed prose.</p>
+<p>It defines the operating boundary:</p>
+<pre class="text"><code>allowed files
+files that may be created
+generated files that must never be edited
+values that must remain unchanged
+commands to run
+tests to run
+conditions that mean STOP
+definition of done</code></pre>
+<p>For example:</p>
+<pre class="text"><code>DO:
+  _00-tokens.scss
+  _02-editorial.scss
+
+DO NOT:
+  _10-navbar.scss
+  docs/
+  site_libs/
+
+VERIFY:
+  rg ...
+  quarto render
+  npm run test:quick
+
+STOP IF:
+  another source defines the same token differently</code></pre>
+<p>This reduces both risk and token burn because the agent does not need to repeatedly rediscover the whole codebase.</p>
+</section>
+<section id="never-let-generated-output-become-the-implementation" class="level2">
+<h2 class="anchored" data-anchor-id="never-let-generated-output-become-the-implementation">Never let generated output become the implementation</h2>
+<p>A rendered Quarto site can produce many changed files under <code>docs/</code> and hashed Bootstrap assets even when the source change is tiny.</p>
+<p>The rule is:</p>
+<blockquote class="blockquote">
+<p><strong>Source files explain the implementation; generated files only prove the render happened.</strong></p>
+</blockquote>
+<p>For this project, visual changes must originate in canonical source such as:</p>
+<pre class="text"><code>styles/
+_quarto.yml
+data/
+filters/
+content</code></pre>
+<p>not in:</p>
+<pre class="text"><code>docs/
+site_libs/</code></pre>
+<p>A render may legitimately change generated output, but an agent must never “fix” the site by editing those files directly.</p>
+</section>
+<section id="diff-first-review-is-better-than-re-reading-the-whole-repository" class="level2">
+<h2 class="anchored" data-anchor-id="diff-first-review-is-better-than-re-reading-the-whole-repository">Diff-first review is better than re-reading the whole repository</h2>
+<p>Once the architecture is understood, the best review input is usually the <strong>Git diff</strong>, not another ZIP of the whole directory.</p>
+<pre class="text"><code>agent changes source
+      ↓
+local render/tests
+      ↓
+commit + push
+      ↓
+review commit diff</code></pre>
+<p>The diff tells me:</p>
+<ul>
+<li>exactly what source changed;</li>
+<li>whether the agent touched unrelated files;</li>
+<li>whether a “move” really preserved values;</li>
+<li>whether generated output is the only extra noise;</li>
+<li>whether the task stayed inside scope.</li>
+</ul>
+<p>I only need the full directory again when:</p>
+<ul>
+<li>architecture is unclear;</li>
+<li>the diff depends on surrounding code not visible in the changed files;</li>
+<li>I am doing a new repo-wide audit;</li>
+<li>the agent reports an unexpected cross-file dependency.</li>
+</ul>
+<p>This gives a useful division:</p>
+<pre class="text"><code>architecture question
+      → inspect repository
+
+implementation review
+      → inspect diff first</code></pre>
+</section>
+<section id="commit-source-refactors-separately-from-render-output-when-useful" class="level2">
+<h2 class="anchored" data-anchor-id="commit-source-refactors-separately-from-render-output-when-useful">Commit source refactors separately from render output when useful</h2>
+<p>Quarto renders can create a large generated diff. When practical, keeping source refactors easy to identify makes review much easier.</p>
+<p>At minimum, I should be able to distinguish:</p>
+<pre class="text"><code>source commit
+    → actual architectural change
+
+render commit
+    → generated HTML / hashed CSS update</code></pre>
+<p>Even when both are committed together, review should conceptually separate those two layers.</p>
+</section>
+<section id="validation-should-match-the-size-of-the-change" class="level2">
+<h2 class="anchored" data-anchor-id="validation-should-match-the-size-of-the-change">Validation should match the size of the change</h2>
+<p>Running the entire test suite for every two-line token move is wasteful.</p>
+<p>The useful principle is:</p>
+<pre class="text"><code>tiny source move
+    → targeted grep + render + quick tests
+
+component refactor
+    → render + component/interaction tests
+
+large architecture change
+    → broader visual/full suite</code></pre>
+<p>Tests are cheap compared with model reasoning, but feeding a model enormous logs and asking it to interpret irrelevant failures is not.</p>
+</section>
+<section id="stop-cheap-models-before-they-loop" class="level2">
+<h2 class="anchored" data-anchor-id="stop-cheap-models-before-they-loop">Stop cheap models before they loop</h2>
+<p>The escalation rule is not:</p>
+<blockquote class="blockquote">
+<p>Keep trying because this model is cheap.</p>
+</blockquote>
+<p>It is:</p>
+<blockquote class="blockquote">
+<p>Escalate when the cheaper model stops making reliable progress.</p>
+</blockquote>
+<p>Typical warning signs:</p>
+<pre class="text"><code>re-reading the same files
+adding another override rather than fixing ownership
+editing generated output
+broadening scope without permission
+trying several speculative fixes
+re-running expensive validation without a new hypothesis</code></pre>
+<p>At that point, moving from Flash to Pro — or from Pro to a premium model — can be cheaper than another five agent iterations.</p>
+</section>
+<section id="capability-ladder" class="level2">
+<h2 class="anchored" data-anchor-id="capability-ladder">Capability ladder</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tier</th>
+<th>Practical role</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Frontier GPT / Claude / Codex</strong></td>
+<td>hardest reasoning and independent review</td>
+<td>architecture, difficult bugs, high-risk changes</td>
+</tr>
+<tr class="even">
+<td><strong>GPT-5.4 mini / MiniMax M3</strong></td>
+<td>premium economical escalation</td>
+<td>hard coding, multimodal or long-agent tasks</td>
+</tr>
+<tr class="odd">
+<td><strong>DeepSeek V4 Pro</strong></td>
+<td>capability/value default</td>
+<td>serious daily agent work</td>
+</tr>
+<tr class="even">
+<td><strong>DeepSeek V4 Flash</strong></td>
+<td>extreme-value worker</td>
+<td>scoped implementation and routine tasks</td>
+</tr>
+<tr class="odd">
+<td><strong>Local model</strong></td>
+<td>privacy path</td>
+<td>sensitive/private work</td>
+</tr>
+</tbody>
+</table>
+<p>The important change is that <strong>frontier agents are no longer the daily driver</strong>. Cheap cloud models are now good enough that the main optimisation problem is task routing and workflow discipline, not avoiding API use entirely.</p>
+</section>
+<section id="the-repository-itself-became-part-of-the-agent-system" class="level2">
+<h2 class="anchored" data-anchor-id="the-repository-itself-became-part-of-the-agent-system">The repository itself became part of the agent system</h2>
+<p>A capable model still performs badly if every session begins with:</p>
+<blockquote class="blockquote">
+<p>Figure out how my project works.</p>
+</blockquote>
+<p>For serious projects, persistent Markdown files are extremely valuable.</p>
+<pre class="text"><code>README.md
+    what the project is
+    how to install / run / test it
+
+AGENTS.md
+    instructions for agents
+    what they may change
+    commands to run
+    definition of done
+
+DESIGN.md
+    visual and UX rules
+    typography
+    spacing
+    components
+    identity that must be preserved
+
+ARCHITECTURE.md
+    technical structure
+    canonical data
+    build pipeline
+    generated vs source files</code></pre>
+<p>The general principle is:</p>
+<blockquote class="blockquote">
+<p><strong>Move durable knowledge out of conversations and into the project.</strong></p>
+</blockquote>
+<p>That reduces repeated explanation, makes agents more reliable and prevents old chats from becoming the only record of decisions.</p>
+</section>
+</section>
+<section id="i-stopped-trying-to-make-one-agent-do-everything" class="level1">
+<h1>7. I stopped trying to make one agent do everything</h1>
+<p>Once individual agent work became reliable, the temptation was to build elaborate multi-agent systems.</p>
+<p>I now think that is usually backwards.</p>
+<p>The starting point should be:</p>
+<pre class="text"><code>one capable agent
++ good instructions
++ good repository structure
++ verification</code></pre>
+<p>Only after that works should I add a reviewer, specialist or manager. Orchestration is useful when the work naturally decomposes — not because “multi-agent” sounds more advanced.</p>
+<p>Orchestration means splitting a task into stages or roles instead of asking one agent to do everything.</p>
+<p>The point is <strong>verification and specialisation</strong>, not running a swarm for its own sake.</p>
+<section id="sequential-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="sequential-pipeline">Sequential pipeline</h2>
+<pre class="text"><code>research
+   ↓
+plan
+   ↓
+implement
+   ↓
+test</code></pre>
+<p>Useful when each step genuinely depends on the previous one.</p>
+</section>
+<section id="builderreviewer-loop" class="level2">
+<h2 class="anchored" data-anchor-id="builderreviewer-loop">Builder–reviewer loop</h2>
+<p>This is the most useful pattern for my work:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    B["Builder"] --&gt; O["Output"]
+    O --&gt; R["Reviewer"]
+    R --&gt; Q{"Good enough?"}
+    Q -- No --&gt; B
+    Q -- Yes --&gt; F["Finish"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>For coding, the builder can use a free/economical model and the reviewer a frontier model:</p>
+<pre class="text"><code>free / economical model
+         ↓
+      implement
+         ↓
+ frontier reviewer
+         ↓
+fix verified issues only</code></pre>
+<p>This saves premium usage while retaining an independent quality check.</p>
+</section>
+<section id="specialist-and-manager-agents" class="level2">
+<h2 class="anchored" data-anchor-id="specialist-and-manager-agents">Specialist and manager agents</h2>
+<p>Larger repeatable workflows can separate researcher, coder, tester and reviewer roles, with a manager deciding what happens next. This becomes useful for workflows such as job-search pipelines, research monitoring or large software tasks.</p>
+<p>But the default remains:</p>
+<blockquote class="blockquote">
+<p><strong>one capable agent + good instructions + tests; add orchestration only when it improves verification or repeats often enough to automate.</strong></p>
+</blockquote>
+</section>
+</section>
+<section id="then-the-bigger-idea-clicked-agents-are-not-just-for-code" class="level1">
+<h1>8. Then the bigger idea clicked: agents are not just for code</h1>
+<p>Coding made agents easy to understand because the actions are visible: read file, edit file, run command, inspect result.</p>
+<p>But once I understood the pattern, the coding-specific pieces fell away.</p>
+<p>A job advert can be input. A CV can be context. Search can be a tool. A tracker can be state. A scheduled run can repeat the workflow. The same architecture appears in research, email, writing and personal administration.</p>
+<p>This is where <strong>ChatGPT Work, OpenClaw and n8n</strong> started to make sense as different layers rather than competing products.</p>
+<p>Coding makes agents easy to understand because the tools are obvious: files, shell commands, tests and Git.</p>
+<p>Outside coding, I should distinguish four layers:</p>
+<pre class="text"><code>interactive work
+      ↓
+persistent agent
+      ↓
+deterministic workflow
+      ↓
+build-my-own agent system</code></pre>
+<p>The tools I currently associate with those layers are:</p>
+<pre class="text"><code>ChatGPT Chat / Work
+      ↓
+OpenClaw
+      ↓
+n8n
+      ↓
+OpenAI Agents SDK</code></pre>
+<p>They overlap, but they solve different problems.</p>
+<section id="chatgpt-chat-and-work-start-here" class="level2">
+<h2 class="anchored" data-anchor-id="chatgpt-chat-and-work-start-here">ChatGPT Chat and Work: start here</h2>
+<p>My default OpenAI stack outside coding is now:</p>
+<pre class="text"><code>Chat
+  → thinking, questions, planning, discussion
+
+Work
+  → longer multi-step tasks and finished deliverables
+
+Codex
+  → software development and technical work</code></pre>
+<p>This means I do <strong>not</strong> need to build an OpenClaw agent merely because a task takes several steps.</p>
+<p>For example:</p>
+<blockquote class="blockquote">
+<p>Find a set of roles, compare them, make a structured table, rank them and produce recommendations.</p>
+</blockquote>
+<p>That is naturally a <strong>Work</strong> task.</p>
+<p>The threshold for OpenClaw is not “more than one step”. It is:</p>
+<blockquote class="blockquote">
+<p><strong>I want this agent/workflow to persist, recur, use standing instructions, or act across tools without me rebuilding the task every time.</strong></p>
+</blockquote>
+<p>Source: <a href="https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex">ChatGPT Work and Codex</a>.</p>
+</section>
+<section id="persistent-general-agents-openclaw" class="level2">
+<h2 class="anchored" data-anchor-id="persistent-general-agents-openclaw">Persistent general agents: OpenClaw</h2>
+<p><strong>OpenClaw</strong> is useful when the unit of work changes from:</p>
+<blockquote class="blockquote">
+<p>Do this task.</p>
+</blockquote>
+<p>to:</p>
+<blockquote class="blockquote">
+<p>Keep doing this job for me.</p>
+</blockquote>
+<p>It is a persistent general-purpose agent gateway with model providers, tools, browser access, scheduled jobs and long-running agent workflows.</p>
+<p>A useful mental model is:</p>
+<pre class="text"><code>                  OpenClaw
+                     │
+        ┌────────────┼────────────┐
+        ▼            ▼            ▼
+      OpenAI      DeepSeek      others
+        │
+        ├── browser
+        ├── files / tools
+        ├── schedules
+        ├── messages
+        └── standing instructions</code></pre>
+<section id="openclaw-deepseek" class="level3">
+<h3 class="anchored" data-anchor-id="openclaw-deepseek">OpenClaw + DeepSeek</h3>
+<p>OpenClaw has an official DeepSeek provider and exposes:</p>
+<pre class="text"><code>deepseek/deepseek-v4-flash
+deepseek/deepseek-v4-pro</code></pre>
+<p>with Flash as the default onboarding model.</p>
+<p>That makes a very inexpensive persistent stack possible:</p>
+<pre class="text"><code>OpenClaw
+   ├── V4 Flash → routine persistent work
+   └── V4 Pro   → harder reasoning</code></pre>
+<p>Source: <a href="https://docs.openclaw.ai/providers/deepseek">OpenClaw DeepSeek provider</a>.</p>
+</section>
+<section id="openclaw-openai" class="level3">
+<h3 class="anchored" data-anchor-id="openclaw-openai">OpenClaw + OpenAI</h3>
+<p>OpenClaw also has a first-class OpenAI provider.</p>
+<p>The important distinction is that it can use either:</p>
+<pre class="text"><code>OpenAI API-key billing</code></pre>
+<p>or supported:</p>
+<pre class="text"><code>ChatGPT / Codex subscription authentication</code></pre>
+<p>for OpenAI agent routes.</p>
+<p>So I do not need separate “DeepSeek OpenClaw” and “OpenAI OpenClaw” installations. OpenClaw is the harness; the model/provider is a routing choice.</p>
+<p>Source: <a href="https://docs.openclaw.ai/providers/openai">OpenClaw OpenAI provider</a>.</p>
+</section>
+</section>
+<section id="n8n-use-it-when-the-process-becomes-known" class="level2">
+<h2 class="anchored" data-anchor-id="n8n-use-it-when-the-process-becomes-known">n8n: use it when the process becomes known</h2>
+<p>OpenClaw and n8n overlap, but the decision rule is useful:</p>
+<blockquote class="blockquote">
+<p><strong>Uncertain task → agent. Known process → workflow.</strong></p>
+</blockquote>
+<p>OpenClaw is shaped like:</p>
+<pre class="text"><code>"Find relevant opportunities and decide which matter."</code></pre>
+<p>The agent chooses how to reason through the task.</p>
+<p>n8n is shaped like:</p>
+<pre class="text"><code>07:30 trigger
+    ↓
+fetch sources
+    ↓
+deduplicate
+    ↓
+extract fields
+    ↓
+call model
+    ↓
+score
+    ↓
+write database row
+    ↓
+notify if threshold passed</code></pre>
+<p>The workflow itself defines the control flow.</p>
+<p>n8n combines explicit workflow logic, integrations, code, AI agents and human approval steps. It is therefore a better place for a process once I know exactly what should happen every time.</p>
+<p>Source: <a href="https://n8n.io/ai-agents/">n8n AI agents</a>.</p>
+<section id="openclaw-and-n8n-can-work-together" class="level3">
+<h3 class="anchored" data-anchor-id="openclaw-and-n8n-can-work-together">OpenClaw and n8n can work together</h3>
+<p>A mature system can split judgement from plumbing:</p>
+<pre class="text"><code>                  OpenClaw
+                 judgement
+                    ▲
+                    │
+sources ──► n8n ──► model
+            │
+            │ structured data
+            ▼
+          tracker
+            │
+            ▼
+         OpenClaw
+       prioritisation
+            │
+            ▼
+           me</code></pre>
+<p>OpenClaw does not need to perform every deterministic transformation itself. n8n does not need to contain all the judgement.</p>
+</section>
+</section>
+<section id="openai-agents-sdk-when-building-the-agent-becomes-the-project" class="level2">
+<h2 class="anchored" data-anchor-id="openai-agents-sdk-when-building-the-agent-becomes-the-project">OpenAI Agents SDK: when building the agent becomes the project</h2>
+<p>The <strong>OpenAI Agents SDK</strong> belongs one level later.</p>
+<p>It provides primitives for building my own agent application, including agents, tools, sessions, handoffs, guardrails and orchestration.</p>
+<p>For example:</p>
+<pre class="text"><code>job_agent
+   │
+   ├── search_agent
+   ├── cv_match_agent
+   └── application_agent</code></pre>
+<p>The SDK can maintain session memory and let one specialist hand work to another through handoffs.</p>
+<p>I should use this when:</p>
+<blockquote class="blockquote">
+<p>I want to <strong>build an agent system as software</strong>.</p>
+</blockquote>
+<p>I should not start there merely to automate a personal workflow that OpenClaw or n8n already handles.</p>
+<p>Sources: <a href="https://openai.github.io/openai-agents-python/agents/">OpenAI Agents SDK — Agents</a>, <a href="https://openai.github.io/openai-agents-python/sessions/">Sessions</a>, <a href="https://openai.github.io/openai-agents-python/handoffs/">Handoffs</a>.</p>
+</section>
+<section id="a-job-search-agent-the-best-first-openclaw-project" class="level2">
+<h2 class="anchored" data-anchor-id="a-job-search-agent-the-best-first-openclaw-project">A job-search agent: the best first OpenClaw project</h2>
+<p>The job-search workflow is a good first persistent-agent project because it naturally progresses from manual reasoning to useful automation.</p>
+<section id="phase-1-one-url-manually" class="level3">
+<h3 class="anchored" data-anchor-id="phase-1-one-url-manually">Phase 1 — one URL, manually</h3>
+<pre class="text"><code>job advert URL
+      ↓
+extract
+role / salary / location / skills / requirements
+      ↓
+compare against profile / CV
+      ↓
+fit + missing skills</code></pre>
+<p>This can be ChatGPT Work or an interactive OpenClaw task.</p>
+</section>
+<section id="phase-2-let-the-agent-search" class="level3">
+<h3 class="anchored" data-anchor-id="phase-2-let-the-agent-search">Phase 2 — let the agent search</h3>
+<pre class="text"><code>selected job sources
+      ↓
+OpenClaw
+      ↓
+new relevant adverts</code></pre>
+<p>The agent now removes the manual discovery step.</p>
+</section>
+<section id="phase-3-persistent-profile-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="phase-3-persistent-profile-comparison">Phase 3 — persistent profile comparison</h3>
+<p>The agent applies the same standing profile and criteria every time:</p>
+<pre class="text"><code>new role
+   ↓
+compare with CV/profile
+   ↓
+fit score
+   ↓
+which experiences to emphasise
+   ↓
+what is missing</code></pre>
+</section>
+<section id="phase-4-recurring-execution" class="level3">
+<h3 class="anchored" data-anchor-id="phase-4-recurring-execution">Phase 4 — recurring execution</h3>
+<pre class="text"><code>every morning
+      ↓
+search
+      ↓
+analyse
+      ↓
+notify only when worth attention</code></pre>
+<p>This is where OpenClaw’s persistence and scheduling become valuable.</p>
+</section>
+<section id="phase-5-structured-tracker" class="level3">
+<h3 class="anchored" data-anchor-id="phase-5-structured-tracker">Phase 5 — structured tracker</h3>
+<p>Once the fields are stable, move the repetitive data plumbing into a structured workflow:</p>
+<pre class="text"><code>advert
+  ↓
+deduplicate
+  ↓
+normalise fields
+  ↓
+score
+  ↓
+tracker / database</code></pre>
+<p>This is a natural point to introduce n8n.</p>
+</section>
+<section id="phase-6-application-material-after-approval" class="level3">
+<h3 class="anchored" data-anchor-id="phase-6-application-material-after-approval">Phase 6 — application material after approval</h3>
+<p>Only after I decide to pursue the role:</p>
+<pre class="text"><code>approved role
+     ↓
+choose relevant experiences
+     ↓
+tailored CV variant
+     ↓
+cover-letter / application material</code></pre>
+<p>The system should never turn into an uncontrolled application bot. The useful automation is <strong>discovery, structuring and prioritisation</strong>, with a human decision before outbound application material or submission.</p>
+<p>The durable lesson is:</p>
+<blockquote class="blockquote">
+<p><strong>Start with one useful manual agent task, make it persistent with OpenClaw, and only convert the stable repeated parts into n8n workflows later.</strong></p>
+</blockquote>
+</section>
+</section>
+</section>
+<section id="once-i-saw-the-pattern-it-applied-everywhere" class="level1">
+<h1>9. Once I saw the pattern, it applied everywhere</h1>
+<p>The most valuable consequence of learning agentic coding was not better CSS. It was a reusable way of thinking about work:</p>
+<pre class="text"><code>input
+  ↓
+reason
+  ↓
+use tools
+  ↓
+produce or change something
+  ↓
+verify
+  ↓
+store the result</code></pre>
+<p>Different domains simply swap in different tools and verification rules.</p>
+<p>AI is particularly useful when it moves between explanation, mathematics, code and evidence.</p>
+<p>A productive research loop might be:</p>
+<pre class="text"><code>paper
+  ↓
+explain idea
+  ↓
+derive mathematics
+  ↓
+challenge derivation
+  ↓
+search related literature
+  ↓
+implement simple example
+  ↓
+run experiment
+  ↓
+interpret result
+  ↓
+write notes / LaTeX</code></pre>
+<p>Rather than using AI as an answer machine, I can use it as a <strong>research workbench</strong>.</p>
+<p>This works especially well for technical learning: ask for intuition, then mathematics, then code, then a counterexample, then test the result.</p>
+<section id="writing-and-professional-work" class="level2">
+<h2 class="anchored" data-anchor-id="writing-and-professional-work">Writing and professional work</h2>
+<p>The blank page is increasingly unnecessary.</p>
+<pre class="text"><code>rough thoughts
+     ↓
+structure
+     ↓
+draft
+     ↓
+critique
+     ↓
+rewrite
+     ↓
+finished document</code></pre>
+<p>Useful outputs include:</p>
+<ul>
+<li>reports;</li>
+<li>proposals;</li>
+<li>presentations;</li>
+<li>CVs;</li>
+<li>applications;</li>
+<li>documentation;</li>
+<li>website copy;</li>
+<li>technical explanations;</li>
+<li>meeting summaries.</li>
+</ul>
+<p>The important improvement is that agentic tools can extend this into <strong>actual editable files and workflows</strong>, rather than stopping at generated prose in a chat window.</p>
+<p>This applies beyond code. The same “no copy-paste” principle from the VS Code discussion above works for ordinary long-form writing too: ChatGPT’s macOS “Work with Apps” reads and edits the open document directly in a text editor or notes app, generating a reviewable diff rather than requiring a round trip through the chat window. For long documents specifically — papers, reports, LaTeX source — the useful property is that the model can see the <em>whole</em> open file as context, not just the fragment I remembered to paste in.</p>
+<p>For LaTeX specifically, VS Code’s <strong>LaTeX Workshop</strong> extension (with a TeX distribution installed locally) gives live PDF preview, compile-on-save and click-to-source-line navigation — combined with an in-editor agent, this covers the full loop of drafting, editing and compiling a paper without leaving the editor.</p>
+</section>
+<section id="email-calendar-and-personal-administration" class="level2">
+<h2 class="anchored" data-anchor-id="email-calendar-and-personal-administration">Email, calendar and personal administration</h2>
+<p>This may ultimately save more time than code generation.</p>
+<pre class="text"><code>inbox
+  ↓
+AI identifies what needs action
+  ↓
+summarises context
+  ↓
+drafts replies
+  ↓
+creates follow-ups
+  ↓
+calendar / reminder</code></pre>
+<p>Useful questions become:</p>
+<blockquote class="blockquote">
+<p>What in my inbox actually needs a response?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Find the confirmation for this booking.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Summarise this email thread and draft a reply.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>What commitments do I have next week?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Remind me to follow up if I have not heard back.</p>
+</blockquote>
+<p>This is where connected tools and scheduled agents become much more valuable than a smarter autocomplete model.</p>
+</section>
+<section id="data-and-spreadsheets" class="level2">
+<h2 class="anchored" data-anchor-id="data-and-spreadsheets">Data and spreadsheets</h2>
+<p>Not every small data problem needs a Python project.</p>
+<p>AI can increasingly handle:</p>
+<pre class="text"><code>raw spreadsheet
+     ↓
+cleaning
+     ↓
+analysis
+     ↓
+comparison
+     ↓
+visualisation
+     ↓
+scenario modelling
+     ↓
+summary</code></pre>
+<p>Useful examples include household budgets, expense analysis, forecasts, comparison tables and small exploratory analyses.</p>
+<p>For important quantitative work, I still want formulas and assumptions exposed and checked. The goal is to remove mechanical work, not verification.</p>
+</section>
+<section id="buying-things-and-doing-research" class="level2">
+<h2 class="anchored" data-anchor-id="buying-things-and-doing-research">Buying things and doing research</h2>
+<p>Another practical use is turning open-ended web research into structured decision support.</p>
+<p>Instead of thirty browser tabs:</p>
+<pre class="text"><code>requirements
+     ↓
+current products
+     ↓
+specifications
+     ↓
+reviews
+     ↓
+trade-offs
+     ↓
+shortlist
+     ↓
+decision</code></pre>
+<p>This works particularly well for technology, appliances, equipment and other specification-heavy purchases.</p>
+<p>The same pattern works for travel:</p>
+<pre class="text"><code>dates + people + constraints
+            ↓
+          research
+            ↓
+ transport + accommodation + logistics
+            ↓
+          itinerary</code></pre>
+<p>The value is not merely finding information. It is connecting current information to explicit constraints.</p>
+</section>
+<section id="visual-and-home-projects" class="level2">
+<h2 class="anchored" data-anchor-id="visual-and-home-projects">Visual and home projects</h2>
+<p>Multimodal models add another category entirely.</p>
+<p>A photograph can become input to a design loop:</p>
+<pre class="text"><code>room photo
+   ↓
+identify constraints
+   ↓
+generate concepts
+   ↓
+compare layouts
+   ↓
+refine proportions
+   ↓
+research real products</code></pre>
+<p>Furniture layouts, storage solutions, renovations, colour schemes and before/after visualisations are good examples.</p>
+<p>This is qualitatively different from asking a text model for decorating advice because the AI can reason over the actual space.</p>
+</section>
+<section id="knowledge-management-chats-are-scratchpads-markdown-is-memory" class="level2">
+<h2 class="anchored" data-anchor-id="knowledge-management-chats-are-scratchpads-markdown-is-memory">Knowledge management: chats are scratchpads, Markdown is memory</h2>
+<p>AI creates a new failure mode: hundreds of useful conversations that cannot be found when I need them.</p>
+<p>The solution is to stop treating chats as the archive.</p>
+<blockquote class="blockquote">
+<p><strong>Chats are temporary workspaces. Local Markdown files are the durable source of truth.</strong></p>
+</blockquote>
+<p>I would keep one plain-Markdown knowledge folder, optionally opened as an Obsidian vault and backed by Git:</p>
+<pre class="text"><code>AI-Notes/
+├── INDEX.md
+├── INBOX.md
+│
+├── projects/
+│   ├── website/
+│   │   ├── README.md
+│   │   ├── DECISIONS.md
+│   │   └── NEXT.md
+│   └── other-project/
+│
+├── areas/
+│   ├── career.md
+│   ├── research.md
+│   ├── teaching.md
+│   └── admin.md
+│
+├── reference/
+│   ├── ai-tools.md
+│   ├── coding-workflow.md
+│   └── topic-notes/
+│
+└── archive/</code></pre>
+<section id="what-each-file-does" class="level3">
+<h3 class="anchored" data-anchor-id="what-each-file-does">What each file does</h3>
+<p><strong><code>INDEX.md</code></strong> — map of the important notes; not a giant document.</p>
+<p><strong><code>INBOX.md</code></strong> — temporary ideas and things to process.</p>
+<p><strong>Project <code>README.md</code></strong> — current state, purpose and links.</p>
+<p><strong><code>DECISIONS.md</code></strong> — decisions already made and why, so I do not repeatedly revisit them.</p>
+<p><strong><code>NEXT.md</code></strong> — immediate next actions, not a complete project history.</p>
+<p><strong><code>areas/</code></strong> — ongoing responsibilities such as career, research or administration.</p>
+<p><strong><code>reference/</code></strong> — stable knowledge worth reusing.</p>
+</section>
+<section id="the-rule-after-a-useful-ai-conversation" class="level3">
+<h3 class="anchored" data-anchor-id="the-rule-after-a-useful-ai-conversation">The rule after a useful AI conversation</h3>
+<p>Do not save the transcript.</p>
+<p>Instead ask:</p>
+<pre class="text"><code>Did this conversation create...
+├── a decision?       → update DECISIONS.md
+├── a next action?    → update NEXT.md
+├── reusable knowledge? → update reference note
+├── project context?  → update project README
+└── nothing durable?  → leave it in chat</code></pre>
+<p>This keeps the knowledge base small.</p>
+</section>
+<section id="periodic-compression" class="level3">
+<h3 class="anchored" data-anchor-id="periodic-compression">Periodic compression</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    C["Chats / papers / experiments"] --&gt; S["Synthesis"]
+    S --&gt; P["Project notes"]
+    S --&gt; D["Decisions"]
+    S --&gt; R["Reference"]
+    S --&gt; N["Next actions"]
+    P --&gt; A["Archive old material"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The goal is <strong>progressive compression</strong>: many chats become a handful of useful notes; old notes become a concise current state.</p>
+<p>Plain Markdown is deliberately boring: it is searchable, portable, Git-friendly, readable by every coding agent and unlikely to become obsolete.</p>
+</section>
+</section>
+<section id="decision-making" class="level2">
+<h2 class="anchored" data-anchor-id="decision-making">Decision making</h2>
+<p>AI is also useful before any action is taken.</p>
+<p>The useful prompt is not:</p>
+<blockquote class="blockquote">
+<p>Decide for me.</p>
+</blockquote>
+<p>It is closer to:</p>
+<blockquote class="blockquote">
+<p>Here are the constraints. Identify the real options, quantify the important trade-offs, challenge my assumptions and tell me which unknowns could change the answer.</p>
+</blockquote>
+<p>That turns a vague decision into an explicit model.</p>
+<pre class="text"><code>messy problem
+     ↓
+constraints
+     ↓
+options
+     ↓
+trade-offs
+     ↓
+uncertainties
+     ↓
+decision</code></pre>
+<p>The human still owns the objective and the final choice.</p>
+</section>
+</section>
+<section id="the-hierarchy-i-ended-up-with" class="level1">
+<h1>10. The hierarchy I ended up with</h1>
+<p>After trying to compare everything with everything else, the landscape became much simpler when I stopped looking for one universal AI product.</p>
+<p>I need a hierarchy of interaction modes, not a single winner.</p>
+<p>The biggest lesson from exploring all these products is that I do not need one AI that does everything.</p>
+<p>I need a hierarchy.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+    ME["Me"] --&gt; CHAT["Chat&lt;br/&gt;think, learn, discuss"]
+    ME --&gt; AG["Agents&lt;br/&gt;act and verify"]
+    ME --&gt; AUTO["Automation&lt;br/&gt;repeat workflows"]
+
+    CHAT --&gt; GPT["GPT / Claude"]
+    AG --&gt; COD["Codex / Claude Code"]
+    AG --&gt; OPEN["Cline / OpenCode / Continue"]
+    OPEN --&gt; LOCAL["Local Qwen"]
+    AG --&gt; WORK["ChatGPT Work"]
+
+    AUTO --&gt; MAIL["Email / calendar"]
+    AUTO --&gt; JOB["Job tracking"]
+    AUTO --&gt; RES["Research workflows"]
+    AUTO --&gt; MON["Scheduled monitoring"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The model is only one component.</p>
+<p>The bigger system is:</p>
+<pre class="text"><code>model
++ tools
++ context
++ permissions
++ memory
++ workflow
++ verification</code></pre>
+<section id="how-i-think-about-cost-now" class="level2">
+<h2 class="anchored" data-anchor-id="how-i-think-about-cost-now">How I think about cost now</h2>
+<p>My priority is predictable cost and using premium capacity only when it materially changes the outcome.</p>
+<p>The current value ladder is:</p>
+<pre class="text"><code>1. Existing ChatGPT subscription
+        ↓
+2. DeepSeek V4 Flash for scoped routine agent work
+        ↓
+3. DeepSeek V4 Pro for serious daily agent reasoning
+        ↓
+4. MiniMax M3 / GPT-5.4 mini when a capability gap appears
+        ↓
+5. Codex / Sonnet / frontier model for genuinely hard or high-risk work
+        ↓
+6. Local model for privacy, not routine cost saving</code></pre>
+<p>This is a change from the earlier “free first” strategy.</p>
+<p>With V4 Flash at $0.14/M uncached input and $0.28/M output, the difference between “free” and “extremely cheap” is often smaller than the cost of a failed agent loop. I should optimise for <strong>successful completion per pound</strong>, not for zero API spend.</p>
+<p>The most interesting paid default is therefore <strong>V4 Pro</strong>: it is only about 3.1× Flash on normal input/output pricing while remaining inexpensive enough for routine serious work.</p>
+<p>I would not add a Claude subscription, Cursor subscription or a large model pool pre-emptively. I can escalate through APIs only when a real task demonstrates that the cheaper layer is insufficient.</p>
+</section>
+</section>
+<section id="what-i-wish-i-had-known-at-the-start" class="level1">
+<h1>11. What I wish I had known at the start</h1>
+<p>Most of the useful lessons came from failed loops, duplicated work and trying tools because they sounded impressive.</p>
+<p>These are the rules I would give myself before starting again.</p>
+<section id="use-chat-to-think-use-agents-to-act" class="level3">
+<h3 class="anchored" data-anchor-id="use-chat-to-think-use-agents-to-act">Use chat to think; use agents to act</h3>
+<p>Do not launch an autonomous agent when a five-minute conversation will solve the problem.</p>
+</section>
+<section id="keep-the-real-project-in-git" class="level3">
+<h3 class="anchored" data-anchor-id="keep-the-real-project-in-git">Keep the real project in Git</h3>
+<p>Do not maintain AI copies, ZIP copies and local copies.</p>
+<pre class="text"><code>one repository
+many tools</code></pre>
+</section>
+<section id="give-agents-persistent-instructions" class="level3">
+<h3 class="anchored" data-anchor-id="give-agents-persistent-instructions">Give agents persistent instructions</h3>
+<p><code>README.md</code>, <code>AGENTS.md</code>, <code>DESIGN.md</code> and <code>ARCHITECTURE.md</code> are cheaper and more reliable than re-explaining the project every session.</p>
+</section>
+<section id="use-the-cheapest-model-that-can-complete-the-task-reliably" class="level3">
+<h3 class="anchored" data-anchor-id="use-the-cheapest-model-that-can-complete-the-task-reliably">Use the cheapest model that can complete the task reliably</h3>
+<pre class="text"><code>free hosted
+     ↓
+economical cloud
+     ↓
+frontier
+
+private material → local</code></pre>
+<p>Escalate when the cheaper level starts looping rather than spending twenty prompts repairing a bad approach.</p>
+</section>
+<section id="verify-actions-not-eloquence" class="level3">
+<h3 class="anchored" data-anchor-id="verify-actions-not-eloquence">Verify actions, not eloquence</h3>
+<p>A coding model that confidently explains its change is less useful than an agent that runs the tests.</p>
+</section>
+<section id="do-not-optimise-hardware-around-todays-models" class="level3">
+<h3 class="anchored" data-anchor-id="do-not-optimise-hardware-around-todays-models">Do not optimise hardware around today’s models</h3>
+<p>Local inference is useful, but cloud capability evolves too quickly to justify enormous hardware premiums solely to avoid subscriptions.</p>
+</section>
+<section id="turn-useful-chats-into-durable-knowledge" class="level3">
+<h3 class="anchored" data-anchor-id="turn-useful-chats-into-durable-knowledge">Turn useful chats into durable knowledge</h3>
+<p>A good conversation should eventually become:</p>
+<pre class="text"><code>code
+note
+reference
+decision
+workflow
+automation</code></pre>
+<p>not another chat I have to find six months later.</p>
+</section>
+</section>
+<section id="the-stack-i-use-now" class="level1">
+<h1>12. The stack I use now</h1>
+<p>The final stack is much smaller than the list of tools I tried.</p>
+<p>That is probably the strongest sign that the exploration was useful: I now know what each layer is for, and just as importantly, what I do <strong>not</strong> need.</p>
+<p>I do not need every tool discussed in this note.</p>
+<section id="coding-core" class="level3">
+<h3 class="anchored" data-anchor-id="coding-core">Coding core</h3>
+<pre class="text"><code>VS Code     → primary editor
+Codex       → premium OpenAI coding agent
+Copilot     → polished VS Code agent for DeepSeek
+OpenCode    → cheap/multi-provider VS Code agent for DeepSeek
+Git         → source of truth
+ChatGPT     → architecture, research, prompts and independent diff review
+Markdown    → durable knowledge</code></pre>
+</section>
+<section id="coding-models" class="level3">
+<h3 class="anchored" data-anchor-id="coding-models">Coding models</h3>
+<p>Inside <strong>Codex</strong>, preserve the shared agentic allowance with:</p>
+<pre class="text"><code>GPT-5.4 Mini  → cheapest mechanical work
+GPT-5.6 Luna  → default economical agent
+GPT-5.6 Terra → stronger everyday reasoning / debugging
+GPT-5.6 Sol   → difficult or high-risk work
+GPT-5.5       → usually skip: currently the same Codex credit rate as Sol</code></pre>
+<p>Outside Codex, my cheap BYOK ladder remains:</p>
+<pre class="text"><code>DeepSeek V4 Flash → exact, bounded implementation
+DeepSeek V4 Pro   → capability/value default
+premium model     → escalation
+Local model       → privacy-sensitive work</code></pre>
+</section>
+<section id="coding-alternatives-worth-keeping-available" class="level3">
+<h3 class="anchored" data-anchor-id="coding-alternatives-worth-keeping-available">Coding alternatives worth keeping available</h3>
+<pre class="text"><code>Cline       → visual VS Code Plan / Act workflow
+Cursor      → integrated editor if I later want to leave stock VS Code
+MiniMax M3  → multimodal / long-context alternative</code></pre>
+<p>Continue is no longer a new-workflow recommendation because its official repository is now read-only after the final 2.0.0 release.</p>
+<p>Kilo Code is not in the current stack because it did not work reliably enough in practice.</p>
+</section>
+<section id="general-agentic-core" class="level3">
+<h3 class="anchored" data-anchor-id="general-agentic-core">General agentic core</h3>
+<pre class="text"><code>ChatGPT Chat → thinking and discussion
+ChatGPT Work → multi-step tasks and finished deliverables
+OpenClaw     → persistent personal agents
+n8n          → deterministic recurring workflows
+Agents SDK   → build my own agent application only when needed</code></pre>
+<p>I would add these in that order.</p>
+<p>OpenClaw becomes worthwhile when I can name a persistent recurring job.</p>
+<p>n8n becomes worthwhile when I can write the process as a stable flowchart.</p>
+<p>The Agents SDK becomes worthwhile when <strong>building the agent system itself is the software project</strong>.</p>
+</section>
+<section id="the-current-map" class="level2">
+<h2 class="anchored" data-anchor-id="the-current-map">The current map</h2>
+<p>The setup I actually want now is:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+    ME["My work"] --&gt; CHAT["ChatGPT Chat&lt;br/&gt;thinking, learning, architecture"]
+    ME --&gt; WORK["ChatGPT Work&lt;br/&gt;multi-step general work"]
+    ME --&gt; VS["VS Code + Git&lt;br/&gt;real repository"]
+    ME --&gt; NOTES["Markdown&lt;br/&gt;durable knowledge"]
+
+    VS --&gt; CODEX["Codex&lt;br/&gt;premium coding route"]
+    VS --&gt; OC["OpenCode&lt;br/&gt;cheap / multi-provider route"]
+    VS -. "visual alternative" .-&gt; CLINE["Cline"]
+
+    OC --&gt; DSF["DeepSeek V4 Flash&lt;br/&gt;bounded execution"]
+    OC --&gt; DSP["DeepSeek V4 Pro&lt;br/&gt;serious daily work"]
+    DSP -. "needs more capability" .-&gt; PREMIUM["GPT-5.4 mini / frontier"]
+
+    CODEX --&gt; TEST["Render / tests"]
+    OC --&gt; TEST
+    CLINE --&gt; TEST
+    TEST --&gt; GIT["Commit + push"]
+    GIT --&gt; REVIEW["ChatGPT diff-first review"]
+    REVIEW --&gt; NEXT["Next small phase"]
+
+    ME -. "persistent recurring work" .-&gt; CLAW["OpenClaw"]
+    CLAW --&gt; OPENAI["OpenAI"]
+    CLAW --&gt; DEEP["DeepSeek"]
+
+    CLAW -. "stable repeated process" .-&gt; N8N["n8n&lt;br/&gt;deterministic workflow"]
+    N8N --&gt; DATA["Tracker / database / notification"]
+
+    ME -. "build my own agent software" .-&gt; SDK["OpenAI Agents SDK"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The practical division is:</p>
+<pre class="text"><code>ChatGPT
+    → thinking, architecture, prompt design, research, review
+
+ChatGPT Work
+    → substantial non-coding tasks and finished deliverables
+    → Luna by default; Terra/Sol only when complexity justifies it
+
+Codex
+    → repository work
+    → Mini/Luna first, Terra for harder reasoning, Sol for difficult failures
+
+OpenCode + DeepSeek
+    → routine and economical agentic coding
+
+Cline
+    → use when I specifically want the visual Plan / Act workflow
+
+GitHub diff
+    → preferred review input after a bounded code change
+
+full repository
+    → inspect when architecture is unknown or the diff exposes
+      a dependency that needs wider context
+
+OpenClaw
+    → persistent agents with standing instructions, tools and schedules
+
+n8n
+    → stable deterministic workflows around agents/models
+
+OpenAI Agents SDK
+    → custom agent software when the system itself becomes the project</code></pre>
+<p>The two durable stacks are therefore:</p>
+<pre class="text"><code>CODING
+
+ChatGPT
+   ↓
+Codex / OpenCode
+   ↓
+Git
+   ↓
+diff review</code></pre>
+<p>and:</p>
+<pre class="text"><code>GENERAL AGENTIC WORK
+
+ChatGPT Chat / Work
+        ↓
+OpenClaw
+        ↓
+n8n when the process stabilises
+        ↓
+Agents SDK only if I decide to build my own system</code></pre>
+<p>The durable idea is:</p>
+<blockquote class="blockquote">
+<p><strong>Use chat to think, agents to act, persistent agents for recurring judgement, workflows for known processes, and custom agent frameworks only when building the agent is itself the goal.</strong></p>
+</blockquote>
+<p>What changed most was not the model I use. It was the unit of work I expect AI to handle.</p>
+<p>I started with prompts. I ended up designing systems around repositories, tools, verification, persistent context and explicit handoffs between human judgement and machine execution.</p>
+<p>That is the shift I mean when I say I moved from <strong>chatbots to agents</strong>.</p>
+<p>Models, prices and product names will continue to change. That architecture should not need to.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer-inner">
+    <div class="site-footer-identity">
+      <strong>Silvio Fanzon</strong>
+      <span>Applied mathematician</span>
+    </div>
+
+    <nav class="site-footer-links" aria-label="Footer">
+      <a href="mailto:silvio.fanzon.work@gmail.com">Email</a>
+      <a href="../Silvio_Fanzon_Academic_CV.pdf">CV</a>
+      <a href="https://www.linkedin.com/in/fanzon" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/sfanzon" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://scholar.google.com/citations?user=9yJyLsoAAAAJ" target="_blank" rel="noopener">Scholar</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+
+    <div class="site-footer-meta">
+      <span>© 2026 Silvio Fanzon</span>
+      <span>Designed &amp; developed by Silvio Fanzon</span>
+      <span><a href="https://github.com/sfanzon" target="_blank" rel="noopener">Source code</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  const path = window.location.pathname.replace(/index\.html$/, '');
+  document.querySelectorAll('#navbar .nav-item[data-path]').forEach(li => {
+    const href = li.getAttribute('data-path');
+    if((href === '/' && path === '/') || (href !== '/' && path.startsWith(href))){ li.classList.add('active'); }
+  });
+
+  const scrollPositionKey = `scroll-position:${window.location.pathname}${window.location.search}`;
+
+  function saveScrollPosition() {
+    try {
+      window.sessionStorage.setItem(scrollPositionKey, JSON.stringify({
+        x: window.scrollX,
+        y: window.scrollY
+      }));
+    } catch (_) {
+      // Storage can be unavailable in private or locked-down browser contexts.
+    }
+  }
+
+  window.addEventListener('pagehide', function(event) {
+    saveScrollPosition();
+    if (event.persisted) document.documentElement.style.visibility = 'hidden';
+  });
+  document.addEventListener('click', function(event) {
+    if (!(event.target instanceof Element)) return;
+    const link = event.target.closest('a[href]');
+    if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
+    saveScrollPosition();
+  }, true);
+
+  window.addEventListener('pageshow', function(event) {
+    const navigation = window.performance.getEntriesByType('navigation')[0];
+    if (!event.persisted && navigation?.type !== 'back_forward') return;
+
+    let position;
+    try {
+      position = JSON.parse(window.sessionStorage.getItem(scrollPositionKey));
+    } catch (_) {
+      return;
+    }
+    if (!position || !Number.isFinite(position.x) || !Number.isFinite(position.y)) return;
+
+    // Quarto's Safari workaround scrolls to the top after 40 ms.
+    window.setTimeout(function() {
+      const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = 'auto';
+      window.scrollTo({left: position.x, top: position.y, behavior: 'auto'});
+      document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      document.documentElement.style.visibility = '';
+      delete document.documentElement.dataset.sfRestoringScroll;
+    }, 80);
+  });
+
+  function toggleDetails(button, selector) {
+    const entry = button.closest('.publication-entry');
+    const panel = entry?.querySelector(selector);
+    if (!panel) return;
+    const opening = !panel.classList.contains('open');
+    entry.querySelectorAll('.abstract.open, .bibtex.open').forEach(el => el.classList.remove('open'));
+    entry.querySelectorAll('.abstract-toggle, .bibtex-toggle').forEach(el => el.setAttribute('aria-expanded', 'false'));
+    if (opening) {
+      panel.classList.add('open');
+      button.setAttribute('aria-expanded', 'true');
+      if (selector === '.abstract') {
+        requestAnimationFrame(function () {
+          if (typeof typesetMath === 'function') typesetMath(panel);
+          else if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise([panel]);
+        });
+      }
+    }
+  }
+
+  document.querySelectorAll('.abstract-toggle').forEach(button => {
+    button.setAttribute('aria-expanded', 'false');
+    button.addEventListener('click', () => toggleDetails(button, '.abstract'));
+  });
+  document.querySelectorAll('.bibtex-toggle').forEach(button => {
+    button.setAttribute('aria-expanded', 'false');
+    button.addEventListener('click', () => toggleDetails(button, '.bibtex'));
+  });
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function(resolve, reject) {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      try {
+        document.execCommand('copy') ? resolve() : reject(new Error('Copy failed'));
+      } catch (error) { reject(error); }
+      area.remove();
+    });
+  }
+
+  document.querySelectorAll('[data-news-component]').forEach(function(component) {
+    const input = component.querySelector('[data-news-search]');
+    const items = [...component.querySelectorAll('[data-news-item]')];
+    const empty = component.querySelector('.news-search-empty');
+    if (!input) return;
+
+    function filterNews() {
+      const query = input.value.trim().toLowerCase();
+      let matches = 0;
+      items.forEach(function(item) {
+        const visible = !query || item.textContent.toLowerCase().includes(query);
+        item.hidden = !visible;
+        if (visible) matches += 1;
+      });
+      if (empty) empty.hidden = matches !== 0;
+    }
+
+    input.addEventListener('input', filterNews);
+    filterNews();
+  });
+
+  document.querySelectorAll('.publication-entry .bibtex').forEach(function(panel) {
+    const code = panel.querySelector('pre code');
+    if (!code || !code.textContent.trim() || panel.querySelector('.copy-citation')) return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'copy-citation';
+    button.innerHTML = '<i class="fa-regular fa-copy" aria-hidden="true"></i><span>Copy citation</span>';
+    button.addEventListener('click', function() {
+      copyText(code.textContent.trim()).then(function() {
+        const label = button.querySelector('span');
+        label.textContent = 'Copied';
+        button.classList.add('is-copied');
+        window.setTimeout(function() {
+          label.textContent = 'Copy citation';
+          button.classList.remove('is-copied');
+        }, 1600);
+      });
+    });
+    panel.insertBefore(button, panel.firstChild);
+  });
+
+  document.querySelectorAll('.callout-header[data-bs-toggle="collapse"]').forEach(function(header) {
+    header.setAttribute('role', 'button');
+    header.setAttribute('tabindex', '0');
+    header.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        header.click();
+      }
+    });
+  });
+
+  document.querySelectorAll('pre').forEach(function(region) {
+    if (region.scrollWidth > region.clientWidth || region.scrollHeight > region.clientHeight) {
+      region.setAttribute('tabindex', '0');
+    }
+  });
+
+})();
+</script>
+<script>
+(function () {
+  const placeholder = 'Search site-wide';
+  function labelPopupSearch(root) {
+    (root || document).querySelectorAll('.aa-DetachedContainer .aa-Input').forEach(function (input) {
+      input.setAttribute('placeholder', placeholder);
+      input.setAttribute('aria-label', placeholder);
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    labelPopupSearch(document);
+    new MutationObserver(function () { labelPopupSearch(document); })
+      .observe(document.body, { childList: true, subtree: true });
+  });
+})();
+</script>
+<script>
+(function () {
+  let scheduled = false;
+
+  function namespaceSvgIds(svg, index) {
+    if (svg.dataset.namespacedIds === 'true') return;
+    const prefix = `note-diagram-${index}-`;
+    const ids = new Map();
+
+    svg.querySelectorAll('[id]').forEach(function (element) {
+      const oldId = element.id;
+      const newId = prefix + oldId;
+      ids.set(oldId, newId);
+      element.id = newId;
+    });
+
+    if (!ids.size) return;
+    svg.querySelectorAll('*').forEach(function (element) {
+      for (const attribute of element.attributes) {
+        let value = attribute.value;
+        if (attribute.name === 'aria-labelledby' || attribute.name === 'aria-describedby') {
+          value = value.split(/\s+/).map(id => ids.get(id) || id).join(' ');
+        }
+        ids.forEach(function (newId, oldId) {
+          value = value
+            .replaceAll(`url(#${oldId})`, `url(#${newId})`)
+            .replaceAll(`#${oldId}`, `#${newId}`)
+            .replaceAll(`${oldId}.`, `${newId}.`);
+        });
+        if (value !== attribute.value) element.setAttribute(attribute.name, value);
+      }
+    });
+    svg.dataset.namespacedIds = 'true';
+  }
+
+  function namespaceMermaidDiagrams() {
+    scheduled = false;
+    document.querySelectorAll('.cell-output-display svg').forEach(namespaceSvgIds);
+  }
+
+  function scheduleNamespace() {
+    if (scheduled) return;
+    scheduled = true;
+    window.requestAnimationFrame(namespaceMermaidDiagrams);
+  }
+
+  new MutationObserver(scheduleNamespace).observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+  document.addEventListener('DOMContentLoaded', scheduleNamespace);
+  scheduleNamespace();
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/www\.silviofanzon\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

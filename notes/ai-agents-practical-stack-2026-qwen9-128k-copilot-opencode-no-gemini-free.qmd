@@ -7,6 +7,10 @@ categories:
   - AI
   - Tools
   - Workflow
+image: ../assets/img/notes/agent-stack-evolution.svg
+image-alt: "A progression from chatbot to coding assistant, agent, workflow and automation"
+featured: true
+featured-order: 3
 toc: true
 ---
 

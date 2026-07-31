@@ -1,0 +1,54 @@
+<script>
+(function () {
+  let scheduled = false;
+
+  function namespaceSvgIds(svg, index) {
+    if (svg.dataset.namespacedIds === 'true') return;
+    const prefix = `note-diagram-${index}-`;
+    const ids = new Map();
+
+    svg.querySelectorAll('[id]').forEach(function (element) {
+      const oldId = element.id;
+      const newId = prefix + oldId;
+      ids.set(oldId, newId);
+      element.id = newId;
+    });
+
+    if (!ids.size) return;
+    svg.querySelectorAll('*').forEach(function (element) {
+      for (const attribute of element.attributes) {
+        let value = attribute.value;
+        if (attribute.name === 'aria-labelledby' || attribute.name === 'aria-describedby') {
+          value = value.split(/\s+/).map(id => ids.get(id) || id).join(' ');
+        }
+        ids.forEach(function (newId, oldId) {
+          value = value
+            .replaceAll(`url(#${oldId})`, `url(#${newId})`)
+            .replaceAll(`#${oldId}`, `#${newId}`)
+            .replaceAll(`${oldId}.`, `${newId}.`);
+        });
+        if (value !== attribute.value) element.setAttribute(attribute.name, value);
+      }
+    });
+    svg.dataset.namespacedIds = 'true';
+  }
+
+  function namespaceMermaidDiagrams() {
+    scheduled = false;
+    document.querySelectorAll('.cell-output-display svg').forEach(namespaceSvgIds);
+  }
+
+  function scheduleNamespace() {
+    if (scheduled) return;
+    scheduled = true;
+    window.requestAnimationFrame(namespaceMermaidDiagrams);
+  }
+
+  new MutationObserver(scheduleNamespace).observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+  document.addEventListener('DOMContentLoaded', scheduleNamespace);
+  scheduleNamespace();
+})();
+</script>

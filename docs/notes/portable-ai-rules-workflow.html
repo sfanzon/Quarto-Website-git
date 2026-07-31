@@ -6,11 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Silvio Fanzon">
-<meta name="dcterms.date" content="2026-07-30">
-<meta name="description" content="A practical account of how I use AI across research, scientific computing and technical communication: where it adds leverage, where I retain control, and how I verify what matters.">
+<meta name="author" content="Anonymous">
+<meta name="dcterms.date" content="2026-07-31">
 
-<title>How I use AI in technical work – Silvio Fanzon</title>
+<title>A Portable Rule System for Working with AI – Silvio Fanzon</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +24,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -98,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed standard-page note-page notes-detail-page quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed notes-detail-page quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -357,24 +391,48 @@ ul.task-list li input[type="checkbox"] {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
+  <ul>
+  <li><a href="#why-i-needed-a-system" id="toc-why-i-needed-a-system" class="nav-link active" data-scroll-target="#why-i-needed-a-system">Why I needed a system</a></li>
+  <li><a href="#the-first-principle-one-source-of-truth" id="toc-the-first-principle-one-source-of-truth" class="nav-link" data-scroll-target="#the-first-principle-one-source-of-truth">The first principle: one source of truth</a></li>
+  <li><a href="#why-not-just-one-file-everywhere" id="toc-why-not-just-one-file-everywhere" class="nav-link" data-scroll-target="#why-not-just-one-file-everywhere">Why not just one file everywhere?</a></li>
+  <li><a href="#the-global-rules" id="toc-the-global-rules" class="nav-link" data-scroll-target="#the-global-rules">The global rules</a>
   <ul class="collapse">
-  <li><a href="#from-a-difficult-question-to-a-defensible-result" id="toc-from-a-difficult-question-to-a-defensible-result" class="nav-link active" data-scroll-target="#from-a-difficult-question-to-a-defensible-result">From a difficult question to a defensible result</a></li>
-  <li><a href="#what-i-delegate" id="toc-what-i-delegate" class="nav-link" data-scroll-target="#what-i-delegate">What I delegate</a></li>
-  <li><a href="#what-i-retain" id="toc-what-i-retain" class="nav-link" data-scroll-target="#what-i-retain">What I retain</a></li>
-  <li><a href="#research-accelerate-exploration-preserve-evidence" id="toc-research-accelerate-exploration-preserve-evidence" class="nav-link" data-scroll-target="#research-accelerate-exploration-preserve-evidence">Research: accelerate exploration, preserve evidence</a></li>
-  <li><a href="#scientific-software-narrow-changes-beat-autonomous-improvement" id="toc-scientific-software-narrow-changes-beat-autonomous-improvement" class="nav-link" data-scroll-target="#scientific-software-narrow-changes-beat-autonomous-improvement">Scientific software: narrow changes beat autonomous improvement</a></li>
-  <li><a href="#separate-audit-from-implementation" id="toc-separate-audit-from-implementation" class="nav-link" data-scroll-target="#separate-audit-from-implementation">Separate audit from implementation</a></li>
-  <li><a href="#tests-should-protect-ideas-not-just-code" id="toc-tests-should-protect-ideas-not-just-code" class="nav-link" data-scroll-target="#tests-should-protect-ideas-not-just-code">Tests should protect ideas, not just code</a></li>
-  <li><a href="#benchmarks-are-part-of-the-scientific-argument" id="toc-benchmarks-are-part-of-the-scientific-argument" class="nav-link" data-scroll-target="#benchmarks-are-part-of-the-scientific-argument">Benchmarks are part of the scientific argument</a></li>
-  <li><a href="#agents-capability-changes-the-failure-mode" id="toc-agents-capability-changes-the-failure-mode" class="nav-link" data-scroll-target="#agents-capability-changes-the-failure-mode">Agents: capability changes the failure mode</a></li>
-  <li><a href="#memory-and-long-context-are-retrieval-aids-not-canonical-records" id="toc-memory-and-long-context-are-retrieval-aids-not-canonical-records" class="nav-link" data-scroll-target="#memory-and-long-context-are-retrieval-aids-not-canonical-records">Memory and long context are retrieval aids, not canonical records</a></li>
-  <li><a href="#fluent-output-is-not-evidence" id="toc-fluent-output-is-not-evidence" class="nav-link" data-scroll-target="#fluent-output-is-not-evidence">Fluent output is not evidence</a></li>
-  <li><a href="#reversibility-is-a-feature" id="toc-reversibility-is-a-feature" class="nav-link" data-scroll-target="#reversibility-is-a-feature">Reversibility is a feature</a></li>
-  <li><a href="#keep-one-source-of-truth" id="toc-keep-one-source-of-truth" class="nav-link" data-scroll-target="#keep-one-source-of-truth">Keep one source of truth</a></li>
-  <li><a href="#technical-communication-transformation-is-a-high-value-use" id="toc-technical-communication-transformation-is-a-high-value-use" class="nav-link" data-scroll-target="#technical-communication-transformation-is-a-high-value-use">Technical communication: transformation is a high-value use</a></li>
-  <li><a href="#ai-assisted-does-not-mean-ai-generated" id="toc-ai-assisted-does-not-mean-ai-generated" class="nav-link" data-scroll-target="#ai-assisted-does-not-mean-ai-generated">AI-assisted does not mean AI-generated</a></li>
-  <li><a href="#my-working-protocol" id="toc-my-working-protocol" class="nav-link" data-scroll-target="#my-working-protocol">My working protocol</a></li>
-  <li><a href="#where-this-leaves-me" id="toc-where-this-leaves-me" class="nav-link" data-scroll-target="#where-this-leaves-me">Where this leaves me</a></li>
+  <li><a href="#result-first" id="toc-result-first" class="nav-link" data-scroll-target="#result-first">Result first</a></li>
+  <li><a href="#concise-but-complete" id="toc-concise-but-complete" class="nav-link" data-scroll-target="#concise-but-complete">Concise but complete</a></li>
+  <li><a href="#challenge-assumptions-but-do-not-be-pedantic" id="toc-challenge-assumptions-but-do-not-be-pedantic" class="nav-link" data-scroll-target="#challenge-assumptions-but-do-not-be-pedantic">Challenge assumptions, but do not be pedantic</a></li>
+  <li><a href="#label-the-status-of-claims" id="toc-label-the-status-of-claims" class="nav-link" data-scroll-target="#label-the-status-of-claims">Label the status of claims</a></li>
+  <li><a href="#preserve-follow-up-ideas-without-letting-them-take-over" id="toc-preserve-follow-up-ideas-without-letting-them-take-over" class="nav-link" data-scroll-target="#preserve-follow-up-ideas-without-letting-them-take-over">Preserve follow-up ideas without letting them take over</a></li>
+  <li><a href="#follow-up-alternative-model" id="toc-follow-up-alternative-model" class="nav-link" data-scroll-target="#follow-up-alternative-model">Follow-up — Alternative model</a></li>
+  <li><a href="#follow-up-exact-computation" id="toc-follow-up-exact-computation" class="nav-link" data-scroll-target="#follow-up-exact-computation">Follow-up — Exact computation</a></li>
+  </ul></li>
+  <li><a href="#rules-for-mathematical-reasoning" id="toc-rules-for-mathematical-reasoning" class="nav-link" data-scroll-target="#rules-for-mathematical-reasoning">Rules for mathematical reasoning</a></li>
+  <li><a href="#rules-for-research-and-literature" id="toc-rules-for-research-and-literature" class="nav-link" data-scroll-target="#rules-for-research-and-literature">Rules for research and literature</a></li>
+  <li><a href="#rules-for-coding" id="toc-rules-for-coding" class="nav-link" data-scroll-target="#rules-for-coding">Rules for coding</a></li>
+  <li><a href="#let-the-ai-choose-the-model-tier" id="toc-let-the-ai-choose-the-model-tier" class="nav-link" data-scroll-target="#let-the-ai-choose-the-model-tier">Let the AI choose the model tier</a></li>
+  <li><a href="#rules-for-editing-existing-files" id="toc-rules-for-editing-existing-files" class="nav-link" data-scroll-target="#rules-for-editing-existing-files">Rules for editing existing files</a>
+  <ul class="collapse">
+  <li><a href="#treat-the-current-file-as-canonical" id="toc-treat-the-current-file-as-canonical" class="nav-link" data-scroll-target="#treat-the-current-file-as-canonical">Treat the current file as canonical</a></li>
+  <li><a href="#add-does-not-mean-rewrite" id="toc-add-does-not-mean-rewrite" class="nav-link" data-scroll-target="#add-does-not-mean-rewrite">“Add” does not mean “rewrite”</a></li>
+  <li><a href="#merge-is-ambiguous" id="toc-merge-is-ambiguous" class="nav-link" data-scroll-target="#merge-is-ambiguous">“Merge” is ambiguous</a></li>
+  <li><a href="#ask-before-rewriting-older-sections" id="toc-ask-before-rewriting-older-sections" class="nav-link" data-scroll-target="#ask-before-rewriting-older-sections">Ask before rewriting older sections</a></li>
+  <li><a href="#keep-a-concise-changelog" id="toc-keep-a-concise-changelog" class="nav-link" data-scroll-target="#keep-a-concise-changelog">Keep a concise changelog</a></li>
+  </ul></li>
+  <li><a href="#rules-for-long-chats" id="toc-rules-for-long-chats" class="nav-link" data-scroll-target="#rules-for-long-chats">Rules for long chats</a>
+  <ul class="collapse">
+  <li><a href="#keep-the-main-thread-focused" id="toc-keep-the-main-thread-focused" class="nav-link" data-scroll-target="#keep-the-main-thread-focused">Keep the main thread focused</a></li>
+  <li><a href="#occasionally-suggest-a-fresh-chat" id="toc-occasionally-suggest-a-fresh-chat" class="nav-link" data-scroll-target="#occasionally-suggest-a-fresh-chat">Occasionally suggest a fresh chat</a></li>
+  <li><a href="#provide-a-handoff-first" id="toc-provide-a-handoff-first" class="nav-link" data-scroll-target="#provide-a-handoff-first">Provide a handoff first</a></li>
+  <li><a href="#be-honest-about-context-loss" id="toc-be-honest-about-context-loss" class="nav-link" data-scroll-target="#be-honest-about-context-loss">Be honest about context loss</a></li>
+  </ul></li>
+  <li><a href="#canonical-notes-should-override-conversational-memory" id="toc-canonical-notes-should-override-conversational-memory" class="nav-link" data-scroll-target="#canonical-notes-should-override-conversational-memory">Canonical notes should override conversational memory</a></li>
+  <li><a href="#chat-is-not-a-notebook" id="toc-chat-is-not-a-notebook" class="nav-link" data-scroll-target="#chat-is-not-a-notebook">Chat is not a notebook</a></li>
+  <li><a href="#deployment-across-tools" id="toc-deployment-across-tools" class="nav-link" data-scroll-target="#deployment-across-tools">Deployment across tools</a></li>
+  <li><a href="#general-chat-assistants" id="toc-general-chat-assistants" class="nav-link" data-scroll-target="#general-chat-assistants">General chat assistants</a></li>
+  <li><a href="#coding-agents" id="toc-coding-agents" class="nav-link" data-scroll-target="#coding-agents">Coding agents</a></li>
+  <li><a href="#local-models" id="toc-local-models" class="nav-link" data-scroll-target="#local-models">Local models</a></li>
+  <li><a href="#why-version-control-is-worth-it" id="toc-why-version-control-is-worth-it" class="nav-link" data-scroll-target="#why-version-control-is-worth-it">Why version control is worth it</a></li>
+  <li><a href="#the-final-architecture" id="toc-the-final-architecture" class="nav-link" data-scroll-target="#the-final-architecture">The final architecture</a></li>
+  <li><a href="#what-this-solves" id="toc-what-this-solves" class="nav-link" data-scroll-target="#what-this-solves">What this solves</a></li>
   </ul>
 </nav>
     </div>
@@ -384,21 +442,10 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">How I use AI in technical work</h1>
-<p class="subtitle lead">Accelerating research, scientific software and communication without outsourcing judgment.</p>
-  <div class="quarto-categories">
-    <div class="quarto-category">AI</div>
-    <div class="quarto-category">Workflow</div>
-    <div class="quarto-category">Research</div>
-    <div class="quarto-category">Scientific computing</div>
-  </div>
-  </div>
-
-<div>
-  <div class="description">
-    A practical account of how I use AI across research, scientific computing and technical communication: where it adds leverage, where I retain control, and how I verify what matters.
-  </div>
+<h1 class="title">A Portable Rule System for Working with AI</h1>
+<p class="subtitle lead">How I moved from long, messy chats to concise, version-controlled instructions</p>
 </div>
+
 
 
 <div class="quarto-title-meta">
@@ -406,14 +453,14 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Silvio Fanzon </p>
+             <p>Anonymous </p>
           </div>
   </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 30, 2026</p>
+      <p class="date">July 31, 2026</p>
     </div>
   </div>
   
@@ -425,472 +472,523 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>AI is now part of my technical workflow.</p>
-<p>I use it to search, compare, draft, test, review and implement faster. In research, it can shorten the distance between a question and a useful map of the literature. In scientific software, it can explain unfamiliar code, trace a bug, propose a regression test or implement a narrowly specified change. In technical communication, it can help turn the same underlying work into a paper, a reproducible repository, a technical walkthrough or an accessible project page.</p>
-<p>That is substantial leverage.</p>
-<p>It is also easy to misuse.</p>
-<p>A model can produce convincing work very quickly, including work that is unnecessary, poorly scoped or simply wrong. An agent can go further: it can act on a mistaken inference, alter the environment, and then continue reasoning from the state it has created.</p>
-<p>So I do not think the useful distinction is between <em>using AI</em> and <em>not using AI</em>. The more important distinction is between <strong>delegating production</strong> and <strong>delegating judgment</strong>.</p>
-<p>My aim is to do the first aggressively and the second cautiously.</p>
-<section id="from-a-difficult-question-to-a-defensible-result" class="level2">
-<h2 class="anchored" data-anchor-id="from-a-difficult-question-to-a-defensible-result">From a difficult question to a defensible result</h2>
-<p>The broader way I work predates current AI tools.</p>
-<p>I tend to start with an open-ended problem and try to make it precise: identify the assumptions, decide what is observable, formulate a model, implement it, test what the evidence supports, and communicate the result clearly.</p>
-<p>In compact form:</p>
-<pre class="text"><code>frame the problem
-        ↓
-model and explore
-        ↓
-build and test
-        ↓
-evaluate the evidence
-        ↓
-communicate the result</code></pre>
-<p>AI fits naturally into this process, but it does not replace the process.</p>
-<p>A useful division of labour is:</p>
-<pre class="text"><code>                 HUMAN
-          define the problem
-                 │
-                 ▼
-        ┌───────────────────┐
-        │        AI         │
-        │                   │
-        │ search            │
-        │ read              │
-        │ compare           │
-        │ calculate         │
-        │ draft             │
-        │ test              │
-        │ review            │
-        │ implement         │
-        └───────────────────┘
-                 │
-                 ▼
-                 HUMAN
-       verify and decide</code></pre>
-<p>The boundary is deliberately porous. AI can suggest a better question, challenge an assumption or notice something I missed. I can also ask it to criticise my conclusions.</p>
-<p>What does not move is responsibility for deciding what the project is trying to establish and whether the evidence actually establishes it.</p>
-</section>
-<section id="what-i-delegate" class="level2">
-<h2 class="anchored" data-anchor-id="what-i-delegate">What I delegate</h2>
-<p>There is a large amount of technical work between having an idea and deciding what it means.</p>
-<p>That middle is where I find AI most valuable.</p>
-<p>Typical uses include:</p>
+<section id="why-i-needed-a-system" class="level2">
+<h2 class="anchored" data-anchor-id="why-i-needed-a-system">Why I needed a system</h2>
+<p>My problem was not that AI was giving bad answers.</p>
+<p>Quite the opposite: the answers were often useful enough that I kept asking follow-up questions. One question became five, five became twenty, and before long a chat contained:</p>
 <ul>
-<li>literature reconnaissance and source discovery;</li>
-<li>comparing papers, assumptions and methods;</li>
-<li>summarising unfamiliar technical material before reading it closely;</li>
-<li>exploring alternative formulations or special cases;</li>
-<li>generating small numerical experiments;</li>
-<li>explaining an unfamiliar codebase;</li>
-<li>tracing bugs and edge cases;</li>
-<li>implementing tightly scoped changes;</li>
-<li>proposing regression tests;</li>
-<li>reviewing code and documentation for inconsistencies;</li>
-<li>checking whether several representations of a project still agree;</li>
-<li>restructuring technical writing for different audiences;</li>
-<li>converting material between Markdown, Quarto, LaTeX and code;</li>
-<li>extracting decisions, unresolved questions and reusable notes from long working sessions.</li>
+<li>the main answer;</li>
+<li>side ideas worth preserving;</li>
+<li>tentative calculations;</li>
+<li>corrections to earlier assumptions;</li>
+<li>code suggestions;</li>
+<li>document edits;</li>
+<li>model recommendations;</li>
+<li>several competing interpretations.</li>
 </ul>
-<p>Individually, many of these tasks are mundane. Collectively, they consume a great deal of time and attention.</p>
-<p>Making them cheaper leaves more time for the parts of the work where judgment matters most.</p>
-</section>
-<section id="what-i-retain" class="level2">
-<h2 class="anchored" data-anchor-id="what-i-retain">What I retain</h2>
-<p>Some decisions sit too close to the substance of the problem to be treated as implementation details.</p>
-<p>I retain responsibility for:</p>
-<p><strong>Problem formulation.</strong> What question are we actually answering? What assumptions are legitimate? What would count as a useful result?</p>
-<p><strong>Mathematical reasoning.</strong> Definitions, derivations, hypotheses, theoretical claims and the distinction between a plausible argument and a proof.</p>
-<p><strong>Experimental design.</strong> What is being measured? Are methods being compared fairly? Has a software change silently changed the scientific experiment?</p>
-<p><strong>Source selection.</strong> Which document, dataset, paper or repository is authoritative?</p>
-<p><strong>Interpretation.</strong> What does the result establish, what remains uncertain, and which conclusions go beyond the evidence?</p>
-<p><strong>Scope.</strong> Is a proposed improvement worth the additional complexity?</p>
-<p><strong>Acceptance.</strong> Does an AI-generated output actually become part of the project?</p>
-<p>This is less about protecting tasks from automation than about keeping the chain of reasoning visible.</p>
-</section>
-<section id="research-accelerate-exploration-preserve-evidence" class="level2">
-<h2 class="anchored" data-anchor-id="research-accelerate-exploration-preserve-evidence">Research: accelerate exploration, preserve evidence</h2>
-<p>Research is one of the strongest uses I have found for AI.</p>
-<p>At the beginning of a topic, a model can help build an initial map:</p>
-<pre class="text"><code>question
-   ↓
-literature reconnaissance
-   ↓
-methods and assumptions
-   ↓
-agreements and disagreements
-   ↓
-promising directions</code></pre>
-<p>That is particularly useful when moving into an adjacent area. It can identify terminology, suggest relevant papers, compare formulations and expose assumptions that deserve attention.</p>
-<p>For mathematical work, I also use AI as an interactive second reader. Useful questions include:</p>
-<ul>
-<li>What happens in the simplest non-trivial case?</li>
-<li>Which assumption is doing the real work?</li>
-<li>Is there an obvious counterexample if this hypothesis is removed?</li>
-<li>Can this statement be reformulated geometrically?</li>
-<li>What numerical experiment would distinguish these two explanations?</li>
-<li>Which result in the literature is closest to this argument?</li>
-<li>Where might this proof fail?</li>
-</ul>
-<p>The important distinction is between <strong>discovery</strong> and <strong>evidence</strong>.</p>
-<p>A model telling me that a paper proves something is not evidence that the paper proves it. A plausible derivation is not a theorem. A numerical value appearing in a conversation is not a reproducible result.</p>
-<p>AI can make the route to verification much shorter. It does not eliminate the final verification step.</p>
-</section>
-<section id="scientific-software-narrow-changes-beat-autonomous-improvement" class="level2">
-<h2 class="anchored" data-anchor-id="scientific-software-narrow-changes-beat-autonomous-improvement">Scientific software: narrow changes beat autonomous improvement</h2>
-<p>Coding makes the strengths and weaknesses of AI especially visible.</p>
-<p>A model can understand a small research repository surprisingly quickly. It can follow execution paths, explain numerical routines, generate test cases and implement changes across several files.</p>
-<p>That makes broad prompts tempting:</p>
+<p>The result was a strange failure mode: <strong>the conversation contained a lot of value, but became harder to use as it grew</strong>.</p>
+<p>Two things made this worse.</p>
+<p>First, long answers often contained excellent points mixed with too much explanatory text. I wanted the substance without the filler.</p>
+<p>Second, I was starting to use several AI systems: general chat models, coding agents, local models, and different interfaces. Repeating the same preferences manually was fragile, and relying on any one product’s memory was not a good long-term strategy.</p>
+<p>The solution was to separate three things that are easy to conflate:</p>
 <blockquote class="blockquote">
-<p>Improve this repository.</p>
+<p><strong>AI rules govern behaviour.</strong><br>
+<strong>Chats are for exploration.</strong><br>
+<strong>Notes preserve what matters.</strong></p>
 </blockquote>
-<blockquote class="blockquote">
-<p>Make this code more robust.</p>
-</blockquote>
-<blockquote class="blockquote">
-<p>Refactor this implementation.</p>
-</blockquote>
-<p>I increasingly avoid them for established work.</p>
-<p>Those prompts allow the model to define both the problem and the meaning of <em>better</em>. A small correction can then expand into a new API, new metadata, new configuration, new benchmark rules and new infrastructure. Every addition may be individually defensible while the project as a whole becomes less transparent.</p>
-<p>For technical repositories I prefer:</p>
-<pre class="text"><code>trusted baseline
-      ↓
-specific observed problem
-      ↓
-diagnosis
-      ↓
-small proposed change
-      ↓
-targeted test
-      ↓
-inspect the diff
-      ↓
-stop</code></pre>
-<p>The word <em>stop</em> matters.</p>
-<p>AI already makes adding code cheap. The workflow needs to make unnecessary complexity expensive again.</p>
+<p>This post is about the first part: building a portable rule system for AI.</p>
 </section>
-<section id="separate-audit-from-implementation" class="level2">
-<h2 class="anchored" data-anchor-id="separate-audit-from-implementation">Separate audit from implementation</h2>
-<p>A particularly useful discipline is to separate finding problems from fixing them.</p>
-<section id="audit" class="level3">
-<h3 class="anchored" data-anchor-id="audit">1. Audit</h3>
-<p>Ask the model to inspect the project, classify issues and provide evidence.</p>
-<p>Do not change anything.</p>
+<section id="the-first-principle-one-source-of-truth" class="level2">
+<h2 class="anchored" data-anchor-id="the-first-principle-one-source-of-truth">The first principle: one source of truth</h2>
+<p>The system starts with one canonical file:</p>
+<pre class="text"><code>AI-RULES.md</code></pre>
+<p>This contains the complete rule set.</p>
+<p>It is deliberately vendor-independent. It should describe <em>how I want an AI to work</em>, not how a particular product implements custom instructions.</p>
+<p>That matters because platforms change. Model names change. Interfaces change. Limits change.</p>
+<p>The rules should survive all of that.</p>
+<p>A typical repository looks like this:</p>
+<pre class="text"><code>AI-Rules/
+├── README.md
+├── AI-RULES.md
+├── AI-RULES-CORE.md
+└── presets/
+    ├── MATH-RESEARCH.md
+    ├── CODING.md
+    ├── EDITING.md
+    └── LONG-CHATS.md</code></pre>
+<p>The master file is canonical.</p>
+<p>The other files are <strong>deployment subsets</strong>, not independent rulebooks.</p>
 </section>
-<section id="select" class="level3">
-<h3 class="anchored" data-anchor-id="select">2. Select</h3>
-<p>Decide which findings are:</p>
-<ul>
-<li>genuine correctness problems;</li>
-<li>reproducibility problems;</li>
-<li>documentation problems;</li>
-<li>intentional simplifications;</li>
-<li>theoretical limitations;</li>
-<li>optional improvements that are not worth their complexity.</li>
-</ul>
-</section>
-<section id="implement" class="level3">
-<h3 class="anchored" data-anchor-id="implement">3. Implement</h3>
-<p>Choose one issue and make the smallest justified intervention.</p>
-<p>This prevents an audit from becoming an automatic mandate to rewrite every imperfect part of a project.</p>
-<p>It also produces a cleaner review trail: diagnosis, decision, patch.</p>
-</section>
-</section>
-<section id="tests-should-protect-ideas-not-just-code" class="level2">
-<h2 class="anchored" data-anchor-id="tests-should-protect-ideas-not-just-code">Tests should protect ideas, not just code</h2>
-<p>AI is very good at generating tests.</p>
-<p>That is valuable, but a large test suite can create false confidence if the tests merely repeat the assumptions of the implementation.</p>
-<p>For numerical and mathematical software, I prefer tests based on independent properties:</p>
-<ul>
-<li>a known closed-form solution;</li>
-<li>scale invariance;</li>
-<li>a conserved quantity;</li>
-<li>a theoretical bound;</li>
-<li>monotonicity where theory genuinely guarantees it;</li>
-<li>agreement with an independently implemented calculation;</li>
-<li>explicit failure when convergence is not achieved.</li>
-</ul>
-<p>The question is not simply:</p>
-<blockquote class="blockquote">
-<p>Does the test pass?</p>
-</blockquote>
-<p>It is:</p>
-<blockquote class="blockquote">
-<p>Would this test still expose the error if the implementation and its internal conventions were both wrong in the same way?</p>
-</blockquote>
-<p>That is a much stronger standard.</p>
-</section>
-<section id="benchmarks-are-part-of-the-scientific-argument" class="level2">
-<h2 class="anchored" data-anchor-id="benchmarks-are-part-of-the-scientific-argument">Benchmarks are part of the scientific argument</h2>
-<p>Software changes can alter scientific conclusions without changing the underlying model.</p>
-<p>Suppose one optimisation method requires a step-size estimate. Replacing an unsafe estimate with a conservative bound may be mathematically valid, but if the new bound is unnecessarily large, the method takes unnecessarily small steps.</p>
-<p>The code is now safer.</p>
-<p>The benchmark may now be less fair.</p>
-<p>Similarly, a timing comparison can change depending on whether preprocessing is included, whether one method receives information derived from the optimum, how frequently objectives are evaluated, or whether stopping criteria represent genuinely comparable accuracy.</p>
-<p>That is why I treat benchmark design as part of the scientific work rather than as implementation plumbing.</p>
-<p>A benchmark change deserves the same question as a modelling change:</p>
-<blockquote class="blockquote">
-<p>What exactly are we comparing now?</p>
-</blockquote>
-</section>
-<section id="agents-capability-changes-the-failure-mode" class="level2">
-<h2 class="anchored" data-anchor-id="agents-capability-changes-the-failure-mode">Agents: capability changes the failure mode</h2>
-<p>An agent is more than a chatbot with a terminal.</p>
-<p>It can inspect files, call tools, edit code, run tests and respond to the results. That can remove a remarkable amount of mechanical work.</p>
-<p>It also allows mistakes to propagate.</p>
-<pre class="text"><code>wrong inference
-      ↓
-tool action
-      ↓
-changed environment
-      ↓
-next inference uses changed state
-      ↓
-further action</code></pre>
-<p>For that reason, I prefer agents with explicit boundaries:</p>
-<ul>
-<li>a trusted starting state;</li>
-<li>a specific objective;</li>
-<li>a clear list of files or systems they may change;</li>
-<li>explicit things they must not change;</li>
-<li>tests or other evidence for success;</li>
-<li>a diff or audit trail before acceptance.</li>
-</ul>
-<p>This is not because current agents are incapable. It is because capability and reliability are different properties.</p>
-<section id="frontier-models-are-still-imperfect-agents" class="level3">
-<h3 class="anchored" data-anchor-id="frontier-models-are-still-imperfect-agents">Frontier models are still imperfect agents</h3>
-<p>Current benchmarks make that distinction concrete.</p>
-<p>As of July 2026, OpenAI reports <strong>58.0% on Toolathlon</strong> and <strong>18.1% on AutomationBench</strong> for GPT-5.6 Sol. On the same Toolathlon table, Claude Mythos 5 scores <strong>61.7%</strong>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>An independent general-agent benchmark, OmniaBench, reports Overall Pass@1 of <strong>58.54% for Claude Sonnet 5</strong> and <strong>57.14% for GPT-5.6 Sol</strong> across 1,431 tasks.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<p>These benchmarks test different environments and should not be compared as if they were one common error rate. They are also not estimates of failure frequency in ordinary day-to-day use.</p>
-<p>Their importance is more basic: even frontier systems that are extremely capable can still fail a substantial fraction of demanding agentic tasks.</p>
-<p>The right response is not to avoid agents. It is to design workflows in which failure is visible and reversible.</p>
-</section>
-</section>
-<section id="memory-and-long-context-are-retrieval-aids-not-canonical-records" class="level2">
-<h2 class="anchored" data-anchor-id="memory-and-long-context-are-retrieval-aids-not-canonical-records">Memory and long context are retrieval aids, not canonical records</h2>
-<p>Another easy mistake is to confuse <em>available somewhere</em> with <em>reliably retrievable</em>.</p>
-<p>A long conversation, large context window or persistent memory system can contain the information needed to answer a question and still fail to surface the right detail.</p>
-<p>Again, current benchmark results illustrate the point. OpenAI reports GPT-5.6 Sol at <strong>73.8%</strong> on its MRCR v2 eight-needle test at 512K–1M tokens and <strong>77.1 F1</strong> on the one-million-token GraphWalks BFS evaluation; Claude Mythos 5 scores <strong>79.4 F1</strong> on the latter.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<p>Those are strong long-context results. They are not perfect recall.</p>
-<p>They also do <strong>not</strong> measure a product’s cross-conversation personal-memory feature, and I would not treat them as if they did.</p>
-<p>For my own work, the practical conclusion is:</p>
-<pre class="text"><code>chat history / model memory
-            ↓
-useful retrieval layer
-            ↓
-not the source of truth</code></pre>
-<p>Important decisions, results, references and project state belong in durable artefacts: repositories, Markdown notes, Quarto documents, data files and documentation.</p>
-<p>AI can help maintain and interrogate that record.</p>
-<p>It should not be the record.</p>
-</section>
-<section id="fluent-output-is-not-evidence" class="level2">
-<h2 class="anchored" data-anchor-id="fluent-output-is-not-evidence">Fluent output is not evidence</h2>
-<p>Modern models are unusually persuasive because uncertainty is not always visible in the prose.</p>
-<p>A claim can be specific, well written and wrong.</p>
-<p>A citation can look plausible and not support the sentence attached to it.</p>
-<p>An agent can say a file was changed, a test passed or a search found nothing.</p>
-<p>For consequential work, I try to attach claims to the thing that can actually establish them:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Claim</th>
-<th>Evidence I want</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>A paper says X</td>
-<td>The paper</td>
-</tr>
-<tr class="even">
-<td>A factual statement is current</td>
-<td>A current primary or authoritative source</td>
-</tr>
-<tr class="odd">
-<td>A derivation is correct</td>
-<td>Assumptions and an independent mathematical check</td>
-</tr>
-<tr class="even">
-<td>A numerical result holds</td>
-<td>Reproducible computation or an invariant</td>
-</tr>
-<tr class="odd">
-<td>A code change works</td>
-<td>Diff + targeted tests</td>
-</tr>
-<tr class="even">
-<td>An agent changed something</td>
-<td>File, commit, API response or tool output</td>
-</tr>
-<tr class="odd">
-<td>A previous decision was made</td>
-<td>Durable project notes or source history</td>
-</tr>
-</tbody>
-</table>
-<p>The required level of verification scales with the consequence of being wrong.</p>
-<p>Brainstorming should remain cheap.</p>
-<p>Published claims, mathematical conclusions and repository changes should not.</p>
-</section>
-<section id="reversibility-is-a-feature" class="level2">
-<h2 class="anchored" data-anchor-id="reversibility-is-a-feature">Reversibility is a feature</h2>
-<p>The safest AI workflow is not one in which the model never makes a poor decision.</p>
-<p>It is one in which a poor decision is cheap to undo.</p>
-<p>For software:</p>
-<pre class="text"><code>main
-  ↓
-small branch
-  ↓
-diff
-  ↓
-test
-  ↓
-review
-  ↓
-merge</code></pre>
-<p>For writing:</p>
-<pre class="text"><code>canonical text
-      ↓
-AI revision
-      ↓
-compare
-      ↓
-accept selected changes</code></pre>
-<p>For research:</p>
-<pre class="text"><code>established model
-      ↓
-experimental extension
-      ↓
-theoretical / numerical check
-      ↓
-promote only if justified</code></pre>
-<p>This is one reason version control matters even more when generation becomes cheap.</p>
-</section>
-<section id="keep-one-source-of-truth" class="level2">
-<h2 class="anchored" data-anchor-id="keep-one-source-of-truth">Keep one source of truth</h2>
-<p>AI makes it almost frictionless to produce another version of something.</p>
-<p>A project can quickly acquire:</p>
-<pre class="text"><code>paper
-  ↓
-repository
-  ↓
-technical walkthrough
-  ↓
-project page
-  ↓
-presentation
-  ↓
-CV summary</code></pre>
-<p>Those are useful layers for different audiences.</p>
-<p>They become a liability when each begins to contain its own version of the facts.</p>
-<p>I therefore try to make one source authoritative for each type of information and derive or verify downstream representations against it.</p>
-<p>A repository can own implementation and version history. A paper can own a published result. Structured project data can own canonical links. A technical walkthrough can explain the implementation without becoming a second implementation.</p>
-<p>AI is particularly useful for transforming one authoritative source for another audience.</p>
-<p>That is very different from letting it invent five loosely related versions.</p>
-</section>
-<section id="technical-communication-transformation-is-a-high-value-use" class="level2">
-<h2 class="anchored" data-anchor-id="technical-communication-transformation-is-a-high-value-use">Technical communication: transformation is a high-value use</h2>
-<p>One of my favourite uses of AI is changing the level of explanation without changing the underlying substance.</p>
-<p>The same work may need to serve several readers:</p>
-<pre class="text"><code>research paper
-      ↓
-technical repository
-      ↓
-technical walkthrough
-      ↓
-industry-facing explanation
-      ↓
-short professional summary</code></pre>
-<p>AI can help identify which details each audience needs, remove unnecessary notation, generate an outline, or compare the public explanation against the technical source for drift.</p>
-<p>This is a good form of delegation because the transformation can be checked against something authoritative.</p>
-<p>The goal is not to make difficult work sound simple.</p>
-<p>It is to make the right part of the difficulty visible to the right reader.</p>
-</section>
-<section id="ai-assisted-does-not-mean-ai-generated" class="level2">
-<h2 class="anchored" data-anchor-id="ai-assisted-does-not-mean-ai-generated">AI-assisted does not mean AI-generated</h2>
-<p>I do not think every project needs an AI badge.</p>
-<p>In some projects AI has played a meaningful role: repository audit, test generation, code review, documentation checks, literature reconnaissance or communication across several technical layers.</p>
-<p>Those contributions are worth describing when they illuminate the workflow.</p>
-<p>In other cases AI may have been no more important than the editor, version-control system or plotting library.</p>
-<p>There is no value in labelling everything.</p>
-<p>The interesting question is:</p>
-<blockquote class="blockquote">
-<p>What did AI make possible, faster or easier—and what evidence was used to decide that its output was good enough?</p>
-</blockquote>
-<p>That is the distinction I want project pages to make when AI is genuinely part of the story.</p>
-</section>
-<section id="my-working-protocol" class="level2">
-<h2 class="anchored" data-anchor-id="my-working-protocol">My working protocol</h2>
-<p>For consequential AI-assisted work, I now use a simple sequence.</p>
-<pre class="text"><code>1. Define
-   State the actual problem.
-
-2. Freeze
-   Identify the trusted baseline.
-
-3. Diagnose
-   Understand the issue before changing it.
-
-4. Select
-   Decide which problem is actually worth solving.
-
-5. Constrain
-   State what must remain unchanged.
-
-6. Delegate
-   Use AI for the expensive middle.
-
-7. Verify
-   Test the relevant property independently.
-
-8. Inspect
-   Look at the output, source, diff or evidence.
-
-9. Accept
-   Decide whether the result belongs in the project.
-
-10. Stop
-    Do not turn a completed task into an unsolicited redesign.</code></pre>
-<p>The protocol is intentionally conservative.</p>
-<p>AI already supplies the speed.</p>
-<p>The workflow needs to supply the control.</p>
-</section>
-<section id="where-this-leaves-me" class="level2">
-<h2 class="anchored" data-anchor-id="where-this-leaves-me">Where this leaves me</h2>
-<p>I expect AI systems to become much more capable.</p>
-<p>That makes me more interested in using them, not less.</p>
-<p>But as production becomes cheaper, other parts of technical work become relatively more important:</p>
-<ul>
-<li>choosing worthwhile questions;</li>
-<li>making assumptions explicit;</li>
-<li>selecting authoritative evidence;</li>
-<li>designing meaningful experiments;</li>
-<li>noticing when complexity adds nothing;</li>
-<li>validating results;</li>
-<li>communicating uncertainty;</li>
-<li>deciding when the work is finished.</li>
-</ul>
-<p>The opportunity is not simply to automate the work I already do.</p>
-<p>It is to spend less time on the mechanical middle and more time on those decisions.</p>
-<p><strong>Delegate production. Preserve evidence. Verify what matters. Retain ownership of the decision.</strong></p>
-
-
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>OpenAI, <a href="https://openai.com/index/gpt-5-6/"><em>GPT-5.6: Frontier intelligence that scales with your ambition</em></a>, 9 July 2026. The published evaluation table reports GPT-5.6 Sol at 58.0% on Toolathlon, 18.1% on AutomationBench, 73.8% on MRCR v2 eight-needle at 512K–1M tokens and 77.1 F1 on GraphWalks BFS at one million tokens; it reports Claude Mythos 5 at 61.7% on Toolathlon and 79.4 F1 on the one-million-token GraphWalks evaluation.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Chengyu Shen et al., <a href="https://arxiv.org/abs/2607.14989"><em>OmniaBench: Benchmarking General AI Agents Across Diverse Scenarios</em></a>, arXiv:2607.14989, 16 July 2026. The benchmark contains 1,431 tasks and reports Overall Pass@1 of 58.54% for Claude Sonnet 5 and 57.14% for GPT-5.6 Sol.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>OpenAI, <a href="https://openai.com/index/gpt-5-6/"><em>GPT-5.6: Frontier intelligence that scales with your ambition</em></a>, 9 July 2026. The published evaluation table reports GPT-5.6 Sol at 58.0% on Toolathlon, 18.1% on AutomationBench, 73.8% on MRCR v2 eight-needle at 512K–1M tokens and 77.1 F1 on GraphWalks BFS at one million tokens; it reports Claude Mythos 5 at 61.7% on Toolathlon and 79.4 F1 on the one-million-token GraphWalks evaluation.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<section id="why-not-just-one-file-everywhere" class="level2">
+<h2 class="anchored" data-anchor-id="why-not-just-one-file-everywhere">Why not just one file everywhere?</h2>
+<p>I initially wanted to paste the entire rule file into every AI system.</p>
+<p>That is attractive because it avoids drift.</p>
+<p>But there are practical reasons to keep a master file plus smaller deployment sets:</p>
+<ol type="1">
+<li>Persistent instruction fields may have character limits.</li>
+<li>Coding rules are irrelevant in many ordinary conversations.</li>
+<li>Some systems have global instructions and separate project instructions.</li>
+<li>Coding agents may read repository files such as <code>AGENTS.md</code>.</li>
+<li>Local models may receive rules through a system prompt.</li>
+<li>Different tasks benefit from different subsets of the same master rules.</li>
 </ol>
-</section></div></main> <!-- /main -->
+<p>So the design became:</p>
+<pre class="text"><code>AI-RULES.md       # canonical master
+AI-RULES-CORE.md  # rules that should apply almost everywhere
+
+presets/
+  MATH-RESEARCH.md
+  CODING.md
+  EDITING.md
+  LONG-CHATS.md</code></pre>
+<p>The important constraint is:</p>
+<blockquote class="blockquote">
+<p><strong>The presets should be extracts from the master, not rewritten interpretations of it.</strong></p>
+</blockquote>
+<p>If the wording in a preset drifts from the master, the system becomes unreliable.</p>
+</section>
+<section id="the-global-rules" class="level2">
+<h2 class="anchored" data-anchor-id="the-global-rules">The global rules</h2>
+<p>The global rules are mostly about information density and epistemic discipline.</p>
+<section id="result-first" class="level3">
+<h3 class="anchored" data-anchor-id="result-first">Result first</h3>
+<p>The answer should begin with the conclusion, not a long preamble.</p>
+<p>This does not mean removing reasoning. It means the reasoning comes <em>after</em> the user knows what the answer is.</p>
+</section>
+<section id="concise-but-complete" class="level3">
+<h3 class="anchored" data-anchor-id="concise-but-complete">Concise but complete</h3>
+<p>The goal is not a rigid word limit.</p>
+<p>The better rule is:</p>
+<blockquote class="blockquote">
+<p>Use the shortest answer that is still complete.</p>
+</blockquote>
+<p>That avoids two bad extremes:</p>
+<ul>
+<li>unnecessarily long answers;</li>
+<li>artificially short answers that omit useful points.</li>
+</ul>
+<p>The aim is high information density.</p>
+</section>
+<section id="challenge-assumptions-but-do-not-be-pedantic" class="level3">
+<h3 class="anchored" data-anchor-id="challenge-assumptions-but-do-not-be-pedantic">Challenge assumptions, but do not be pedantic</h3>
+<p>A useful AI should notice when an important assumption is questionable.</p>
+<p>It should not derail every discussion over minor technicalities.</p>
+<p>The distinction is simple:</p>
+<ul>
+<li>challenge assumptions that materially affect the conclusion;</li>
+<li>ignore trivial imperfections unless they matter.</li>
+</ul>
+</section>
+<section id="label-the-status-of-claims" class="level3">
+<h3 class="anchored" data-anchor-id="label-the-status-of-claims">Label the status of claims</h3>
+<p>For technical work, it is useful to distinguish:</p>
+<ul>
+<li><strong>Proved / verified</strong></li>
+<li><strong>Numerically checked</strong></li>
+<li><strong>Plausible</strong></li>
+<li><strong>Speculative</strong></li>
+</ul>
+<p>This is especially valuable during brainstorming, where a good idea can easily sound more established than it really is.</p>
+</section>
+<section id="preserve-follow-up-ideas-without-letting-them-take-over" class="level3">
+<h3 class="anchored" data-anchor-id="preserve-follow-up-ideas-without-letting-them-take-over">Preserve follow-up ideas without letting them take over</h3>
+<p>Long conversations often grow because every interesting branch gets explored immediately.</p>
+<p>A better rule is:</p>
+<blockquote class="blockquote">
+<p>When several follow-up ideas arise, put them under short headings. Explore each enough to explain the idea, why it matters, and the likely next step, but do not fully develop every branch automatically.</p>
+</blockquote>
+<p>For example:</p>
+</section>
+<section id="follow-up-alternative-model" class="level3">
+<h3 class="anchored" data-anchor-id="follow-up-alternative-model">Follow-up — Alternative model</h3>
+<p><strong>Plausible.</strong> A different probabilistic model may remove an unrealistic assumption in the current approach. It is worth testing if the original model fails validation.</p>
+</section>
+<section id="follow-up-exact-computation" class="level3">
+<h3 class="anchored" data-anchor-id="follow-up-exact-computation">Follow-up — Exact computation</h3>
+<p><strong>Numerically checked.</strong> A simulation currently estimates the quantity, but an exact integral may be possible and would make a good validation exercise.</p>
+<p>The idea is preserved, but the main answer stays focused.</p>
+</section>
+</section>
+<section id="rules-for-mathematical-reasoning" class="level2">
+<h2 class="anchored" data-anchor-id="rules-for-mathematical-reasoning">Rules for mathematical reasoning</h2>
+<p>Mathematical work needs stricter discipline than ordinary chat.</p>
+<p>The rules I settled on are:</p>
+<ul>
+<li>give the result first, then the derivation;</li>
+<li>challenge important assumptions;</li>
+<li>distinguish established results from numerical checks and speculation;</li>
+<li>search the literature when a result may already be known;</li>
+<li>keep alternative ideas after the main argument rather than mixing them into it.</li>
+</ul>
+<p>The literature rule is particularly important.</p>
+<p>AI models are good at proposing ideas that <em>feel</em> new. In mathematics, that is not enough. A useful workflow should automatically ask:</p>
+<blockquote class="blockquote">
+<p>Is this already known?</p>
+</blockquote>
+<p>That does not eliminate hallucinations, but it makes them easier to catch.</p>
+</section>
+<section id="rules-for-research-and-literature" class="level2">
+<h2 class="anchored" data-anchor-id="rules-for-research-and-literature">Rules for research and literature</h2>
+<p>The research rules are separate because source handling is a different problem from mathematical reasoning.</p>
+<p>The main principles are:</p>
+<ul>
+<li>prefer primary sources;</li>
+<li>cite the main nontrivial external claims;</li>
+<li>show disagreements in the literature instead of smoothing them away;</li>
+<li>separate:
+<ul>
+<li>what the source says;</li>
+<li>the AI’s interpretation;</li>
+<li>proposed extensions.</li>
+</ul></li>
+</ul>
+<p>That last distinction is easy to lose.</p>
+<p>An AI can move very quickly from:</p>
+<blockquote class="blockquote">
+<p>“The paper proves X”</p>
+</blockquote>
+<p>into:</p>
+<blockquote class="blockquote">
+<p>“This suggests Y”</p>
+</blockquote>
+<p>and then into:</p>
+<blockquote class="blockquote">
+<p>“Therefore Z is probably true”</p>
+</blockquote>
+<p>without making the transitions explicit.</p>
+<p>The rule system forces those layers apart.</p>
+</section>
+<section id="rules-for-coding" class="level2">
+<h2 class="anchored" data-anchor-id="rules-for-coding">Rules for coding</h2>
+<p>The coding rules grew out of a common agentic-workflow problem: powerful coding agents are useful, but it is easy to overuse them.</p>
+<p>The default rule is:</p>
+<blockquote class="blockquote">
+<p>Prefer the smallest clean change that solves the task.</p>
+</blockquote>
+<p>But there is an important exception:</p>
+<blockquote class="blockquote">
+<p>If the local fix would become hacky, suggest a refactor instead.</p>
+</blockquote>
+<p>This avoids two opposite failure modes:</p>
+<ul>
+<li>refactoring an entire codebase for a tiny change;</li>
+<li>stacking patches until the code becomes fragile.</li>
+</ul>
+<p>Other coding rules include:</p>
+<ul>
+<li>explain important changes, not every line;</li>
+<li>do not change architecture, visual identity, or naming conventions without asking;</li>
+<li>read project guidance first (<code>AGENTS.md</code>, <code>README.md</code>, <code>DESIGN.md</code>, etc.);</li>
+<li>after an edit, report concisely what changed and where.</li>
+</ul>
+</section>
+<section id="let-the-ai-choose-the-model-tier" class="level2">
+<h2 class="anchored" data-anchor-id="let-the-ai-choose-the-model-tier">Let the AI choose the model tier</h2>
+<p>One of the most useful rules concerns coding agents.</p>
+<p>If a chat model generates a prompt for a coding agent, it should also say which class of model is appropriate for the task.</p>
+<p>The user should not have to guess whether the task is easy or hard.</p>
+<p>The rule is:</p>
+<blockquote class="blockquote">
+<p>Recommend the cheapest or lightest model likely to complete the task reliably.</p>
+</blockquote>
+<p>The recommendation should be:</p>
+<ul>
+<li>based on the generated task itself;</li>
+<li>vendor-neutral;</li>
+<li>updated as model availability changes;</li>
+<li>explicit about reasoning level or effort when useful.</li>
+</ul>
+<p>A stronger model should only be recommended when it is genuinely justified.</p>
+<p>This is a useful antidote to a common tendency: always reaching for the most expensive model because of fear that a cheaper one might miss something.</p>
+<p>A better workflow is:</p>
+<pre class="text"><code>chat model
+   ↓
+understand task
+   ↓
+draft coding-agent prompt
+   ↓
+estimate task difficulty
+   ↓
+recommend suitable model tier
+   ↓
+run agent</code></pre>
+<p>This keeps the expensive models for the work that actually needs them.</p>
+</section>
+<section id="rules-for-editing-existing-files" class="level2">
+<h2 class="anchored" data-anchor-id="rules-for-editing-existing-files">Rules for editing existing files</h2>
+<p>Document editing caused one of the biggest sources of drift in my workflow.</p>
+<p>Repeatedly asking an AI to “update” a document can quietly turn into repeated rewriting.</p>
+<p>After a few iterations, the document may be internally consistent but no longer faithful to the original discussion.</p>
+<p>So the editing rules are deliberately conservative.</p>
+<section id="treat-the-current-file-as-canonical" class="level3">
+<h3 class="anchored" data-anchor-id="treat-the-current-file-as-canonical">Treat the current file as canonical</h3>
+<p>Unless a rewrite is explicitly requested, the current file is the baseline.</p>
+</section>
+<section id="add-does-not-mean-rewrite" class="level3">
+<h3 class="anchored" data-anchor-id="add-does-not-mean-rewrite">“Add” does not mean “rewrite”</h3>
+<p>If I ask to add material, the AI should add material.</p>
+<p>It should not reinterpret the request as permission to restructure or rewrite existing sections.</p>
+</section>
+<section id="merge-is-ambiguous" class="level3">
+<h3 class="anchored" data-anchor-id="merge-is-ambiguous">“Merge” is ambiguous</h3>
+<p>A merge may mean:</p>
+<ul>
+<li>append;</li>
+<li>reconcile;</li>
+<li>deduplicate;</li>
+<li>restructure;</li>
+<li>preserve both versions.</li>
+</ul>
+<p>The AI should clarify which interpretation is intended.</p>
+</section>
+<section id="ask-before-rewriting-older-sections" class="level3">
+<h3 class="anchored" data-anchor-id="ask-before-rewriting-older-sections">Ask before rewriting older sections</h3>
+<p>If new material creates a contradiction with existing text, that is not permission to silently fix the old section.</p>
+<p>The AI should flag the conflict and ask before changing it.</p>
+</section>
+<section id="keep-a-concise-changelog" class="level3">
+<h3 class="anchored" data-anchor-id="keep-a-concise-changelog">Keep a concise changelog</h3>
+<p>After substantial edits, the AI should say what changed and where.</p>
+<p>This makes file evolution much easier to audit.</p>
+</section>
+</section>
+<section id="rules-for-long-chats" class="level2">
+<h2 class="anchored" data-anchor-id="rules-for-long-chats">Rules for long chats</h2>
+<p>Long chats are useful.</p>
+<p>They are also dangerous.</p>
+<p>They encourage the illusion that the entire conversation remains perfectly available and coherent forever.</p>
+<p>In practice, long conversations can become difficult for both the user and the model to manage.</p>
+<p>The rules therefore include a small amount of conversational self-management.</p>
+<section id="keep-the-main-thread-focused" class="level3">
+<h3 class="anchored" data-anchor-id="keep-the-main-thread-focused">Keep the main thread focused</h3>
+<p>Side branches go under <strong>Follow-up ideas</strong> rather than expanding automatically.</p>
+</section>
+<section id="occasionally-suggest-a-fresh-chat" class="level3">
+<h3 class="anchored" data-anchor-id="occasionally-suggest-a-fresh-chat">Occasionally suggest a fresh chat</h3>
+<p>The key word is <em>occasionally</em>.</p>
+<p>A reminder every ten messages would become irritating.</p>
+<p>The AI should only suggest a fresh chat when the current conversation has genuinely become broad enough that context confusion is likely.</p>
+</section>
+<section id="provide-a-handoff-first" class="level3">
+<h3 class="anchored" data-anchor-id="provide-a-handoff-first">Provide a handoff first</h3>
+<p>Before suggesting a new chat, produce a compact handoff:</p>
+<pre class="text"><code>Current question
+Established conclusions
+Open questions
+Useful follow-ups</code></pre>
+<p>That gives the next chat a clean starting point.</p>
+</section>
+<section id="be-honest-about-context-loss" class="level3">
+<h3 class="anchored" data-anchor-id="be-honest-about-context-loss">Be honest about context loss</h3>
+<p>A long-chat summary should not automatically be described as perfectly faithful.</p>
+<p>For technical work, the AI should distinguish between:</p>
+<ul>
+<li>extracted from visible/current context;</li>
+<li>reconstructed from compressed context;</li>
+<li>uncertain and needing verification against the source chat.</li>
+</ul>
+<p>That is much safer than pretending to remember everything.</p>
+</section>
+</section>
+<section id="canonical-notes-should-override-conversational-memory" class="level2">
+<h2 class="anchored" data-anchor-id="canonical-notes-should-override-conversational-memory">Canonical notes should override conversational memory</h2>
+<p>This rule connects AI behaviour to external notes.</p>
+<p>If a project has a canonical Markdown file and the AI remembers something different, the AI should say so.</p>
+<p>The rule is:</p>
+<blockquote class="blockquote">
+<p>Canonical project notes/files override conversational memory. If there is a conflict, identify it explicitly and use the canonical source unless instructed otherwise.</p>
+</blockquote>
+<p>This avoids silent drift.</p>
+<p>It also makes external notes useful without requiring an elaborate knowledge-management system.</p>
+</section>
+<section id="chat-is-not-a-notebook" class="level2">
+<h2 class="anchored" data-anchor-id="chat-is-not-a-notebook">Chat is not a notebook</h2>
+<p>This was the larger lesson.</p>
+<p>A chat is excellent for:</p>
+<ul>
+<li>asking questions;</li>
+<li>exploring ideas;</li>
+<li>checking calculations;</li>
+<li>generating alternatives;</li>
+<li>debugging;</li>
+<li>drafting.</li>
+</ul>
+<p>It is not ideal as the permanent record of a project.</p>
+<p>That does not mean every conversation needs to become a formal note.</p>
+<p>A much lighter distinction is enough:</p>
+<blockquote class="blockquote">
+<p><strong>Chat explores. Notes preserve.</strong></p>
+</blockquote>
+<p>A project note might contain only:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Project</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Current</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Decisions</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Ideas</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The point is not to create a complicated personal knowledge system.</p>
+<p>The point is to avoid making the chat history the only place where important decisions live.</p>
+</section>
+<section id="deployment-across-tools" class="level2">
+<h2 class="anchored" data-anchor-id="deployment-across-tools">Deployment across tools</h2>
+<p>The same rules can be deployed differently depending on the platform.</p>
+<p>A practical pattern is:</p>
+<pre class="text"><code>Ordinary chat
+= CORE
+
+Maths / research
+= CORE + MATH-RESEARCH
+
+Coding
+= CORE + CODING
+
+Editing a technical document
+= CORE + MATH-RESEARCH + EDITING
+
+Long mathematical brainstorming
+= CORE + MATH-RESEARCH + LONG-CHATS</code></pre>
+<p>The canonical master remains unchanged.</p>
+<p>The deployment layer adapts the rules to the tool.</p>
+</section>
+<section id="general-chat-assistants" class="level2">
+<h2 class="anchored" data-anchor-id="general-chat-assistants">General chat assistants</h2>
+<p>For a general chat system with persistent custom instructions:</p>
+<pre class="text"><code>global instructions
+= AI-RULES-CORE.md</code></pre>
+<p>For a project-specific context:</p>
+<pre class="text"><code>project instructions
+= CORE
++ relevant presets
++ project-specific constraints</code></pre>
+<p>The exact interface varies between products.</p>
+<p>The important point is architectural:</p>
+<blockquote class="blockquote">
+<p>Platform settings are deployments of the rules, not the source of truth.</p>
+</blockquote>
+</section>
+<section id="coding-agents" class="level2">
+<h2 class="anchored" data-anchor-id="coding-agents">Coding agents</h2>
+<p>Coding agents often support repository-level instruction files.</p>
+<p>For example:</p>
+<pre class="text"><code>AGENTS.md</code></pre>
+<p>can contain project-specific coding rules.</p>
+<p>A sensible split is:</p>
+<pre class="text"><code>global agent instructions
+= CORE
+
+repository instructions
+= CODING
++ project-specific constraints</code></pre>
+<p>This is preferable to hiding behavioural expectations inside prompts generated ad hoc each time.</p>
+</section>
+<section id="local-models" class="level2">
+<h2 class="anchored" data-anchor-id="local-models">Local models</h2>
+<p>Local models need the same behavioural context.</p>
+<p>The rules can be supplied through:</p>
+<ul>
+<li>a persistent system prompt in the client;</li>
+<li>a model configuration;</li>
+<li>a wrapper around the local model;</li>
+<li>an agent configuration file.</li>
+</ul>
+<p>For example, an Ollama-style model configuration may contain a persistent system prompt:</p>
+<pre class="text"><code>FROM &lt;base-model&gt;
+
+SYSTEM """
+&lt;paste CORE rules here&gt;
+"""</code></pre>
+<p>A coding-specific local model can receive:</p>
+<pre class="text"><code>CORE + CODING</code></pre>
+<p>while a mathematical research model can receive:</p>
+<pre class="text"><code>CORE + MATH-RESEARCH</code></pre>
+<p>The rules do not change the model weights. They define the working context.</p>
+</section>
+<section id="why-version-control-is-worth-it" class="level2">
+<h2 class="anchored" data-anchor-id="why-version-control-is-worth-it">Why version control is worth it</h2>
+<p>The rules are small, but important.</p>
+<p>That makes them an unusually good candidate for Git.</p>
+<p>A simple repository is enough:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Initial AI rules"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then rule changes become explicit:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Refine long-chat handling"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This gives useful capabilities:</p>
+<ul>
+<li>see exactly what changed;</li>
+<li>revert a bad rule;</li>
+<li>compare versions;</li>
+<li>synchronize across machines;</li>
+<li>keep platform-specific deployments reproducible.</li>
+</ul>
+<p>It also creates a healthy discipline:</p>
+<blockquote class="blockquote">
+<p>Change the master intentionally, then deploy the change.</p>
+</blockquote>
+</section>
+<section id="the-final-architecture" class="level2">
+<h2 class="anchored" data-anchor-id="the-final-architecture">The final architecture</h2>
+<p>The complete system is deliberately small:</p>
+<pre class="text"><code>AI-Rules/
+├── README.md
+├── AI-RULES.md
+├── AI-RULES-CORE.md
+└── presets/
+    ├── MATH-RESEARCH.md
+    ├── CODING.md
+    ├── EDITING.md
+    └── LONG-CHATS.md</code></pre>
+<p>And conceptually:</p>
+<pre class="text"><code>                 AI-RULES.md
+                      │
+                 source of truth
+                      │
+          ┌───────────┴───────────┐
+          │                       │
+        CORE                   presets
+          │                       │
+          └───────────┬───────────┘
+                      │
+                deployment layer
+                      │
+       ┌──────────────┼──────────────┐
+       │              │              │
+   chat models    coding agents   local models</code></pre>
+<p>The project knowledge system is separate:</p>
+<pre class="text"><code>Project note
+├── Current
+├── Decisions
+├── Ideas
+└── Next</code></pre>
+<p>The two systems interact, but should not be confused.</p>
+</section>
+<section id="what-this-solves" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-solves">What this solves</h2>
+<p>The system does not make AI perfectly reliable.</p>
+<p>It does solve several practical problems:</p>
+<ul>
+<li>answers become denser and easier to read;</li>
+<li>useful side ideas are preserved without hijacking the main discussion;</li>
+<li>speculative claims are easier to identify;</li>
+<li>file edits become less destructive;</li>
+<li>coding agents are less likely to consume expensive models unnecessarily;</li>
+<li>long chats are less likely to become the sole repository of important information;</li>
+<li>behaviour stays consistent across AI products;</li>
+<li>rules evolve in a controlled, auditable way.</li>
+</ul>
+<p>Most importantly, it changes the relationship with AI.</p>
+<p>Instead of repeatedly telling each model how to behave, I maintain one small specification of how I want to work.</p>
+<p>The models can change.</p>
+<p>The workflow remains mine.</p>
+
+
+</section>
+
+</main> <!-- /main -->
 <footer class="site-footer" role="contentinfo">
   <div class="site-footer-inner">
     <div class="site-footer-identity">
