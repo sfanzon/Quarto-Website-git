@@ -26,7 +26,7 @@
    ========================================================================== */
 
 .site-footer-inner {
-  width: min(calc(100% - 2 * var(--site-chrome-padding)), var(--site-chrome-width));
+  width: min(calc(100% - 2 * var(--footer-shell-padding)), var(--site-chrome-width));
   max-width: var(--site-chrome-width);
   margin-left: auto;
   margin-right: auto;

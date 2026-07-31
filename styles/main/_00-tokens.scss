@@ -59,14 +59,24 @@
   --homepage-orange-accent: #9b4828;
 
   /* Shared site chrome */
-  --site-chrome-width: 1240px;
-  --site-chrome-padding: 1.5rem;
+  --site-chrome-width: 1440px;
+  --navbar-shell-padding: 1.5rem;
+  --footer-shell-padding: 1.5rem;
 
   /* Site layout */
   --site-content-width: 1180px;
   --site-reading-width: 820px;
   --site-prose-width: 720px;
   --site-content-gutter: clamp(1rem, 3vw, 2.25rem);
+}
+
+/* Keep navbar and footer independently configurable while aligning both with
+   the page text edge on phones. */
+@media (max-width: 767.98px) {
+  :root {
+    --navbar-shell-padding: 1rem;
+    --footer-shell-padding: 1rem;
+  }
 }
 
 body.quarto-dark {
@@ -123,4 +133,3 @@ body.quarto-dark {
   /* Homepage editorial accent */
   --homepage-orange-accent: #e49472;
 }
-

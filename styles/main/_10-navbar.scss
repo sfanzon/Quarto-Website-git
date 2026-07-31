@@ -30,17 +30,42 @@
   -webkit-backdrop-filter: blur(12px);
 }
 
+/* Quarto's base navbar rule adds a 1em gutter to the outer nav element.
+   Remove it so the navbar and footer use the same shell edges. */
+#quarto-header > nav.navbar {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Quarto compensates for the desktop scrollbar with a right margin on the
+   header. The footer has no equivalent margin, so remove it for shared edges. */
+@media (min-width: 992px) {
+  #quarto-header {
+    margin-right: 0 !important;
+  }
+}
+
 /* Container: constrained inner content */
 
 #quarto-header .navbar .navbar-container,
 #navbar .container,
 #quarto-header .navbar .container,
 #quarto-header .navbar .container-fluid {
-  width: min(calc(100% - 2 * var(--site-chrome-padding)), var(--site-chrome-width));
+  width: min(calc(100% - 2 * var(--navbar-shell-padding)), var(--site-chrome-width));
   max-width: var(--site-chrome-width);
   margin-left: auto;
   margin-right: auto;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
   min-height: 56px !important;
+}
+
+/* Quarto adds .mx-auto to this wrapper by default, which centers the brand.
+   Keep the identity at the left edge and let the navigation stay right-aligned. */
+#quarto-header .navbar .navbar-brand-container,
+.navbar .navbar-brand-container {
+  margin-left: 0 !important;
+  margin-right: auto !important;
 }
 
 .navbar a,
@@ -66,7 +91,7 @@
   line-height: 1;
   white-space: nowrap;
   visibility: visible !important;
-  padding: .5rem .9rem !important;
+  padding: 0 !important;
   min-height: 42px;
   margin: 0 .15rem 0 0;
   border-radius: 7px;
@@ -407,7 +432,10 @@ body.quarto-dark .navbar .quarto-color-scheme-toggle:focus .bi::before,
     display: flex !important;
     align-items: center !important;
     flex-wrap: wrap !important;
-    width: 100%;
+    width: min(calc(100% - 2 * var(--navbar-shell-padding)), var(--site-chrome-width)) !important;
+    max-width: var(--site-chrome-width);
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   /* Brand/title on the left */
@@ -574,25 +602,26 @@ body.quarto-dark .navbar .quarto-color-scheme-toggle:focus .bi::before,
 }
 
 /* ==========================================================================
-   Mobile container width for very small viewports
-   ========================================================================== */
-
-@media (max-width: 767.98px) {
-  #navbar .container,
-  #quarto-header .navbar .container,
-  #quarto-header .navbar .container-fluid {
-    width: calc(100% - 2rem);
-    max-width: none;
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-
-/* ==========================================================================
    Desktop navigation refinements
    ========================================================================== */
 
 @media (min-width: 992px) {
+  /* Quarto gives the search overlay an extra right margin. Keep the control's
+     target size, but align its outer edge with the navbar shell. */
+  #quarto-header .navbar #quarto-search {
+    margin-right: 0 !important;
+  }
+
+  #quarto-header .navbar #quarto-search.type-overlay .aa-Autocomplete,
+  #quarto-header .navbar #quarto-search.type-overlay .aa-DetachedSearchButton {
+    display: flex !important;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 !important;
+  }
+
   .navbar .navbar-nav {
     align-items: center;
     gap: .12rem;
