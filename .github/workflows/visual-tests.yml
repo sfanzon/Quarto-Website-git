@@ -14,12 +14,15 @@ on:
       - '_quarto.yml'
       - 'data/**'
       - 'filters/**'
+      - 'includes/**'
       - 'scripts/**'
       - 'projects/**'
       - 'news/**'
       - '*.qmd'
       - 'package.json'
       - 'package-lock.json'
+      - 'playwright.config.js'
+      - 'tests/visual/**'
       - '.github/workflows/visual-tests.yml'
 
 jobs:

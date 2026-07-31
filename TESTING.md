@@ -4,11 +4,12 @@
 
 | Command | Scope | Environment |
 |---|---|---|
-| `npm run test:quick` | 11 Chromium checks: interactions, links, static guards | Local or CI |
-| `npm test` | 60 Chromium checks: all-page smoke, interactions, links, navigation | Local or CI |
+| `npm run test:quick` | 11 Chromium checks plus 6 generated-output guard tests | Local or CI |
+| `npm test` | 38 Chromium checks: all-page smoke, interactions, links, navigation | Local or CI |
+| `npm run test:accessibility` | 36 Chromium WCAG A/AA checks | Local or CI |
 | `npm run cross-browser:test` | 18 checks across Firefox + WebKit | Local or CI |
 | `npm run test:visual` | 30 full-page Chromium screenshot comparisons | **CI only** (see below) |
-| `npm run test:full` | 188 checks: all of the above + accessibility | **CI only** (includes visual) |
+| `npm run test:full` | 122 checks: all of the above + accessibility | **CI only** (includes visual) |
 
 ## Visual regression tests
 
@@ -118,6 +119,7 @@ Local visual test results are informative but not authoritative. The CI run is t
 | `tests/safety/links.spec.js` | Internal link and fragment validity |
 | `tests/safety/cross-browser.spec.js` | Critical path checks in Firefox + WebKit |
 | `tests/safety/accessibility.spec.js` | WCAG A/AA checks |
-| `tests/safety/generated-output-guard.mjs` | Static guard for retired components and inline styles |
+| `tests/safety/generated-output-guard.mjs` | Prevents generated-only changes without a canonical source change |
 | `.github/workflows/visual-tests.yml` | CI: visual regression tests |
+| `.github/workflows/functional-tests.yml` | CI: fresh render plus functional, accessibility, and cross-browser tests |
 | `.github/workflows/update-visual-baselines.yml` | CI: manual baseline regeneration |

@@ -3,8 +3,8 @@
 /**
  * generated-output-guard.mjs
  *
- * Cheap guardrail: fail if files under docs/ changed but no canonical
- * source file outside docs/ was also modified.
+ * Cheap guardrail: fail if generated output changed but no canonical
+ * source file was also modified.
  *
  * Usage:
  *   node tests/safety/generated-output-guard.mjs
@@ -16,7 +16,9 @@
  *                      (skips git entirely).
  */
 
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
+import { fileURLToPath } from "url";
+import { resolve } from "path";
 
 const GENERATED_PATHS = new Set([
   "data/projects.generated.json",
@@ -35,12 +37,14 @@ const GENERATED_PATHS = new Set([
  * @param {string[]} files – list of changed file paths
  */
 export function checkGuard(files) {
-  const hasDocs = files.some((f) => f.startsWith("docs/"));
+  const hasGenerated = files.some(
+    (f) => f.startsWith("docs/") || GENERATED_PATHS.has(f)
+  );
   const hasSource = files.some(
     (f) => !f.startsWith("docs/") && !GENERATED_PATHS.has(f)
   );
 
-  if (hasDocs && !hasSource) {
+  if (hasGenerated && !hasSource) {
     return {
       passed: false,
       message: [
@@ -57,17 +61,33 @@ export function checkGuard(files) {
   return { passed: true, message: "PASS" };
 }
 
-function getChangedFiles() {
-  const testPaths = process.env.GUARD_TEST_PATHS;
+export function getChangedFiles({
+  baseRef = process.env.BASE_REF || "HEAD",
+  testPaths = process.env.GUARD_TEST_PATHS,
+  cwd = process.cwd(),
+} = {}) {
   if (testPaths) {
     return testPaths.split(/\s+/).filter(Boolean);
   }
 
-  const baseRef = process.env.BASE_REF || "HEAD";
-  const stdout = execSync(`git diff --name-only "${baseRef}"`, {
+  const changed = execFileSync("git", ["diff", "--name-only", baseRef], {
     encoding: "utf-8",
+    cwd,
   });
-  return stdout.split("\n").filter(Boolean);
+  const untracked = execFileSync(
+    "git",
+    ["ls-files", "--others", "--exclude-standard"],
+    { encoding: "utf-8", cwd }
+  );
+
+  return [
+    ...new Set(
+      `${changed}\n${untracked}`
+        .split("\n")
+        .map((file) => file.trim())
+        .filter(Boolean)
+    ),
+  ];
 }
 
 function main() {
@@ -89,7 +109,9 @@ function main() {
   }
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (
+  process.argv[1] &&
+  fileURLToPath(import.meta.url) === resolve(process.argv[1])
+) {
   main();
 }
-

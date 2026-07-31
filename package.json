@@ -6,11 +6,12 @@
   "scripts": {
     "test:quick": "npm run test:generated && playwright test tests/safety/interactions.spec.js tests/safety/links.spec.js --project=chromium",
     "test": "playwright test tests/safety/smoke.spec.js tests/safety/interactions.spec.js tests/safety/links.spec.js tests/safety/cross-browser.spec.js --project=chromium",
+    "test:accessibility": "playwright test tests/safety/accessibility.spec.js --project=chromium",
     "test:visual": "playwright test tests/visual/capture.spec.js --project=chromium",
     "test:full": "playwright test",
     "cross-browser:test": "playwright test tests/safety/cross-browser.spec.js --project=firefox --project=webkit",
     "visual:baseline": "playwright test tests/visual/capture.spec.js --project=chromium --update-snapshots",
-    "test:generated": "node tests/safety/generated-output-guard.mjs",
+    "test:generated": "node --test tests/safety/generated-output-guard.test.mjs && node tests/safety/generated-output-guard.mjs",
     "visual:report": "playwright show-report"
   },
   "repository": {

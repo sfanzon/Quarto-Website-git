@@ -1,0 +1,59 @@
+name: Functional Tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  functional:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers (with system deps)
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: '1.9.38'
+
+      - name: Check generated-output discipline
+        run: npm run test:generated
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.sha }}
+
+      - name: Render site from source
+        run: quarto render
+
+      - name: Run Chromium functional tests
+        run: npm test
+
+      - name: Run accessibility tests
+        run: npm run test:accessibility
+
+      - name: Run Firefox and WebKit critical-path tests
+        run: npm run cross-browser:test
+
+      - name: Upload reports on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: functional-test-reports
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14

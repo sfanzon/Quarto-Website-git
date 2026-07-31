@@ -4,7 +4,6 @@ project:
   pre-render: python3 scripts/build-content.py
   render:
   - '*.qmd'
-  - news/*.md
   - projects/**/*.qmd
   - '!includes/*.qmd'
   resources:

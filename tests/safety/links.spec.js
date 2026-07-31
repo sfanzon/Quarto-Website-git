@@ -5,6 +5,12 @@ const { docsRoot, htmlPages, repositoryRoot } = require("./site");
 
 const ignoredSchemes = /^(?:data:|mailto:|tel:|javascript:|blob:)/i;
 
+// Intentionally published before their destination content is ready.
+// Remove an entry when the corresponding resource is added to the site.
+const plannedLocalTargets = new Set([
+  "notes/how-i-use-ai.html"
+]);
+
 function localTarget(reference, sourceRelativePath) {
   const trimmed = reference.trim();
   if (
@@ -62,7 +68,9 @@ test("all generated HTML and CSS references resolve locally", async () => {
       if (!target) continue;
       const file = targetFile(target.relativePath);
       if (!file) {
-        missing.add(`${pageTarget.relativePath} -> ${match[1]}`);
+        if (!plannedLocalTargets.has(target.relativePath)) {
+          missing.add(`${pageTarget.relativePath} -> ${match[1]}`);
+        }
       } else if (!fragmentExists(file, target.fragment)) {
         missing.add(
           `${pageTarget.relativePath} -> ${match[1]} (missing fragment)`
