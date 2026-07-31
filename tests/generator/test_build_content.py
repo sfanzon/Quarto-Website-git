@@ -109,6 +109,44 @@ class BuildContentTests(unittest.TestCase):
         self.assertIn("Example project", rendered)
         self.assertIn("assets/img/projects/example.svg", rendered)
 
+    def test_local_asset_validation_checks_assets_and_skips_external_urls(self):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        fixture_root = Path(directory.name)
+        (fixture_root / "assets/pdf").mkdir(parents=True)
+        (fixture_root / "assets/pdf/notes.pdf").write_bytes(b"pdf")
+        (fixture_root / "assets/img").mkdir(parents=True)
+        (fixture_root / "assets/img/project.svg").write_text("<svg/>", encoding="utf-8")
+        (fixture_root / "projects/demo").mkdir(parents=True)
+        (fixture_root / "projects/demo/index.qmd").write_text("# Demo", encoding="utf-8")
+        original_root = build_content.root
+        build_content.root = fixture_root
+        try:
+            external = build_content.validate_local_assets(
+                [{"id": "demo", "image": "assets/img/project.svg", "href": "projects/demo/index.html"}],
+                [{"id": "pub", "pdf": "/assets/pdf/notes.pdf", "code": "https://github.com/example/repo"}],
+                [("teaching.bib", [{"id": "course", "taster": "notes.pdf", "webpage": "/blog/course"}])],
+            )
+            self.assertEqual(len(external), 2)
+        finally:
+            build_content.root = original_root
+
+    def test_local_asset_validation_reports_all_missing_references(self):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        original_root = build_content.root
+        build_content.root = Path(directory.name)
+        try:
+            with self.assertRaisesRegex(ValueError, "project demo image") as context:
+                build_content.validate_local_assets(
+                    [{"id": "demo", "image": "missing.svg", "href": "missing.html"}],
+                    [{"id": "pub", "pdf": "/missing.pdf"}],
+                    [],
+                )
+            self.assertIn("publication pub pdf", str(context.exception))
+        finally:
+            build_content.root = original_root
+
 
 if __name__ == "__main__":
     unittest.main()
