@@ -56,9 +56,6 @@ format:
       - darkly
       - styles/main.scss
     respect-user-color-scheme: true
-    css:
-    - styles/project-pages.css
-    - styles/project-navigation.css
     toc: false
     page-layout: article
     smooth-scroll: true
@@ -69,7 +66,6 @@ format:
     include-after-body:
     - includes/site-footer.html
     - includes/after-body.html
-    - includes/project-navigation.html
     anchor-sections: false
 filters:
 - filters/project-components.lua
