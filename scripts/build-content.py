@@ -42,6 +42,13 @@ def read_bibtex_entries(path):
         if depth:
             raise ValueError(f'Unclosed BibTeX entry in {path.name}')
 
+        # BibTeX declarations are not content records. In particular,
+        # @string entries commonly appear before teaching and publication
+        # records and must not be validated as if they were courses.
+        if entry_type in {'string', 'preamble', 'comment'}:
+            position = cursor
+            continue
+
         record = source[start:cursor - 1]
         if ',' not in record:
             raise ValueError(f'Malformed BibTeX entry in {path.name}')
@@ -220,6 +227,37 @@ def teaching_actions(course):
                 f'<a class="teaching-action" href="{html.escape(href, quote=True)}"><i class="fa-solid {icon}"></i> {label}</a>'
             )
     return ''.join(actions)
+
+ACADEMIC_YEAR_PATTERN = re.compile(r'^(?P<start>\d{4})/(?P<end>\d{2})$')
+
+
+def teaching_years(courses, source_name):
+    """Return validated academic years in descending chronological order."""
+    years = set()
+    for course in courses:
+        value = str(course.get('yearacademic', '')).strip()
+        if not value:
+            raise ValueError(
+                f'Teaching record {course.get("id", "<unknown>")} in '
+                f'{source_name} is missing yearacademic'
+            )
+        match = ACADEMIC_YEAR_PATTERN.fullmatch(value)
+        if not match:
+            raise ValueError(
+                f'Teaching record {course.get("id", "<unknown>")} in '
+                f'{source_name} has invalid yearacademic: {value!r} '
+                '(expected YYYY/YY)'
+            )
+        start = int(match.group('start'))
+        expected_end = f'{(start + 1) % 100:02d}'
+        if match.group('end') != expected_end:
+            raise ValueError(
+                f'Teaching record {course.get("id", "<unknown>")} in '
+                f'{source_name} has non-consecutive yearacademic: {value!r}'
+            )
+        years.add(value)
+    return sorted(years, key=lambda year: int(year[:4]), reverse=True)
+
 
 def teaching_section(section_id, heading, courses, years):
     year_sections = []
@@ -515,13 +553,13 @@ teaching_html = [
         'lecturer',
         'Lecturer',
         lecturer_courses,
-        ['2025/26', '2024/25', '2023/24', '2022/23', '2020/21', '2019/20'],
+        teaching_years(lecturer_courses, 'teaching_lecturer.bib'),
     ),
     teaching_section(
         'tutor',
         'Teaching assistant',
         tutor_courses,
-        ['2017/18', '2016/17', '2015/16', '2014/15', '2012/13'],
+        teaching_years(tutor_courses, 'teaching_tutor.bib'),
     ),
 ]
 (root / 'includes/teaching-list.html').write_text('\n'.join(teaching_html))
