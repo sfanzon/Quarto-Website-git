@@ -908,6 +908,186 @@ body.projects-page .project-page-heading {
   text-underline-offset: .16em;
 }
 
+/* Notes — text-led archive, long-form articles and one compact homepage preview. */
+.home-note-preview {
+  display: grid;
+  grid-template-columns: minmax(170px, 220px) minmax(0, 1fr);
+  gap: clamp(1.4rem, 3vw, 2.5rem);
+  align-items: center;
+  margin-top: clamp(2.5rem, 6vw, 5.5rem);
+  padding: clamp(1.5rem, 3vw, 2.2rem) 0;
+  border-top: 1px solid var(--global-divider-color);
+  border-bottom: 1px solid var(--global-divider-color);
+}
+.home-note-visual {
+  display: grid;
+  min-height: 132px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--global-theme-color) 18%, var(--global-divider-color));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--global-section-bg) 56%, var(--global-bg-color));
+}
+.home-note-visual img {
+  width: 100%;
+  height: 122px;
+  padding: .45rem;
+  object-fit: contain;
+}
+.home-note-copy { max-width: 720px; }
+.home-note-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1rem;
+  align-items: baseline;
+  margin-bottom: .55rem;
+}
+.home-note-meta .eyebrow {
+  margin: 0;
+  color: var(--homepage-orange-accent, var(--global-theme-color));
+  font-size: .68rem;
+  font-weight: 760;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.home-note-meta time {
+  color: var(--global-text-color-light);
+  font-size: .78rem;
+}
+.home-note-copy h2 {
+  margin: 0 0 .55rem;
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+  letter-spacing: -.025em;
+  line-height: 1.12;
+}
+.home-note-copy > p {
+  max-width: 650px;
+  margin: 0 0 .8rem;
+  color: var(--global-text-color-light);
+  font-size: .94rem;
+  line-height: 1.58;
+}
+.home-note-link {
+  color: var(--homepage-orange-accent, var(--global-theme-color));
+  font-size: .86rem;
+  font-weight: 680;
+}
+
+.notes-index-intro {
+  max-width: var(--site-reading-width);
+  margin: 0 0 clamp(2rem, 4vw, 3.5rem);
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--global-divider-color);
+}
+.notes-index-intro p {
+  max-width: var(--site-prose-width);
+  margin: 0;
+  color: var(--global-text-color-light);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+body.notes-index-page .quarto-listing-container-default {
+  max-width: var(--site-reading-width);
+}
+body.notes-index-page .quarto-post {
+  padding: 1.35rem 0;
+  border-bottom-color: var(--global-divider-color);
+}
+body.notes-index-page .quarto-post .thumbnail img {
+  border: 1px solid color-mix(in srgb, var(--global-theme-color) 16%, var(--global-divider-color));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--global-section-bg) 56%, var(--global-bg-color));
+  object-fit: contain;
+}
+body.notes-index-page .listing-title {
+  color: var(--global-text-color);
+  font-size: 1.25rem;
+  font-weight: 680;
+  letter-spacing: -.015em;
+}
+body.notes-index-page .listing-description {
+  color: var(--global-text-color-light);
+  line-height: 1.58;
+}
+
+body.notes-detail-page main.content {
+  max-width: calc(var(--site-reading-width) + 2 * var(--site-content-gutter)) !important;
+  padding-top: clamp(1.2rem, 3vw, 2.5rem) !important;
+  padding-bottom: clamp(3rem, 7vw, 6rem) !important;
+}
+body.notes-detail-page #title-block-header,
+body.notes-detail-page main.content > p,
+body.notes-detail-page main.content > ul,
+body.notes-detail-page main.content > ol,
+body.notes-detail-page main.content > .callout,
+body.notes-detail-page main.content > section > p,
+body.notes-detail-page main.content > section > ul,
+body.notes-detail-page main.content > section > ol,
+body.notes-detail-page main.content > section > blockquote,
+body.notes-detail-page main.content > section > pre,
+body.notes-detail-page main.content > section > .callout,
+body.notes-detail-page main.content > section > h2,
+body.notes-detail-page main.content > section > h3 {
+  max-width: var(--site-prose-width);
+  margin-right: auto;
+  margin-left: auto;
+}
+body.notes-detail-page .quarto-title-meta {
+  padding-top: .9rem;
+  border-top: 1px solid var(--global-divider-color);
+}
+body.notes-detail-page main.content h2 {
+  margin-top: 2.7rem;
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  letter-spacing: -.025em;
+}
+body.notes-detail-page main.content h3 {
+  margin-top: 1.8rem;
+  font-size: 1.12rem;
+}
+body.notes-detail-page main.content p,
+body.notes-detail-page main.content li {
+  line-height: 1.72;
+}
+body.notes-detail-page main.content table {
+  width: 100%;
+  margin: 1.5rem auto;
+  font-size: .9rem;
+}
+body.notes-detail-page main.content .quarto-figure {
+  margin: clamp(1.8rem, 4vw, 3rem) auto;
+}
+body.notes-detail-page main.content .quarto-figure img {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--global-theme-color) 14%, var(--global-divider-color));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--global-section-bg) 42%, var(--global-bg-color));
+}
+body.notes-detail-page main.content figcaption {
+  color: var(--global-text-color-light);
+  font-size: .82rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 767.98px) {
+  .home-note-preview {
+    grid-template-columns: 118px minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+  }
+  .home-note-visual { min-height: 96px; }
+  .home-note-visual img { height: 92px; padding: .35rem; }
+  .home-note-meta { display: block; margin-bottom: .4rem; }
+  .home-note-meta time { display: block; margin-top: .15rem; }
+  .home-note-copy h2 { font-size: 1.24rem; }
+  .home-note-copy > p { font-size: .86rem; line-height: 1.48; }
+  body.notes-index-page .quarto-post .thumbnail { width: 105px; }
+  body.notes-detail-page main.content table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
 /* Project article eyebrow: responsive, but deliberately quieter than card/page section labels. */
 body.project-detail-page .project-detail-hero .eyebrow {
   margin-bottom: .68rem;

@@ -1,0 +1,2739 @@
+---
+title: "From Chatbots to Agents: How I Built My AI Stack in 2026"
+description: "A practical account of how I moved from using ChatGPT as a chatbot to building a working stack around Codex, OpenCode, DeepSeek, OpenClaw and automation."
+date: 2026-07-26
+date-modified: 2026-07-27
+categories:
+  - AI
+  - Tools
+  - Workflow
+toc: true
+---
+
+For a long time, my mental model of AI was simple:
+
+> Open ChatGPT, ask a question, get an answer.
+
+That was already useful. I used it to understand mathematics, write code, compare hardware, work on papers, plan projects and redesign my website. But the interaction was still fundamentally conversational: I asked, the model answered, and I carried the answer back into the real world.
+
+The thing that changed my view was not a new benchmark or a larger model. It was trying to make AI **act on the work itself**.
+
+My website became the test case.
+
+I had a real Quarto repository, a growing pile of CSS, generated output, a design I did not want agents to casually change, and lots of apparently tiny requests:
+
+> Make the navbar wider.
+
+> Fix the mobile footer.
+
+> Move these styles into the right place.
+
+Those requests sounded trivial. They were not. Agents would inspect too much, edit the wrong layer, stack another override on top of old overrides, render the site, fail to change the thing I meant, then start another expensive loop.
+
+At the same time I was experimenting with local models. Running Qwen through Ollama sounded attractive: private, local and effectively free per token. In practice, making a powerful Mac run hot just to summarise a one-page file was a useful reality check. I was optimising for zero API cost while ignoring time, heat, latency and the fact that very cheap cloud models were becoming dramatically better.
+
+Then I tried coding-agent interfaces. Cline made the agent loop tangible. Kilo looked promising but did not work reliably enough for me. DeepSeek changed the economics. The website refactor taught me that repository architecture and task scoping mattered as much as model quality. Codex and OpenCode eventually simplified the coding stack. And once that pattern became clear, I realised that coding was only one example of a much larger idea: persistent agents, workflows and automation could apply to research, job search, email, writing and everyday administration.
+
+This post is the map I wish I had at the beginning. It is not a survey of every AI product. It is the path from:
+
+```text
+chatbot
+   ↓
+coding assistant
+   ↓
+agent
+   ↓
+reliable agent workflow
+   ↓
+persistent agent
+   ↓
+automation
+```
+
+and the practical stack I ended up with after trying the alternatives rather than choosing them from feature lists.
+
+::: {.callout-note}
+## A moving target
+
+Products, models, limits and prices change extremely quickly. Specific product details below are a snapshot checked in **July 2026**. The workflow itself should age better than the model names.
+:::
+
+# 1. I thought AI meant ChatGPT
+
+The first conceptual shift was realising that I had been mixing together four different things: **models, chats, agents and tools**.
+
+
+```{mermaid}
+flowchart LR
+    A["ChatGPT<br/>ask and answer"] --> B["Local models<br/>privacy / cost experiment"]
+    B --> C["Cline / Kilo<br/>discover the agent loop"]
+    C --> D["DeepSeek<br/>cheap capable cloud"]
+    D --> E["Website refactor<br/>architecture + bounded tasks"]
+    E --> F["Codex + OpenCode<br/>simplified coding stack"]
+    F --> G["OpenClaw + n8n<br/>persistent agents + workflows"]
+```
+
+
+## The distinction I was missing: a model is not an agent
+
+A language model produces responses.
+
+An **agent** wraps a model in a system that can observe its environment, use tools, take actions, inspect the result and continue.
+
+```{mermaid}
+flowchart LR
+    A["Goal"] --> B["Model reasons"]
+    B --> C["Agent chooses an action"]
+    C --> D["Read files / search / run commands / use apps"]
+    D --> E["Observe result"]
+    E --> F{"Finished?"}
+    F -- No --> B
+    F -- Yes --> G["Deliver result"]
+```
+
+That loop is the important part.
+
+A normal chat might tell me how to fix a bug.
+
+A coding agent can:
+
+```text
+inspect repository
+      ↓
+find relevant files
+      ↓
+edit code
+      ↓
+run tests
+      ↓
+read failure
+      ↓
+edit again
+      ↓
+run tests
+      ↓
+show final diff
+```
+
+This is what people mean by **agentic AI** in practice. It is not necessarily a fundamentally different model. It is a model given tools, context, permissions and an iterative loop.
+
+The same idea applies outside coding.
+
+## Chat, Work and agents solve different problems
+
+My current mental model is:
+
+| Mode | Best for |
+|---|---|
+| **Chat** | Thinking, explaining, learning, discussing, small edits |
+| **Agent** | Acting on files, tools or systems over multiple steps |
+| **Automation** | Repeating an agent workflow later or when a condition occurs |
+
+The distinction matters because throwing an agent at every problem is wasteful.
+
+If I want to understand an algorithm, I want a conversation.
+
+If I want twelve files changed consistently and the project rebuilt afterwards, I want an agent.
+
+If I want the same analysis performed every Monday, I want automation.
+
+# 2. The breakthrough was letting AI act on the real project
+
+The first real breakthrough was moving from **asking for code** to letting an agent operate on the repository.
+
+That sounds like a small distinction, but it changed what I cared about. A good answer was no longer enough. The system had to find the right file, make the change, run the build, notice failure and show me a trustworthy diff.
+
+That is when the difference between a model and an agent harness stopped being theoretical.
+
+
+The coding market looks complicated because two different things are mixed together:
+
+1. **the model** — GPT, Claude, Qwen, Gemini, etc.;
+2. **the agent harness** — Codex, Claude Code, Cline, OpenCode, Continue, etc.
+
+The harness determines what the model can actually do.
+
+## Codex
+
+**Codex** is OpenAI's dedicated software-engineering agent. It can navigate a repository, edit files, run commands and tests, and work through a task rather than merely suggest code.
+
+For difficult work, this remains my default.
+
+```text
+architecture
+hard bug
+large refactor
+unfamiliar codebase
+important final review
+        ↓
+      CODEX
+```
+
+## Ordinary ChatGPT can also work with VS Code
+
+One of the more useful discoveries is that normal ChatGPT on macOS can work with code open in VS Code.
+
+That makes ordinary ChatGPT useful as a **pair programmer**:
+
+```text
+VS Code                         ChatGPT
+
+styles.scss  ────────────────►  "Why is this breaking
+                                 on mobile?"
+
+             ◄────────────────  explanation + edit
+```
+
+This is ideal for:
+
+- discussing design choices;
+- debugging a particular function;
+- editing a few related files;
+- asking questions about code I am already looking at;
+- iterating interactively.
+
+Codex is better when the task is more autonomous:
+
+> Find the cause, fix it, rebuild the site and verify the result.
+
+## Two different "GitHub" connections in ChatGPT
+
+Easy to conflate, worth keeping separate:
+
+```text
+GitHub connector (Settings → Connectors)
+   │
+   ├── read-only
+   ├── good for: "explain this repo", cited answers, deep research
+   └── cannot edit, commit, or open a PR
+
+Codex's GitHub App (ChatGPT desktop → Codex tab)
+   │
+   ├── write access, its own isolated container per task
+   ├── point it at a repo, describe the change
+   └── opens a pull request when done — never pushes to main directly
+```
+
+The second one is the actual answer to *"can I just point GPT at the git repo and get edits back?"* — yes, that is exactly Codex's job, and the PR-not-direct-push behaviour keeps the same review discipline as every other agent in this note. The trade-off is that it draws down Codex allowance rather than pennies of BYOK spend, so it earns the same "genuinely autonomous, worth the premium cost" bar as the rest of this section, not every small tweak.
+
+## ChatGPT Work removes another old limitation
+
+A general-purpose agent that can operate directly on a local project removes one particularly bad workflow:
+
+```text
+old workflow
+
+local repo
+   ↓
+ZIP
+   ↓
+upload to chat
+   ↓
+AI edits copy
+   ↓
+download ZIP
+   ↓
+reconcile with real repo
+```
+
+The better principle is:
+
+> **Keep one Git repository and put the AI tools around it.**
+
+```{mermaid}
+flowchart TB
+    R["Git repository"] --> V["VS Code"]
+    R --> C["Codex"]
+    R --> W["ChatGPT Work"]
+    R --> L["Local agent"]
+    V --> R
+    C --> R
+    W --> R
+    L --> R
+```
+
+The repository remains the source of truth.
+
+## Claude Code: excellent, but not part of my default stack
+
+Claude Code is a genuine Codex-class coding agent, but another frontier subscription does not solve my main problem: **routine coding should not consume scarce premium-agent allowance**.
+
+I therefore keep Claude/Sonnet as an occasional independent fallback rather than another everyday platform.
+
+## Why a subscription doesn't pay for itself yet
+
+The honest way to decide is to compare the flat subscription against what the same work costs pay-as-you-go, at the scale I actually operate at — a Jekyll/Quarto site, not full-time software engineering.
+
+The insight that matters more than any price in the table below:
+
+> **The expensive part of agentic coding is iteration count, not raw token price.** A cheap model that edits the wrong file and needs three correction rounds can cost more — in time and in tokens — than a stronger model that gets it right once.
+
+```text
+cheap model, wrong file
+prompt → wrong edit → render → nothing changes → debug → repeat
+
+capable model, right file
+prompt → understands the templating architecture → edits the
+         right partial/layout → render → done
+```
+
+Rough illustrative costs for tasks at the scale of a site redesign (these will drift — the shape of the comparison is the durable part):
+
+| Task | Cheap BYOK (DeepSeek/Gemini) | Mid BYOK (Haiku) | Sonnet, pay-per-token | Sonnet, flat subscription |
+|---|---|---|---|---|
+| Small CSS tweak | pennies | small | small | £0 marginal, inside the flat fee |
+| Navbar/footer change | small | small–moderate | moderate | £0 marginal |
+| Homepage/section redesign | small | moderate | moderate–high | £0 marginal |
+| Full repo audit/refactor | moderate | moderate–high | high | £0 marginal, most likely tier to hit the plan's rolling usage limit |
+
+A flat Claude subscription only pays for itself once monthly usage is consistently heavy enough that the pay-per-token total would exceed the subscription price on its own — in practice, several large redesigns or audits in the same month, not the occasional navbar tweak. Below that volume, BYOK Sonnet through Cline/OpenCode (pay only for what I use) is cheaper than adding a second flat subscription alongside the ChatGPT one I already have.
+
+The one thing a subscription buys that BYOK doesn't: not having to think about it. Worth revisiting if usage volume changes, or if a Claude-specific harness feature (native subagents, very large context) becomes something I actually need rather than something that's merely available.
+
+# 3. I tried too many coding tools before the stack simplified
+
+Once I understood that the harness mattered, I did what everyone does with a fast-moving tool category: I started comparing too many of them.
+
+Cursor, Cline, Kilo, Continue, OpenCode, Codex, Claude Code — on paper they all overlap. In practice the important question turned out to be much simpler:
+
+> **Which interface reliably works against my real Git repository, with the model I want to use, without creating another layer of friction?**
+
+Cline was useful because Plan → Act made the loop visible. Kilo was attractive in theory but did not work reliably enough in my setup. Continue looked like a strong VS Code alternative, but later became a poor foundation for a new workflow when its official repository went read-only. OpenCode became more interesting when I realised it could live inside VS Code and switch providers cleanly. Codex remained the strongest integrated OpenAI route.
+
+The result was not one winner. It was a pair: **Codex for premium coding work, OpenCode for cheap model-flexible work**.
+
+
+The most useful conclusion from trying several coding agents is that I should not search for one universal winner. I need two complementary routes around the same Git repository:
+
+```text
+premium / strongest route
+    → Codex
+
+cheap / provider-flexible route
+    → OpenCode + DeepSeek
+```
+
+ChatGPT remains the place where I think through architecture, formulate bounded tasks and independently review the resulting diff.
+
+My current ranking is therefore:
+
+| Interface | Best at | Current role |
+|---|---|---|
+| **Codex** | High-capability software-engineering agent with tight OpenAI integration | **Premium/default route for difficult code work** |
+| **OpenCode** | Multi-provider coding agent, direct DeepSeek support, terminal/IDE/desktop workflow | **Best cheap and model-flexible route** |
+| **Cline in VS Code** | Visual Plan → Act workflow, approvals, checkpoints, BYOK | Useful GUI alternative |
+| **Cursor** | Highly integrated editor + agent experience | Optional if I want to leave stock VS Code |
+| **Continue** | Final 2.0 release remains usable | Legacy option; **not a new-workflow recommendation** |
+| **Kilo Code** | Cline-lineage alternative | Tested, but not reliable enough in my setup |
+
+## Codex: the premium OpenAI coding route
+
+**Codex** is the tool I should reach for when the task itself is difficult:
+
+```text
+understand unfamiliar architecture
+      ↓
+decide what should change
+      ↓
+edit repository
+      ↓
+run commands / tests
+      ↓
+review the result
+```
+
+It is designed specifically for software development and technical work. It is also included with ChatGPT plans, so there is no reason to pay OpenAI API prices through another harness before using the Codex allowance already available to me.
+
+That gives Codex a very clear role:
+
+```text
+hard bug
+architecture
+large refactor
+important implementation
+independent code review
+        ↓
+      CODEX
+```
+
+Source: [Using Codex with your ChatGPT plan](https://help.openai.com/en/articles/11369540), [ChatGPT Work and Codex](https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex).
+
+## OpenCode: the cheap, model-independent route
+
+**OpenCode** is the strongest complement to Codex because the harness is not tied to one model vendor.
+
+It supports more than 75 providers and local models. That means the same coding workflow can use:
+
+```text
+DeepSeek
+MiniMax
+Qwen
+Claude
+OpenAI
+local models
+```
+
+without changing the agent harness.
+
+The most useful setup for me is:
+
+```text
+OpenCode
+   ├── DeepSeek V4 Flash → exact/mechanical work
+   ├── DeepSeek V4 Pro   → serious daily agent work
+   └── premium model     → escalation only when needed
+```
+
+This is the coding equivalent of separating the **agent harness** from the **model**.
+
+Source: [OpenCode providers](https://opencode.ai/docs/providers/).
+
+### OpenCode works inside VS Code
+
+I originally thought of OpenCode as terminal-first and therefore separate from the editor. That is no longer accurate.
+
+OpenCode has a VS Code integration. Running `opencode` from the integrated terminal can install the extension automatically, and the IDE integration can pass file/selection references into the agent.
+
+So the practical layout is:
+
+```text
+VS Code
+
+┌─────────────────────────────────┐
+│ code                            │
+│                                 │
+│ styles/main/_12-page-shell.scss │
+│                                 │
+├─────────────────────────────────┤
+│ OpenCode                        │
+│ > implement this bounded phase  │
+└─────────────────────────────────┘
+```
+
+That gives me the benefits of stock VS Code while keeping OpenCode's provider flexibility.
+
+Source: [OpenCode IDE integration](https://opencode.ai/docs/ide/).
+
+### Then I installed the OpenCode desktop app
+
+This was another small conceptual correction.
+
+I had been treating OpenCode mainly as a **terminal harness that could also live inside VS Code**. The desktop app made the product boundary much clearer: OpenCode is the agent environment itself, and the terminal, IDE integration and desktop app are simply different front ends onto that environment.
+
+OpenCode now describes itself as an open-source coding agent available in:
+
+```text
+terminal
+IDE
+desktop app
+```
+
+and the desktop version can manage multiple active agent sessions as tabs.
+
+More importantly, the app does not require me to arrive with an API key before it becomes useful. OpenCode advertises **free models included**, while still allowing connection to more than 75 providers and local models.
+
+In my own model picker I found, among others:
+
+```text
+DeepSeek V4 Flash
+Laguna S 2.1
+```
+
+That was useful because it changed the first-run experience from:
+
+```text
+install harness
+   ↓
+create provider account
+   ↓
+buy API credits
+   ↓
+configure key
+   ↓
+choose model
+   ↓
+finally try the agent
+```
+
+to:
+
+```text
+install OpenCode
+   ↓
+open repository
+   ↓
+choose an available model
+   ↓
+try the agent
+```
+
+The exact free-model list is not something I should hard-code into the workflow. OpenCode builds its picker from available providers, integrations and configuration, so models can appear or disappear. The durable point is that **a harness can now bundle enough inference to be useful immediately**, while still letting me attach my own provider later.
+
+Sources: [OpenCode](https://opencode.ai/), [OpenCode desktop download](https://opencode.ai/download), [OpenCode models](https://opencode.ai/v2/docs/models).
+
+#### Laguna S 2.1 was also new to me
+
+Laguna S 2.1 is Poolside's 118B-parameter mixture-of-experts coding model, with 8B parameters active per token and a 1M-token context window. Poolside describes it as a model for agentic coding and long-horizon work.
+
+Poolside also provides its own harness, `pool`, and says Laguna models are trained inside that agent environment and perform best there, although they can also be used from other compatible clients.
+
+That makes Laguna interesting for a different reason from DeepSeek:
+
+```text
+DeepSeek
+   → cheap general model inside many harnesses
+
+Laguna
+   → coding model developed together with an agent harness
+```
+
+Poolside currently says Laguna is free to use for a limited time, so I should treat that as an experiment rather than a permanent zero-cost tier.
+
+Source: [Poolside models](https://poolside.ai/models).
+
+### Other harnesses like OpenCode
+
+Once I saw OpenCode as the **agent harness** rather than merely a coding UI, several other products became easier to classify.
+
+| Harness | Form | Model flexibility | What is distinctive |
+|---|---|---|---|
+| **OpenCode** | Desktop + terminal + IDE | Very high | Coding-focused, 75+ providers, bundled free models |
+| **goose** | Desktop + CLI + API | High | Open-source general-purpose agent, not limited to coding |
+| **Aider** | Terminal | Very high | Git-centric pair programming, repo maps, automatic lint/test loops |
+| **Gemini CLI** | Terminal | Gemini-focused | Open source, generous Google free tier, files/shell/search/MCP |
+| **pool** | Terminal/agent client | Poolside-focused | Harness used to train Laguna; strongest fit for Laguna models |
+| **Cline** | VS Code | High | Visual Plan → Act workflow and explicit approvals |
+| **Cursor** | Full editor | Curated multi-model | Most integrated editor/agent experience |
+
+I do **not** need to adopt all of these. They are useful because they show the same architecture appearing in different forms.
+
+#### goose: the closest broader analogue
+
+The most interesting one outside pure coding is **goose**.
+
+It is an open-source agent with:
+
+```text
+desktop app
+CLI
+API
+```
+
+and it is explicitly positioned for:
+
+```text
+coding
+research
+writing
+automation
+data analysis
+```
+
+It supports multiple model providers, MCP extensions, subagents and reusable workflow recipes. It can also operate as an ACP client/server, which points toward a future where agents and front ends become more interchangeable.
+
+Conceptually:
+
+```text
+OpenCode
+    → developer-focused agent harness
+
+goose
+    → general-purpose local agent harness
+```
+
+That does not replace OpenClaw in my stack: OpenClaw's role is still the **persistent personal-agent layer**. goose is relevant because it shows how far a local desktop harness can go before I need a persistent service.
+
+Source: [goose](https://block.github.io/goose/).
+
+#### Aider: narrower, older, still useful
+
+**Aider** is a terminal-first coding harness built around a Git repository.
+
+Its strengths are unusually concrete:
+
+```text
+repo map
+file editing
+Git integration
+automatic commits
+linting
+testing
+cloud or local models
+```
+
+It is less of a desktop "AI workspace" than OpenCode, but architecturally it is the same idea: put an agent loop around the repository and let different models provide the reasoning engine.
+
+For pure code work, especially Python/R/LaTeX projects, it remains a useful reference implementation of a simple harness.
+
+Source: [Aider](https://aider.chat/).
+
+#### Gemini CLI: a harness with a useful free tier
+
+Google's **Gemini CLI** is another open-source terminal agent. It combines Gemini with:
+
+```text
+file operations
+shell commands
+web fetching
+Google Search grounding
+MCP extensions
+```
+
+Google currently advertises a personal-account free tier of up to **1,000 requests per day**, subject to its current limits.
+
+That makes it worth knowing about even if I do not change my main coding setup: it is another way to obtain a genuinely agentic coding loop without immediately adding API spend.
+
+Source: [Gemini CLI](https://github.com/google-gemini/gemini-cli).
+
+#### pool: model and harness designed together
+
+Poolside's `pool` is especially interesting because the Laguna models were trained to operate inside it.
+
+This suggests another distinction:
+
+```text
+model-agnostic harness
+OpenCode / Aider / goose
+        ↓
+choose whichever model works best
+
+vertically integrated harness
+pool + Laguna
+        ↓
+model and agent environment designed together
+```
+
+Neither architecture is automatically better.
+
+A model-agnostic harness gives me competition and cheap routing.
+
+A vertically integrated harness may extract better behaviour from a model because its training and tools match the environment it will actually use.
+
+For now, this is something to **test**, not a reason to change the workflow that already works.
+
+### The useful lesson is about layers, not another tool migration
+
+Installing the desktop app could easily have triggered another round of:
+
+> Should OpenCode replace VS Code? Should goose replace OpenClaw? Should I move to pool because Laguna is trained there?
+
+That is exactly the kind of churn I want to stop.
+
+The better conclusion is simply:
+
+```text
+MODEL
+DeepSeek / Laguna / GPT / Claude / Gemini / ...
+
+        ↓ runs inside
+
+HARNESS
+OpenCode / Codex / Cline / Aider / goose / pool / ...
+
+        ↓ acts on
+
+ENVIRONMENT
+repository / shell / browser / apps / services
+```
+
+I can test a new harness without redesigning the whole system.
+
+My existing workflow therefore stays unchanged. OpenCode desktop is another interface onto the OpenCode role I had already chosen; the other harnesses are alternatives and experiments, not a new stack.
+
+## Codex + OpenCode is the useful pair
+
+This is the simplified coding stack I actually want:
+
+```text
+                   ChatGPT
+           architecture / review
+                       │
+             precise bounded task
+                       ▼
+        ┌──────────────────────────┐
+        │          VS Code         │
+        │                          │
+        │ Codex        OpenCode    │
+        │ premium      cheap/BYOK  │
+        └──────────────┬───────────┘
+                       │
+                       ▼
+                      Git
+                       │
+                       ▼
+                 GitHub diff
+                       │
+                       ▼
+               ChatGPT review
+```
+
+The decision rule is simple:
+
+```text
+task is hard / ambiguous
+    → Codex
+
+task is well specified and routine
+    → OpenCode + DeepSeek
+
+task is cheap but starts looping
+    → escalate the model rather than letting it thrash
+```
+
+## Cline: still useful when I want a visual Plan → Act workflow
+
+Cline remains a capable VS Code agent and its explicit Plan / Act split is genuinely useful.
+
+```text
+PLAN
+read / search / understand / propose
+            ↓
+human review
+            ↓
+ACT
+edit / run commands / test / show diff
+```
+
+It also supports direct BYOK providers, including DeepSeek.
+
+I no longer need to treat it as the centre of the stack, however. OpenCode gives me a cleaner multi-provider route, while Codex gives me the premium OpenAI route. Cline stays valuable when I specifically prefer the visual side-panel experience, checkpoints and explicit permission flow.
+
+Source: [Cline Plan & Act](https://docs.cline.bot/core-workflows/plan-and-act).
+
+## Continue: useful history, but not a new setup
+
+Continue previously looked like the cleanest Cline alternative because of its separate Plan, Chat and Agent modes.
+
+The important update is that the official Continue documentation now says:
+
+> the `continuedev/continue` repository is no longer actively maintained and is read-only.
+
+A final 2.0.0 release was shipped for the VS Code extension, CLI and JetBrains plugin.
+
+That means Continue can still be useful software, but I would **not build a new 2026 workflow around it**. For a new setup:
+
+```text
+want stock VS Code + visual agent
+    → Cline
+
+want stock VS Code + provider-flexible agent
+    → OpenCode
+
+want premium OpenAI coding agent
+    → Codex
+```
+
+Source: [Continue documentation](https://docs.continue.dev/).
+
+## Cursor: polished, but optional
+
+Cursor remains a polished integrated editor, but I no longer need an editor migration merely to obtain strong agentic coding.
+
+```text
+VS Code
++ Codex
++ OpenCode
++ Git
+```
+
+already gives me the workflow I need.
+
+## Kilo Code: tested, not my default
+
+Kilo Code looked attractive on paper because it inherited the Cline-style agent model and emphasised structured workflows.
+
+In practice, it did not work reliably enough in my setup. The useful lesson is:
+
+> **Do not choose an agent harness from feature lists. Choose the one that reliably edits, tests and shows the right diff in the repository I actually use.**
+
+## Native, from-scratch editors: not yet a shortcut
+
+Separately from the agent-harness question, there is a family of editors (**Zed**, **CodeEdit**) built natively rather than on Electron/VS Code, optimised for raw startup and input speed rather than AI depth.
+
+```text
+Electron / VS Code fork
+   ↓
+mature ecosystem, deep AI integration
+   ↓
+Cursor, Windsurf, VS Code + Cline/Continue
+
+native (Rust / Swift)
+   ↓
+fast, lightweight, AI still catching up
+   ↓
+Zed, CodeEdit
+```
+
+Worth trying if editor speed itself is the bottleneck. Not currently a shortcut to a *better* free agentic workflow — the editors ahead on AI depth are the VS Code-family tools above, and the fastest natively-built free option (CodeEdit) is still behind them on AI maturity. I keep this as a "watch, don't switch yet" category.
+
+# 4. Cost changed the problem
+
+At first I thought the cost question was mostly:
+
+> Can I make this free?
+
+That pushed me toward local models and free hosted endpoints. But coding agents changed the economics because they do not make one model call. They read files, reason, edit, inspect, call tools, retry and sometimes loop.
+
+A model that costs almost nothing per token can still be expensive if it needs five bad iterations. The metric that started to matter was **successful completion per pound**, not price per million tokens.
+
+
+## Then I realised Codex and Work need their own model ladder
+
+There was a second cost lesson I nearly missed.
+
+I had been comparing Codex with cheap API models as if "Codex" were one fixed-cost product. It is not. The model choice inside Codex matters enormously, and **Codex and ChatGPT Work can draw from the same agentic usage allowance on Plus and Pro**.
+
+That changes the way I should use the OpenAI stack.
+
+The first rule is almost embarrassingly simple:
+
+> **Do the thinking in ordinary ChatGPT when I can; spend agentic allowance when I actually need an agent to act.**
+
+For example, instead of asking Work or Codex to explore a vague problem for twenty minutes, I can first use a normal ChatGPT conversation to decide:
+
+```text
+what is the task?
+what is the likely architecture?
+which files or sources matter?
+what must not change?
+what counts as success?
+```
+
+Then I hand the agent a bounded job.
+
+That is the same lesson the website refactor taught me, now applied directly to credits.
+
+### The OpenAI model ladder I actually have
+
+In July 2026, the useful models in Codex/Work include the GPT-5.6 family:
+
+```text
+Luna  → fastest / lowest-cost GPT-5.6
+Terra → balance of capability, speed and cost
+Sol   → flagship capability
+```
+
+OpenAI explicitly describes Luna as the fastest and lowest-cost member of GPT-5.6, Terra as the balanced everyday option, and Sol as the flagship. On eligible Plus plans, Sol, Terra and Luna are available in Work and Codex.
+
+Source: [GPT-5.6 in ChatGPT](https://help.openai.com/en/articles/20001354-gpt-56-in-chatgpt).
+
+The current Codex token-credit rates make the differences concrete:
+
+| Model | Input credits / 1M | Cached input / 1M | Output / 1M | Relative role |
+|---|---:|---:|---:|---|
+| **GPT-5.4 Mini** | 18.75 | 1.875 | 113 | cheapest option when available |
+| **GPT-5.6 Luna** | 25 | 2.5 | 150 | cheap default for real agent work |
+| **GPT-5.6 Terra** | 62.5 | 6.25 | 375 | stronger everyday reasoning |
+| **GPT-5.6 Sol** | 125 | 12.5 | 750 | difficult / high-value tasks |
+| **GPT-5.5** | 125 | 12.5 | 750 | same credit rate as Sol |
+
+Source: [Codex rate card](https://help.openai.com/en/articles/20001106-codex-rate-card).
+
+The relative costs are more useful than the raw numbers:
+
+```text
+Mini
+  ↓  about 1.33×
+Luna
+  ↓  2.5×
+Terra
+  ↓  2×
+Sol
+
+Sol ≈ GPT-5.5 in credit rate
+```
+
+So, purely for preserving agentic allowance, **GPT-5.5 is not an economical middle step**. It currently costs the same token credits as Sol. Unless I specifically prefer GPT-5.5's behaviour for a task, I would choose Sol when I am already willing to pay that tier.
+
+### My practical Codex routing rule
+
+The default should not be "always use the strongest model".
+
+It should be:
+
+```text
+tiny / mechanical / already specified
+        ↓
+GPT-5.4 Mini
+
+routine agent work
+        ↓
+GPT-5.6 Luna
+
+needs architectural judgement,
+debugging or several interacting files
+        ↓
+GPT-5.6 Terra
+
+genuinely difficult,
+high-risk or expensive-to-get-wrong
+        ↓
+GPT-5.6 Sol
+```
+
+GPT-5.5 is not part of the normal escalation ladder because its current Codex credit rate is the same as Sol.
+
+For the kind of website work that taught me this lesson:
+
+```text
+"move these exact selectors"
+        → Mini or Luna
+
+"implement this bounded phase from an approved prompt"
+        → Luna
+
+"work out which rules are actually winning and refactor safely"
+        → Terra
+
+"untangle a difficult architectural bug after cheaper models failed"
+        → Sol
+```
+
+### An illustrative agent turn
+
+Suppose a task used 100K uncached input tokens and produced 20K output tokens.
+
+At the current Codex credit rates, the rough consumption would be:
+
+| Model | Approx. credits |
+|---|---:|
+| GPT-5.4 Mini | 4.1 |
+| GPT-5.6 Luna | 5.5 |
+| GPT-5.6 Terra | 13.8 |
+| GPT-5.6 Sol | 27.5 |
+| GPT-5.5 | 27.5 |
+
+This is only an illustration; real tasks vary substantially in context, cached input, output length and tool loops.
+
+But it shows why the routing decision matters. A routine task on Luna can use roughly one fifth of the credits of the same token mix on Sol.
+
+### The other ways to preserve agentic allowance
+
+Model choice is only part of it.
+
+**1. Keep routine work out of the shared pool where practical.**
+
+Codex and Work share agentic usage. Ordinary ChatGPT is therefore the better place for preliminary thinking, prompt design, explanation and review that does not require the agent to act on files or tools.
+
+**2. Give the agent the smallest useful scope.**
+
+```text
+bad:
+"review the repo and improve the CSS"
+
+better:
+"edit only these two files; preserve appearance;
+run render + quick tests; stop if ownership is ambiguous"
+```
+
+Less wandering means less input, less output and fewer loops.
+
+**3. Prefer Luna over Sol as the normal starting point.**
+
+Luna is not merely a "cheap emergency model". It is the cost-efficient member of the current flagship family. Terra is the escalation when the task genuinely needs more judgement.
+
+**4. Use Mini for genuinely mechanical work.**
+
+Mini is cheaper than Luna on the current rate card. I should use it when the task has already been fully reasoned through and failure is easy to detect.
+
+**5. Avoid Fast mode unless latency is worth the extra credits.**
+
+OpenAI says Fast mode consumes credits at a higher rate on supported models.
+
+**6. Keep outputs short when long prose is not useful.**
+
+Output tokens are the expensive side of the rate card. For coding agents, I want:
+
+```text
+make the change
+run the checks
+show the diff
+report only what matters
+```
+
+not a long essay after every edit.
+
+**7. Exploit stable context rather than making the agent rediscover architecture.**
+
+Cached input is charged at one tenth of normal input for the current GPT-5.6 models. Files such as `AGENTS.md`, `SOURCE_MAP.md` and a clean canonical architecture therefore help twice: they reduce reasoning mistakes and make repeated context cheaper.
+
+**8. Stop cheap agents when they start looping.**
+
+Three failed Luna attempts can be worse than one Terra attempt. The correct optimisation target is still:
+
+> **credits per successful task, not credits per model call.**
+
+### Work follows the same strategic rule
+
+OpenAI says Codex, ChatGPT Work and other supported agentic features can draw from the same agentic allowance. The public Plus/Pro documentation does not give me a simple fixed "Work task = N credits" table, because consumption depends on the task and model.
+
+So I use the same conservative routing idea:
+
+```text
+simple research / file handling
+        → Luna
+
+multi-source synthesis / judgement
+        → Terra
+
+difficult, long, high-value workflow
+        → Sol
+```
+
+And before launching Work, I ask whether the task actually needs Work at all.
+
+If ordinary ChatGPT can produce the plan, comparison or draft without acting across files/tools, I save the agentic pool for the part that genuinely benefits from an agent.
+
+
+
+The old toolkit summary had the right principle but was too tied to specific promotional model names and prices.
+
+The durable strategy is:
+
+```text
+routine, non-sensitive
+        ↓
+best current FREE hosted model
+
+need more reliability
+        ↓
+strong economical cloud model
+
+genuinely hard
+        ↓
+frontier model / Codex
+```
+
+Specific free endpoints change quickly. Rather than permanently standardising on one Gemini, DeepSeek or other promotional model, I should use the strongest current free option exposed by the interface I am using.
+
+## July 2026: DeepSeek V4 changes the value ladder
+
+The most important new finding is that **DeepSeek V4 Flash and V4 Pro are cheap enough to change how I route agent work**.
+
+As of 27 July 2026, the official API prices are:
+
+| Model | Input, cache miss / 1M | Output / 1M | Context | Practical role |
+|---|---:|---:|---:|---|
+| **DeepSeek V4 Flash** | $0.14 | $0.28 | 1M | extremely cheap default worker |
+| **DeepSeek V4 Pro** | $0.435 | $0.87 | 1M | capability/value default for harder agent work |
+| **MiniMax M3** (≤512K input) | $0.30 | $1.20 | up to 1M | strong multimodal challenger |
+| **GPT-5.4 mini** | $0.75 | $4.50 | 400K | premium economical escalation |
+| **Claude Sonnet 5** (intro price through 31 Aug 2026) | $2.00 | $10.00 | — | frontier fallback |
+
+Sources: [DeepSeek pricing](https://api-docs.deepseek.com/quick_start/pricing), [MiniMax M3 pricing](https://platform.minimax.io/subscribe/token-plan?tab=api-enterprise), [GPT-5.4 mini](https://openai.com/index/introducing-gpt-5-4-mini-and-nano/), [Claude Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5).
+
+MiniMax M3's pay-as-you-go price doubles to $0.60/M input and $2.40/M output when the input context is above 512K tokens, so its long-context headline capability is not priced uniformly.
+
+The DeepSeek comparison is especially useful because it is not merely a cheap model versus an expensive model. DeepSeek says **V4 Flash approaches V4 Pro in reasoning and performs on par with Pro on simple agent tasks**, while Pro is the stronger option for harder work.
+
+So my practical routing becomes:
+
+```text
+exact, mechanical task
+        ↓
+DeepSeek V4 Flash
+
+task requires deciding what should be changed
+        ↓
+DeepSeek V4 Pro
+
+DeepSeek struggles / visual or multimodal context matters
+        ↓
+MiniMax M3 or GPT-5.4 mini
+
+genuinely difficult / high-value failure
+        ↓
+frontier GPT / Claude / Codex
+```
+
+### Why V4 Pro may be the sweet spot
+
+V4 Pro costs about **3.1× Flash** on uncached input and output, but both are still very inexpensive in absolute terms.
+
+For an illustrative agent turn using 100K uncached input tokens and 20K output tokens:
+
+| Model | Approximate token cost |
+|---|---:|
+| DeepSeek V4 Flash | $0.0196 |
+| MiniMax M3 | $0.054 |
+| DeepSeek V4 Pro | $0.0609 |
+| GPT-5.4 mini | $0.165 |
+| Claude Sonnet 5 (intro price) | $0.40 |
+
+This makes an important point:
+
+> **A stronger cheap model that finishes in one pass can be cheaper than a cheaper model that loops three times.**
+
+The dominant cost in agentic coding is often not the published price per million tokens. It is the repeated cycle of:
+
+```text
+read many files
+→ make wrong assumption
+→ edit
+→ render
+→ inspect failure
+→ reread context
+→ try again
+```
+
+That is why better prompts, cleaner repository architecture and explicit stop conditions matter as much as model price.
+
+### A practical model ladder
+
+My working judgement, not a universal benchmark ranking:
+
+```text
+DeepSeek V4 Flash
+    → extreme value, scoped agent work
+
+DeepSeek V4 Pro
+    → best capability/value balance for serious daily agent work
+
+MiniMax M3
+    → interesting alternative when multimodality or long-context agent work matters
+
+GPT-5.4 mini
+    → premium step-up without immediately paying full frontier prices
+
+Sonnet 5 / full frontier GPT / Codex
+    → escalation when failure costs more than tokens
+```
+
+I would therefore start most well-specified repository tasks on Flash, use Pro when the agent has to determine the architecture or debug interactions, and escalate only when the cheaper levels stop being reliable.
+
+## Cheap capacity inside the coding environment
+
+My view changed here as I kept experimenting:
+
+- **Codex** is the premium OpenAI route, but I should route its tasks through Mini → Luna → Terra → Sol rather than defaulting to the strongest model.
+- **OpenCode** is the main cheap/provider-flexible complement to Codex, and it can run comfortably from VS Code.
+- **Cline** remains useful when I specifically want the visual Plan → Act workflow.
+- **Continue** is no longer a new-workflow recommendation because its official repository is now read-only.
+- **Cursor** remains worth testing for its integrated UX, but I do not need an editor migration to get serious agentic coding.
+
+The important distinction is now:
+
+```text
+included OpenAI agentic allowance
+        → spend carefully through Codex / Work
+
+cheap BYOK execution
+        → OpenCode + DeepSeek
+
+ordinary thinking / planning
+        → ChatGPT
+```
+
+The useful idea from the older summary is the **escalation ladder**, not the exact model names:
+
+```text
+FREE
+  ↓
+CHEAP / VALUE
+  ↓
+FRONTIER
+```
+
+## The escalation ladder now exists inside a single vendor too
+
+The FREE → CHEAP/VALUE → FRONTIER ladder above used to mean *switching vendors*. That is changing: major labs now ship the same underlying model as several **named capability tiers**, trading reasoning depth against speed and cost within one family.
+
+```text
+fastest / cheapest tier   → high-volume, low-stakes, latency-sensitive
+balanced tier             → the everyday default for most tasks
+flagship tier              → hardest reasoning, slowest, most expensive
+```
+
+The practical implication is the same routing discipline as before, just one level more granular: default to the balanced tier, drop to the fast tier for trivial high-volume work, and reserve the flagship tier for the genuinely hard cases — rather than sending every request to the most capable (and slowest) option out of habit. The specific tier names will change with each model generation; the pattern of "one family, three depths" looks durable.
+
+## Qwen is not only a local model
+
+The local Qwen models described later in this note are one branch of a much larger family. Alibaba also serves Qwen as a hosted API, and the coding/cost-efficient variants are genuinely competitive with Western frontier pricing rather than merely "cheap but worse":
+
+```text
+Qwen hosted API
+  │
+  ├── small/cheap coding-tuned tier   → near-DeepSeek pricing, coding-focused
+  ├── mid tier (dense or MoE)         → strong general + coding balance
+  └── reasoning-native flagship       → frontier-adjacent quality at a
+                                         fraction of Western frontier cost
+```
+
+The flagship hosted tier is the interesting one: independent benchmarks put it ahead of a GPT-4-class model on agentic coding/terminal tasks at roughly a quarter of the price. That makes it a genuine "capable but still cheap" escalation step — one I'd reach for *before* a frontier subscription model, not just before nothing.
+
+::: {.callout-note}
+## "Free" needs a definition
+Several providers advertise free tiers that turn out to be a one-time signup token grant rather than a standing allowance — after the grant, they're simply cheap, not free. Before I standardise on a provider as "the free option," I check whether that's a recurring daily quota or a one-time credit, since the practical routing decision differs.
+:::
+
+## Antigravity: one extra free agent platform
+
+My one extra agent platform is **Google Antigravity**.
+
+Its free Individual tier provides a separate pool of autonomous-agent capacity and access to multiple model families. It is useful when I want:
+
+- free overflow after coding-agent limits;
+- larger autonomous tasks;
+- browser/tool workflows;
+- subagents and parallel work;
+- a platform broader than a code editor.
+
+```text
+Cursor / Cline
+      ↓
+daily development
+
+Antigravity
+      ↓
+free autonomous overflow
+broader workflows
+
+Codex
+      ↓
+rare premium escalation
+```
+
+Free cloud endpoints are for **non-sensitive** material. Private code, unpublished research and sensitive personal documents stay local.
+
+# 5. Local AI taught me what "free" really means
+
+Local inference was one of the most useful experiments precisely because it was less magical than I expected.
+
+With 48 GB of unified memory I can run serious local models. But when Qwen through Ollama made the machine noticeably hot for a trivial document task, the trade-off became concrete:
+
+```text
+zero API bill
+≠
+zero cost
+```
+
+There is still latency, power, heat, memory pressure and the opportunity cost of using a weaker or slower model.
+
+That did not make local AI pointless. It clarified its role: **privacy and independence**, not routine penny-saving.
+
+
+Running a model locally gives privacy and zero marginal inference cost, but on a laptop it also means slower generation, substantial memory use, heat and battery/power consumption.
+
+I therefore no longer use local AI merely to save money.
+
+```text
+private code
+confidential documents
+unpublished research
+sensitive personal data
+        ↓
+local model
+```
+
+For ordinary non-sensitive work, hosted free or inexpensive models are faster and more convenient.
+
+The mistake is assuming:
+
+> bigger model = better setup.
+
+A local coding agent needs enough memory not only for model weights but also for context, the inference runtime, macOS, VS Code, browsers, compilers and everything else running alongside it.
+
+## My current local stack: three Qwens
+
+With **48 GB unified memory**, I do not need one local model for everything. I keep three clearly separated roles:
+
+| Model | Role |
+|---|---|
+| **Qwen3.5 9B** | Trivial sensitive work: small summaries, private forms, simple extraction or rewriting |
+| **Qwen3.6 27B** | Serious private general work: documents, maths, reasoning, research and analysis |
+| **Qwen3.6 27B Coding NVFP4** | Local coding and repository work |
+
+```bash
+# Pull the three base models
+ollama pull qwen3.5:9b
+ollama pull qwen3.6:27b
+ollama pull qwen3.6:27b-coding-nvfp4
+
+# Keep the custom Modelfiles together
+mkdir -p ~/ollama-modelfiles
+cd ~/ollama-modelfiles
+
+# Lightweight general model with a larger working context
+cat > Modelfile-qwen9-128k <<'EOF'
+FROM qwen3.5:9b
+PARAMETER num_ctx 131072
+EOF
+ollama create qwen9-128k -f Modelfile-qwen9-128k
+
+# Main general + maths model
+cat > Modelfile-qwen27-64k <<'EOF'
+FROM qwen3.6:27b
+PARAMETER num_ctx 65536
+EOF
+ollama create qwen27-64k -f Modelfile-qwen27-64k
+
+# Coding / repository agent model
+cat > Modelfile-qwen27-code-64k <<'EOF'
+FROM qwen3.6:27b-coding-nvfp4
+PARAMETER num_ctx 65536
+EOF
+ollama create qwen27-code-64k -f Modelfile-qwen27-code-64k
+
+# Check the custom models
+ollama list
+```
+
+The 9B model is not my default for difficult work. Its point is speed and low overhead when the task is simple but the material is sensitive. For anything important, I move straight to one of the 27B models.
+
+I give the 9B model a **128K working context**, while keeping both 27B models at **64K**. The smaller model can afford the extra context more comfortably, which makes it more useful for long documents, larger repository reads and agent sessions without giving up its main advantage: lower memory and compute overhead. The 27B models stay at 64K to preserve more headroom for their much larger weights, the inference runtime and the rest of the Mac.
+
+### Why 27B rather than 35B?
+
+Counter-intuitively, the bigger number does not make the 35B version the obvious upgrade.
+
+Qwen3.6-27B is a dense 27B model, while the 35B variant is a mixture-of-experts model. I therefore keep the 27B models as the serious local tier rather than adding 35B simply because it is larger.
+
+The practical rule is:
+
+```text
+tiny + sensitive      → qwen9-128k
+maths / general       → qwen27-64k
+local coding          → qwen27-code-64k
+hardest work          → strong cloud model / Codex
+```
+
+## Quantisation matters, but only up to a point
+
+There are higher-precision versions of the same model.
+
+For Qwen3.6-27B, the useful hierarchy is roughly:
+
+```text
+Q4_K_M             ~17 GB
+NVFP4 coding       ~20 GB   ← sweet spot
+MXFP8 coding       ~31 GB
+BF16               ~55 GB
+```
+
+Higher precision recovers capability lost during quantisation.
+
+It does **not** turn a 27B model into a frontier datacentre model.
+
+```text
+same underlying model
+
+BF16
+ ↑
+FP8
+ ↑
+NVFP4
+ ↑
+Q4
+```
+
+For an agent, I would rather have a good 20 GB model with room for context, VS Code and fast iteration than consume almost all system memory chasing a small precision gain.
+
+## The local/cloud rule I ended up with
+
+Buying enough laptop memory to run huge models locally is usually poor value compared with using cloud models selectively.
+
+My split is:
+
+```{mermaid}
+flowchart TD
+    T["Task"] --> P{"Sensitive?"}
+    P -- Yes --> L["Local Qwen"]
+    P -- No --> R{"Routine?"}
+    R -- Yes --> F["Free hosted model / Antigravity"]
+    R -- No --> H{"Hard?"}
+    H -- No --> C["Strong economical cloud model"]
+    H -- Yes --> X["Codex / frontier model"]
+```
+
+This keeps the Mac cool, makes routine work cheap or free, and reserves frontier allowance for tasks where it actually changes the outcome.
+
+# 6. The website refactor taught me what agents actually need
+
+The website refactor was where all of these ideas stopped being abstract.
+
+The repository had accumulated years of design changes, legacy rules and generated output. A request like “make the navbar wider” could touch several competing selectors. One agent might edit the obvious rule, render the site and discover that a later override still won. Another might append a new “final fix”, making the next task even harder.
+
+The important discovery was that better prompting alone was not enough. I had to improve the **environment the agent was reasoning over**.
+
+We started consolidating ownership:
+
+```text
+navbar question
+    → one navbar file
+
+footer question
+    → one footer file
+
+global page-width question
+    → one page-shell file
+```
+
+Then the workflow itself became disciplined:
+
+```text
+audit
+  ↓
+one bounded phase
+  ↓
+render
+  ↓
+cheap targeted tests
+  ↓
+commit + push
+  ↓
+diff review
+  ↓
+next phase
+```
+
+That was the point where agents started feeling less like unpredictable collaborators and more like tools I could engineer around.
+
+
+The website refactor produced a more concrete workflow than any model benchmark.
+
+The winning pattern is:
+
+```text
+ChatGPT / strong reasoning
+      ↓
+scope the task precisely
+      ↓
+Codex OR OpenCode executes
+      ↓
+render / test locally
+      ↓
+commit + push
+      ↓
+review the diff
+      ↓
+next small phase
+```
+
+The important part is not which harness performs every step. It is the separation between **reasoning, bounded execution, validation and independent review**.
+
+## Stronger reasoning; cheaper execution when the task allows it
+
+For an ambiguous task, the first job is to understand the architecture.
+
+That planning step can happen in:
+
+```text
+ChatGPT
+Codex
+DeepSeek V4 Pro
+GPT-5.4 mini / frontier model
+```
+
+It should answer:
+
+- what is the canonical source?
+- which files actually participate?
+- what currently wins in the cascade or build pipeline?
+- what must remain unchanged?
+- what is the smallest safe implementation phase?
+
+Once that is known, a cheaper worker can execute an exact prompt:
+
+```text
+reasoning / architecture
+        ↓
+ChatGPT / Codex / V4 Pro
+
+approved bounded implementation
+        ↓
+OpenCode + V4 Flash
+```
+
+For a difficult coding task, there is no requirement to split planning and acting between tools. Codex can own the whole implementation loop. The split matters when the task is already understood and I want to minimise routine agent cost.
+
+## Small phases beat one giant autonomous task
+
+The website cleanup made this concrete.
+
+Instead of:
+
+```text
+"clean up the CSS architecture"
+```
+
+the useful sequence was closer to:
+
+```text
+Phase 1
+audit only
+no edits
+
+Phase 2A
+consolidate navbar into one canonical stylesheet
+
+Phase 2A.1
+move two shared chrome variables into the token file
+
+Phase 2B
+consolidate footer into one canonical stylesheet
+```
+
+Each task had:
+
+- an explicit objective;
+- an allow-list of files;
+- explicit files that must not change;
+- values that must remain identical;
+- cheap validation commands;
+- stop conditions when the agent discovers unexpected architecture;
+- a concise required final report.
+
+This is much cheaper and safer than letting an agent discover the entire repository and refactor it in one run.
+
+## The prompt should constrain the *search space*
+
+A good implementation prompt is not merely detailed prose.
+
+It defines the operating boundary:
+
+```text
+allowed files
+files that may be created
+generated files that must never be edited
+values that must remain unchanged
+commands to run
+tests to run
+conditions that mean STOP
+definition of done
+```
+
+For example:
+
+```text
+DO:
+  _00-tokens.scss
+  _02-editorial.scss
+
+DO NOT:
+  _10-navbar.scss
+  docs/
+  site_libs/
+
+VERIFY:
+  rg ...
+  quarto render
+  npm run test:quick
+
+STOP IF:
+  another source defines the same token differently
+```
+
+This reduces both risk and token burn because the agent does not need to repeatedly rediscover the whole codebase.
+
+## Never let generated output become the implementation
+
+A rendered Quarto site can produce many changed files under `docs/` and hashed Bootstrap assets even when the source change is tiny.
+
+The rule is:
+
+> **Source files explain the implementation; generated files only prove the render happened.**
+
+For this project, visual changes must originate in canonical source such as:
+
+```text
+styles/
+_quarto.yml
+data/
+filters/
+content
+```
+
+not in:
+
+```text
+docs/
+site_libs/
+```
+
+A render may legitimately change generated output, but an agent must never "fix" the site by editing those files directly.
+
+## Diff-first review is better than re-reading the whole repository
+
+Once the architecture is understood, the best review input is usually the **Git diff**, not another ZIP of the whole directory.
+
+```text
+agent changes source
+      ↓
+local render/tests
+      ↓
+commit + push
+      ↓
+review commit diff
+```
+
+The diff tells me:
+
+- exactly what source changed;
+- whether the agent touched unrelated files;
+- whether a "move" really preserved values;
+- whether generated output is the only extra noise;
+- whether the task stayed inside scope.
+
+I only need the full directory again when:
+
+- architecture is unclear;
+- the diff depends on surrounding code not visible in the changed files;
+- I am doing a new repo-wide audit;
+- the agent reports an unexpected cross-file dependency.
+
+This gives a useful division:
+
+```text
+architecture question
+      → inspect repository
+
+implementation review
+      → inspect diff first
+```
+
+## Commit source refactors separately from render output when useful
+
+Quarto renders can create a large generated diff. When practical, keeping source refactors easy to identify makes review much easier.
+
+At minimum, I should be able to distinguish:
+
+```text
+source commit
+    → actual architectural change
+
+render commit
+    → generated HTML / hashed CSS update
+```
+
+Even when both are committed together, review should conceptually separate those two layers.
+
+## Validation should match the size of the change
+
+Running the entire test suite for every two-line token move is wasteful.
+
+The useful principle is:
+
+```text
+tiny source move
+    → targeted grep + render + quick tests
+
+component refactor
+    → render + component/interaction tests
+
+large architecture change
+    → broader visual/full suite
+```
+
+Tests are cheap compared with model reasoning, but feeding a model enormous logs and asking it to interpret irrelevant failures is not.
+
+## Stop cheap models before they loop
+
+The escalation rule is not:
+
+> Keep trying because this model is cheap.
+
+It is:
+
+> Escalate when the cheaper model stops making reliable progress.
+
+Typical warning signs:
+
+```text
+re-reading the same files
+adding another override rather than fixing ownership
+editing generated output
+broadening scope without permission
+trying several speculative fixes
+re-running expensive validation without a new hypothesis
+```
+
+At that point, moving from Flash to Pro — or from Pro to a premium model — can be cheaper than another five agent iterations.
+
+## Capability ladder
+
+| Tier | Practical role | Use |
+|---|---|---|
+| **Frontier GPT / Claude / Codex** | hardest reasoning and independent review | architecture, difficult bugs, high-risk changes |
+| **GPT-5.4 mini / MiniMax M3** | premium economical escalation | hard coding, multimodal or long-agent tasks |
+| **DeepSeek V4 Pro** | capability/value default | serious daily agent work |
+| **DeepSeek V4 Flash** | extreme-value worker | scoped implementation and routine tasks |
+| **Local model** | privacy path | sensitive/private work |
+
+The important change is that **frontier agents are no longer the daily driver**. Cheap cloud models are now good enough that the main optimisation problem is task routing and workflow discipline, not avoiding API use entirely.
+
+## The repository itself became part of the agent system
+
+A capable model still performs badly if every session begins with:
+
+> Figure out how my project works.
+
+For serious projects, persistent Markdown files are extremely valuable.
+
+```text
+README.md
+    what the project is
+    how to install / run / test it
+
+AGENTS.md
+    instructions for agents
+    what they may change
+    commands to run
+    definition of done
+
+DESIGN.md
+    visual and UX rules
+    typography
+    spacing
+    components
+    identity that must be preserved
+
+ARCHITECTURE.md
+    technical structure
+    canonical data
+    build pipeline
+    generated vs source files
+```
+
+The general principle is:
+
+> **Move durable knowledge out of conversations and into the project.**
+
+That reduces repeated explanation, makes agents more reliable and prevents old chats from becoming the only record of decisions.
+
+# 7. I stopped trying to make one agent do everything
+
+Once individual agent work became reliable, the temptation was to build elaborate multi-agent systems.
+
+I now think that is usually backwards.
+
+The starting point should be:
+
+```text
+one capable agent
++ good instructions
++ good repository structure
++ verification
+```
+
+Only after that works should I add a reviewer, specialist or manager. Orchestration is useful when the work naturally decomposes — not because “multi-agent” sounds more advanced.
+
+
+Orchestration means splitting a task into stages or roles instead of asking one agent to do everything.
+
+The point is **verification and specialisation**, not running a swarm for its own sake.
+
+## Sequential pipeline
+
+```text
+research
+   ↓
+plan
+   ↓
+implement
+   ↓
+test
+```
+
+Useful when each step genuinely depends on the previous one.
+
+## Builder–reviewer loop
+
+This is the most useful pattern for my work:
+
+```{mermaid}
+flowchart LR
+    B["Builder"] --> O["Output"]
+    O --> R["Reviewer"]
+    R --> Q{"Good enough?"}
+    Q -- No --> B
+    Q -- Yes --> F["Finish"]
+```
+
+For coding, the builder can use a free/economical model and the reviewer a frontier model:
+
+```text
+free / economical model
+         ↓
+      implement
+         ↓
+ frontier reviewer
+         ↓
+fix verified issues only
+```
+
+This saves premium usage while retaining an independent quality check.
+
+## Specialist and manager agents
+
+Larger repeatable workflows can separate researcher, coder, tester and reviewer roles, with a manager deciding what happens next. This becomes useful for workflows such as job-search pipelines, research monitoring or large software tasks.
+
+But the default remains:
+
+> **one capable agent + good instructions + tests; add orchestration only when it improves verification or repeats often enough to automate.**
+
+# 8. Then the bigger idea clicked: agents are not just for code
+
+Coding made agents easy to understand because the actions are visible: read file, edit file, run command, inspect result.
+
+But once I understood the pattern, the coding-specific pieces fell away.
+
+A job advert can be input. A CV can be context. Search can be a tool. A tracker can be state. A scheduled run can repeat the workflow. The same architecture appears in research, email, writing and personal administration.
+
+This is where **ChatGPT Work, OpenClaw and n8n** started to make sense as different layers rather than competing products.
+
+
+Coding makes agents easy to understand because the tools are obvious: files, shell commands, tests and Git.
+
+Outside coding, I should distinguish four layers:
+
+```text
+interactive work
+      ↓
+persistent agent
+      ↓
+deterministic workflow
+      ↓
+build-my-own agent system
+```
+
+The tools I currently associate with those layers are:
+
+```text
+ChatGPT Chat / Work
+      ↓
+OpenClaw
+      ↓
+n8n
+      ↓
+OpenAI Agents SDK
+```
+
+They overlap, but they solve different problems.
+
+## ChatGPT Chat and Work: start here
+
+My default OpenAI stack outside coding is now:
+
+```text
+Chat
+  → thinking, questions, planning, discussion
+
+Work
+  → longer multi-step tasks and finished deliverables
+
+Codex
+  → software development and technical work
+```
+
+This means I do **not** need to build an OpenClaw agent merely because a task takes several steps.
+
+For example:
+
+> Find a set of roles, compare them, make a structured table, rank them and produce recommendations.
+
+That is naturally a **Work** task.
+
+The threshold for OpenClaw is not "more than one step". It is:
+
+> **I want this agent/workflow to persist, recur, use standing instructions, or act across tools without me rebuilding the task every time.**
+
+Source: [ChatGPT Work and Codex](https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex).
+
+## Persistent general agents: OpenClaw
+
+**OpenClaw** is useful when the unit of work changes from:
+
+> Do this task.
+
+to:
+
+> Keep doing this job for me.
+
+It is a persistent general-purpose agent gateway with model providers, tools, browser access, scheduled jobs and long-running agent workflows.
+
+A useful mental model is:
+
+```text
+                  OpenClaw
+                     │
+        ┌────────────┼────────────┐
+        ▼            ▼            ▼
+      OpenAI      DeepSeek      others
+        │
+        ├── browser
+        ├── files / tools
+        ├── schedules
+        ├── messages
+        └── standing instructions
+```
+
+### OpenClaw + DeepSeek
+
+OpenClaw has an official DeepSeek provider and exposes:
+
+```text
+deepseek/deepseek-v4-flash
+deepseek/deepseek-v4-pro
+```
+
+with Flash as the default onboarding model.
+
+That makes a very inexpensive persistent stack possible:
+
+```text
+OpenClaw
+   ├── V4 Flash → routine persistent work
+   └── V4 Pro   → harder reasoning
+```
+
+Source: [OpenClaw DeepSeek provider](https://docs.openclaw.ai/providers/deepseek).
+
+### OpenClaw + OpenAI
+
+OpenClaw also has a first-class OpenAI provider.
+
+The important distinction is that it can use either:
+
+```text
+OpenAI API-key billing
+```
+
+or supported:
+
+```text
+ChatGPT / Codex subscription authentication
+```
+
+for OpenAI agent routes.
+
+So I do not need separate "DeepSeek OpenClaw" and "OpenAI OpenClaw" installations. OpenClaw is the harness; the model/provider is a routing choice.
+
+Source: [OpenClaw OpenAI provider](https://docs.openclaw.ai/providers/openai).
+
+## n8n: use it when the process becomes known
+
+OpenClaw and n8n overlap, but the decision rule is useful:
+
+> **Uncertain task → agent. Known process → workflow.**
+
+OpenClaw is shaped like:
+
+```text
+"Find relevant opportunities and decide which matter."
+```
+
+The agent chooses how to reason through the task.
+
+n8n is shaped like:
+
+```text
+07:30 trigger
+    ↓
+fetch sources
+    ↓
+deduplicate
+    ↓
+extract fields
+    ↓
+call model
+    ↓
+score
+    ↓
+write database row
+    ↓
+notify if threshold passed
+```
+
+The workflow itself defines the control flow.
+
+n8n combines explicit workflow logic, integrations, code, AI agents and human approval steps. It is therefore a better place for a process once I know exactly what should happen every time.
+
+Source: [n8n AI agents](https://n8n.io/ai-agents/).
+
+### OpenClaw and n8n can work together
+
+A mature system can split judgement from plumbing:
+
+```text
+                  OpenClaw
+                 judgement
+                    ▲
+                    │
+sources ──► n8n ──► model
+            │
+            │ structured data
+            ▼
+          tracker
+            │
+            ▼
+         OpenClaw
+       prioritisation
+            │
+            ▼
+           me
+```
+
+OpenClaw does not need to perform every deterministic transformation itself. n8n does not need to contain all the judgement.
+
+## OpenAI Agents SDK: when building the agent becomes the project
+
+The **OpenAI Agents SDK** belongs one level later.
+
+It provides primitives for building my own agent application, including agents, tools, sessions, handoffs, guardrails and orchestration.
+
+For example:
+
+```text
+job_agent
+   │
+   ├── search_agent
+   ├── cv_match_agent
+   └── application_agent
+```
+
+The SDK can maintain session memory and let one specialist hand work to another through handoffs.
+
+I should use this when:
+
+> I want to **build an agent system as software**.
+
+I should not start there merely to automate a personal workflow that OpenClaw or n8n already handles.
+
+Sources: [OpenAI Agents SDK — Agents](https://openai.github.io/openai-agents-python/agents/), [Sessions](https://openai.github.io/openai-agents-python/sessions/), [Handoffs](https://openai.github.io/openai-agents-python/handoffs/).
+
+## A job-search agent: the best first OpenClaw project
+
+The job-search workflow is a good first persistent-agent project because it naturally progresses from manual reasoning to useful automation.
+
+### Phase 1 — one URL, manually
+
+```text
+job advert URL
+      ↓
+extract
+role / salary / location / skills / requirements
+      ↓
+compare against profile / CV
+      ↓
+fit + missing skills
+```
+
+This can be ChatGPT Work or an interactive OpenClaw task.
+
+### Phase 2 — let the agent search
+
+```text
+selected job sources
+      ↓
+OpenClaw
+      ↓
+new relevant adverts
+```
+
+The agent now removes the manual discovery step.
+
+### Phase 3 — persistent profile comparison
+
+The agent applies the same standing profile and criteria every time:
+
+```text
+new role
+   ↓
+compare with CV/profile
+   ↓
+fit score
+   ↓
+which experiences to emphasise
+   ↓
+what is missing
+```
+
+### Phase 4 — recurring execution
+
+```text
+every morning
+      ↓
+search
+      ↓
+analyse
+      ↓
+notify only when worth attention
+```
+
+This is where OpenClaw's persistence and scheduling become valuable.
+
+### Phase 5 — structured tracker
+
+Once the fields are stable, move the repetitive data plumbing into a structured workflow:
+
+```text
+advert
+  ↓
+deduplicate
+  ↓
+normalise fields
+  ↓
+score
+  ↓
+tracker / database
+```
+
+This is a natural point to introduce n8n.
+
+### Phase 6 — application material after approval
+
+Only after I decide to pursue the role:
+
+```text
+approved role
+     ↓
+choose relevant experiences
+     ↓
+tailored CV variant
+     ↓
+cover-letter / application material
+```
+
+The system should never turn into an uncontrolled application bot. The useful automation is **discovery, structuring and prioritisation**, with a human decision before outbound application material or submission.
+
+The durable lesson is:
+
+> **Start with one useful manual agent task, make it persistent with OpenClaw, and only convert the stable repeated parts into n8n workflows later.**
+
+# 9. Once I saw the pattern, it applied everywhere
+
+The most valuable consequence of learning agentic coding was not better CSS. It was a reusable way of thinking about work:
+
+```text
+input
+  ↓
+reason
+  ↓
+use tools
+  ↓
+produce or change something
+  ↓
+verify
+  ↓
+store the result
+```
+
+Different domains simply swap in different tools and verification rules.
+
+
+AI is particularly useful when it moves between explanation, mathematics, code and evidence.
+
+A productive research loop might be:
+
+```text
+paper
+  ↓
+explain idea
+  ↓
+derive mathematics
+  ↓
+challenge derivation
+  ↓
+search related literature
+  ↓
+implement simple example
+  ↓
+run experiment
+  ↓
+interpret result
+  ↓
+write notes / LaTeX
+```
+
+Rather than using AI as an answer machine, I can use it as a **research workbench**.
+
+This works especially well for technical learning: ask for intuition, then mathematics, then code, then a counterexample, then test the result.
+
+## Writing and professional work
+
+The blank page is increasingly unnecessary.
+
+```text
+rough thoughts
+     ↓
+structure
+     ↓
+draft
+     ↓
+critique
+     ↓
+rewrite
+     ↓
+finished document
+```
+
+Useful outputs include:
+
+- reports;
+- proposals;
+- presentations;
+- CVs;
+- applications;
+- documentation;
+- website copy;
+- technical explanations;
+- meeting summaries.
+
+The important improvement is that agentic tools can extend this into **actual editable files and workflows**, rather than stopping at generated prose in a chat window.
+
+This applies beyond code. The same "no copy-paste" principle from the VS Code discussion above works for ordinary long-form writing too: ChatGPT's macOS "Work with Apps" reads and edits the open document directly in a text editor or notes app, generating a reviewable diff rather than requiring a round trip through the chat window. For long documents specifically — papers, reports, LaTeX source — the useful property is that the model can see the *whole* open file as context, not just the fragment I remembered to paste in.
+
+For LaTeX specifically, VS Code's **LaTeX Workshop** extension (with a TeX distribution installed locally) gives live PDF preview, compile-on-save and click-to-source-line navigation — combined with an in-editor agent, this covers the full loop of drafting, editing and compiling a paper without leaving the editor.
+
+## Email, calendar and personal administration
+
+This may ultimately save more time than code generation.
+
+```text
+inbox
+  ↓
+AI identifies what needs action
+  ↓
+summarises context
+  ↓
+drafts replies
+  ↓
+creates follow-ups
+  ↓
+calendar / reminder
+```
+
+Useful questions become:
+
+> What in my inbox actually needs a response?
+
+> Find the confirmation for this booking.
+
+> Summarise this email thread and draft a reply.
+
+> What commitments do I have next week?
+
+> Remind me to follow up if I have not heard back.
+
+This is where connected tools and scheduled agents become much more valuable than a smarter autocomplete model.
+
+## Data and spreadsheets
+
+Not every small data problem needs a Python project.
+
+AI can increasingly handle:
+
+```text
+raw spreadsheet
+     ↓
+cleaning
+     ↓
+analysis
+     ↓
+comparison
+     ↓
+visualisation
+     ↓
+scenario modelling
+     ↓
+summary
+```
+
+Useful examples include household budgets, expense analysis, forecasts, comparison tables and small exploratory analyses.
+
+For important quantitative work, I still want formulas and assumptions exposed and checked. The goal is to remove mechanical work, not verification.
+
+## Buying things and doing research
+
+Another practical use is turning open-ended web research into structured decision support.
+
+Instead of thirty browser tabs:
+
+```text
+requirements
+     ↓
+current products
+     ↓
+specifications
+     ↓
+reviews
+     ↓
+trade-offs
+     ↓
+shortlist
+     ↓
+decision
+```
+
+This works particularly well for technology, appliances, equipment and other specification-heavy purchases.
+
+The same pattern works for travel:
+
+```text
+dates + people + constraints
+            ↓
+          research
+            ↓
+ transport + accommodation + logistics
+            ↓
+          itinerary
+```
+
+The value is not merely finding information. It is connecting current information to explicit constraints.
+
+## Visual and home projects
+
+Multimodal models add another category entirely.
+
+A photograph can become input to a design loop:
+
+```text
+room photo
+   ↓
+identify constraints
+   ↓
+generate concepts
+   ↓
+compare layouts
+   ↓
+refine proportions
+   ↓
+research real products
+```
+
+Furniture layouts, storage solutions, renovations, colour schemes and before/after visualisations are good examples.
+
+This is qualitatively different from asking a text model for decorating advice because the AI can reason over the actual space.
+
+## Knowledge management: chats are scratchpads, Markdown is memory
+
+AI creates a new failure mode: hundreds of useful conversations that cannot be found when I need them.
+
+The solution is to stop treating chats as the archive.
+
+> **Chats are temporary workspaces. Local Markdown files are the durable source of truth.**
+
+I would keep one plain-Markdown knowledge folder, optionally opened as an Obsidian vault and backed by Git:
+
+```text
+AI-Notes/
+├── INDEX.md
+├── INBOX.md
+│
+├── projects/
+│   ├── website/
+│   │   ├── README.md
+│   │   ├── DECISIONS.md
+│   │   └── NEXT.md
+│   └── other-project/
+│
+├── areas/
+│   ├── career.md
+│   ├── research.md
+│   ├── teaching.md
+│   └── admin.md
+│
+├── reference/
+│   ├── ai-tools.md
+│   ├── coding-workflow.md
+│   └── topic-notes/
+│
+└── archive/
+```
+
+### What each file does
+
+**`INDEX.md`** — map of the important notes; not a giant document.
+
+**`INBOX.md`** — temporary ideas and things to process.
+
+**Project `README.md`** — current state, purpose and links.
+
+**`DECISIONS.md`** — decisions already made and why, so I do not repeatedly revisit them.
+
+**`NEXT.md`** — immediate next actions, not a complete project history.
+
+**`areas/`** — ongoing responsibilities such as career, research or administration.
+
+**`reference/`** — stable knowledge worth reusing.
+
+### The rule after a useful AI conversation
+
+Do not save the transcript.
+
+Instead ask:
+
+```text
+Did this conversation create...
+├── a decision?       → update DECISIONS.md
+├── a next action?    → update NEXT.md
+├── reusable knowledge? → update reference note
+├── project context?  → update project README
+└── nothing durable?  → leave it in chat
+```
+
+This keeps the knowledge base small.
+
+### Periodic compression
+
+```{mermaid}
+flowchart TD
+    C["Chats / papers / experiments"] --> S["Synthesis"]
+    S --> P["Project notes"]
+    S --> D["Decisions"]
+    S --> R["Reference"]
+    S --> N["Next actions"]
+    P --> A["Archive old material"]
+```
+
+The goal is **progressive compression**: many chats become a handful of useful notes; old notes become a concise current state.
+
+Plain Markdown is deliberately boring: it is searchable, portable, Git-friendly, readable by every coding agent and unlikely to become obsolete.
+
+## Decision making
+
+AI is also useful before any action is taken.
+
+The useful prompt is not:
+
+> Decide for me.
+
+It is closer to:
+
+> Here are the constraints. Identify the real options, quantify the important trade-offs, challenge my assumptions and tell me which unknowns could change the answer.
+
+That turns a vague decision into an explicit model.
+
+```text
+messy problem
+     ↓
+constraints
+     ↓
+options
+     ↓
+trade-offs
+     ↓
+uncertainties
+     ↓
+decision
+```
+
+The human still owns the objective and the final choice.
+
+# 10. The hierarchy I ended up with
+
+After trying to compare everything with everything else, the landscape became much simpler when I stopped looking for one universal AI product.
+
+I need a hierarchy of interaction modes, not a single winner.
+
+
+The biggest lesson from exploring all these products is that I do not need one AI that does everything.
+
+I need a hierarchy.
+
+```{mermaid}
+flowchart TB
+    ME["Me"] --> CHAT["Chat<br/>think, learn, discuss"]
+    ME --> AG["Agents<br/>act and verify"]
+    ME --> AUTO["Automation<br/>repeat workflows"]
+
+    CHAT --> GPT["GPT / Claude"]
+    AG --> COD["Codex / Claude Code"]
+    AG --> OPEN["Cline / OpenCode / Continue"]
+    OPEN --> LOCAL["Local Qwen"]
+    AG --> WORK["ChatGPT Work"]
+
+    AUTO --> MAIL["Email / calendar"]
+    AUTO --> JOB["Job tracking"]
+    AUTO --> RES["Research workflows"]
+    AUTO --> MON["Scheduled monitoring"]
+```
+
+The model is only one component.
+
+The bigger system is:
+
+```text
+model
++ tools
++ context
++ permissions
++ memory
++ workflow
++ verification
+```
+
+## How I think about cost now
+
+My priority is predictable cost and using premium capacity only when it materially changes the outcome.
+
+The current value ladder is:
+
+```text
+1. Existing ChatGPT subscription
+        ↓
+2. DeepSeek V4 Flash for scoped routine agent work
+        ↓
+3. DeepSeek V4 Pro for serious daily agent reasoning
+        ↓
+4. MiniMax M3 / GPT-5.4 mini when a capability gap appears
+        ↓
+5. Codex / Sonnet / frontier model for genuinely hard or high-risk work
+        ↓
+6. Local model for privacy, not routine cost saving
+```
+
+This is a change from the earlier "free first" strategy.
+
+With V4 Flash at $0.14/M uncached input and $0.28/M output, the difference between "free" and "extremely cheap" is often smaller than the cost of a failed agent loop. I should optimise for **successful completion per pound**, not for zero API spend.
+
+The most interesting paid default is therefore **V4 Pro**: it is only about 3.1× Flash on normal input/output pricing while remaining inexpensive enough for routine serious work.
+
+I would not add a Claude subscription, Cursor subscription or a large model pool pre-emptively. I can escalate through APIs only when a real task demonstrates that the cheaper layer is insufficient.
+
+# 11. What I wish I had known at the start
+
+Most of the useful lessons came from failed loops, duplicated work and trying tools because they sounded impressive.
+
+These are the rules I would give myself before starting again.
+
+
+### Use chat to think; use agents to act
+
+Do not launch an autonomous agent when a five-minute conversation will solve the problem.
+
+### Keep the real project in Git
+
+Do not maintain AI copies, ZIP copies and local copies.
+
+```text
+one repository
+many tools
+```
+
+### Give agents persistent instructions
+
+`README.md`, `AGENTS.md`, `DESIGN.md` and `ARCHITECTURE.md` are cheaper and more reliable than re-explaining the project every session.
+
+### Use the cheapest model that can complete the task reliably
+
+```text
+free hosted
+     ↓
+economical cloud
+     ↓
+frontier
+
+private material → local
+```
+
+Escalate when the cheaper level starts looping rather than spending twenty prompts repairing a bad approach.
+
+### Verify actions, not eloquence
+
+A coding model that confidently explains its change is less useful than an agent that runs the tests.
+
+### Do not optimise hardware around today's models
+
+Local inference is useful, but cloud capability evolves too quickly to justify enormous hardware premiums solely to avoid subscriptions.
+
+### Turn useful chats into durable knowledge
+
+A good conversation should eventually become:
+
+```text
+code
+note
+reference
+decision
+workflow
+automation
+```
+
+not another chat I have to find six months later.
+
+# 12. The stack I use now
+
+The final stack is much smaller than the list of tools I tried.
+
+That is probably the strongest sign that the exploration was useful: I now know what each layer is for, and just as importantly, what I do **not** need.
+
+
+I do not need every tool discussed in this note.
+
+### Coding core
+
+```text
+VS Code     → primary editor
+Codex       → premium OpenAI coding agent
+Copilot     → polished VS Code agent for DeepSeek
+OpenCode    → cheap/multi-provider VS Code agent for DeepSeek
+Git         → source of truth
+ChatGPT     → architecture, research, prompts and independent diff review
+Markdown    → durable knowledge
+```
+
+### Coding models
+
+Inside **Codex**, preserve the shared agentic allowance with:
+
+```text
+GPT-5.4 Mini  → cheapest mechanical work
+GPT-5.6 Luna  → default economical agent
+GPT-5.6 Terra → stronger everyday reasoning / debugging
+GPT-5.6 Sol   → difficult or high-risk work
+GPT-5.5       → usually skip: currently the same Codex credit rate as Sol
+```
+
+Outside Codex, my cheap BYOK ladder remains:
+
+```text
+DeepSeek V4 Flash → exact, bounded implementation
+DeepSeek V4 Pro   → capability/value default
+premium model     → escalation
+Local model       → privacy-sensitive work
+```
+
+### Coding alternatives worth keeping available
+
+```text
+Cline       → visual VS Code Plan / Act workflow
+Cursor      → integrated editor if I later want to leave stock VS Code
+MiniMax M3  → multimodal / long-context alternative
+```
+
+Continue is no longer a new-workflow recommendation because its official repository is now read-only after the final 2.0.0 release.
+
+Kilo Code is not in the current stack because it did not work reliably enough in practice.
+
+### General agentic core
+
+```text
+ChatGPT Chat → thinking and discussion
+ChatGPT Work → multi-step tasks and finished deliverables
+OpenClaw     → persistent personal agents
+n8n          → deterministic recurring workflows
+Agents SDK   → build my own agent application only when needed
+```
+
+I would add these in that order.
+
+OpenClaw becomes worthwhile when I can name a persistent recurring job.
+
+n8n becomes worthwhile when I can write the process as a stable flowchart.
+
+The Agents SDK becomes worthwhile when **building the agent system itself is the software project**.
+
+## The current map
+
+The setup I actually want now is:
+
+```{mermaid}
+flowchart TB
+    ME["My work"] --> CHAT["ChatGPT Chat<br/>thinking, learning, architecture"]
+    ME --> WORK["ChatGPT Work<br/>multi-step general work"]
+    ME --> VS["VS Code + Git<br/>real repository"]
+    ME --> NOTES["Markdown<br/>durable knowledge"]
+
+    VS --> CODEX["Codex<br/>premium coding route"]
+    VS --> OC["OpenCode<br/>cheap / multi-provider route"]
+    VS -. "visual alternative" .-> CLINE["Cline"]
+
+    OC --> DSF["DeepSeek V4 Flash<br/>bounded execution"]
+    OC --> DSP["DeepSeek V4 Pro<br/>serious daily work"]
+    DSP -. "needs more capability" .-> PREMIUM["GPT-5.4 mini / frontier"]
+
+    CODEX --> TEST["Render / tests"]
+    OC --> TEST
+    CLINE --> TEST
+    TEST --> GIT["Commit + push"]
+    GIT --> REVIEW["ChatGPT diff-first review"]
+    REVIEW --> NEXT["Next small phase"]
+
+    ME -. "persistent recurring work" .-> CLAW["OpenClaw"]
+    CLAW --> OPENAI["OpenAI"]
+    CLAW --> DEEP["DeepSeek"]
+
+    CLAW -. "stable repeated process" .-> N8N["n8n<br/>deterministic workflow"]
+    N8N --> DATA["Tracker / database / notification"]
+
+    ME -. "build my own agent software" .-> SDK["OpenAI Agents SDK"]
+```
+
+The practical division is:
+
+```text
+ChatGPT
+    → thinking, architecture, prompt design, research, review
+
+ChatGPT Work
+    → substantial non-coding tasks and finished deliverables
+    → Luna by default; Terra/Sol only when complexity justifies it
+
+Codex
+    → repository work
+    → Mini/Luna first, Terra for harder reasoning, Sol for difficult failures
+
+OpenCode + DeepSeek
+    → routine and economical agentic coding
+
+Cline
+    → use when I specifically want the visual Plan / Act workflow
+
+GitHub diff
+    → preferred review input after a bounded code change
+
+full repository
+    → inspect when architecture is unknown or the diff exposes
+      a dependency that needs wider context
+
+OpenClaw
+    → persistent agents with standing instructions, tools and schedules
+
+n8n
+    → stable deterministic workflows around agents/models
+
+OpenAI Agents SDK
+    → custom agent software when the system itself becomes the project
+```
+
+The two durable stacks are therefore:
+
+```text
+CODING
+
+ChatGPT
+   ↓
+Codex / OpenCode
+   ↓
+Git
+   ↓
+diff review
+```
+
+and:
+
+```text
+GENERAL AGENTIC WORK
+
+ChatGPT Chat / Work
+        ↓
+OpenClaw
+        ↓
+n8n when the process stabilises
+        ↓
+Agents SDK only if I decide to build my own system
+```
+
+The durable idea is:
+
+> **Use chat to think, agents to act, persistent agents for recurring judgement, workflows for known processes, and custom agent frameworks only when building the agent is itself the goal.**
+
+What changed most was not the model I use. It was the unit of work I expect AI to handle.
+
+I started with prompts. I ended up designing systems around repositories, tools, verification, persistent context and explicit handoffs between human judgement and machine execution.
+
+That is the shift I mean when I say I moved from **chatbots to agents**.
+
+
+Models, prices and product names will continue to change. That architecture should not need to.

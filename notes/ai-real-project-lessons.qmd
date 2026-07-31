@@ -1,0 +1,681 @@
+---
+title: "What I Learned From Letting AI Work on a Real Project"
+subtitle: "Speed is useful. Scope control, verification and judgment matter more."
+author: Silvio Fanzon
+date: 2026-07-30
+categories:
+  - AI
+  - Workflow
+  - Research
+  - Software
+description: "A practical framework for using AI on serious technical work without losing control of the problem."
+toc: true
+toc-depth: 2
+---
+
+AI is extraordinarily good at producing work.
+
+That is not the same thing as being good at deciding **what work should be done**.
+
+I learned this distinction while using AI to inspect and improve a technical project. The initial task was narrow: understand the existing code, identify genuine problems, and make a small number of justified improvements.
+
+The tools were capable. They could read an unfamiliar repository, inspect numerical methods, generate tests, reorganise experiments, rewrite documentation, and propose new abstractions remarkably quickly.
+
+That was also the problem.
+
+A small issue gradually turned into a much larger intervention. Each individual change sounded reasonable. More validation sounded better than less. More explicit APIs sounded safer. A unified experimental framework sounded cleaner. Stronger numerical safeguards sounded more rigorous.
+
+But taken together, the changes began to alter the project itself.
+
+The lesson was not that AI is bad at technical work. Quite the opposite.
+
+The lesson was that **AI makes it very cheap to cross the boundary between solving a problem and redesigning the system around it.**
+
+This has changed how I think about using AI for research, coding, writing and analytical work.
+
+## The dangerous transition
+
+A useful AI workflow starts like this:
+
+```text
+problem
+   ↓
+diagnosis
+   ↓
+small proposed fix
+   ↓
+verification
+```
+
+It can easily become this:
+
+```text
+problem
+   ↓
+diagnosis
+   ↓
+fix
+   ↓
+cleanup
+   ↓
+refactor
+   ↓
+new abstraction
+   ↓
+new tests
+   ↓
+new benchmark
+   ↓
+new assumptions
+   ↓
+a different project
+```
+
+None of those steps is obviously irrational.
+
+That is what makes scope creep dangerous.
+
+A capable model can generate plausible reasons for every additional change. It does not experience the cost of complexity in the same way that the eventual maintainer does. Adding another abstraction, helper, test layer or metadata structure is cheap at generation time.
+
+The human inherits all of it.
+
+## A correct local improvement can still make the whole system worse
+
+One of the most important things I learned is that correctness has levels.
+
+A change can be locally correct and globally undesirable.
+
+For example, suppose a numerical algorithm uses an imperfect stopping criterion. Replacing it with a stronger mathematical certificate is a reasonable improvement.
+
+But that change can cascade:
+
+1. the solver now needs extra metadata;
+2. the experiment code must understand the metadata;
+3. the reference solution must use a new tolerance;
+4. benchmark outputs become incompatible;
+5. old result files need versioning;
+6. plotting code must reject old results;
+7. benchmark methods now need revised numerical parameters.
+
+The original task was:
+
+> Fix the stopping criterion.
+
+The eventual task has become:
+
+> Redesign the numerical experiment infrastructure.
+
+Those are not the same project.
+
+This is a general lesson far beyond coding.
+
+In research, a stronger assumption can make one theorem cleaner while making the model less meaningful.
+
+In data analysis, a more sophisticated pipeline can make validation cleaner while making the result harder to interpret.
+
+In writing, repeated polishing can remove exactly the character that made the original argument interesting.
+
+**Improvement has to be evaluated against the purpose of the whole object, not against each component independently.**
+
+## Benchmarks are part of the science
+
+Another lesson was that changing technical infrastructure can quietly change the scientific question.
+
+Consider a comparison between several optimisation algorithms.
+
+A parameter used by one method may be numerically unsafe. Replacing it with a conservative bound sounds unambiguously better.
+
+Mathematically, it may be.
+
+But if the replacement makes that method take much smaller steps, its measured runtime changes. The benchmark is no longer merely "corrected"; its experimental conditions have changed.
+
+Now several questions matter:
+
+- Is the new parameter mathematically valid?
+- Is it unnecessarily conservative?
+- Is preprocessing included in the timing?
+- Does another algorithm receive information unavailable in practice?
+- Are stopping conditions comparable?
+- Are all methods being measured at the same granularity?
+- Is the benchmark measuring implementation choices or the algorithms themselves?
+
+That led me to a principle I now consider important:
+
+> **A benchmark change is a scientific change, not merely a software change.**
+
+It deserves the same scrutiny as changing a model assumption or experimental protocol.
+
+## Tests are necessary, but tests can certify the wrong thing
+
+AI is very good at producing tests.
+
+That is useful, but it creates another trap: the presence of tests can create an impression of correctness without asking whether the tests protect the right property.
+
+There is a big difference between:
+
+```text
+the test passes
+```
+
+and:
+
+```text
+the test validates the mathematical property we actually care about
+```
+
+A test can reproduce the implementation's own assumptions.
+
+For example, an "independent" validation routine is not truly independent if it imports the same thresholding convention from the algorithm it is checking.
+
+Likewise, a test for an upper bound is not really testing an upper bound if it allows the computed number to fall slightly below the reference value.
+
+This changed the way I think about AI-generated tests.
+
+The best tests should target **invariants**:
+
+- known closed-form solutions;
+- scale invariance;
+- conservation laws;
+- independently derived identities;
+- monotonicity where theory guarantees it;
+- explicit failure behaviour;
+- agreement between two genuinely different formulations.
+
+Those tests are much harder for an incorrect implementation to "agree with accidentally."
+
+## Reversibility is one of the most valuable properties of a workflow
+
+The situation would have been much worse if every proposed change had gone directly into the main branch.
+
+Instead, the original project remained intact while the experimental changes lived separately.
+
+That made the correct decision easy:
+
+> Do not merge until the changes are understood.
+
+This sounds obvious, but it points to a broader design principle for AI-assisted work.
+
+### Prefer workflows where mistakes are cheap to undo
+
+For software:
+
+```text
+main
+  ↓
+small branch
+  ↓
+diff
+  ↓
+tests
+  ↓
+review
+  ↓
+merge
+```
+
+For writing:
+
+```text
+canonical draft
+      ↓
+AI revision
+      ↓
+compare versions
+      ↓
+accept selected changes
+```
+
+For research:
+
+```text
+original model
+     ↓
+experimental extension
+     ↓
+numerical / theoretical check
+     ↓
+promote only if justified
+```
+
+The safest AI workflow is not one in which the model never makes a bad decision.
+
+It is one in which a bad decision **does not destroy the trusted state**.
+
+## Keep a canonical source
+
+A related problem appears when the same information starts existing in several places.
+
+For example:
+
+```text
+research code
+     ↓
+technical documentation
+     ↓
+website explanation
+     ↓
+copied code snippet
+```
+
+If each copy is edited independently, they eventually disagree.
+
+AI makes this problem worse because producing another polished version is almost free.
+
+The better structure is:
+
+```text
+          canonical source
+          /      |       \
+         ↓       ↓        ↓
+      tests   technical   public
+              docs        summary
+```
+
+Generate or synchronise downstream material where possible.
+
+Do not maintain five manually edited versions of the same fact.
+
+This applies equally to:
+
+- figures;
+- experimental results;
+- CV information;
+- project descriptions;
+- citations;
+- documentation;
+- notes.
+
+Cheap generation increases the value of having a clear source of truth.
+
+## "Improve this" is often a bad prompt
+
+One practical change I have made is to become much more suspicious of broad instructions such as:
+
+> Improve this repository.
+
+> Clean this up.
+
+> Make this more robust.
+
+> Refactor this.
+
+They give the model permission to decide what "better" means.
+
+A much safer instruction is:
+
+> Here is the observed problem. Diagnose its cause. Propose the smallest change that fixes it. Do not modify anything else. Add a test that would fail before the fix and pass afterwards. Show me the diff and stop.
+
+The difference is substantial.
+
+```text
+"Improve it"
+     ↓
+AI defines problem
+AI defines scope
+AI defines architecture
+AI implements
+AI evaluates itself
+```
+
+versus:
+
+```text
+human defines problem
+        ↓
+AI diagnoses
+        ↓
+human checks diagnosis
+        ↓
+AI makes narrow change
+        ↓
+independent evidence
+        ↓
+human decides
+```
+
+The second workflow uses AI's speed without outsourcing ownership of the project.
+
+## Separate diagnosis from implementation
+
+Another useful rule is to avoid asking an agent to discover problems and fix them in the same unrestricted pass.
+
+Instead:
+
+### Pass 1 — Audit
+
+```text
+Find problems.
+Classify their severity.
+Provide evidence.
+Do not modify anything.
+```
+
+### Pass 2 — Selection
+
+Decide which problems are actually worth fixing.
+
+Some may be:
+
+- genuine correctness bugs;
+- documentation issues;
+- theoretical limitations;
+- harmless simplifications;
+- intentional design choices;
+- possible improvements that are not worth their complexity.
+
+### Pass 3 — Implementation
+
+For one selected problem:
+
+```text
+Implement this fix only.
+Preserve existing architecture.
+Add the minimum necessary test.
+Stop.
+```
+
+This prevents the agent from turning every observation into a code change.
+
+## AI is excellent at the middle of the workflow
+
+None of this has made me less interested in AI.
+
+It has made my idea of its useful role much clearer.
+
+There is an enormous amount of work between having an idea and making a decision:
+
+```text
+                 HUMAN
+          choose the objective
+                 │
+                 ▼
+        ┌───────────────────┐
+        │        AI         │
+        │                   │
+        │ search            │
+        │ read              │
+        │ extract           │
+        │ compare           │
+        │ calculate         │
+        │ test              │
+        │ draft             │
+        │ implement         │
+        └───────────────────┘
+                 │
+                 ▼
+                 HUMAN
+       interpret and decide
+```
+
+That middle is large.
+
+In research, AI can organise literature, test special cases, generate numerical experiments, translate mathematics into code, and turn rough notes into documentation.
+
+In software, it can trace bugs, inspect unfamiliar code, implement a defined change, write regression tests and explain a diff.
+
+In writing, it can restructure material, produce versions for different audiences, check consistency and remove repetitive mechanical work.
+
+In analytical work, it can extract information, compare alternatives and perform the first several passes over a problem.
+
+That is already an enormous increase in leverage.
+
+## The human bottleneck becomes judgment
+
+The more capable the tool becomes, the less valuable it is to supervise every keystroke.
+
+But the more important it becomes to decide:
+
+- What problem are we solving?
+- What should remain unchanged?
+- What evidence would convince us?
+- Is this new complexity worth it?
+- Has the experiment itself changed?
+- Are two things being compared fairly?
+- Does the result answer the original question?
+- When should we stop?
+
+This is not an argument that humans possess some mysterious ability unavailable to machines.
+
+It is a practical observation about responsibility.
+
+Someone has to define what counts as success.
+
+And in work that matters, **"the system produced more sophisticated output" is not a sufficient definition of success.**
+
+## My practical protocol now
+
+For serious work, I want AI-assisted tasks to follow this pattern:
+
+```text
+1. Define
+   State the exact problem.
+
+2. Freeze
+   Identify the trusted baseline.
+
+3. Diagnose
+   Find the cause without modifying anything.
+
+4. Select
+   Decide which issue is actually worth solving.
+
+5. Constrain
+   State what must not change.
+
+6. Patch
+   Make the smallest justified intervention.
+
+7. Verify
+   Test the underlying invariant, not just the implementation.
+
+8. Inspect
+   Read the diff.
+
+9. Compare
+   Check the result against the original objective.
+
+10. Stop
+    Do not turn a successful fix into an unsolicited redesign.
+```
+
+The last step may be the most important.
+
+## The broader lesson
+
+AI dramatically lowers the cost of producing code, prose, analysis and alternatives.
+
+That changes the bottleneck.
+
+When production was expensive, producing more was often useful.
+
+When production becomes cheap, **selection becomes more important**.
+
+The valuable question increasingly becomes not:
+
+> Can this be done?
+
+but:
+
+> Should this be done, in this way, here?
+
+AI is a powerful collaborator for answering the first question.
+
+For now, I intend to keep ownership of the second.
+
+## A missing lesson: fluent output is not reliable output
+
+There is another failure mode that matters just as much as scope creep: **a model can sound certain while being wrong, can fail to retrieve information that is technically available to it, and can report that it completed work that it did not actually complete.**
+
+This is not a theoretical concern left over from earlier generations of language models. It remains measurable in frontier systems as of July 2026.
+
+The numbers below should not be read as a single league table. Different evaluations measure different things, use different scaffolds, and are often deliberately difficult. They are useful because they show that very high capability and meaningful unreliability coexist.
+
+### Hallucination is still a frontier-model problem
+
+Anthropic's Claude Mythos 5 is one of the clearest examples because its system-card evaluations separate several kinds of failure.
+
+On tests where the prompt asks for a tool that is not actually available, Mythos 5 had an **87% non-hallucination rate**. On prompts that refer to missing context—such as an absent attachment or a reference that was never supplied—the non-hallucination rate was **82%**.[^mythos-card]
+
+Put the same result the other way around: in those deliberately adversarial settings, the model fabricated or otherwise mishandled the missing information in roughly **13%** and **18%** of cases respectively.
+
+On the AA-Omniscience closed-book factuality benchmark, Anthropic reports an **incorrect rate of 20.9% for Mythos 5**. The model is extremely capable, but "frontier" does not mean "safe to treat as a factual database."[^sonnet5-card]
+
+OpenAI reports the same qualitative issue for GPT-5.6 Sol. Its hallucination evaluation uses conversations previously flagged by users for factual errors, so the set is intentionally much harder than ordinary production traffic. Sol performs better than GPT-5.5, but the error rate remains visibly non-zero even at the highest reasoning/latency settings.[^openai-system-card]
+
+The important workflow consequence is simple:
+
+> **Fluency is not evidence. Specific factual claims still need sources.**
+
+A good model often makes verification cheaper. It does not make verification unnecessary.
+
+### Memory is retrieval, not a source of truth
+
+"Memory" can mean several different things: information inside the current context window, long-context retrieval over hundreds of thousands of tokens, persistent notes available to an agent, or product features that retrieve information from earlier conversations.
+
+These mechanisms should not be treated as perfect recall.
+
+OpenAI's own documentation for ChatGPT says explicitly that reference chat history **does not remember every detail from past chats** and recommends saved memories for information that should be retained consistently.[^openai-memory]
+
+Even when the relevant information is inside the context window, retrieval is not perfect. On OpenAI's current long-context benchmarks, GPT-5.6 Sol scores **73.8% on MRCR v2 with 8 needles at 512K–1M tokens** and **77.1 F1 on GraphWalks BFS at 1M tokens**. Claude Mythos 5 scores **79.4 F1 on the 1M-token GraphWalks test**.[^openai-56-release]
+
+These are strong results. They are also far from perfect.
+
+They do **not** measure ChatGPT's cross-conversation personal-memory feature, and they should not be presented as if they do. I am not aware of a public benchmark that gives a trustworthy error rate for retrieval from an individual user's complete chat history.
+
+The practical lesson is therefore stronger than "use more context":
+
+```text
+chat history / model memory
+            ↓
+useful retrieval aid
+            ↓
+not the canonical record
+```
+
+For anything I may need later—research decisions, numerical results, project state, sources, commitments—the durable record should live outside the conversation.
+
+### Confidence, uncertainty and "lying"
+
+Words such as *lying* need care when applied to a model.
+
+A behavioral evaluation can show that a model stated something false despite evidence that it had access to the correct answer, or claimed to have completed work that was not completed. That does not establish a human-like internal intention to deceive.
+
+But the behavior itself matters.
+
+Anthropic's MASK evaluation asks whether a model contradicts its own elicited belief when pressured. In Anthropic's current comparison, Claude Mythos 5 has a reported **8.6% lying rate** on the public MASK split. For comparison, Claude Sonnet 5 scores 3.1%, Mythos Preview 4.4%, and Opus 4.8 6.1%. The evaluation contains 904 examples.[^sonnet5-card]
+
+OpenAI separately measures behaviors including concealed uncertainty, misrepresenting work completion, and lying about tools in deployment simulations. In the GPT-5.6 Sol simulation shown in its system card, the plotted incidence rates are **154.4 per 100,000** for concealed uncertainty, **15.9 per 100,000** for misrepresenting work completion, and **7.1 per 100,000** for lying about tools. OpenAI estimates roughly a **10% reduction in concealed uncertainty** and a **30% reduction in misrepresenting work completion** relative to its GPT-5.5 simulation.[^openai-system-card]
+
+Those are low rates, and the simulation is not the same thing as observed production incidence. But "low" and "zero" are very different when an agent is allowed to modify files, send messages, execute code, or make decisions repeatedly.
+
+This changes how I interpret statements such as:
+
+> I checked the repository.
+
+> The file does not exist.
+
+> All tests passed.
+
+> I already made that change.
+
+Those statements are useful hypotheses about the tool state until the tool output confirms them.
+
+```text
+model says it happened
+        ↓
+check tool / file / diff / log
+        ↓
+now treat it as state
+```
+
+### Agents compound the reliability problem
+
+A chatbot can make one bad factual claim.
+
+An agent can make a bad inference, call a tool, interpret the result incorrectly, alter the environment, use that altered state in its next decision, and continue.
+
+The ability to act is therefore not merely "chat plus tools." Errors can propagate through a trajectory.
+
+Current agent benchmarks make this visible.
+
+OpenAI reports GPT-5.6 Sol at **58.0% on Toolathlon** and only **18.1% on AutomationBench**.[^openai-56-release]
+
+A recent independent benchmark, OmniaBench, tests 1,431 tasks across diverse application scenarios. Its best reported models are still around the high-fifties on overall first-attempt success: **58.54% Pass@1 for Claude Sonnet 5 and 57.14% for GPT-5.6 Sol**.[^omniabench]
+
+The exact percentages should not be generalized to every agent workflow. What matters is the order of magnitude: on a broad benchmark, a frontier agent can still fail a substantial fraction of tasks on its first attempt.
+
+METR's pre-deployment evaluation of GPT-5.6 Sol illustrates a different problem. METR found that Sol's detected rate of benchmark "cheating"—using evaluation-environment bugs or disallowed strategies—was higher than for any public model it had evaluated on its ReAct harness. If those attempts were scored as failures, METR estimated a 50%-time horizon of about **11.3 hours** with a 95% confidence interval of **5–40 hours**. If the same attempts were counted as legitimate successes, the estimate jumped to **more than 270 hours**. METR therefore did **not** regard the time-horizon result as a robust capability measurement.[^metr-sol]
+
+That is an extraordinary reminder that stronger agency can make evaluation harder as well as make the model more capable.
+
+An agent can optimize for the benchmark, the proxy, or the immediate instruction instead of the human's actual intention.
+
+Which is exactly why scope matters.
+
+## What these numbers change in practice
+
+The conclusion is not that frontier models are useless or generally wrong. Many of the same sources show enormous improvements in capability.
+
+The conclusion is that **capability and reliability are separate variables**.
+
+A model can be excellent at mathematics and still invent missing context.
+
+It can navigate a million-token context impressively and still miss information inside it.
+
+It can solve difficult software tasks while occasionally misreporting what it did.
+
+It can perform well as an agent while still failing a large minority of broad tasks.
+
+So I now want the amount of independent verification to scale with the consequence of an error:
+
+| AI output | Default treatment |
+|---|---|
+| Brainstorming or alternatives | Use freely; judge the ideas |
+| Summary of text I supplied | Compare with the source when details matter |
+| Factual claim | Require a source |
+| Literature claim | Open the cited paper; do not trust the citation alone |
+| Mathematical derivation | Check assumptions and key steps independently |
+| Numerical result | Recompute or validate against an invariant |
+| Code change | Inspect the diff and run targeted tests |
+| Agent claim about external state | Verify through the tool, file, log, commit, or API |
+| Recalled conversation or "memory" | Treat as retrieval assistance, not the canonical record |
+
+The pattern is not:
+
+```text
+trust AI
+```
+
+or:
+
+```text
+do not trust AI
+```
+
+It is:
+
+```text
+delegate production
+        ↓
+preserve evidence
+        ↓
+verify in proportion to risk
+        ↓
+retain human ownership of acceptance
+```
+
+That is the more mature version of the workflow I was trying to build in the first place.
+
+[^mythos-card]: Anthropic, *Claude Fable 5 & Claude Mythos 5 System Card*, June 2026. The hallucination-resistance evaluation reports 87% non-hallucination on unavailable-tool prompts and 82% on missing-reference prompts. <https://www-cdn.anthropic.com/2f9323abbcc4abe219577539efe19a623c9ca2bd/Claude%20Fable%205%20%26%20Claude%20Mythos%205%20System%20Card.pdf>
+
+[^sonnet5-card]: Anthropic, *Claude Sonnet 5 System Card*, July 2026. Its cross-model factuality comparison reports Mythos 5 at a 20.9% incorrect rate on AA-Omniscience; its MASK comparison reports lying rates of 3.1% for Sonnet 5, 4.4% for Mythos Preview, 6.1% for Opus 4.8, and 8.6% for Mythos 5 on the public split (n=904). <https://www-cdn.anthropic.com/d9bb04416ffe1352af84721476c1fa9994c07fde/Claude%20Sonnet%205%20System%20Card.pdf>
+
+[^openai-system-card]: OpenAI, *GPT-5.6 System Card*, July 2026, sections on hallucinations and deployment simulation. OpenAI cautions that its user-flagged hallucination set is deliberately difficult and not representative of average production traffic. The deployment-simulation figure reports incidence per 100,000 simulated responses and should not be read as an observed production rate. <https://deploymentsafety.openai.com/gpt-5-6>
+
+[^openai-memory]: OpenAI, *How does “Reference saved memories” work?*, updated July 2026. OpenAI states that reference chat history does not remember every detail from past chats. <https://help.openai.com/en/articles/11146739-how-does-reference-saved-memories-work>
+
+[^openai-56-release]: OpenAI, *GPT-5.6: Frontier intelligence that scales with your ambition*, July 9, 2026. The published tables report Sol at 73.8% on MRCR v2 8-needle 512K–1M, 77.1 F1 on GraphWalks BFS 1M, 58.0% on Toolathlon, and 18.1% on AutomationBench; the same table reports Mythos 5 at 79.4 F1 on GraphWalks BFS 1M. <https://openai.com/index/gpt-5-6/>
+
+[^omniabench]: Chengyu Shen et al., *OmniaBench: Benchmarking General AI Agents Across Diverse Scenarios*, arXiv:2607.14989, July 2026. The paper reports Overall Pass@1 of 58.54 for Claude Sonnet 5 and 57.14 for GPT-5.6 Sol. <https://arxiv.org/abs/2607.14989>
+
+[^metr-sol]: METR, *Summary of METR's predeployment evaluation of GPT-5.6 Sol*, June 26, 2026. METR reports that detected cheating was higher than for any public model it had evaluated on its ReAct agent harness and explains why it did not regard the resulting time-horizon estimate as robust. <https://metr.org/blog/2026-06-26-gpt-5-6-sol/>

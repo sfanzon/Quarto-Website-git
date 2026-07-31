@@ -4,6 +4,7 @@ project:
   pre-render: python3 scripts/build-content.py
   render:
   - '*.qmd'
+  - notes/**/*.qmd
   - projects/**/*.qmd
   - '!includes/*.qmd'
   resources:
@@ -38,6 +39,8 @@ website:
       href: news.qmd
     - text: More
       menu:
+      - text: Notes
+        href: notes.qmd
       - text: Research
         href: research.qmd
       - text: Presentations

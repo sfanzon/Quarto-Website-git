@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Selected modelling, optimisation, research software, documentation and communication projects by Silvio Fanzon">
+<meta name="description" content="Practical notes on mathematical modelling, scientific computing, AI-assisted work and technical communication">
 
-<title>Projects – Silvio Fanzon</title>
+<title>Notes – Silvio Fanzon</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -34,6 +34,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./assets/img/brand/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -74,6 +76,35 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-image','listing-date','listing-title','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
 <style>html{ scroll-behavior: smooth; }</style>
 <script>
 (function () {
@@ -92,10 +123,39 @@ ul.task-list li input[type="checkbox"] {
 })();
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
-<body class="nav-fixed standard-page projects-page quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed standard-page notes-index-page quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -288,7 +348,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./projects.html" aria-current="page"> 
+    <a class="nav-link" href="./projects.html"> 
 <span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
@@ -357,12 +417,12 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Projects</h1>
+<h1 class="title">Notes</h1>
 </div>
 
 <div>
   <div class="description">
-    Selected modelling, optimisation, research software, documentation and communication projects by Silvio Fanzon
+    Practical notes on mathematical modelling, scientific computing, AI-assisted work and technical communication
   </div>
 </div>
 
@@ -379,174 +439,54 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<header class="page-hero compact-page-hero projects-hero">
-  <p class="eyebrow">Projects</p>
-  <h1>Evidence of how I work</h1>
-  <p>Selected examples showing problem formulation, modelling, implementation, evaluation and communication—not only technical mathematics.</p>
+<header class="page-hero compact-page-hero notes-hero">
+  <p class="eyebrow">Notes</p>
+  <h1>Working notes on models, software and technical practice</h1>
+  <p>Longer, practical writing about the tools and methods I use to formulate problems, build reliable computational work and communicate technical ideas.</p>
 </header>
-<section class="projects-positioning" aria-label="About these projects">
-  <p><strong>Expertise</strong> describes my transferable capabilities. <strong>Research</strong> explains the academic contributions. <strong>Projects</strong> makes the work inspectable through code, experiments, documentation and plain-language explanations.</p>
-</section>
-<section class="projects-section project-portfolio">
-<div class="section-heading project-page-heading">
-<div>
-<p class="eyebrow">
-Selected work
-</p>
-<span>Projects, implementations and reproducible outputs</span>
+<div class="notes-index-intro">
+  <p>These are maintained field notes rather than news updates. Each article separates durable methods from tool-specific details that may change over time.</p>
 </div>
-</div>
-<div class="projects-card-grid">
-<article class="home-project-card project-summary-card">
-<div class="home-project-visual">
-<img src="assets/img/projects/f1-benchmarking.svg" alt="Abstract visual for Who’s actually the best F1 driver?">
-</div>
-<div class="home-project-copy">
-<p class="project-labels">
-Statistical modelling · Sports analytics · R
-</p>
-<h3>
-Who’s actually the best F1 driver?
-</h3>
-<p>
-An industry-facing explanation of how 2022 race results and 2023 betting odds separate driver performance from constructor advantage.
-</p>
-<div class="home-project-actions">
-<a href="projects/f1-time-rank-duality/index.html">Read project <span aria-hidden="true">→</span></a><a href="https://github.com/sfanzon/F1-Paper-Code">Code</a>
-</div>
-</div>
-</article>
-<article class="home-project-card project-summary-card project-summary-card-archive">
-<div class="home-project-visual">
-<img src="projects/f1-time-rank-duality/figures/02_team_effects.png" alt="Abstract visual for F1 compact overview (archive)">
-</div>
-<div class="home-project-copy">
-<p class="project-labels">
-Statistical modelling · Archive
-</p>
-<h3>
-F1 compact overview (archive)
-</h3>
-<p>
-The shorter dual-page overview retained as a visible backup after the richer industry-facing post became canonical.
-</p>
-<div class="home-project-actions">
-<a href="projects/f1-time-rank-duality-previous/index.html">Read project <span aria-hidden="true">→</span></a>
-</div>
-</div>
-</article>
-<article class="home-project-card project-summary-card">
-<div class="home-project-visual">
-<img src="assets/img/projects/sparse-gcg.svg" alt="Abstract visual for Sparse optimisation with FC-GCG">
-</div>
-<div class="home-project-copy">
-<p class="project-labels">
-Optimisation · Algorithms · Python
-</p>
-<h3>
-Sparse optimisation with FC-GCG
-</h3>
-<p>
-A visual pedagogical implementation showing how fully-corrective conditional gradients build sparse solutions one atom at a time.
-</p>
-<div class="home-project-actions">
-<a href="projects/sparse-gcg/index.html">Read project <span aria-hidden="true">→</span></a><a href="https://github.com/sfanzon/sparse-gcg-paper-explainer">Code</a>
-</div>
-</div>
-</article>
-<article class="home-project-card project-summary-card">
-<div class="home-project-visual">
-<img src="assets/img/projects/optimal-transport.svg" alt="Abstract visual for Dynamic inverse problems with optimal transport">
-</div>
-<div class="home-project-copy">
-<p class="project-labels">
-Inverse problems · Optimal transport · Imaging
-</p>
-<h3>
-Dynamic inverse problems with optimal transport
-</h3>
-<p>
-Algorithms that reconstruct moving sources from incomplete and noisy measurements, supported by theory and numerical experiments.
-</p>
-<div class="home-project-actions">
-<a href="publications.html#2023-Bre-Car-Fan-Rom">Read project <span aria-hidden="true">→</span></a><a href="https://github.com/sfanzon/DGCG_algorithm">Code</a>
-</div>
-</div>
-</article>
-<article class="home-project-card project-summary-card">
-<div class="home-project-visual">
-<img src="assets/img/projects/teaching.svg" alt="Abstract visual for An applied statistical modelling course">
-</div>
-<div class="home-project-copy">
-<p class="project-labels">
-Statistics · Teaching · R
-</p>
-<h3>
-An applied statistical modelling course
-</h3>
-<p>
-A complete R-based learning system combining lectures, worked examples, practical exercises and accessible digital publishing.
-</p>
-<div class="home-project-actions">
-<a href="https://www.silviofanzon.com/blog/2026/Statistical-Models/">Read project <span aria-hidden="true">→</span></a>
-</div>
-</div>
-</article>
-<article class="home-project-card project-summary-card">
-<div class="home-project-visual">
-<img src="assets/img/projects/polycrystals.svg" alt="Abstract visual for Variational models for polycrystals">
-</div>
-<div class="home-project-copy">
-<p class="project-labels">
-PDEs · Calculus of variations · Materials science
-</p>
-<h3>
-Variational models for polycrystals
-</h3>
-<p>
-Mathematical models explaining how dislocations and elastic energy generate large-scale crystalline structures.
-</p>
-<div class="home-project-actions">
-<a href="publications.html#2019-Fan-Pal-Pon">Read project <span aria-hidden="true">→</span></a>
-</div>
-</div>
-</article>
-<article class="home-project-card project-summary-card">
-<div class="home-project-visual">
-<img src="assets/img/projects/website.svg" alt="Abstract visual for A research communication platform">
-</div>
-<div class="home-project-copy">
-<p class="project-labels">
-Web design · Research communication · Quarto
-</p>
-<h3>
-A research communication platform
-</h3>
-<p>
-A responsive portfolio that turns publications, projects, teaching and structured data into a coherent story for different audiences.
-</p>
-<div class="home-project-actions">
-<a href="index.html">Read project <span aria-hidden="true">→</span></a><a href="https://github.com/sfanzon/sfanzon.github.io">Code</a>
-</div>
-</div>
-</article>
-</div>
-</section>
-<section class="project-capabilities">
-  <div class="section-heading"><div><p class="eyebrow">What the portfolio shows</p><h2>More than technical mathematics</h2></div></div>
-  <div class="capability-grid">
-    <article><h3>Problem formulation</h3><p>Turning ambiguous scientific or applied questions into explicit assumptions, models and measurable outputs.</p></article>
-    <article><h3>Implementation</h3><p>Building reproducible numerical and statistical workflows in Python, R and MATLAB.</p></article>
-    <article><h3>Evaluation</h3><p>Comparing methods, checking sensitivity, stating limitations and distinguishing evidence from interpretation.</p></article>
-    <article><h3>Communication</h3><p>Writing for technical and non-technical audiences through papers, documentation, teaching and visual explanation.</p></article>
-    <article><h3>Leadership</h3><p>Coordinating programmes and research projects, mentoring junior researchers and collaborating internationally.</p></article>
-    <article><h3>Delivery</h3><p>Producing inspectable outputs: code, figures, reports, learning systems and maintained digital resources.</p></article>
-  </div>
-</section>
 
 
 
-</main> <!-- /main -->
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="QUklMjBhZ2VudHMlMkNTY2llbnRpZmljJTIwY29tcHV0aW5nJTJDV29ya2Zsb3c=" data-listing-date-sort="1785448800000" data-listing-file-modified-sort="1785512349091" data-listing-date-modified-sort="1785448800000" data-listing-reading-time-sort="10" data-listing-word-count-sort="1990">
+<div class="thumbnail"><a href="./notes/how-i-use-ai.html" class="no-external">
+
+<img loading="lazy" src="./assets/img/notes/ai-agent-stack.svg" class="thumbnail-image" alt="A five-layer diagram of an AI agent workflow, from model to human review">
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./notes/how-i-use-ai.html" class="no-external">How I use AI agents</a>
+</h3>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('QUklMjBhZ2VudHM='); return false;">AI agents</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('U2NpZW50aWZpYyUyMGNvbXB1dGluZw=='); return false;">Scientific computing</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('V29ya2Zsb3c='); return false;">Workflow</div>
+
+</div>
+<div class="delink listing-description"><a href="./notes/how-i-use-ai.html" class="no-external">
+<p>A practical reference for choosing and using coding agents, general agents, local and cloud models, VS Code, Codex, OpenCode and DeepSeek.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./notes/how-i-use-ai.html" class="no-external">
+<div class="listing-date">
+Jul 31, 2026
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div></main> <!-- /main -->
 <footer class="site-footer" role="contentinfo">
   <div class="site-footer-inner">
     <div class="site-footer-identity">

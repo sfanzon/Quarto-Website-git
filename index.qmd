@@ -118,14 +118,20 @@ body-classes: home-page
   </div>
 </div>
 
-<div class="home-background-section home-ai-workflow" role="region" aria-labelledby="home-ai-workflow-title">
-  <div class="home-background-copy">
-    <p class="eyebrow">Workflow</p>
-    <h2 id="home-ai-workflow-title">How I use AI</h2>
-    <p>AI is part of how I research, build scientific software and communicate technical work. I use it to search, test, review and implement faster—while keeping mathematical judgment, experimental design and final validation anchored to evidence.</p>
+<section class="home-note-preview" aria-labelledby="home-note-title">
+  <a class="home-note-visual" href="/notes/how-i-use-ai.html" aria-label="Read How I use AI agents">
+    <img src="/assets/img/notes/ai-agent-stack.svg" alt="A layered diagram of an AI agent workflow">
+  </a>
+  <div class="home-note-copy">
+    <div class="home-note-meta">
+      <p class="eyebrow">Latest note</p>
+      <time datetime="2026-07-31">31 July 2026</time>
+    </div>
+    <h2 id="home-note-title">How I use AI agents</h2>
+    <p>Models, coding agents, local and cloud execution, orchestration and the practical workflows I use for reliable technical work.</p>
+    <a class="home-note-link" href="/notes/how-i-use-ai.html">Read note →</a>
   </div>
-  <a class="home-background-link" href="/notes/how-i-use-ai.html">Read my approach →</a>
-</div>
+</section>
 
 <section class="home-section selected-publications-section home-editorial-section">
   <div class="section-heading home-editorial-heading">

@@ -1,0 +1,658 @@
+---
+title: "A Portable Rule System for Working with AI"
+subtitle: "How I moved from long, messy chats to concise, version-controlled instructions"
+author: "Anonymous"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    code-tools: false
+    smooth-scroll: true
+    anchor-sections: true
+---
+
+## Why I needed a system
+
+My problem was not that AI was giving bad answers.
+
+Quite the opposite: the answers were often useful enough that I kept asking follow-up questions. One question became five, five became twenty, and before long a chat contained:
+
+- the main answer;
+- side ideas worth preserving;
+- tentative calculations;
+- corrections to earlier assumptions;
+- code suggestions;
+- document edits;
+- model recommendations;
+- several competing interpretations.
+
+The result was a strange failure mode: **the conversation contained a lot of value, but became harder to use as it grew**.
+
+Two things made this worse.
+
+First, long answers often contained excellent points mixed with too much explanatory text. I wanted the substance without the filler.
+
+Second, I was starting to use several AI systems: general chat models, coding agents, local models, and different interfaces. Repeating the same preferences manually was fragile, and relying on any one product's memory was not a good long-term strategy.
+
+The solution was to separate three things that are easy to conflate:
+
+> **AI rules govern behaviour.**  
+> **Chats are for exploration.**  
+> **Notes preserve what matters.**
+
+This post is about the first part: building a portable rule system for AI.
+
+## The first principle: one source of truth
+
+The system starts with one canonical file:
+
+```text
+AI-RULES.md
+```
+
+This contains the complete rule set.
+
+It is deliberately vendor-independent. It should describe *how I want an AI to work*, not how a particular product implements custom instructions.
+
+That matters because platforms change. Model names change. Interfaces change. Limits change.
+
+The rules should survive all of that.
+
+A typical repository looks like this:
+
+```text
+AI-Rules/
+├── README.md
+├── AI-RULES.md
+├── AI-RULES-CORE.md
+└── presets/
+    ├── MATH-RESEARCH.md
+    ├── CODING.md
+    ├── EDITING.md
+    └── LONG-CHATS.md
+```
+
+The master file is canonical.
+
+The other files are **deployment subsets**, not independent rulebooks.
+
+## Why not just one file everywhere?
+
+I initially wanted to paste the entire rule file into every AI system.
+
+That is attractive because it avoids drift.
+
+But there are practical reasons to keep a master file plus smaller deployment sets:
+
+1. Persistent instruction fields may have character limits.
+2. Coding rules are irrelevant in many ordinary conversations.
+3. Some systems have global instructions and separate project instructions.
+4. Coding agents may read repository files such as `AGENTS.md`.
+5. Local models may receive rules through a system prompt.
+6. Different tasks benefit from different subsets of the same master rules.
+
+So the design became:
+
+```text
+AI-RULES.md       # canonical master
+AI-RULES-CORE.md  # rules that should apply almost everywhere
+
+presets/
+  MATH-RESEARCH.md
+  CODING.md
+  EDITING.md
+  LONG-CHATS.md
+```
+
+The important constraint is:
+
+> **The presets should be extracts from the master, not rewritten interpretations of it.**
+
+If the wording in a preset drifts from the master, the system becomes unreliable.
+
+## The global rules
+
+The global rules are mostly about information density and epistemic discipline.
+
+### Result first
+
+The answer should begin with the conclusion, not a long preamble.
+
+This does not mean removing reasoning. It means the reasoning comes *after* the user knows what the answer is.
+
+### Concise but complete
+
+The goal is not a rigid word limit.
+
+The better rule is:
+
+> Use the shortest answer that is still complete.
+
+That avoids two bad extremes:
+
+- unnecessarily long answers;
+- artificially short answers that omit useful points.
+
+The aim is high information density.
+
+### Challenge assumptions, but do not be pedantic
+
+A useful AI should notice when an important assumption is questionable.
+
+It should not derail every discussion over minor technicalities.
+
+The distinction is simple:
+
+- challenge assumptions that materially affect the conclusion;
+- ignore trivial imperfections unless they matter.
+
+### Label the status of claims
+
+For technical work, it is useful to distinguish:
+
+- **Proved / verified**
+- **Numerically checked**
+- **Plausible**
+- **Speculative**
+
+This is especially valuable during brainstorming, where a good idea can easily sound more established than it really is.
+
+### Preserve follow-up ideas without letting them take over
+
+Long conversations often grow because every interesting branch gets explored immediately.
+
+A better rule is:
+
+> When several follow-up ideas arise, put them under short headings. Explore each enough to explain the idea, why it matters, and the likely next step, but do not fully develop every branch automatically.
+
+For example:
+
+### Follow-up — Alternative model
+
+**Plausible.** A different probabilistic model may remove an unrealistic assumption in the current approach. It is worth testing if the original model fails validation.
+
+### Follow-up — Exact computation
+
+**Numerically checked.** A simulation currently estimates the quantity, but an exact integral may be possible and would make a good validation exercise.
+
+The idea is preserved, but the main answer stays focused.
+
+## Rules for mathematical reasoning
+
+Mathematical work needs stricter discipline than ordinary chat.
+
+The rules I settled on are:
+
+- give the result first, then the derivation;
+- challenge important assumptions;
+- distinguish established results from numerical checks and speculation;
+- search the literature when a result may already be known;
+- keep alternative ideas after the main argument rather than mixing them into it.
+
+The literature rule is particularly important.
+
+AI models are good at proposing ideas that *feel* new. In mathematics, that is not enough. A useful workflow should automatically ask:
+
+> Is this already known?
+
+That does not eliminate hallucinations, but it makes them easier to catch.
+
+## Rules for research and literature
+
+The research rules are separate because source handling is a different problem from mathematical reasoning.
+
+The main principles are:
+
+- prefer primary sources;
+- cite the main nontrivial external claims;
+- show disagreements in the literature instead of smoothing them away;
+- separate:
+  - what the source says;
+  - the AI's interpretation;
+  - proposed extensions.
+
+That last distinction is easy to lose.
+
+An AI can move very quickly from:
+
+> "The paper proves X"
+
+into:
+
+> "This suggests Y"
+
+and then into:
+
+> "Therefore Z is probably true"
+
+without making the transitions explicit.
+
+The rule system forces those layers apart.
+
+## Rules for coding
+
+The coding rules grew out of a common agentic-workflow problem: powerful coding agents are useful, but it is easy to overuse them.
+
+The default rule is:
+
+> Prefer the smallest clean change that solves the task.
+
+But there is an important exception:
+
+> If the local fix would become hacky, suggest a refactor instead.
+
+This avoids two opposite failure modes:
+
+- refactoring an entire codebase for a tiny change;
+- stacking patches until the code becomes fragile.
+
+Other coding rules include:
+
+- explain important changes, not every line;
+- do not change architecture, visual identity, or naming conventions without asking;
+- read project guidance first (`AGENTS.md`, `README.md`, `DESIGN.md`, etc.);
+- after an edit, report concisely what changed and where.
+
+## Let the AI choose the model tier
+
+One of the most useful rules concerns coding agents.
+
+If a chat model generates a prompt for a coding agent, it should also say which class of model is appropriate for the task.
+
+The user should not have to guess whether the task is easy or hard.
+
+The rule is:
+
+> Recommend the cheapest or lightest model likely to complete the task reliably.
+
+The recommendation should be:
+
+- based on the generated task itself;
+- vendor-neutral;
+- updated as model availability changes;
+- explicit about reasoning level or effort when useful.
+
+A stronger model should only be recommended when it is genuinely justified.
+
+This is a useful antidote to a common tendency: always reaching for the most expensive model because of fear that a cheaper one might miss something.
+
+A better workflow is:
+
+```text
+chat model
+   ↓
+understand task
+   ↓
+draft coding-agent prompt
+   ↓
+estimate task difficulty
+   ↓
+recommend suitable model tier
+   ↓
+run agent
+```
+
+This keeps the expensive models for the work that actually needs them.
+
+## Rules for editing existing files
+
+Document editing caused one of the biggest sources of drift in my workflow.
+
+Repeatedly asking an AI to "update" a document can quietly turn into repeated rewriting.
+
+After a few iterations, the document may be internally consistent but no longer faithful to the original discussion.
+
+So the editing rules are deliberately conservative.
+
+### Treat the current file as canonical
+
+Unless a rewrite is explicitly requested, the current file is the baseline.
+
+### "Add" does not mean "rewrite"
+
+If I ask to add material, the AI should add material.
+
+It should not reinterpret the request as permission to restructure or rewrite existing sections.
+
+### "Merge" is ambiguous
+
+A merge may mean:
+
+- append;
+- reconcile;
+- deduplicate;
+- restructure;
+- preserve both versions.
+
+The AI should clarify which interpretation is intended.
+
+### Ask before rewriting older sections
+
+If new material creates a contradiction with existing text, that is not permission to silently fix the old section.
+
+The AI should flag the conflict and ask before changing it.
+
+### Keep a concise changelog
+
+After substantial edits, the AI should say what changed and where.
+
+This makes file evolution much easier to audit.
+
+## Rules for long chats
+
+Long chats are useful.
+
+They are also dangerous.
+
+They encourage the illusion that the entire conversation remains perfectly available and coherent forever.
+
+In practice, long conversations can become difficult for both the user and the model to manage.
+
+The rules therefore include a small amount of conversational self-management.
+
+### Keep the main thread focused
+
+Side branches go under **Follow-up ideas** rather than expanding automatically.
+
+### Occasionally suggest a fresh chat
+
+The key word is *occasionally*.
+
+A reminder every ten messages would become irritating.
+
+The AI should only suggest a fresh chat when the current conversation has genuinely become broad enough that context confusion is likely.
+
+### Provide a handoff first
+
+Before suggesting a new chat, produce a compact handoff:
+
+```text
+Current question
+Established conclusions
+Open questions
+Useful follow-ups
+```
+
+That gives the next chat a clean starting point.
+
+### Be honest about context loss
+
+A long-chat summary should not automatically be described as perfectly faithful.
+
+For technical work, the AI should distinguish between:
+
+- extracted from visible/current context;
+- reconstructed from compressed context;
+- uncertain and needing verification against the source chat.
+
+That is much safer than pretending to remember everything.
+
+## Canonical notes should override conversational memory
+
+This rule connects AI behaviour to external notes.
+
+If a project has a canonical Markdown file and the AI remembers something different, the AI should say so.
+
+The rule is:
+
+> Canonical project notes/files override conversational memory. If there is a conflict, identify it explicitly and use the canonical source unless instructed otherwise.
+
+This avoids silent drift.
+
+It also makes external notes useful without requiring an elaborate knowledge-management system.
+
+## Chat is not a notebook
+
+This was the larger lesson.
+
+A chat is excellent for:
+
+- asking questions;
+- exploring ideas;
+- checking calculations;
+- generating alternatives;
+- debugging;
+- drafting.
+
+It is not ideal as the permanent record of a project.
+
+That does not mean every conversation needs to become a formal note.
+
+A much lighter distinction is enough:
+
+> **Chat explores. Notes preserve.**
+
+A project note might contain only:
+
+```markdown
+# Project
+
+## Current
+
+## Decisions
+
+## Ideas
+
+## Next
+```
+
+The point is not to create a complicated personal knowledge system.
+
+The point is to avoid making the chat history the only place where important decisions live.
+
+## Deployment across tools
+
+The same rules can be deployed differently depending on the platform.
+
+A practical pattern is:
+
+```text
+Ordinary chat
+= CORE
+
+Maths / research
+= CORE + MATH-RESEARCH
+
+Coding
+= CORE + CODING
+
+Editing a technical document
+= CORE + MATH-RESEARCH + EDITING
+
+Long mathematical brainstorming
+= CORE + MATH-RESEARCH + LONG-CHATS
+```
+
+The canonical master remains unchanged.
+
+The deployment layer adapts the rules to the tool.
+
+## General chat assistants
+
+For a general chat system with persistent custom instructions:
+
+```text
+global instructions
+= AI-RULES-CORE.md
+```
+
+For a project-specific context:
+
+```text
+project instructions
+= CORE
++ relevant presets
++ project-specific constraints
+```
+
+The exact interface varies between products.
+
+The important point is architectural:
+
+> Platform settings are deployments of the rules, not the source of truth.
+
+## Coding agents
+
+Coding agents often support repository-level instruction files.
+
+For example:
+
+```text
+AGENTS.md
+```
+
+can contain project-specific coding rules.
+
+A sensible split is:
+
+```text
+global agent instructions
+= CORE
+
+repository instructions
+= CODING
++ project-specific constraints
+```
+
+This is preferable to hiding behavioural expectations inside prompts generated ad hoc each time.
+
+## Local models
+
+Local models need the same behavioural context.
+
+The rules can be supplied through:
+
+- a persistent system prompt in the client;
+- a model configuration;
+- a wrapper around the local model;
+- an agent configuration file.
+
+For example, an Ollama-style model configuration may contain a persistent system prompt:
+
+```text
+FROM <base-model>
+
+SYSTEM """
+<paste CORE rules here>
+"""
+```
+
+A coding-specific local model can receive:
+
+```text
+CORE + CODING
+```
+
+while a mathematical research model can receive:
+
+```text
+CORE + MATH-RESEARCH
+```
+
+The rules do not change the model weights. They define the working context.
+
+## Why version control is worth it
+
+The rules are small, but important.
+
+That makes them an unusually good candidate for Git.
+
+A simple repository is enough:
+
+```bash
+git init
+git add .
+git commit -m "Initial AI rules"
+```
+
+Then rule changes become explicit:
+
+```bash
+git add .
+git commit -m "Refine long-chat handling"
+```
+
+This gives useful capabilities:
+
+- see exactly what changed;
+- revert a bad rule;
+- compare versions;
+- synchronize across machines;
+- keep platform-specific deployments reproducible.
+
+It also creates a healthy discipline:
+
+> Change the master intentionally, then deploy the change.
+
+## The final architecture
+
+The complete system is deliberately small:
+
+```text
+AI-Rules/
+├── README.md
+├── AI-RULES.md
+├── AI-RULES-CORE.md
+└── presets/
+    ├── MATH-RESEARCH.md
+    ├── CODING.md
+    ├── EDITING.md
+    └── LONG-CHATS.md
+```
+
+And conceptually:
+
+```text
+                 AI-RULES.md
+                      │
+                 source of truth
+                      │
+          ┌───────────┴───────────┐
+          │                       │
+        CORE                   presets
+          │                       │
+          └───────────┬───────────┘
+                      │
+                deployment layer
+                      │
+       ┌──────────────┼──────────────┐
+       │              │              │
+   chat models    coding agents   local models
+```
+
+The project knowledge system is separate:
+
+```text
+Project note
+├── Current
+├── Decisions
+├── Ideas
+└── Next
+```
+
+The two systems interact, but should not be confused.
+
+## What this solves
+
+The system does not make AI perfectly reliable.
+
+It does solve several practical problems:
+
+- answers become denser and easier to read;
+- useful side ideas are preserved without hijacking the main discussion;
+- speculative claims are easier to identify;
+- file edits become less destructive;
+- coding agents are less likely to consume expensive models unnecessarily;
+- long chats are less likely to become the sole repository of important information;
+- behaviour stays consistent across AI products;
+- rules evolve in a controlled, auditable way.
+
+Most importantly, it changes the relationship with AI.
+
+Instead of repeatedly telling each model how to behave, I maintain one small specification of how I want to work.
+
+The models can change.
+
+The workflow remains mine.

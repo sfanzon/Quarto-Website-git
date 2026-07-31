@@ -6,9 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Selected modelling, optimisation, research software, documentation and communication projects by Silvio Fanzon">
+<meta name="author" content="Silvio Fanzon">
+<meta name="dcterms.date" content="2026-07-31">
+<meta name="description" content="A practical reference for choosing and using coding agents, general agents, local and cloud models, VS Code, Codex, OpenCode and DeepSeek.">
 
-<title>Projects – Silvio Fanzon</title>
+<title>How I use AI agents – Silvio Fanzon</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -27,26 +29,27 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./assets/img/brand/favicon.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-1ea9f056b461306b067daea6f5965b86.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-d3e1cf6a7a69aa31bceeacb14fc09231.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-1ea9f056b461306b067daea6f5965b86.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-1ea9f056b461306b067daea6f5965b86.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-d3e1cf6a7a69aa31bceeacb14fc09231.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-1ea9f056b461306b067daea6f5965b86.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -95,7 +98,7 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed standard-page projects-page quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed notes-detail-page quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -273,7 +276,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Silvio Fanzon</span>
     </a>
   </div>
@@ -284,31 +287,31 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./projects.html" aria-current="page"> 
+    <a class="nav-link" href="../projects.html"> 
 <span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./expertise.html"> 
+    <a class="nav-link" href="../expertise.html"> 
 <span class="menu-text">Expertise</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./Silvio_Fanzon_Academic_CV.pdf"> 
+    <a class="nav-link" href="../Silvio_Fanzon_Academic_CV.pdf"> 
 <span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./publications.html"> 
+    <a class="nav-link" href="../publications.html"> 
 <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./teaching.html"> 
+    <a class="nav-link" href="../teaching.html"> 
 <span class="menu-text">Teaching</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./news.html"> 
+    <a class="nav-link" href="../news.html"> 
 <span class="menu-text">News</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -317,23 +320,23 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-more">    
         <li>
-    <a class="dropdown-item" href="./notes.html">
+    <a class="dropdown-item" href="../notes.html">
  <span class="dropdown-text">Notes</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./research.html">
+    <a class="dropdown-item" href="../research.html">
  <span class="dropdown-text">Research</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./presentations.html">
+    <a class="dropdown-item" href="../presentations.html">
  <span class="dropdown-text">Presentations</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./supervision.html">
+    <a class="dropdown-item" href="../supervision.html">
  <span class="dropdown-text">Supervision</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./contact.html">
+    <a class="dropdown-item" href="../contact.html">
  <span class="dropdown-text">Contact</span></a>
   </li>  
     </ul>
@@ -347,30 +350,89 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#agent-stack" id="toc-agent-stack" class="nav-link active" data-scroll-target="#agent-stack">The agent stack</a></li>
+  <li><a href="#general-agents-and-coding-agents" id="toc-general-agents-and-coding-agents" class="nav-link" data-scroll-target="#general-agents-and-coding-agents">General agents and coding agents</a>
+  <ul class="collapse">
+  <li><a href="#general-agents" id="toc-general-agents" class="nav-link" data-scroll-target="#general-agents">General agents</a></li>
+  <li><a href="#coding-agents" id="toc-coding-agents" class="nav-link" data-scroll-target="#coding-agents">Coding agents</a></li>
+  <li><a href="#hybrid-workflows" id="toc-hybrid-workflows" class="nav-link" data-scroll-target="#hybrid-workflows">Hybrid workflows</a></li>
+  </ul></li>
+  <li><a href="#local-and-cloud-execution" id="toc-local-and-cloud-execution" class="nav-link" data-scroll-target="#local-and-cloud-execution">Local and cloud execution</a></li>
+  <li><a href="#my-current-working-environment" id="toc-my-current-working-environment" class="nav-link" data-scroll-target="#my-current-working-environment">My current working environment</a>
+  <ul class="collapse">
+  <li><a href="#vs-code" id="toc-vs-code" class="nav-link" data-scroll-target="#vs-code">VS Code</a></li>
+  <li><a href="#codex" id="toc-codex" class="nav-link" data-scroll-target="#codex">Codex</a></li>
+  <li><a href="#opencode" id="toc-opencode" class="nav-link" data-scroll-target="#opencode">OpenCode</a></li>
+  <li><a href="#deepseek" id="toc-deepseek" class="nav-link" data-scroll-target="#deepseek">DeepSeek</a></li>
+  </ul></li>
+  <li><a href="#choosing-a-model" id="toc-choosing-a-model" class="nav-link" data-scroll-target="#choosing-a-model">Choosing a model</a></li>
+  <li><a href="#agent-orchestration" id="toc-agent-orchestration" class="nav-link" data-scroll-target="#agent-orchestration">Agent orchestration</a></li>
+  <li><a href="#practical-workflows" id="toc-practical-workflows" class="nav-link" data-scroll-target="#practical-workflows">Practical workflows</a>
+  <ul class="collapse">
+  <li><a href="#review-an-unfamiliar-repository" id="toc-review-an-unfamiliar-repository" class="nav-link" data-scroll-target="#review-an-unfamiliar-repository">Review an unfamiliar repository</a></li>
+  <li><a href="#implement-a-feature-safely" id="toc-implement-a-feature-safely" class="nav-link" data-scroll-target="#implement-a-feature-safely">Implement a feature safely</a></li>
+  <li><a href="#diagnose-a-responsive-problem" id="toc-diagnose-a-responsive-problem" class="nav-link" data-scroll-target="#diagnose-a-responsive-problem">Diagnose a responsive problem</a></li>
+  <li><a href="#move-from-research-to-code" id="toc-move-from-research-to-code" class="nav-link" data-scroll-target="#move-from-research-to-code">Move from research to code</a></li>
+  <li><a href="#maintain-a-structured-website" id="toc-maintain-a-structured-website" class="nav-link" data-scroll-target="#maintain-a-structured-website">Maintain a structured website</a></li>
+  </ul></li>
+  <li><a href="#writing-effective-agent-tasks" id="toc-writing-effective-agent-tasks" class="nav-link" data-scroll-target="#writing-effective-agent-tasks">Writing effective agent tasks</a></li>
+  <li><a href="#safety-evidence-and-review" id="toc-safety-evidence-and-review" class="nav-link" data-scroll-target="#safety-evidence-and-review">Safety, evidence and review</a></li>
+  <li><a href="#what-i-do-not-delegate" id="toc-what-i-do-not-delegate" class="nav-link" data-scroll-target="#what-i-do-not-delegate">What I do not delegate</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Projects</h1>
-</div>
+<h1 class="title">How I use AI agents</h1>
+<p class="subtitle lead">Models, tools, orchestration and practical workflows</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">AI agents</div>
+    <div class="quarto-category">Scientific computing</div>
+    <div class="quarto-category">Workflow</div>
+  </div>
+  </div>
 
 <div>
   <div class="description">
-    Selected modelling, optimisation, research software, documentation and communication projects by Silvio Fanzon
+    A practical reference for choosing and using coding agents, general agents, local and cloud models, VS Code, Codex, OpenCode and DeepSeek.
   </div>
 </div>
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Silvio Fanzon </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 31, 2026</p>
+    </div>
+  </div>
   
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">July 31, 2026</p>
+    </div>
+  </div>
     
   </div>
   
@@ -379,172 +441,259 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<header class="page-hero compact-page-hero projects-hero">
-  <p class="eyebrow">Projects</p>
-  <h1>Evidence of how I work</h1>
-  <p>Selected examples showing problem formulation, modelling, implementation, evaluation and communication—not only technical mathematics.</p>
-</header>
-<section class="projects-positioning" aria-label="About these projects">
-  <p><strong>Expertise</strong> describes my transferable capabilities. <strong>Research</strong> explains the academic contributions. <strong>Projects</strong> makes the work inspectable through code, experiments, documentation and plain-language explanations.</p>
+<p>AI is useful to me when it shortens the distance between a well-formed question and an inspectable result. I use agents to explore unfamiliar repositories, implement and test software, compare technical approaches, review documents and maintain this website. I do not use them as substitutes for mathematical judgement, experimental design or final verification.</p>
+<p>This note records the structure behind that work. Product names and model versions will change; the distinctions between models, agents, tools, environments and human review are more durable.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A maintained reference
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The tool-specific section reflects my current setup in July 2026. The selection principles and workflows are intended to remain useful when individual products or models change.</p>
+</div>
+</div>
+<section id="agent-stack" class="level2">
+<h2 class="anchored" data-anchor-id="agent-stack">The agent stack</h2>
+<p>An AI workflow has several layers. Calling all of them “the model” hides the decisions that most affect reliability.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/img/notes/ai-agent-stack.svg" class="img-fluid figure-img" alt="A five-layer diagram showing model, agent harness, tools and permissions, working environment, and human review."></p>
+<figcaption>A model supplies reasoning and generation to an agent harness, which operates tools inside an environment under human review.</figcaption>
+</figure>
+</div>
+<p><strong>The model</strong> generates language, code and decisions. Different models vary in reasoning, speed, cost, context handling and tool use.</p>
+<p><strong>The agent harness</strong> turns model outputs into actions. It manages the conversation, gathers context, invokes tools, applies permissions and decides when to continue or stop.</p>
+<p><strong>Tools</strong> let the agent inspect files, edit code, run tests, browse documentation or interact with external services. A strong model without the right tools may be less useful than a smaller model operating in a well-designed environment.</p>
+<p><strong>The working environment</strong> supplies the repository, editor, terminal, dependencies and version-control history. It determines what the agent can observe and what its actions can affect.</p>
+<p><strong>Human review</strong> remains the final control layer. I define the objective, decide what authority to grant, inspect consequential changes and judge whether the result answers the real problem.</p>
 </section>
-<section class="projects-section project-portfolio">
-<div class="section-heading project-page-heading">
-<div>
-<p class="eyebrow">
-Selected work
-</p>
-<span>Projects, implementations and reproducible outputs</span>
-</div>
-</div>
-<div class="projects-card-grid">
-<article class="home-project-card project-summary-card">
-<div class="home-project-visual">
-<img src="assets/img/projects/f1-benchmarking.svg" alt="Abstract visual for Who’s actually the best F1 driver?">
-</div>
-<div class="home-project-copy">
-<p class="project-labels">
-Statistical modelling · Sports analytics · R
-</p>
-<h3>
-Who’s actually the best F1 driver?
-</h3>
-<p>
-An industry-facing explanation of how 2022 race results and 2023 betting odds separate driver performance from constructor advantage.
-</p>
-<div class="home-project-actions">
-<a href="projects/f1-time-rank-duality/index.html">Read project <span aria-hidden="true">→</span></a><a href="https://github.com/sfanzon/F1-Paper-Code">Code</a>
-</div>
-</div>
-</article>
-<article class="home-project-card project-summary-card project-summary-card-archive">
-<div class="home-project-visual">
-<img src="projects/f1-time-rank-duality/figures/02_team_effects.png" alt="Abstract visual for F1 compact overview (archive)">
-</div>
-<div class="home-project-copy">
-<p class="project-labels">
-Statistical modelling · Archive
-</p>
-<h3>
-F1 compact overview (archive)
-</h3>
-<p>
-The shorter dual-page overview retained as a visible backup after the richer industry-facing post became canonical.
-</p>
-<div class="home-project-actions">
-<a href="projects/f1-time-rank-duality-previous/index.html">Read project <span aria-hidden="true">→</span></a>
-</div>
-</div>
-</article>
-<article class="home-project-card project-summary-card">
-<div class="home-project-visual">
-<img src="assets/img/projects/sparse-gcg.svg" alt="Abstract visual for Sparse optimisation with FC-GCG">
-</div>
-<div class="home-project-copy">
-<p class="project-labels">
-Optimisation · Algorithms · Python
-</p>
-<h3>
-Sparse optimisation with FC-GCG
-</h3>
-<p>
-A visual pedagogical implementation showing how fully-corrective conditional gradients build sparse solutions one atom at a time.
-</p>
-<div class="home-project-actions">
-<a href="projects/sparse-gcg/index.html">Read project <span aria-hidden="true">→</span></a><a href="https://github.com/sfanzon/sparse-gcg-paper-explainer">Code</a>
-</div>
-</div>
-</article>
-<article class="home-project-card project-summary-card">
-<div class="home-project-visual">
-<img src="assets/img/projects/optimal-transport.svg" alt="Abstract visual for Dynamic inverse problems with optimal transport">
-</div>
-<div class="home-project-copy">
-<p class="project-labels">
-Inverse problems · Optimal transport · Imaging
-</p>
-<h3>
-Dynamic inverse problems with optimal transport
-</h3>
-<p>
-Algorithms that reconstruct moving sources from incomplete and noisy measurements, supported by theory and numerical experiments.
-</p>
-<div class="home-project-actions">
-<a href="publications.html#2023-Bre-Car-Fan-Rom">Read project <span aria-hidden="true">→</span></a><a href="https://github.com/sfanzon/DGCG_algorithm">Code</a>
-</div>
-</div>
-</article>
-<article class="home-project-card project-summary-card">
-<div class="home-project-visual">
-<img src="assets/img/projects/teaching.svg" alt="Abstract visual for An applied statistical modelling course">
-</div>
-<div class="home-project-copy">
-<p class="project-labels">
-Statistics · Teaching · R
-</p>
-<h3>
-An applied statistical modelling course
-</h3>
-<p>
-A complete R-based learning system combining lectures, worked examples, practical exercises and accessible digital publishing.
-</p>
-<div class="home-project-actions">
-<a href="https://www.silviofanzon.com/blog/2026/Statistical-Models/">Read project <span aria-hidden="true">→</span></a>
-</div>
-</div>
-</article>
-<article class="home-project-card project-summary-card">
-<div class="home-project-visual">
-<img src="assets/img/projects/polycrystals.svg" alt="Abstract visual for Variational models for polycrystals">
-</div>
-<div class="home-project-copy">
-<p class="project-labels">
-PDEs · Calculus of variations · Materials science
-</p>
-<h3>
-Variational models for polycrystals
-</h3>
-<p>
-Mathematical models explaining how dislocations and elastic energy generate large-scale crystalline structures.
-</p>
-<div class="home-project-actions">
-<a href="publications.html#2019-Fan-Pal-Pon">Read project <span aria-hidden="true">→</span></a>
-</div>
-</div>
-</article>
-<article class="home-project-card project-summary-card">
-<div class="home-project-visual">
-<img src="assets/img/projects/website.svg" alt="Abstract visual for A research communication platform">
-</div>
-<div class="home-project-copy">
-<p class="project-labels">
-Web design · Research communication · Quarto
-</p>
-<h3>
-A research communication platform
-</h3>
-<p>
-A responsive portfolio that turns publications, projects, teaching and structured data into a coherent story for different audiences.
-</p>
-<div class="home-project-actions">
-<a href="index.html">Read project <span aria-hidden="true">→</span></a><a href="https://github.com/sfanzon/sfanzon.github.io">Code</a>
-</div>
-</div>
-</article>
-</div>
+<section id="general-agents-and-coding-agents" class="level2">
+<h2 class="anchored" data-anchor-id="general-agents-and-coding-agents">General agents and coding agents</h2>
+<p>I choose an agent by the work it can perform, not by the chat interface surrounding it.</p>
+<section id="general-agents" class="level3">
+<h3 class="anchored" data-anchor-id="general-agents">General agents</h3>
+<p>General agents are useful for research, comparison, outlining, drafting, explanation and work spanning several kinds of documents. They are particularly effective before implementation: clarifying a question, identifying unknowns, comparing approaches and producing a plan that can be tested.</p>
+<p>Their weakness is often distance from the source material. A persuasive answer is not evidence that a repository builds, a citation supports a claim or an equation is correct.</p>
 </section>
-<section class="project-capabilities">
-  <div class="section-heading"><div><p class="eyebrow">What the portfolio shows</p><h2>More than technical mathematics</h2></div></div>
-  <div class="capability-grid">
-    <article><h3>Problem formulation</h3><p>Turning ambiguous scientific or applied questions into explicit assumptions, models and measurable outputs.</p></article>
-    <article><h3>Implementation</h3><p>Building reproducible numerical and statistical workflows in Python, R and MATLAB.</p></article>
-    <article><h3>Evaluation</h3><p>Comparing methods, checking sensitivity, stating limitations and distinguishing evidence from interpretation.</p></article>
-    <article><h3>Communication</h3><p>Writing for technical and non-technical audiences through papers, documentation, teaching and visual explanation.</p></article>
-    <article><h3>Leadership</h3><p>Coordinating programmes and research projects, mentoring junior researchers and collaborating internationally.</p></article>
-    <article><h3>Delivery</h3><p>Producing inspectable outputs: code, figures, reports, learning systems and maintained digital resources.</p></article>
-  </div>
+<section id="coding-agents" class="level3">
+<h3 class="anchored" data-anchor-id="coding-agents">Coding agents</h3>
+<p>Coding agents work directly with a repository and terminal. They can locate canonical sources, edit files, render outputs, run tests and inspect diffs. OpenAI describes the Codex CLI as an agent that can read, modify and run code locally; <a href="https://help.openai.com/en/articles/11096431">the official guide</a> is the appropriate place for current installation and product details.</p>
+<p>The important capability is the closed loop:</p>
+<pre class="text"><code>inspect → change → execute → observe → correct → verify</code></pre>
+<p>That loop makes coding agents useful beyond code generation. They can diagnose why a layout changes at one breakpoint, trace generated content back to its canonical source, or prove that a proposed refactor preserves behaviour.</p>
 </section>
+<section id="hybrid-workflows" class="level3">
+<h3 class="anchored" data-anchor-id="hybrid-workflows">Hybrid workflows</h3>
+<p>Many substantial tasks need both modes. I may use a general agent to compare current documentation and develop a conceptual structure, then use a coding agent to implement the result in a repository. The handoff should include sources, constraints and a definition of done—not only a prose summary.</p>
+</section>
+</section>
+<section id="local-and-cloud-execution" class="level2">
+<h2 class="anchored" data-anchor-id="local-and-cloud-execution">Local and cloud execution</h2>
+<p>“Local” and “cloud” describe two different choices: where the agent runs and where the model runs. A terminal agent can run locally while calling a cloud model; an open-weight model can run on local hardware; a cloud agent may execute inside a remote sandbox.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/img/notes/local-cloud-models.svg" class="img-fluid figure-img" alt="A branching decision diagram comparing local and cloud AI execution."></p>
+<figcaption>Decision scheme comparing local and cloud execution through privacy, capability, hardware, cost and reproducibility.</figcaption>
+</figure>
+</div>
+<p>I favour local execution when direct repository access, low latency, offline work or control over sensitive material matters. Local models also make experimentation reproducible, but their capability and context size depend on available hardware.</p>
+<p>I favour cloud models when a task benefits from stronger reasoning, large context, maintained infrastructure or specialised capabilities. The trade-offs are network dependence, usage cost and the need to understand what data leaves the machine.</p>
+<p>The practical questions are:</p>
+<ul>
+<li>What information will the agent see?</li>
+<li>Where will prompts, files and logs be processed or retained?</li>
+<li>Does the task require a frontier model, or only competent transformation?</li>
+<li>Can the result be verified locally?</li>
+<li>What happens if the service or model version changes?</li>
+</ul>
+</section>
+<section id="my-current-working-environment" class="level2">
+<h2 class="anchored" data-anchor-id="my-current-working-environment">My current working environment</h2>
+<section id="vs-code" class="level3">
+<h3 class="anchored" data-anchor-id="vs-code">VS Code</h3>
+<p>VS Code is the main inspection and editing surface: files, search, diffs, diagnostics, terminals and rendered previews remain visible together. Its agent architecture now distinguishes interactive local agents, background agents, cloud agents and third-party agents; <a href="https://code.visualstudio.com/docs/agents/overview">Microsoft documents those modes explicitly</a>.</p>
+<p>I value the editor less as an AI product than as a shared observation surface. I should be able to see what the agent changed, compare it with the source of truth and run the same commands myself.</p>
+</section>
+<section id="codex" class="level3">
+<h3 class="anchored" data-anchor-id="codex">Codex</h3>
+<p>I use Codex for substantial repository work: architecture review, scoped implementation, debugging, test construction and verification. It is most useful when the task includes explicit constraints, access to the real project and permission to continue through the complete inspect–change–test loop.</p>
+<p>The strongest prompts are often short because the repository carries the detail. A useful request states the outcome, the constraints and what must be checked. The agent should then inspect before deciding which files to change.</p>
+</section>
+<section id="opencode" class="level3">
+<h3 class="anchored" data-anchor-id="opencode">OpenCode</h3>
+<p>OpenCode is useful when I want an open-source terminal agent with provider flexibility. Its <a href="https://opencode.ai/docs">official documentation</a> describes the current configuration and agent model. I treat it as an alternative harness rather than a model: its behaviour depends on the selected provider, tools, permissions and project instructions.</p>
+</section>
+<section id="deepseek" class="level3">
+<h3 class="anchored" data-anchor-id="deepseek">DeepSeek</h3>
+<p>DeepSeek belongs primarily in the model/provider layer. I may consider it when cost, open-weight availability or provider diversity matters. I avoid embedding a permanent recommendation for one named version because endpoints and model mappings change; the <a href="https://api-docs.deepseek.com/api/list-models">official model list</a> is the source to check before configuring a workflow.</p>
+<p>This distinction prevents an unhelpful comparison. Codex and OpenCode are agent environments; DeepSeek supplies models. They can occupy different layers of the same workflow.</p>
+</section>
+</section>
+<section id="choosing-a-model" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-a-model">Choosing a model</h2>
+<p>I do not choose models from a universal ranking. I choose against the failure cost and structure of the task.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Task property</th>
+<th>What I prioritise</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Small, well-specified transformation</td>
+<td>Speed and cost</td>
+</tr>
+<tr class="even">
+<td>Ambiguous debugging</td>
+<td>Strong reasoning and tool use</td>
+</tr>
+<tr class="odd">
+<td>Large unfamiliar repository</td>
+<td>Context handling and disciplined search</td>
+</tr>
+<tr class="even">
+<td>Mathematical argument</td>
+<td>Reasoning quality and independent verification</td>
+</tr>
+<tr class="odd">
+<td>Repetitive classification</td>
+<td>Stable structured output</td>
+</tr>
+<tr class="even">
+<td>Sensitive material</td>
+<td>Local execution or an approved private environment</td>
+</tr>
+<tr class="odd">
+<td>Visual or document work</td>
+<td>Native support for the relevant artifact and visual inspection</td>
+</tr>
+<tr class="even">
+<td>Long autonomous task</td>
+<td>Reliable planning, recovery and test execution</td>
+</tr>
+</tbody>
+</table>
+<p>My default rule is to use the least expensive model that completes the task reliably. I move to a stronger model when ambiguity, architectural consequences or verification difficulty increases. Model escalation should solve a demonstrated limitation, not replace clearer task design.</p>
+</section>
+<section id="agent-orchestration" class="level2">
+<h2 class="anchored" data-anchor-id="agent-orchestration">Agent orchestration</h2>
+<p>One capable agent is the default. Multiple agents add value only when the work divides into independent, bounded investigations.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/img/notes/agent-orchestration.svg" class="img-fluid figure-img" alt="A main agent delegating three independent audits and then integrating their results before verification."></p>
+<figcaption>A primary agent delegates architecture, testing and accessibility audits, then integrates the findings before rendering and verification.</figcaption>
+</figure>
+</div>
+<p>Good parallel tasks have separate evidence and little editing overlap: an architecture review, a test audit and an accessibility audit can proceed independently. The primary agent can then reconcile their findings and own the final change.</p>
+<p>Parallelism is a poor fit when several agents would edit the same component, when the decision depends on a shared evolving design, or when coordinating the work costs more than doing it directly.</p>
+<p>A useful orchestration pattern is:</p>
+<ol type="1">
+<li>The primary agent defines the objective, constraints and ownership boundaries.</li>
+<li>Each delegated agent receives a bounded question and a required output.</li>
+<li>The primary agent compares findings rather than concatenating them.</li>
+<li>One owner implements overlapping changes.</li>
+<li>The integrated result is rendered and tested as a whole.</li>
+</ol>
+</section>
+<section id="practical-workflows" class="level2">
+<h2 class="anchored" data-anchor-id="practical-workflows">Practical workflows</h2>
+<section id="review-an-unfamiliar-repository" class="level3">
+<h3 class="anchored" data-anchor-id="review-an-unfamiliar-repository">Review an unfamiliar repository</h3>
+<p>Start with orientation rather than recommendations.</p>
+<ol type="1">
+<li>Read repository instructions and architecture documents.</li>
+<li>Identify canonical sources, generated outputs and build commands.</li>
+<li>Inspect version-control status before editing.</li>
+<li>Map the runtime, content pipeline, tests and deployment path.</li>
+<li>Report findings by severity with concrete file references.</li>
+<li>Separate defects from optional improvements and removable material.</li>
+</ol>
+<p>The outcome is not merely a list of suspicious files. It is a model of ownership: which source controls each behaviour and which generated artifacts should never be patched directly.</p>
+</section>
+<section id="implement-a-feature-safely" class="level3">
+<h3 class="anchored" data-anchor-id="implement-a-feature-safely">Implement a feature safely</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/img/notes/safe-agent-workflow.svg" class="img-fluid figure-img" alt="A seven-step workflow for safe agent-assisted software changes."></p>
+<figcaption>A safe coding workflow moving from objective and inspection through a canonical source change, focused tests, rendered inspection and final diff review.</figcaption>
+</figure>
+</div>
+<p>My preferred sequence is:</p>
+<pre class="text"><code>objective
+  → inspect canonical source
+  → state a concise plan
+  → make the smallest coherent change
+  → run focused tests
+  → inspect the rendered result
+  → review the final diff</code></pre>
+<p>Tests should be proportional to risk. A local content correction may need a render and link check; shared responsive navigation needs browser tests across representative widths; a generation-pipeline change needs direct unit tests and a complete render.</p>
+</section>
+<section id="diagnose-a-responsive-problem" class="level3">
+<h3 class="anchored" data-anchor-id="diagnose-a-responsive-problem">Diagnose a responsive problem</h3>
+<p>Visual bugs are often caused by nested containers rather than the element that appears misaligned. I ask the agent to measure computed geometry at desktop, tablet and mobile widths, identify the canonical owner of each gutter, and compare visible edges numerically. Only then should it change CSS.</p>
+<p>The final check is visual. A passing interaction test can prove that a menu opens, but not that its spacing feels balanced.</p>
+</section>
+<section id="move-from-research-to-code" class="level3">
+<h3 class="anchored" data-anchor-id="move-from-research-to-code">Move from research to code</h3>
+<p>For mathematical or scientific work, I separate four artifacts:</p>
+<ul>
+<li>the claim or model;</li>
+<li>the assumptions under which it is valid;</li>
+<li>the computational implementation;</li>
+<li>the experiment that could expose failure.</li>
+</ul>
+<p>An agent can translate equations into code, construct fixtures, explore edge cases and write documentation. I retain responsibility for whether the formulation represents the intended problem and whether the experiment supports the conclusion.</p>
+</section>
+<section id="maintain-a-structured-website" class="level3">
+<h3 class="anchored" data-anchor-id="maintain-a-structured-website">Maintain a structured website</h3>
+<p>This site generates publications, teaching entries, projects and news from structured sources. A coding agent should edit BibTeX, YAML, Markdown or SCSS—not the rendered HTML. It should regenerate the site, validate local assets, test internal links and inspect the resulting page at representative viewports.</p>
+<p>This workflow generalises: automation is safest when ownership is explicit and generated output can be reproduced from canonical input.</p>
+</section>
+</section>
+<section id="writing-effective-agent-tasks" class="level2">
+<h2 class="anchored" data-anchor-id="writing-effective-agent-tasks">Writing effective agent tasks</h2>
+<p>A useful task contains four elements:</p>
+<pre class="text"><code>Goal: the observable outcome
+Context: where the relevant evidence lives
+Constraints: what must remain unchanged
+Done: how the result will be verified</code></pre>
+<p>For example:</p>
+<blockquote class="blockquote">
+<p>Review the responsive navbar and footer. Their visible left and right edges should match at 390, 820 and 1440 pixels. Preserve the existing visual identity and do not redesign unrelated components. Measure the rendered geometry, fix the canonical SCSS source, render the site and add focused layout assertions.</p>
+</blockquote>
+<p>This is stronger than asking an agent to “make the navbar better” because the outcome and invariants are observable. It still leaves room for investigation rather than prescribing an unverified fix.</p>
+</section>
+<section id="safety-evidence-and-review" class="level2">
+<h2 class="anchored" data-anchor-id="safety-evidence-and-review">Safety, evidence and review</h2>
+<p>Agentic work becomes risky when authority grows faster than verification.</p>
+<p>I keep repositories under version control, inspect existing changes before starting and review the final diff. Secrets do not belong in prompts, logs or committed configuration. Destructive operations require explicit targets and should be recoverable where possible.</p>
+<p>External content is evidence, not instruction. A web page, issue or document may contain outdated advice or text designed to redirect an agent. Claims should be checked against primary sources, and high-stakes decisions require independent review.</p>
+<p>Execution is also not proof of correctness. A command can succeed while producing the wrong result; a test suite can pass while omitting the behaviour that matters. Verification should combine automated checks with domain judgement and, for visual work, direct inspection.</p>
+</section>
+<section id="what-i-do-not-delegate" class="level2">
+<h2 class="anchored" data-anchor-id="what-i-do-not-delegate">What I do not delegate</h2>
+<p>I do not delegate final responsibility for:</p>
+<ul>
+<li>mathematical or scientific claims;</li>
+<li>the interpretation of experimental evidence;</li>
+<li>sensitive professional communication;</li>
+<li>destructive changes or broad external actions;</li>
+<li>visual acceptance;</li>
+<li>ethical and professional decisions.</li>
+</ul>
+<p>Agents are most valuable when they make reasoning and implementation easier to inspect. The objective is not maximum autonomy. It is a workflow in which more useful work can be completed without weakening ownership, evidence or judgement.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <footer class="site-footer" role="contentinfo">
@@ -556,11 +705,11 @@ A responsive portfolio that turns publications, projects, teaching and structure
 
     <nav class="site-footer-links" aria-label="Footer">
       <a href="mailto:silvio.fanzon.work@gmail.com">Email</a>
-      <a href="./Silvio_Fanzon_Academic_CV.pdf">CV</a>
+      <a href="../Silvio_Fanzon_Academic_CV.pdf">CV</a>
       <a href="https://www.linkedin.com/in/fanzon" target="_blank" rel="noopener">LinkedIn</a>
       <a href="https://github.com/sfanzon" target="_blank" rel="noopener">GitHub</a>
       <a href="https://scholar.google.com/citations?user=9yJyLsoAAAAJ" target="_blank" rel="noopener">Scholar</a>
-      <a href="./contact.html">Contact</a>
+      <a href="../contact.html">Contact</a>
     </nav>
 
     <div class="site-footer-meta">
@@ -764,6 +913,13 @@ A responsive portfolio that turns publications, projects, teaching and structure
       window.document.body.appendChild(a);
     }
     setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     
@@ -1165,5 +1321,5 @@ A responsive portfolio that turns publications, projects, teaching and structure
 
 
 
-<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

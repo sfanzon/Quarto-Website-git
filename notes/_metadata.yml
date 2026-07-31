@@ -1,0 +1,9 @@
+author: Silvio Fanzon
+page-layout: article
+toc: true
+toc-depth: 3
+body-classes: notes-detail-page
+format:
+  html:
+    anchor-sections: true
+

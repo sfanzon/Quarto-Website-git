@@ -1,0 +1,575 @@
+---
+title: "How I use AI in technical work"
+subtitle: "Accelerating research, scientific software and communication without outsourcing judgment."
+description: "A practical account of how I use AI across research, scientific computing and technical communication: where it adds leverage, where I retain control, and how I verify what matters."
+author: "Silvio Fanzon"
+date: 2026-07-30
+categories:
+  - AI
+  - Workflow
+  - Research
+  - Scientific computing
+body-classes: standard-page note-page
+page-layout: article
+toc: true
+toc-depth: 2
+execute:
+  enabled: false
+---
+
+AI is now part of my technical workflow.
+
+I use it to search, compare, draft, test, review and implement faster. In research, it can shorten the distance between a question and a useful map of the literature. In scientific software, it can explain unfamiliar code, trace a bug, propose a regression test or implement a narrowly specified change. In technical communication, it can help turn the same underlying work into a paper, a reproducible repository, a technical walkthrough or an accessible project page.
+
+That is substantial leverage.
+
+It is also easy to misuse.
+
+A model can produce convincing work very quickly, including work that is unnecessary, poorly scoped or simply wrong. An agent can go further: it can act on a mistaken inference, alter the environment, and then continue reasoning from the state it has created.
+
+So I do not think the useful distinction is between *using AI* and *not using AI*. The more important distinction is between **delegating production** and **delegating judgment**.
+
+My aim is to do the first aggressively and the second cautiously.
+
+## From a difficult question to a defensible result
+
+The broader way I work predates current AI tools.
+
+I tend to start with an open-ended problem and try to make it precise: identify the assumptions, decide what is observable, formulate a model, implement it, test what the evidence supports, and communicate the result clearly.
+
+In compact form:
+
+```text
+frame the problem
+        ↓
+model and explore
+        ↓
+build and test
+        ↓
+evaluate the evidence
+        ↓
+communicate the result
+```
+
+AI fits naturally into this process, but it does not replace the process.
+
+A useful division of labour is:
+
+```text
+                 HUMAN
+          define the problem
+                 │
+                 ▼
+        ┌───────────────────┐
+        │        AI         │
+        │                   │
+        │ search            │
+        │ read              │
+        │ compare           │
+        │ calculate         │
+        │ draft             │
+        │ test              │
+        │ review            │
+        │ implement         │
+        └───────────────────┘
+                 │
+                 ▼
+                 HUMAN
+       verify and decide
+```
+
+The boundary is deliberately porous. AI can suggest a better question, challenge an assumption or notice something I missed. I can also ask it to criticise my conclusions.
+
+What does not move is responsibility for deciding what the project is trying to establish and whether the evidence actually establishes it.
+
+## What I delegate
+
+There is a large amount of technical work between having an idea and deciding what it means.
+
+That middle is where I find AI most valuable.
+
+Typical uses include:
+
+- literature reconnaissance and source discovery;
+- comparing papers, assumptions and methods;
+- summarising unfamiliar technical material before reading it closely;
+- exploring alternative formulations or special cases;
+- generating small numerical experiments;
+- explaining an unfamiliar codebase;
+- tracing bugs and edge cases;
+- implementing tightly scoped changes;
+- proposing regression tests;
+- reviewing code and documentation for inconsistencies;
+- checking whether several representations of a project still agree;
+- restructuring technical writing for different audiences;
+- converting material between Markdown, Quarto, LaTeX and code;
+- extracting decisions, unresolved questions and reusable notes from long working sessions.
+
+Individually, many of these tasks are mundane. Collectively, they consume a great deal of time and attention.
+
+Making them cheaper leaves more time for the parts of the work where judgment matters most.
+
+## What I retain
+
+Some decisions sit too close to the substance of the problem to be treated as implementation details.
+
+I retain responsibility for:
+
+**Problem formulation.** What question are we actually answering? What assumptions are legitimate? What would count as a useful result?
+
+**Mathematical reasoning.** Definitions, derivations, hypotheses, theoretical claims and the distinction between a plausible argument and a proof.
+
+**Experimental design.** What is being measured? Are methods being compared fairly? Has a software change silently changed the scientific experiment?
+
+**Source selection.** Which document, dataset, paper or repository is authoritative?
+
+**Interpretation.** What does the result establish, what remains uncertain, and which conclusions go beyond the evidence?
+
+**Scope.** Is a proposed improvement worth the additional complexity?
+
+**Acceptance.** Does an AI-generated output actually become part of the project?
+
+This is less about protecting tasks from automation than about keeping the chain of reasoning visible.
+
+## Research: accelerate exploration, preserve evidence
+
+Research is one of the strongest uses I have found for AI.
+
+At the beginning of a topic, a model can help build an initial map:
+
+```text
+question
+   ↓
+literature reconnaissance
+   ↓
+methods and assumptions
+   ↓
+agreements and disagreements
+   ↓
+promising directions
+```
+
+That is particularly useful when moving into an adjacent area. It can identify terminology, suggest relevant papers, compare formulations and expose assumptions that deserve attention.
+
+For mathematical work, I also use AI as an interactive second reader. Useful questions include:
+
+- What happens in the simplest non-trivial case?
+- Which assumption is doing the real work?
+- Is there an obvious counterexample if this hypothesis is removed?
+- Can this statement be reformulated geometrically?
+- What numerical experiment would distinguish these two explanations?
+- Which result in the literature is closest to this argument?
+- Where might this proof fail?
+
+The important distinction is between **discovery** and **evidence**.
+
+A model telling me that a paper proves something is not evidence that the paper proves it. A plausible derivation is not a theorem. A numerical value appearing in a conversation is not a reproducible result.
+
+AI can make the route to verification much shorter. It does not eliminate the final verification step.
+
+## Scientific software: narrow changes beat autonomous improvement
+
+Coding makes the strengths and weaknesses of AI especially visible.
+
+A model can understand a small research repository surprisingly quickly. It can follow execution paths, explain numerical routines, generate test cases and implement changes across several files.
+
+That makes broad prompts tempting:
+
+> Improve this repository.
+
+> Make this code more robust.
+
+> Refactor this implementation.
+
+I increasingly avoid them for established work.
+
+Those prompts allow the model to define both the problem and the meaning of *better*. A small correction can then expand into a new API, new metadata, new configuration, new benchmark rules and new infrastructure. Every addition may be individually defensible while the project as a whole becomes less transparent.
+
+For technical repositories I prefer:
+
+```text
+trusted baseline
+      ↓
+specific observed problem
+      ↓
+diagnosis
+      ↓
+small proposed change
+      ↓
+targeted test
+      ↓
+inspect the diff
+      ↓
+stop
+```
+
+The word *stop* matters.
+
+AI already makes adding code cheap. The workflow needs to make unnecessary complexity expensive again.
+
+## Separate audit from implementation
+
+A particularly useful discipline is to separate finding problems from fixing them.
+
+### 1. Audit
+
+Ask the model to inspect the project, classify issues and provide evidence.
+
+Do not change anything.
+
+### 2. Select
+
+Decide which findings are:
+
+- genuine correctness problems;
+- reproducibility problems;
+- documentation problems;
+- intentional simplifications;
+- theoretical limitations;
+- optional improvements that are not worth their complexity.
+
+### 3. Implement
+
+Choose one issue and make the smallest justified intervention.
+
+This prevents an audit from becoming an automatic mandate to rewrite every imperfect part of a project.
+
+It also produces a cleaner review trail: diagnosis, decision, patch.
+
+## Tests should protect ideas, not just code
+
+AI is very good at generating tests.
+
+That is valuable, but a large test suite can create false confidence if the tests merely repeat the assumptions of the implementation.
+
+For numerical and mathematical software, I prefer tests based on independent properties:
+
+- a known closed-form solution;
+- scale invariance;
+- a conserved quantity;
+- a theoretical bound;
+- monotonicity where theory genuinely guarantees it;
+- agreement with an independently implemented calculation;
+- explicit failure when convergence is not achieved.
+
+The question is not simply:
+
+> Does the test pass?
+
+It is:
+
+> Would this test still expose the error if the implementation and its internal conventions were both wrong in the same way?
+
+That is a much stronger standard.
+
+## Benchmarks are part of the scientific argument
+
+Software changes can alter scientific conclusions without changing the underlying model.
+
+Suppose one optimisation method requires a step-size estimate. Replacing an unsafe estimate with a conservative bound may be mathematically valid, but if the new bound is unnecessarily large, the method takes unnecessarily small steps.
+
+The code is now safer.
+
+The benchmark may now be less fair.
+
+Similarly, a timing comparison can change depending on whether preprocessing is included, whether one method receives information derived from the optimum, how frequently objectives are evaluated, or whether stopping criteria represent genuinely comparable accuracy.
+
+That is why I treat benchmark design as part of the scientific work rather than as implementation plumbing.
+
+A benchmark change deserves the same question as a modelling change:
+
+> What exactly are we comparing now?
+
+## Agents: capability changes the failure mode
+
+An agent is more than a chatbot with a terminal.
+
+It can inspect files, call tools, edit code, run tests and respond to the results. That can remove a remarkable amount of mechanical work.
+
+It also allows mistakes to propagate.
+
+```text
+wrong inference
+      ↓
+tool action
+      ↓
+changed environment
+      ↓
+next inference uses changed state
+      ↓
+further action
+```
+
+For that reason, I prefer agents with explicit boundaries:
+
+- a trusted starting state;
+- a specific objective;
+- a clear list of files or systems they may change;
+- explicit things they must not change;
+- tests or other evidence for success;
+- a diff or audit trail before acceptance.
+
+This is not because current agents are incapable. It is because capability and reliability are different properties.
+
+### Frontier models are still imperfect agents
+
+Current benchmarks make that distinction concrete.
+
+As of July 2026, OpenAI reports **58.0% on Toolathlon** and **18.1% on AutomationBench** for GPT-5.6 Sol. On the same Toolathlon table, Claude Mythos 5 scores **61.7%**.[^openai56]
+
+An independent general-agent benchmark, OmniaBench, reports Overall Pass@1 of **58.54% for Claude Sonnet 5** and **57.14% for GPT-5.6 Sol** across 1,431 tasks.[^omnia]
+
+These benchmarks test different environments and should not be compared as if they were one common error rate. They are also not estimates of failure frequency in ordinary day-to-day use.
+
+Their importance is more basic: even frontier systems that are extremely capable can still fail a substantial fraction of demanding agentic tasks.
+
+The right response is not to avoid agents. It is to design workflows in which failure is visible and reversible.
+
+## Memory and long context are retrieval aids, not canonical records
+
+Another easy mistake is to confuse *available somewhere* with *reliably retrievable*.
+
+A long conversation, large context window or persistent memory system can contain the information needed to answer a question and still fail to surface the right detail.
+
+Again, current benchmark results illustrate the point. OpenAI reports GPT-5.6 Sol at **73.8%** on its MRCR v2 eight-needle test at 512K–1M tokens and **77.1 F1** on the one-million-token GraphWalks BFS evaluation; Claude Mythos 5 scores **79.4 F1** on the latter.[^openai56]
+
+Those are strong long-context results. They are not perfect recall.
+
+They also do **not** measure a product's cross-conversation personal-memory feature, and I would not treat them as if they did.
+
+For my own work, the practical conclusion is:
+
+```text
+chat history / model memory
+            ↓
+useful retrieval layer
+            ↓
+not the source of truth
+```
+
+Important decisions, results, references and project state belong in durable artefacts: repositories, Markdown notes, Quarto documents, data files and documentation.
+
+AI can help maintain and interrogate that record.
+
+It should not be the record.
+
+## Fluent output is not evidence
+
+Modern models are unusually persuasive because uncertainty is not always visible in the prose.
+
+A claim can be specific, well written and wrong.
+
+A citation can look plausible and not support the sentence attached to it.
+
+An agent can say a file was changed, a test passed or a search found nothing.
+
+For consequential work, I try to attach claims to the thing that can actually establish them:
+
+| Claim | Evidence I want |
+|---|---|
+| A paper says X | The paper |
+| A factual statement is current | A current primary or authoritative source |
+| A derivation is correct | Assumptions and an independent mathematical check |
+| A numerical result holds | Reproducible computation or an invariant |
+| A code change works | Diff + targeted tests |
+| An agent changed something | File, commit, API response or tool output |
+| A previous decision was made | Durable project notes or source history |
+
+The required level of verification scales with the consequence of being wrong.
+
+Brainstorming should remain cheap.
+
+Published claims, mathematical conclusions and repository changes should not.
+
+## Reversibility is a feature
+
+The safest AI workflow is not one in which the model never makes a poor decision.
+
+It is one in which a poor decision is cheap to undo.
+
+For software:
+
+```text
+main
+  ↓
+small branch
+  ↓
+diff
+  ↓
+test
+  ↓
+review
+  ↓
+merge
+```
+
+For writing:
+
+```text
+canonical text
+      ↓
+AI revision
+      ↓
+compare
+      ↓
+accept selected changes
+```
+
+For research:
+
+```text
+established model
+      ↓
+experimental extension
+      ↓
+theoretical / numerical check
+      ↓
+promote only if justified
+```
+
+This is one reason version control matters even more when generation becomes cheap.
+
+## Keep one source of truth
+
+AI makes it almost frictionless to produce another version of something.
+
+A project can quickly acquire:
+
+```text
+paper
+  ↓
+repository
+  ↓
+technical walkthrough
+  ↓
+project page
+  ↓
+presentation
+  ↓
+CV summary
+```
+
+Those are useful layers for different audiences.
+
+They become a liability when each begins to contain its own version of the facts.
+
+I therefore try to make one source authoritative for each type of information and derive or verify downstream representations against it.
+
+A repository can own implementation and version history. A paper can own a published result. Structured project data can own canonical links. A technical walkthrough can explain the implementation without becoming a second implementation.
+
+AI is particularly useful for transforming one authoritative source for another audience.
+
+That is very different from letting it invent five loosely related versions.
+
+## Technical communication: transformation is a high-value use
+
+One of my favourite uses of AI is changing the level of explanation without changing the underlying substance.
+
+The same work may need to serve several readers:
+
+```text
+research paper
+      ↓
+technical repository
+      ↓
+technical walkthrough
+      ↓
+industry-facing explanation
+      ↓
+short professional summary
+```
+
+AI can help identify which details each audience needs, remove unnecessary notation, generate an outline, or compare the public explanation against the technical source for drift.
+
+This is a good form of delegation because the transformation can be checked against something authoritative.
+
+The goal is not to make difficult work sound simple.
+
+It is to make the right part of the difficulty visible to the right reader.
+
+## AI-assisted does not mean AI-generated
+
+I do not think every project needs an AI badge.
+
+In some projects AI has played a meaningful role: repository audit, test generation, code review, documentation checks, literature reconnaissance or communication across several technical layers.
+
+Those contributions are worth describing when they illuminate the workflow.
+
+In other cases AI may have been no more important than the editor, version-control system or plotting library.
+
+There is no value in labelling everything.
+
+The interesting question is:
+
+> What did AI make possible, faster or easier—and what evidence was used to decide that its output was good enough?
+
+That is the distinction I want project pages to make when AI is genuinely part of the story.
+
+## My working protocol
+
+For consequential AI-assisted work, I now use a simple sequence.
+
+```text
+1. Define
+   State the actual problem.
+
+2. Freeze
+   Identify the trusted baseline.
+
+3. Diagnose
+   Understand the issue before changing it.
+
+4. Select
+   Decide which problem is actually worth solving.
+
+5. Constrain
+   State what must remain unchanged.
+
+6. Delegate
+   Use AI for the expensive middle.
+
+7. Verify
+   Test the relevant property independently.
+
+8. Inspect
+   Look at the output, source, diff or evidence.
+
+9. Accept
+   Decide whether the result belongs in the project.
+
+10. Stop
+    Do not turn a completed task into an unsolicited redesign.
+```
+
+The protocol is intentionally conservative.
+
+AI already supplies the speed.
+
+The workflow needs to supply the control.
+
+## Where this leaves me
+
+I expect AI systems to become much more capable.
+
+That makes me more interested in using them, not less.
+
+But as production becomes cheaper, other parts of technical work become relatively more important:
+
+- choosing worthwhile questions;
+- making assumptions explicit;
+- selecting authoritative evidence;
+- designing meaningful experiments;
+- noticing when complexity adds nothing;
+- validating results;
+- communicating uncertainty;
+- deciding when the work is finished.
+
+The opportunity is not simply to automate the work I already do.
+
+It is to spend less time on the mechanical middle and more time on those decisions.
+
+**Delegate production. Preserve evidence. Verify what matters. Retain ownership of the decision.**
+
+[^openai56]: OpenAI, [*GPT-5.6: Frontier intelligence that scales with your ambition*](https://openai.com/index/gpt-5-6/), 9 July 2026. The published evaluation table reports GPT-5.6 Sol at 58.0% on Toolathlon, 18.1% on AutomationBench, 73.8% on MRCR v2 eight-needle at 512K–1M tokens and 77.1 F1 on GraphWalks BFS at one million tokens; it reports Claude Mythos 5 at 61.7% on Toolathlon and 79.4 F1 on the one-million-token GraphWalks evaluation.
+
+[^omnia]: Chengyu Shen et al., [*OmniaBench: Benchmarking General AI Agents Across Diverse Scenarios*](https://arxiv.org/abs/2607.14989), arXiv:2607.14989, 16 July 2026. The benchmark contains 1,431 tasks and reports Overall Pass@1 of 58.54% for Claude Sonnet 5 and 57.14% for GPT-5.6 Sol.
