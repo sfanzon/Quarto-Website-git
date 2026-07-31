@@ -4,8 +4,9 @@
   "private": true,
   "description": "Quarto source and visual regression tests for silviofanzon.com",
   "scripts": {
-    "test:quick": "npm run test:generated && playwright test tests/safety/interactions.spec.js tests/safety/layout.spec.js tests/safety/links.spec.js --project=chromium",
-    "test": "playwright test tests/safety/smoke.spec.js tests/safety/interactions.spec.js tests/safety/layout.spec.js tests/safety/links.spec.js tests/safety/cross-browser.spec.js --project=chromium",
+    "test:generator": "python3 -m unittest discover -s tests/generator -p 'test_*.py'",
+    "test:quick": "npm run test:generator && npm run test:generated && playwright test tests/safety/interactions.spec.js tests/safety/layout.spec.js tests/safety/links.spec.js --project=chromium",
+    "test": "npm run test:generator && playwright test tests/safety/smoke.spec.js tests/safety/interactions.spec.js tests/safety/layout.spec.js tests/safety/links.spec.js tests/safety/cross-browser.spec.js --project=chromium",
     "test:accessibility": "playwright test tests/safety/accessibility.spec.js --project=chromium",
     "test:visual": "playwright test tests/visual/capture.spec.js --project=chromium",
     "test:full": "playwright test",

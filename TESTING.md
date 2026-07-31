@@ -4,12 +4,12 @@
 
 | Command | Scope | Environment |
 |---|---|---|
-| `npm run test:quick` | 11 Chromium checks plus 6 generated-output guard tests | Local or CI |
-| `npm test` | 38 Chromium checks: all-page smoke, interactions, links, navigation | Local or CI |
+| `npm run test:quick` | 13 Chromium checks plus 9 generator tests and 6 generated-output guard tests | Local or CI |
+| `npm test` | 40 Chromium checks plus 9 generator tests: all-page smoke, interactions, links, navigation | Local or CI |
 | `npm run test:accessibility` | 36 Chromium WCAG A/AA checks | Local or CI |
 | `npm run cross-browser:test` | 18 checks across Firefox + WebKit | Local or CI |
 | `npm run test:visual` | 30 full-page Chromium screenshot comparisons | **CI only** (see below) |
-| `npm run test:full` | 122 checks: all of the above + accessibility | **CI only** (includes visual) |
+| `npm run test:full` | 124 browser checks: smoke, interactions, links, layout, accessibility, cross-browser and visual | **CI only** (includes visual) |
 
 ## Visual regression tests
 

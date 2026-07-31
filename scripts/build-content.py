@@ -3,10 +3,7 @@ from datetime import datetime
 import html, json, re, yaml
 
 root=Path(__file__).resolve().parents[1]
-pubs = []  # Loaded from data/publications.bib below.
-projects=yaml.safe_load((root/'data/projects.yml').read_text())
-(root/'data/projects.generated.json').write_text(json.dumps(projects, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-coauthor_urls=yaml.safe_load((root/'data/coauthors.yml').read_text()) or {}
+COAUTHOR_URLS = {}
 
 def read_front_matter(path):
     text = path.read_text()
@@ -55,24 +52,52 @@ def read_bibtex_entries(path):
         key, fields_source = record.split(',', 1)
         fields = {'id': key.strip(), 'entrytype': entry_type}
         field_position = 0
-        field_pattern = re.compile(r'([\w-]+)\s*=\s*\{')
+        field_pattern = re.compile(r'([\w-]+)\s*=\s*', re.IGNORECASE)
         while True:
             field_match = field_pattern.search(fields_source, field_position)
             if not field_match:
                 break
             name = field_match.group(1).lower()
             value_start = field_match.end()
-            value_cursor = value_start
-            value_depth = 1
-            while value_cursor < len(fields_source) and value_depth:
-                if fields_source[value_cursor] == '{':
-                    value_depth += 1
-                elif fields_source[value_cursor] == '}':
-                    value_depth -= 1
+            while value_start < len(fields_source) and fields_source[value_start].isspace():
+                value_start += 1
+
+            if value_start >= len(fields_source):
+                raise ValueError(f'Missing value for field {name} in {path.name}:{key.strip()}')
+
+            opening = fields_source[value_start]
+            if opening == '{':
+                value_cursor = value_start + 1
+                value_depth = 1
+                while value_cursor < len(fields_source) and value_depth:
+                    if fields_source[value_cursor] == '{':
+                        value_depth += 1
+                    elif fields_source[value_cursor] == '}':
+                        value_depth -= 1
+                    value_cursor += 1
+                if value_depth:
+                    raise ValueError(f'Unclosed field {name} in {path.name}:{key.strip()}')
+                value = fields_source[value_start + 1:value_cursor - 1]
+            elif opening == '"':
+                value_cursor = value_start + 1
+                escaped = False
+                while value_cursor < len(fields_source):
+                    char = fields_source[value_cursor]
+                    if char == '"' and not escaped:
+                        break
+                    escaped = char == '\\' and not escaped
+                    if char != '\\':
+                        escaped = False
+                    value_cursor += 1
+                if value_cursor >= len(fields_source):
+                    raise ValueError(f'Unclosed field {name} in {path.name}:{key.strip()}')
+                value = fields_source[value_start + 1:value_cursor]
                 value_cursor += 1
-            if value_depth:
-                raise ValueError(f'Unclosed field {name} in {path.name}:{key.strip()}')
-            value = fields_source[value_start:value_cursor - 1]
+            else:
+                comma = fields_source.find(',', value_start)
+                value_cursor = len(fields_source) if comma == -1 else comma
+                value = fields_source[value_start:value_cursor].strip()
+
             fields[name] = re.sub(r'\s+', ' ', value).strip()
             field_position = value_cursor
         records.append(fields)
@@ -192,8 +217,6 @@ def load_publications(path):
         publications.append(record)
     return publications
 
-
-pubs = load_publications(root / 'data/publications.bib')
 
 def teaching_link(value, asset=False):
     if value.startswith(('http://', 'https://', '/')):
@@ -455,8 +478,6 @@ def pub_actions(p, toggles=True):
 
     return ''.join(xs)
 
-COAUTHOR_URLS = coauthor_urls
-
 def publication_side_meta(p):
     """Research-theme labels for the responsive publication rail."""
     return f'<div class="publication-theme-rail">{publication_theme_pills(p)}</div>'
@@ -492,80 +513,6 @@ def render_project_card(project):
       <div class="home-project-copy"><p class="project-labels">{labels}</p><h3>{title}</h3><p>{summary}</p><div class="home-project-actions"><a href="{href}">Read project <span aria-hidden="true">→</span></a>{code_link}</div></div>
     </article>'''
 
-
-
-# Long-form project heroes, F1 resource navigation and related-project
-# suggestions are rendered at Quarto render-time by filters/project-components.lua.
-# That filter reads data/projects.generated.json, which is refreshed above from
-# the same data/projects.yml used by the homepage and Projects page cards.
-
-featured_projects=[p for p in projects if p.get('featured') is True][:3]
-proj=[render_project_card(p) for p in featured_projects]
-project_archive=[render_project_card(p) for p in projects]
-# Every publication explicitly marked `selected: true` appears on the
-# homepage, in the same order as data/publications.bib.
-selected=[p for p in pubs if p.get('selected') is True]
-(root/'includes/home-projects.html').write_text('\n'.join(proj))
-(root/'includes/projects-portfolio.html').write_text('''<section class="projects-section project-portfolio">
-  <div class="section-heading project-page-heading"><div><p class="eyebrow">Selected work</p><span>Projects, implementations and reproducible outputs</span></div></div>
-  <div class="projects-card-grid">
-''' + '\n'.join(project_archive) + '''
-  </div>
-</section>''')
-
-home_pub_rows=[]
-for p in selected:
-    home_pub_rows.append(
-        render_publication_entry(
-            p,
-            f"home-list-{p['id']}",
-            'home-publication-row',
-            pub_actions(p),
-        )
-    )
-(root/'includes/home-publications-list.html').write_text('\n'.join(home_pub_rows))
-
-# Publications page
-publication_categories = list(dict.fromkeys(p['category'] for p in pubs))
-
-allbits=[]
-for group in publication_categories:
-    rows=[]
-    for p in [x for x in pubs if x['category'] == group]:
-        rows.append(
-            render_publication_entry(
-                p,
-                p['id'],
-                'home-publication-row publication-archive-row',
-                pub_actions(p),
-            )
-        )
-    if rows:
-        group_id=group.lower().replace(' ','-')
-        allbits.append(f'''<section class="publication-category" id="{group_id}"><h2>{group}</h2><div class="publication-category-list">{''.join(rows)}</div></section>''')
-(root/'includes/publications-all.html').write_text('\n'.join(allbits))
-
-# Teaching: retain the original BibDesk bibliographies as the single source.
-lecturer_courses = read_bibtex_entries(root / 'data/teaching_lecturer.bib')
-tutor_courses = read_bibtex_entries(root / 'data/teaching_tutor.bib')
-teaching_html = [
-    teaching_section(
-        'lecturer',
-        'Lecturer',
-        lecturer_courses,
-        teaching_years(lecturer_courses, 'teaching_lecturer.bib'),
-    ),
-    teaching_section(
-        'tutor',
-        'Teaching assistant',
-        tutor_courses,
-        teaching_years(tutor_courses, 'teaching_tutor.bib'),
-    ),
-]
-(root / 'includes/teaching-list.html').write_text('\n'.join(teaching_html))
-
-# News: dated Markdown files are the single source for both views.
-news = load_news()
 
 
 def render_news_component(items, empty_message, searchable=True):
@@ -614,5 +561,87 @@ def write_news_qmd(path, items, empty_message, searchable=True):
     markup = render_news_component(items, empty_message, searchable=searchable)
     path.write_text(f"```{{=html}}\n{markup}\n```\n", encoding='utf-8')
 
-write_news_qmd(root / 'includes/home-news.qmd', news[:8], 'No recent announcements.', searchable=False)
-write_news_qmd(root / 'includes/news-all.qmd', news, 'No announcements yet.')
+
+def main():
+    global COAUTHOR_URLS
+
+    projects = yaml.safe_load((root / 'data/projects.yml').read_text()) or []
+    (root / 'data/projects.generated.json').write_text(
+        json.dumps(projects, ensure_ascii=False, indent=2) + '\n',
+        encoding='utf-8',
+    )
+    COAUTHOR_URLS = yaml.safe_load((root / 'data/coauthors.yml').read_text()) or {}
+    pubs = load_publications(root / 'data/publications.bib')
+
+    # Long-form project heroes, F1 resource navigation and related-project
+    # suggestions are rendered at Quarto render-time by filters/project-components.lua.
+    featured_projects = [p for p in projects if p.get('featured') is True][:3]
+    project_cards = [render_project_card(p) for p in featured_projects]
+    project_archive = [render_project_card(p) for p in projects]
+    selected = [p for p in pubs if p.get('selected') is True]
+    (root / 'includes/home-projects.html').write_text('\n'.join(project_cards))
+    (root / 'includes/projects-portfolio.html').write_text(
+        '''<section class="projects-section project-portfolio">
+  <div class="section-heading project-page-heading"><div><p class="eyebrow">Selected work</p><span>Projects, implementations and reproducible outputs</span></div></div>
+  <div class="projects-card-grid">
+''' + '\n'.join(project_archive) + '''
+  </div>
+</section>'''
+    )
+
+    home_pub_rows = [
+        render_publication_entry(
+            p,
+            f"home-list-{p['id']}",
+            'home-publication-row',
+            pub_actions(p),
+        )
+        for p in selected
+    ]
+    (root / 'includes/home-publications-list.html').write_text('\n'.join(home_pub_rows))
+
+    publication_categories = list(dict.fromkeys(p['category'] for p in pubs))
+    allbits = []
+    for group in publication_categories:
+        rows = [
+            render_publication_entry(
+                p,
+                p['id'],
+                'home-publication-row publication-archive-row',
+                pub_actions(p),
+            )
+            for p in pubs
+            if p['category'] == group
+        ]
+        if rows:
+            group_id = group.lower().replace(' ', '-')
+            allbits.append(
+                f'''<section class="publication-category" id="{group_id}"><h2>{group}</h2><div class="publication-category-list">{''.join(rows)}</div></section>'''
+            )
+    (root / 'includes/publications-all.html').write_text('\n'.join(allbits))
+
+    lecturer_courses = read_bibtex_entries(root / 'data/teaching_lecturer.bib')
+    tutor_courses = read_bibtex_entries(root / 'data/teaching_tutor.bib')
+    teaching_html = [
+        teaching_section(
+            'lecturer',
+            'Lecturer',
+            lecturer_courses,
+            teaching_years(lecturer_courses, 'teaching_lecturer.bib'),
+        ),
+        teaching_section(
+            'tutor',
+            'Teaching assistant',
+            tutor_courses,
+            teaching_years(tutor_courses, 'teaching_tutor.bib'),
+        ),
+    ]
+    (root / 'includes/teaching-list.html').write_text('\n'.join(teaching_html))
+
+    news = load_news()
+    write_news_qmd(root / 'includes/home-news.qmd', news[:8], 'No recent announcements.', searchable=False)
+    write_news_qmd(root / 'includes/news-all.qmd', news, 'No announcements yet.')
+
+
+if __name__ == '__main__':
+    main()
