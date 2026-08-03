@@ -1,4 +1,11 @@
 const { defineConfig } = require("@playwright/test");
+const path = require("node:path");
+
+const visualSiteRoot = path.resolve(process.env.VISUAL_SITE_ROOT || ".");
+const visualBaselinesDirectory = process.env.VISUAL_BASELINES_DIR;
+const visualSnapshotPath = visualBaselinesDirectory
+  ? path.resolve(visualBaselinesDirectory, "{arg}{ext}")
+  : "{testDir}/visual/baselines/{arg}{ext}";
 
 module.exports = defineConfig({
   testDir: "./tests",
@@ -12,7 +19,7 @@ module.exports = defineConfig({
       animations: "disabled",
       caret: "hide",
       maxDiffPixelRatio: 0.001,
-      pathTemplate: "{testDir}/visual/baselines/{arg}{ext}"
+      pathTemplate: visualSnapshotPath
     }
   },
   reporter: [["list"], ["html", { open: "never" }]],
@@ -40,8 +47,9 @@ module.exports = defineConfig({
   ],
   webServer: {
     command: "python3 -m http.server 4321 --bind 127.0.0.1 --directory docs",
+    cwd: visualSiteRoot,
     url: "http://127.0.0.1:4321/index.html",
-    reuseExistingServer: true,
+    reuseExistingServer: !process.env.CI,
     timeout: 30_000
   }
 });

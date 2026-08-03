@@ -1,14 +1,13 @@
 name: Visual Regression Tests
 
-# ── When ──────────────────────────────────────────────────────────
-# Manual trigger or when styles/content/data/filters change in a PR.
-# Does NOT run on every push — visual tests are expensive and should
-# be intentional.
-# ───────────────────────────────────────────────────────────────────
+# Pull requests compare freshly rendered base and head revisions in the same
+# controlled environment. Manual runs retain the reviewed, committed-baseline
+# check. Neither mode updates committed screenshots.
 
 on:
   workflow_dispatch:
   pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
     paths:
       - 'styles/**'
       - '_quarto.yml'
@@ -18,6 +17,7 @@ on:
       - 'scripts/**'
       - 'projects/**'
       - 'news/**'
+      - 'notes/**'
       - '*.qmd'
       - 'package.json'
       - 'package-lock.json'
@@ -26,7 +26,101 @@ on:
       - '.github/workflows/visual-tests.yml'
 
 jobs:
-  visual:
+  compare-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout pull-request base
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.base.repo.full_name }}
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base
+
+      - name: Checkout pull-request head
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: head
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: head/package-lock.json
+
+      - name: Install head test dependencies
+        working-directory: head
+        run: npm ci
+
+      - name: Install Playwright Chromium (with system deps)
+        working-directory: head
+        run: npx playwright install --with-deps chromium
+
+      - name: Install deterministic fonts
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-roboto
+
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: '1.9.38'
+
+      - name: Render base site from source
+        working-directory: base
+        run: quarto render
+
+      - name: Render head site from source
+        working-directory: head
+        run: quarto render
+
+      - name: Capture temporary base screenshots
+        working-directory: head
+        run: npm run visual:baseline
+        env:
+          VISUAL_BASE_HEAD_COMPARISON: '1'
+          VISUAL_SITE_ROOT: ${{ github.workspace }}/base
+          VISUAL_BASELINES_DIR: ${{ runner.temp }}/base-visual-baselines
+
+      - name: Compare head with base
+        id: compare
+        continue-on-error: true
+        working-directory: head
+        run: npm run test:visual
+        env:
+          VISUAL_BASE_HEAD_COMPARISON: '1'
+          VISUAL_SITE_ROOT: ${{ github.workspace }}/head
+          VISUAL_BASELINES_DIR: ${{ runner.temp }}/base-visual-baselines
+
+      - name: Upload base screenshots and diffs on failure
+        if: failure() || steps.compare.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: base-head-visual-diffs
+          path: |
+            ${{ runner.temp }}/base-visual-baselines/
+            head/test-results/
+            head/playwright-report/
+          retention-days: 14
+
+      - name: Require review for visual differences
+        if: steps.compare.outcome == 'failure' && !contains(github.event.pull_request.labels.*.name, 'visual-change-approved')
+        run: |
+          echo "Visual differences were detected."
+          echo "Review the base-head-visual-diffs artifact, then apply"
+          echo "the visual-change-approved label if every difference is intentional."
+          exit 1
+
+      - name: Record approved visual differences
+        if: steps.compare.outcome == 'failure' && contains(github.event.pull_request.labels.*.name, 'visual-change-approved')
+        run: echo "Visual differences were explicitly approved after artifact review."
+
+  compare-reviewed-baselines:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-22.04
 
     steps:
@@ -46,9 +140,6 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Install deterministic fonts
-        # Roboto is the first cross-platform fallback in the site's font stack
-        # after the macOS/Windows-specific entries. Installing it ensures
-        # consistent font rendering across CI runs.
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-roboto
@@ -61,14 +152,14 @@ jobs:
       - name: Render site from source
         run: quarto render
 
-      - name: Run visual regression tests
+      - name: Compare with reviewed baselines
         run: npm run test:visual
 
       - name: Upload diffs on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: visual-regression-diffs
+          name: reviewed-baseline-visual-diffs
           path: |
             test-results/
             playwright-report/

@@ -82,5 +82,31 @@
       "name": "f1-project",
       "path": "projects/f1-time-rank-duality/index.html"
     }
+  ],
+  "prComparisonPages": [
+    {
+      "name": "about",
+      "path": "about.html"
+    },
+    {
+      "name": "expertise",
+      "path": "expertise.html"
+    },
+    {
+      "name": "research",
+      "path": "research.html"
+    },
+    {
+      "name": "news",
+      "path": "news.html"
+    },
+    {
+      "name": "notes",
+      "path": "notes.html"
+    },
+    {
+      "name": "note-detail",
+      "path": "notes/how-i-use-ai.html"
+    }
   ]
 }

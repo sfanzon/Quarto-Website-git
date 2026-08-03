@@ -2,8 +2,11 @@ const { test, expect } = require("@playwright/test");
 const manifest = require("./baseline-manifest.json");
 
 const combinations = [];
+const pageTargets = process.env.VISUAL_BASE_HEAD_COMPARISON === "1"
+  ? [...manifest.pages, ...(manifest.prComparisonPages || [])]
+  : manifest.pages;
 
-for (const pageTarget of manifest.pages) {
+for (const pageTarget of pageTargets) {
   for (const [themeName, theme] of Object.entries(manifest.themes)) {
     for (const [viewportName, viewport] of Object.entries(manifest.viewports)) {
       combinations.push({

@@ -9,6 +9,7 @@
 | `npm run test:accessibility` | 46 Chromium WCAG A/AA checks | Local or CI |
 | `npm run cross-browser:test` | 18 checks across Firefox + WebKit | Local or CI |
 | `npm run test:visual` | 30 full-page Chromium screenshot comparisons | **CI only** (see below) |
+| Pull-request visual workflow | 66 base-versus-head screenshot comparisons | **CI only** |
 | `npm run test:full` | 140 browser checks: smoke, interactions, links, layout, accessibility, cross-browser and visual | **CI only** (includes visual) |
 
 ## Visual regression tests
@@ -42,30 +43,40 @@ Visual tests run in GitHub Actions on `ubuntu-22.04` with:
 - **Quarto**: 1.9.38 (site is rendered from source in CI before screenshots)
 - **Fonts**: `fonts-roboto` installed explicitly for deterministic rendering
 
-The CI environment is the **single source of truth** for visual baselines.
+The CI environment is the **single source of truth** for pixel comparisons.
 
 ### Build workflow
 
-Both the visual regression workflow and the baseline-update workflow now follow
-the same recipe:
+Pull requests render both revisions and compare them directly:
 
 ```
-source
-  ↓
-quarto render
-  ↓
-docs/
-  ↓
-Playwright screenshots
+base source ──→ quarto render ──→ temporary base screenshots
+                                             ↓ compare
+head source ──→ quarto render ──→ head screenshots
 ```
 
-This ensures that baselines and visual comparisons exercise the same artifact —
-a site freshly rendered from source in the same controlled environment. Visual
-regression and generated-output reproducibility are treated as separate concerns.
+The base and head renders use the same runner, Chromium build, fonts, Quarto
+version and test harness. This removes uncertainty caused by stale permanent
+screenshots: a failure identifies a visual difference introduced by the pull
+request itself.
+
+If there is no difference, the check passes automatically. If there is a
+difference, CI uploads the `base-head-visual-diffs` artifact and fails the
+check. After reviewing that artifact, apply the `visual-change-approved` pull
+request label only when every difference is intentional. Label changes rerun
+the workflow; an approved visual difference then passes without changing any
+screenshots.
+
+Manual visual runs and the baseline-update workflow retain the reviewed,
+committed-baseline model. They follow the usual `source → quarto render → docs/
+→ screenshots` recipe. Pull-request comparison screenshots are temporary and
+never overwrite the committed baselines.
 
 ### When visual tests run
 
-- **Pull requests** that touch styles, content, data, filters, or build configuration
+- **Pull requests** that touch styles, content, data, filters, or build
+  configuration compare base with head across 11 representative pages, three
+  viewports and both themes (66 comparisons)
 - **Manual trigger** via `workflow_dispatch` on the Actions tab
 
 They do NOT run on every push. Visual tests are expensive and intentional.
@@ -81,9 +92,16 @@ Baselines must never update automatically. When an intentional visual change occ
 5. Review every screenshot carefully
 6. Commit the new baselines to `tests/visual/baselines/`
 
+This permanent-baseline update is separate from approving a pull-request diff.
+The `visual-change-approved` label records review of that PR; it never updates
+or replaces committed screenshots.
+
 ### Current baseline state
 
-The baselines were regenerated in the controlled CI environment on 2026-07-28 and committed as part of the visual baseline migration. They use the Linux CI environment (ubuntu-22.04, Chromium, Roboto font) and are compatible with the CI visual regression workflow.
+The 30 committed baselines cover five representative pages and remain the
+reviewed reference set for manual runs. Pull-request checks additionally cover
+About, Expertise, Research, News, the Notes archive and a representative note
+article without requiring permanent screenshots for those pages.
 
 To regenerate baselines after an intentional visual change, trigger the "Update Visual Baselines" workflow, review the artifacts, and commit the result.
 
