@@ -58,3 +58,38 @@ test("desktop search icon aligns with the navbar shell", async ({ page }) => {
 
   expectAligned(layout.iconRight, layout.navbarRight, "desktop: search icon right edge");
 });
+
+test("project card grids retain their responsive column counts", async ({ page }) => {
+  const targets = [
+    { path: "/index.html", selector: ".home-project-grid" },
+    { path: "/projects.html", selector: ".projects-card-grid" }
+  ];
+  const expectedColumns = { mobile: 1, iPad: 2, desktop: 3 };
+
+  for (const viewport of responsiveViewports) {
+    await page.setViewportSize(viewport);
+    for (const target of targets) {
+      await page.goto(target.path);
+      const grid = page.locator(target.selector);
+      await expect(grid).toBeVisible();
+
+      const layout = await grid.evaluate((element) => {
+        const columns = getComputedStyle(element).gridTemplateColumns
+          .trim()
+          .split(/\s+/)
+          .filter(Boolean).length;
+        const cardsFitViewport = [...element.querySelectorAll(".home-project-card")]
+          .every((card) => {
+            const rect = card.getBoundingClientRect();
+            return rect.left >= -0.5 && rect.right <= window.innerWidth + 0.5;
+          });
+        return { columns, cardsFitViewport };
+      });
+
+      expect(layout.columns, `${viewport.name}: ${target.path} columns`)
+        .toBe(expectedColumns[viewport.name]);
+      expect(layout.cardsFitViewport, `${viewport.name}: ${target.path} overflow`)
+        .toBe(true);
+    }
+  }
+});

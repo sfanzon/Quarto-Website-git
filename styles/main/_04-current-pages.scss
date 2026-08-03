@@ -128,82 +128,6 @@ body.home-page .home-role span {
   }
 }
 
-/* Three visible projects: no hidden carousel content. */
-.home-project-grid,
-.projects-card-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.5rem, 3.6vw, 2rem);
-}
-.home-project-card {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--global-theme-color) 18%, var(--global-divider-color));
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--global-section-bg) 42%, var(--global-bg-color));
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--global-text-color) 5%, transparent);
-}
-.home-project-visual {
-  display: grid;
-  place-items: center;
-  min-height: 165px;
-  padding: .9rem;
-  background: color-mix(in srgb, var(--global-theme-color) 7%, var(--global-bg-color));
-  border-bottom: 1px solid var(--global-divider-color);
-}
-.home-project-visual img {
-  width: 100%;
-  height: 165px;
-  object-fit: contain;
-}
-
-@media (min-width: 992px) {
-  .home-project-visual { min-height: 190px; }
-  .home-project-visual img { height: 170px; }
-}
-
-@media (min-width: 768px) and (max-width: 991.98px) {
-  .home-project-grid,
-  .projects-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .home-project-visual { min-height: 185px; }
-}
-.home-project-copy {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: clamp(1rem, 1.7vw, 1.25rem);
-}
-.home-project-copy h3 {
-  margin: 0 0 .75rem;
-  color: var(--global-text-color);
-  font-size: clamp(1.16rem, 1.55vw, 1.38rem);
-  line-height: 1.17;
-  letter-spacing: -.025em;
-}
-.home-project-copy > p:not(.eyebrow):not(.project-labels) {
-  margin: 0 0 1rem;
-  color: var(--global-text-color-light);
-  font-size: .93rem;
-  line-height: 1.58;
-}
-.home-project-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .55rem 2.2rem;
-  margin-top: auto;
-  padding-top: .8rem;
-  border-top: 1px solid var(--global-divider-color);
-}
-.home-project-actions a {
-  color: var(--homepage-orange-accent, var(--global-theme-color));
-  font-size: .84rem;
-  font-weight: 650;
-  text-decoration: none;
-}
-.home-project-actions a:hover { color: var(--global-hover-color); }
-
 /* Closing career section: the About link is offered only after the story. */
 .home-background-section {
   display: grid;
@@ -587,10 +511,6 @@ body.home-page .home-role span {
 
 /* Mobile: section destinations come after content, never before it. */
 @media (max-width: 767.98px) {
-  .home-project-grid,
-  .projects-card-grid { grid-template-columns: 1fr; }
-  .home-project-visual { min-height: 225px; }
-  .home-project-visual img { height: 210px; }
   body.home-page .home-editorial-section,
   body.home-page .home-expertise-preview {
     display: flex;
@@ -862,32 +782,6 @@ body.archived-project-page .project-detail-hero {
   .project-workflow span { margin-bottom: .7rem; }
 }
 
-/* Unified editorial project taxonomy — July 2026
-   Cards use compact text metadata rather than pills; article pages retain
-   only the primary discipline in their hero. */
-.project-labels {
-  margin: 0 0 .55rem;
-  color: var(--homepage-orange-accent, var(--global-theme-color));
-  font-size: clamp(.58rem, .54rem + .08vw, .64rem);
-  font-weight: 720;
-  letter-spacing: .09em;
-  line-height: 1.35;
-  text-transform: uppercase;
-}
-.home-project-copy > p.project-labels {
-  margin: 0 0 .6rem;
-  color: var(--homepage-orange-accent, var(--global-theme-color));
-  font-size: clamp(.58rem, .54rem + .08vw, .64rem);
-  font-weight: 720;
-  letter-spacing: .09em;
-  line-height: 1.35;
-  text-transform: uppercase;
-  white-space: normal;
-  overflow-wrap: anywhere;
-  text-wrap: pretty;
-}
-/* Shared YAML-driven project cards — July 2026
-   Homepage and Projects page use the exact same card component and visual rules. */
 body.projects-page .projects-positioning {
   margin-bottom: clamp(1.8rem, 3.5vw, 2.8rem);
 }
@@ -895,19 +789,6 @@ body.projects-page .project-page-heading {
   margin-bottom: 1rem;
   padding-bottom: .75rem;
 }
-.project-summary-card-archive {
-  border-style: dashed;
-  background: color-mix(in srgb, var(--global-section-bg) 55%, var(--global-card-bg-color));
-}
-.project-summary-card-archive .project-labels {
-  color: var(--global-text-color-light);
-}
-.project-summary-card-archive .home-project-actions a {
-  color: var(--global-text-color);
-  text-decoration: underline;
-  text-underline-offset: .16em;
-}
-
 /* Project article eyebrow: responsive, but deliberately quieter than card/page section labels. */
 body.project-detail-page .project-detail-hero .eyebrow {
   margin-bottom: .68rem;

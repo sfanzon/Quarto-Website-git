@@ -83,6 +83,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/main/_12-page-shell.scss` | Page shell and layout container styles |
 | `styles/main/_04-current-pages.scss` | Transitional page-specific rules imported before migrated component owners |
 | `styles/components/_notes.scss` | Homepage note rows, Notes archive and long-form note pages |
+| `styles/components/_project-cards.scss` | Shared homepage and Projects archive cards, including labels and archived state |
 
 `styles/project-pages.css` and `styles/project-navigation.css` are standalone CSS files loaded separately on project pages. They are **not** part of the `styles/main.scss` SCSS import chain.
 
@@ -102,6 +103,7 @@ already exists.
 | Homepage note selection | `styles/components/_notes.scss` | Canonical |
 | Notes archive | `styles/components/_notes.scss` | Canonical |
 | Long-form note pages | `styles/components/_notes.scss` | Canonical |
+| Homepage and Projects archive cards | `styles/components/_project-cards.scss` | Canonical |
 | Project article presentation | `styles/project-pages.css` | Canonical, project-only |
 | Project chapter navigation | `styles/project-navigation.css` | Canonical, project-only |
 | Homepage and general page composition | `styles/main/_03-overrides.scss`, `styles/main/_04-current-pages.scss` | Transitional |
