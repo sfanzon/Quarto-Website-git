@@ -81,9 +81,34 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/main/_10-navbar.scss` | Navigation bar styles |
 | `styles/main/_11-footer.scss` | Footer styles |
 | `styles/main/_12-page-shell.scss` | Page shell and layout container styles |
-| `styles/main/_04-current-pages.scss` | Page-specific rules for current site pages; imported last |
+| `styles/main/_04-current-pages.scss` | Transitional page-specific rules imported before migrated component owners |
+| `styles/components/_notes.scss` | Homepage note rows, Notes archive and long-form note pages |
 
 `styles/project-pages.css` and `styles/project-navigation.css` are standalone CSS files loaded separately on project pages. They are **not** part of the `styles/main.scss` SCSS import chain.
+
+### Style control index
+
+This table records the canonical owner for migrated components and the current
+location of components that still await consolidation. During the style
+refactor, do not add a new rule to a transitional owner when a canonical owner
+already exists.
+
+| Visible area | Current owner | Status |
+|---|---|---|
+| Design tokens, colours and shared widths | `styles/main/_00-tokens.scss` | Canonical |
+| Navbar and mobile navigation | `styles/main/_10-navbar.scss` | Canonical, pending consolidation |
+| Footer | `styles/main/_11-footer.scss` | Canonical |
+| Outer page shell | `styles/main/_12-page-shell.scss` | Canonical |
+| Homepage note selection | `styles/components/_notes.scss` | Canonical |
+| Notes archive | `styles/components/_notes.scss` | Canonical |
+| Long-form note pages | `styles/components/_notes.scss` | Canonical |
+| Project article presentation | `styles/project-pages.css` | Canonical, project-only |
+| Project chapter navigation | `styles/project-navigation.css` | Canonical, project-only |
+| Homepage and general page composition | `styles/main/_03-overrides.scss`, `styles/main/_04-current-pages.scss` | Transitional |
+| Publications | `styles/main/_01-foundation.scss`, `_02-editorial.scss`, `_03-overrides.scss`, `_04-current-pages.scss` | Transitional |
+| Teaching | `styles/main/_03-overrides.scss` | Transitional |
+| News | `styles/main/_01-foundation.scss`, `_02-editorial.scss`, `_03-overrides.scss`, `_04-current-pages.scss` | Transitional |
+| About, Expertise and Research | `styles/main/_03-overrides.scss`, `_04-current-pages.scss` | Transitional |
 
 ## Lua filters
 
