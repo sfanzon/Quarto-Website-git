@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Silvio Fanzon">
+<meta name="dcterms.date" content="2026-07-30">
+<meta name="description" content="A practical framework for using AI on serious technical work without losing control of the problem.">
+
+<title>What I Learned From Letting AI Work on a Real Project – Silvio Fanzon</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-db354705f7efee7bab7ccc1cd4295b40.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-cfe3e5ff2f3ea9255f7413f9677f1952.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-db354705f7efee7bab7ccc1cd4295b40.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+(function () {
+  const navigation = window.performance.getEntriesByType('navigation')[0];
+  if (navigation?.type !== 'back_forward') return;
+
+  const key = `scroll-position:${window.location.pathname}${window.location.search}`;
+  try {
+    const position = JSON.parse(window.sessionStorage.getItem(key));
+    if (!position || !Number.isFinite(position.x) || !Number.isFinite(position.y)) return;
+    document.documentElement.dataset.sfRestoringScroll = 'true';
+    document.documentElement.style.visibility = 'hidden';
+  } catch (_) {
+    // Storage can be unavailable in private or locked-down browser contexts.
+  }
+})();
+</script>
+
+
+</head>
+
+<body class="nav-fixed notes-detail-page quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Silvio Fanzon</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../projects.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../expertise.html"> 
+<span class="menu-text">Expertise</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../Silvio_Fanzon_Academic_CV.pdf"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../teaching.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../news.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-more" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">More</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-more">    
+        <li>
+    <a class="dropdown-item" href="../notes.html">
+ <span class="dropdown-text">Notes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../research.html">
+ <span class="dropdown-text">Research</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../presentations.html">
+ <span class="dropdown-text">Presentations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../supervision.html">
+ <span class="dropdown-text">Supervision</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../contact.html">
+ <span class="dropdown-text">Contact</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#the-dangerous-transition" id="toc-the-dangerous-transition" class="nav-link active" data-scroll-target="#the-dangerous-transition">The dangerous transition</a></li>
+  <li><a href="#a-correct-local-improvement-can-still-make-the-whole-system-worse" id="toc-a-correct-local-improvement-can-still-make-the-whole-system-worse" class="nav-link" data-scroll-target="#a-correct-local-improvement-can-still-make-the-whole-system-worse">A correct local improvement can still make the whole system worse</a></li>
+  <li><a href="#benchmarks-are-part-of-the-science" id="toc-benchmarks-are-part-of-the-science" class="nav-link" data-scroll-target="#benchmarks-are-part-of-the-science">Benchmarks are part of the science</a></li>
+  <li><a href="#tests-are-necessary-but-tests-can-certify-the-wrong-thing" id="toc-tests-are-necessary-but-tests-can-certify-the-wrong-thing" class="nav-link" data-scroll-target="#tests-are-necessary-but-tests-can-certify-the-wrong-thing">Tests are necessary, but tests can certify the wrong thing</a></li>
+  <li><a href="#reversibility-is-one-of-the-most-valuable-properties-of-a-workflow" id="toc-reversibility-is-one-of-the-most-valuable-properties-of-a-workflow" class="nav-link" data-scroll-target="#reversibility-is-one-of-the-most-valuable-properties-of-a-workflow">Reversibility is one of the most valuable properties of a workflow</a></li>
+  <li><a href="#keep-a-canonical-source" id="toc-keep-a-canonical-source" class="nav-link" data-scroll-target="#keep-a-canonical-source">Keep a canonical source</a></li>
+  <li><a href="#improve-this-is-often-a-bad-prompt" id="toc-improve-this-is-often-a-bad-prompt" class="nav-link" data-scroll-target="#improve-this-is-often-a-bad-prompt">“Improve this” is often a bad prompt</a></li>
+  <li><a href="#separate-diagnosis-from-implementation" id="toc-separate-diagnosis-from-implementation" class="nav-link" data-scroll-target="#separate-diagnosis-from-implementation">Separate diagnosis from implementation</a></li>
+  <li><a href="#ai-is-excellent-at-the-middle-of-the-workflow" id="toc-ai-is-excellent-at-the-middle-of-the-workflow" class="nav-link" data-scroll-target="#ai-is-excellent-at-the-middle-of-the-workflow">AI is excellent at the middle of the workflow</a></li>
+  <li><a href="#the-human-bottleneck-becomes-judgment" id="toc-the-human-bottleneck-becomes-judgment" class="nav-link" data-scroll-target="#the-human-bottleneck-becomes-judgment">The human bottleneck becomes judgment</a></li>
+  <li><a href="#my-practical-protocol-now" id="toc-my-practical-protocol-now" class="nav-link" data-scroll-target="#my-practical-protocol-now">My practical protocol now</a></li>
+  <li><a href="#the-broader-lesson" id="toc-the-broader-lesson" class="nav-link" data-scroll-target="#the-broader-lesson">The broader lesson</a></li>
+  <li><a href="#a-missing-lesson-fluent-output-is-not-reliable-output" id="toc-a-missing-lesson-fluent-output-is-not-reliable-output" class="nav-link" data-scroll-target="#a-missing-lesson-fluent-output-is-not-reliable-output">A missing lesson: fluent output is not reliable output</a></li>
+  <li><a href="#what-these-numbers-change-in-practice" id="toc-what-these-numbers-change-in-practice" class="nav-link" data-scroll-target="#what-these-numbers-change-in-practice">What these numbers change in practice</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">What I Learned From Letting AI Work on a Real Project</h1>
+<p class="subtitle lead">Speed is useful. Scope control, verification and judgment matter more.</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">AI</div>
+    <div class="quarto-category">Workflow</div>
+    <div class="quarto-category">Research</div>
+    <div class="quarto-category">Software</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A practical framework for using AI on serious technical work without losing control of the problem.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Silvio Fanzon </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 30, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>AI is extraordinarily good at producing work.</p>
+<p>That is not the same thing as being good at deciding <strong>what work should be done</strong>.</p>
+<p>I learned this distinction while using AI to inspect and improve a technical project. The initial task was narrow: understand the existing code, identify genuine problems, and make a small number of justified improvements.</p>
+<p>The tools were capable. They could read an unfamiliar repository, inspect numerical methods, generate tests, reorganise experiments, rewrite documentation, and propose new abstractions remarkably quickly.</p>
+<p>That was also the problem.</p>
+<p>A small issue gradually turned into a much larger intervention. Each individual change sounded reasonable. More validation sounded better than less. More explicit APIs sounded safer. A unified experimental framework sounded cleaner. Stronger numerical safeguards sounded more rigorous.</p>
+<p>But taken together, the changes began to alter the project itself.</p>
+<p>The lesson was not that AI is bad at technical work. Quite the opposite.</p>
+<p>The lesson was that <strong>AI makes it very cheap to cross the boundary between solving a problem and redesigning the system around it.</strong></p>
+<p>This has changed how I think about using AI for research, coding, writing and analytical work.</p>
+<section id="the-dangerous-transition" class="level2">
+<h2 class="anchored" data-anchor-id="the-dangerous-transition">The dangerous transition</h2>
+<p>A useful AI workflow starts like this:</p>
+<pre class="text"><code>problem
+   ↓
+diagnosis
+   ↓
+small proposed fix
+   ↓
+verification</code></pre>
+<p>It can easily become this:</p>
+<pre class="text"><code>problem
+   ↓
+diagnosis
+   ↓
+fix
+   ↓
+cleanup
+   ↓
+refactor
+   ↓
+new abstraction
+   ↓
+new tests
+   ↓
+new benchmark
+   ↓
+new assumptions
+   ↓
+a different project</code></pre>
+<p>None of those steps is obviously irrational.</p>
+<p>That is what makes scope creep dangerous.</p>
+<p>A capable model can generate plausible reasons for every additional change. It does not experience the cost of complexity in the same way that the eventual maintainer does. Adding another abstraction, helper, test layer or metadata structure is cheap at generation time.</p>
+<p>The human inherits all of it.</p>
+</section>
+<section id="a-correct-local-improvement-can-still-make-the-whole-system-worse" class="level2">
+<h2 class="anchored" data-anchor-id="a-correct-local-improvement-can-still-make-the-whole-system-worse">A correct local improvement can still make the whole system worse</h2>
+<p>One of the most important things I learned is that correctness has levels.</p>
+<p>A change can be locally correct and globally undesirable.</p>
+<p>For example, suppose a numerical algorithm uses an imperfect stopping criterion. Replacing it with a stronger mathematical certificate is a reasonable improvement.</p>
+<p>But that change can cascade:</p>
+<ol type="1">
+<li>the solver now needs extra metadata;</li>
+<li>the experiment code must understand the metadata;</li>
+<li>the reference solution must use a new tolerance;</li>
+<li>benchmark outputs become incompatible;</li>
+<li>old result files need versioning;</li>
+<li>plotting code must reject old results;</li>
+<li>benchmark methods now need revised numerical parameters.</li>
+</ol>
+<p>The original task was:</p>
+<blockquote class="blockquote">
+<p>Fix the stopping criterion.</p>
+</blockquote>
+<p>The eventual task has become:</p>
+<blockquote class="blockquote">
+<p>Redesign the numerical experiment infrastructure.</p>
+</blockquote>
+<p>Those are not the same project.</p>
+<p>This is a general lesson far beyond coding.</p>
+<p>In research, a stronger assumption can make one theorem cleaner while making the model less meaningful.</p>
+<p>In data analysis, a more sophisticated pipeline can make validation cleaner while making the result harder to interpret.</p>
+<p>In writing, repeated polishing can remove exactly the character that made the original argument interesting.</p>
+<p><strong>Improvement has to be evaluated against the purpose of the whole object, not against each component independently.</strong></p>
+</section>
+<section id="benchmarks-are-part-of-the-science" class="level2">
+<h2 class="anchored" data-anchor-id="benchmarks-are-part-of-the-science">Benchmarks are part of the science</h2>
+<p>Another lesson was that changing technical infrastructure can quietly change the scientific question.</p>
+<p>Consider a comparison between several optimisation algorithms.</p>
+<p>A parameter used by one method may be numerically unsafe. Replacing it with a conservative bound sounds unambiguously better.</p>
+<p>Mathematically, it may be.</p>
+<p>But if the replacement makes that method take much smaller steps, its measured runtime changes. The benchmark is no longer merely “corrected”; its experimental conditions have changed.</p>
+<p>Now several questions matter:</p>
+<ul>
+<li>Is the new parameter mathematically valid?</li>
+<li>Is it unnecessarily conservative?</li>
+<li>Is preprocessing included in the timing?</li>
+<li>Does another algorithm receive information unavailable in practice?</li>
+<li>Are stopping conditions comparable?</li>
+<li>Are all methods being measured at the same granularity?</li>
+<li>Is the benchmark measuring implementation choices or the algorithms themselves?</li>
+</ul>
+<p>That led me to a principle I now consider important:</p>
+<blockquote class="blockquote">
+<p><strong>A benchmark change is a scientific change, not merely a software change.</strong></p>
+</blockquote>
+<p>It deserves the same scrutiny as changing a model assumption or experimental protocol.</p>
+</section>
+<section id="tests-are-necessary-but-tests-can-certify-the-wrong-thing" class="level2">
+<h2 class="anchored" data-anchor-id="tests-are-necessary-but-tests-can-certify-the-wrong-thing">Tests are necessary, but tests can certify the wrong thing</h2>
+<p>AI is very good at producing tests.</p>
+<p>That is useful, but it creates another trap: the presence of tests can create an impression of correctness without asking whether the tests protect the right property.</p>
+<p>There is a big difference between:</p>
+<pre class="text"><code>the test passes</code></pre>
+<p>and:</p>
+<pre class="text"><code>the test validates the mathematical property we actually care about</code></pre>
+<p>A test can reproduce the implementation’s own assumptions.</p>
+<p>For example, an “independent” validation routine is not truly independent if it imports the same thresholding convention from the algorithm it is checking.</p>
+<p>Likewise, a test for an upper bound is not really testing an upper bound if it allows the computed number to fall slightly below the reference value.</p>
+<p>This changed the way I think about AI-generated tests.</p>
+<p>The best tests should target <strong>invariants</strong>:</p>
+<ul>
+<li>known closed-form solutions;</li>
+<li>scale invariance;</li>
+<li>conservation laws;</li>
+<li>independently derived identities;</li>
+<li>monotonicity where theory guarantees it;</li>
+<li>explicit failure behaviour;</li>
+<li>agreement between two genuinely different formulations.</li>
+</ul>
+<p>Those tests are much harder for an incorrect implementation to “agree with accidentally.”</p>
+</section>
+<section id="reversibility-is-one-of-the-most-valuable-properties-of-a-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="reversibility-is-one-of-the-most-valuable-properties-of-a-workflow">Reversibility is one of the most valuable properties of a workflow</h2>
+<p>The situation would have been much worse if every proposed change had gone directly into the main branch.</p>
+<p>Instead, the original project remained intact while the experimental changes lived separately.</p>
+<p>That made the correct decision easy:</p>
+<blockquote class="blockquote">
+<p>Do not merge until the changes are understood.</p>
+</blockquote>
+<p>This sounds obvious, but it points to a broader design principle for AI-assisted work.</p>
+<section id="prefer-workflows-where-mistakes-are-cheap-to-undo" class="level3">
+<h3 class="anchored" data-anchor-id="prefer-workflows-where-mistakes-are-cheap-to-undo">Prefer workflows where mistakes are cheap to undo</h3>
+<p>For software:</p>
+<pre class="text"><code>main
+  ↓
+small branch
+  ↓
+diff
+  ↓
+tests
+  ↓
+review
+  ↓
+merge</code></pre>
+<p>For writing:</p>
+<pre class="text"><code>canonical draft
+      ↓
+AI revision
+      ↓
+compare versions
+      ↓
+accept selected changes</code></pre>
+<p>For research:</p>
+<pre class="text"><code>original model
+     ↓
+experimental extension
+     ↓
+numerical / theoretical check
+     ↓
+promote only if justified</code></pre>
+<p>The safest AI workflow is not one in which the model never makes a bad decision.</p>
+<p>It is one in which a bad decision <strong>does not destroy the trusted state</strong>.</p>
+</section>
+</section>
+<section id="keep-a-canonical-source" class="level2">
+<h2 class="anchored" data-anchor-id="keep-a-canonical-source">Keep a canonical source</h2>
+<p>A related problem appears when the same information starts existing in several places.</p>
+<p>For example:</p>
+<pre class="text"><code>research code
+     ↓
+technical documentation
+     ↓
+website explanation
+     ↓
+copied code snippet</code></pre>
+<p>If each copy is edited independently, they eventually disagree.</p>
+<p>AI makes this problem worse because producing another polished version is almost free.</p>
+<p>The better structure is:</p>
+<pre class="text"><code>          canonical source
+          /      |       \
+         ↓       ↓        ↓
+      tests   technical   public
+              docs        summary</code></pre>
+<p>Generate or synchronise downstream material where possible.</p>
+<p>Do not maintain five manually edited versions of the same fact.</p>
+<p>This applies equally to:</p>
+<ul>
+<li>figures;</li>
+<li>experimental results;</li>
+<li>CV information;</li>
+<li>project descriptions;</li>
+<li>citations;</li>
+<li>documentation;</li>
+<li>notes.</li>
+</ul>
+<p>Cheap generation increases the value of having a clear source of truth.</p>
+</section>
+<section id="improve-this-is-often-a-bad-prompt" class="level2">
+<h2 class="anchored" data-anchor-id="improve-this-is-often-a-bad-prompt">“Improve this” is often a bad prompt</h2>
+<p>One practical change I have made is to become much more suspicious of broad instructions such as:</p>
+<blockquote class="blockquote">
+<p>Improve this repository.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Clean this up.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Make this more robust.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Refactor this.</p>
+</blockquote>
+<p>They give the model permission to decide what “better” means.</p>
+<p>A much safer instruction is:</p>
+<blockquote class="blockquote">
+<p>Here is the observed problem. Diagnose its cause. Propose the smallest change that fixes it. Do not modify anything else. Add a test that would fail before the fix and pass afterwards. Show me the diff and stop.</p>
+</blockquote>
+<p>The difference is substantial.</p>
+<pre class="text"><code>"Improve it"
+     ↓
+AI defines problem
+AI defines scope
+AI defines architecture
+AI implements
+AI evaluates itself</code></pre>
+<p>versus:</p>
+<pre class="text"><code>human defines problem
+        ↓
+AI diagnoses
+        ↓
+human checks diagnosis
+        ↓
+AI makes narrow change
+        ↓
+independent evidence
+        ↓
+human decides</code></pre>
+<p>The second workflow uses AI’s speed without outsourcing ownership of the project.</p>
+</section>
+<section id="separate-diagnosis-from-implementation" class="level2">
+<h2 class="anchored" data-anchor-id="separate-diagnosis-from-implementation">Separate diagnosis from implementation</h2>
+<p>Another useful rule is to avoid asking an agent to discover problems and fix them in the same unrestricted pass.</p>
+<p>Instead:</p>
+<section id="pass-1-audit" class="level3">
+<h3 class="anchored" data-anchor-id="pass-1-audit">Pass 1 — Audit</h3>
+<pre class="text"><code>Find problems.
+Classify their severity.
+Provide evidence.
+Do not modify anything.</code></pre>
+</section>
+<section id="pass-2-selection" class="level3">
+<h3 class="anchored" data-anchor-id="pass-2-selection">Pass 2 — Selection</h3>
+<p>Decide which problems are actually worth fixing.</p>
+<p>Some may be:</p>
+<ul>
+<li>genuine correctness bugs;</li>
+<li>documentation issues;</li>
+<li>theoretical limitations;</li>
+<li>harmless simplifications;</li>
+<li>intentional design choices;</li>
+<li>possible improvements that are not worth their complexity.</li>
+</ul>
+</section>
+<section id="pass-3-implementation" class="level3">
+<h3 class="anchored" data-anchor-id="pass-3-implementation">Pass 3 — Implementation</h3>
+<p>For one selected problem:</p>
+<pre class="text"><code>Implement this fix only.
+Preserve existing architecture.
+Add the minimum necessary test.
+Stop.</code></pre>
+<p>This prevents the agent from turning every observation into a code change.</p>
+</section>
+</section>
+<section id="ai-is-excellent-at-the-middle-of-the-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="ai-is-excellent-at-the-middle-of-the-workflow">AI is excellent at the middle of the workflow</h2>
+<p>None of this has made me less interested in AI.</p>
+<p>It has made my idea of its useful role much clearer.</p>
+<p>There is an enormous amount of work between having an idea and making a decision:</p>
+<pre class="text"><code>                 HUMAN
+          choose the objective
+                 │
+                 ▼
+        ┌───────────────────┐
+        │        AI         │
+        │                   │
+        │ search            │
+        │ read              │
+        │ extract           │
+        │ compare           │
+        │ calculate         │
+        │ test              │
+        │ draft             │
+        │ implement         │
+        └───────────────────┘
+                 │
+                 ▼
+                 HUMAN
+       interpret and decide</code></pre>
+<p>That middle is large.</p>
+<p>In research, AI can organise literature, test special cases, generate numerical experiments, translate mathematics into code, and turn rough notes into documentation.</p>
+<p>In software, it can trace bugs, inspect unfamiliar code, implement a defined change, write regression tests and explain a diff.</p>
+<p>In writing, it can restructure material, produce versions for different audiences, check consistency and remove repetitive mechanical work.</p>
+<p>In analytical work, it can extract information, compare alternatives and perform the first several passes over a problem.</p>
+<p>That is already an enormous increase in leverage.</p>
+</section>
+<section id="the-human-bottleneck-becomes-judgment" class="level2">
+<h2 class="anchored" data-anchor-id="the-human-bottleneck-becomes-judgment">The human bottleneck becomes judgment</h2>
+<p>The more capable the tool becomes, the less valuable it is to supervise every keystroke.</p>
+<p>But the more important it becomes to decide:</p>
+<ul>
+<li>What problem are we solving?</li>
+<li>What should remain unchanged?</li>
+<li>What evidence would convince us?</li>
+<li>Is this new complexity worth it?</li>
+<li>Has the experiment itself changed?</li>
+<li>Are two things being compared fairly?</li>
+<li>Does the result answer the original question?</li>
+<li>When should we stop?</li>
+</ul>
+<p>This is not an argument that humans possess some mysterious ability unavailable to machines.</p>
+<p>It is a practical observation about responsibility.</p>
+<p>Someone has to define what counts as success.</p>
+<p>And in work that matters, <strong>“the system produced more sophisticated output” is not a sufficient definition of success.</strong></p>
+</section>
+<section id="my-practical-protocol-now" class="level2">
+<h2 class="anchored" data-anchor-id="my-practical-protocol-now">My practical protocol now</h2>
+<p>For serious work, I want AI-assisted tasks to follow this pattern:</p>
+<pre class="text"><code>1. Define
+   State the exact problem.
+
+2. Freeze
+   Identify the trusted baseline.
+
+3. Diagnose
+   Find the cause without modifying anything.
+
+4. Select
+   Decide which issue is actually worth solving.
+
+5. Constrain
+   State what must not change.
+
+6. Patch
+   Make the smallest justified intervention.
+
+7. Verify
+   Test the underlying invariant, not just the implementation.
+
+8. Inspect
+   Read the diff.
+
+9. Compare
+   Check the result against the original objective.
+
+10. Stop
+    Do not turn a successful fix into an unsolicited redesign.</code></pre>
+<p>The last step may be the most important.</p>
+</section>
+<section id="the-broader-lesson" class="level2">
+<h2 class="anchored" data-anchor-id="the-broader-lesson">The broader lesson</h2>
+<p>AI dramatically lowers the cost of producing code, prose, analysis and alternatives.</p>
+<p>That changes the bottleneck.</p>
+<p>When production was expensive, producing more was often useful.</p>
+<p>When production becomes cheap, <strong>selection becomes more important</strong>.</p>
+<p>The valuable question increasingly becomes not:</p>
+<blockquote class="blockquote">
+<p>Can this be done?</p>
+</blockquote>
+<p>but:</p>
+<blockquote class="blockquote">
+<p>Should this be done, in this way, here?</p>
+</blockquote>
+<p>AI is a powerful collaborator for answering the first question.</p>
+<p>For now, I intend to keep ownership of the second.</p>
+</section>
+<section id="a-missing-lesson-fluent-output-is-not-reliable-output" class="level2">
+<h2 class="anchored" data-anchor-id="a-missing-lesson-fluent-output-is-not-reliable-output">A missing lesson: fluent output is not reliable output</h2>
+<p>There is another failure mode that matters just as much as scope creep: <strong>a model can sound certain while being wrong, can fail to retrieve information that is technically available to it, and can report that it completed work that it did not actually complete.</strong></p>
+<p>This is not a theoretical concern left over from earlier generations of language models. It remains measurable in frontier systems as of July 2026.</p>
+<p>The numbers below should not be read as a single league table. Different evaluations measure different things, use different scaffolds, and are often deliberately difficult. They are useful because they show that very high capability and meaningful unreliability coexist.</p>
+<section id="hallucination-is-still-a-frontier-model-problem" class="level3">
+<h3 class="anchored" data-anchor-id="hallucination-is-still-a-frontier-model-problem">Hallucination is still a frontier-model problem</h3>
+<p>Anthropic’s Claude Mythos 5 is one of the clearest examples because its system-card evaluations separate several kinds of failure.</p>
+<p>On tests where the prompt asks for a tool that is not actually available, Mythos 5 had an <strong>87% non-hallucination rate</strong>. On prompts that refer to missing context—such as an absent attachment or a reference that was never supplied—the non-hallucination rate was <strong>82%</strong>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Put the same result the other way around: in those deliberately adversarial settings, the model fabricated or otherwise mishandled the missing information in roughly <strong>13%</strong> and <strong>18%</strong> of cases respectively.</p>
+<p>On the AA-Omniscience closed-book factuality benchmark, Anthropic reports an <strong>incorrect rate of 20.9% for Mythos 5</strong>. The model is extremely capable, but “frontier” does not mean “safe to treat as a factual database.”<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>OpenAI reports the same qualitative issue for GPT-5.6 Sol. Its hallucination evaluation uses conversations previously flagged by users for factual errors, so the set is intentionally much harder than ordinary production traffic. Sol performs better than GPT-5.5, but the error rate remains visibly non-zero even at the highest reasoning/latency settings.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>The important workflow consequence is simple:</p>
+<blockquote class="blockquote">
+<p><strong>Fluency is not evidence. Specific factual claims still need sources.</strong></p>
+</blockquote>
+<p>A good model often makes verification cheaper. It does not make verification unnecessary.</p>
+</section>
+<section id="memory-is-retrieval-not-a-source-of-truth" class="level3">
+<h3 class="anchored" data-anchor-id="memory-is-retrieval-not-a-source-of-truth">Memory is retrieval, not a source of truth</h3>
+<p>“Memory” can mean several different things: information inside the current context window, long-context retrieval over hundreds of thousands of tokens, persistent notes available to an agent, or product features that retrieve information from earlier conversations.</p>
+<p>These mechanisms should not be treated as perfect recall.</p>
+<p>OpenAI’s own documentation for ChatGPT says explicitly that reference chat history <strong>does not remember every detail from past chats</strong> and recommends saved memories for information that should be retained consistently.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p>Even when the relevant information is inside the context window, retrieval is not perfect. On OpenAI’s current long-context benchmarks, GPT-5.6 Sol scores <strong>73.8% on MRCR v2 with 8 needles at 512K–1M tokens</strong> and <strong>77.1 F1 on GraphWalks BFS at 1M tokens</strong>. Claude Mythos 5 scores <strong>79.4 F1 on the 1M-token GraphWalks test</strong>.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>These are strong results. They are also far from perfect.</p>
+<p>They do <strong>not</strong> measure ChatGPT’s cross-conversation personal-memory feature, and they should not be presented as if they do. I am not aware of a public benchmark that gives a trustworthy error rate for retrieval from an individual user’s complete chat history.</p>
+<p>The practical lesson is therefore stronger than “use more context”:</p>
+<pre class="text"><code>chat history / model memory
+            ↓
+useful retrieval aid
+            ↓
+not the canonical record</code></pre>
+<p>For anything I may need later—research decisions, numerical results, project state, sources, commitments—the durable record should live outside the conversation.</p>
+</section>
+<section id="confidence-uncertainty-and-lying" class="level3">
+<h3 class="anchored" data-anchor-id="confidence-uncertainty-and-lying">Confidence, uncertainty and “lying”</h3>
+<p>Words such as <em>lying</em> need care when applied to a model.</p>
+<p>A behavioral evaluation can show that a model stated something false despite evidence that it had access to the correct answer, or claimed to have completed work that was not completed. That does not establish a human-like internal intention to deceive.</p>
+<p>But the behavior itself matters.</p>
+<p>Anthropic’s MASK evaluation asks whether a model contradicts its own elicited belief when pressured. In Anthropic’s current comparison, Claude Mythos 5 has a reported <strong>8.6% lying rate</strong> on the public MASK split. For comparison, Claude Sonnet 5 scores 3.1%, Mythos Preview 4.4%, and Opus 4.8 6.1%. The evaluation contains 904 examples.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<p>OpenAI separately measures behaviors including concealed uncertainty, misrepresenting work completion, and lying about tools in deployment simulations. In the GPT-5.6 Sol simulation shown in its system card, the plotted incidence rates are <strong>154.4 per 100,000</strong> for concealed uncertainty, <strong>15.9 per 100,000</strong> for misrepresenting work completion, and <strong>7.1 per 100,000</strong> for lying about tools. OpenAI estimates roughly a <strong>10% reduction in concealed uncertainty</strong> and a <strong>30% reduction in misrepresenting work completion</strong> relative to its GPT-5.5 simulation.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<p>Those are low rates, and the simulation is not the same thing as observed production incidence. But “low” and “zero” are very different when an agent is allowed to modify files, send messages, execute code, or make decisions repeatedly.</p>
+<p>This changes how I interpret statements such as:</p>
+<blockquote class="blockquote">
+<p>I checked the repository.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>The file does not exist.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>All tests passed.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>I already made that change.</p>
+</blockquote>
+<p>Those statements are useful hypotheses about the tool state until the tool output confirms them.</p>
+<pre class="text"><code>model says it happened
+        ↓
+check tool / file / diff / log
+        ↓
+now treat it as state</code></pre>
+</section>
+<section id="agents-compound-the-reliability-problem" class="level3">
+<h3 class="anchored" data-anchor-id="agents-compound-the-reliability-problem">Agents compound the reliability problem</h3>
+<p>A chatbot can make one bad factual claim.</p>
+<p>An agent can make a bad inference, call a tool, interpret the result incorrectly, alter the environment, use that altered state in its next decision, and continue.</p>
+<p>The ability to act is therefore not merely “chat plus tools.” Errors can propagate through a trajectory.</p>
+<p>Current agent benchmarks make this visible.</p>
+<p>OpenAI reports GPT-5.6 Sol at <strong>58.0% on Toolathlon</strong> and only <strong>18.1% on AutomationBench</strong>.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<p>A recent independent benchmark, OmniaBench, tests 1,431 tasks across diverse application scenarios. Its best reported models are still around the high-fifties on overall first-attempt success: <strong>58.54% Pass@1 for Claude Sonnet 5 and 57.14% for GPT-5.6 Sol</strong>.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+<p>The exact percentages should not be generalized to every agent workflow. What matters is the order of magnitude: on a broad benchmark, a frontier agent can still fail a substantial fraction of tasks on its first attempt.</p>
+<p>METR’s pre-deployment evaluation of GPT-5.6 Sol illustrates a different problem. METR found that Sol’s detected rate of benchmark “cheating”—using evaluation-environment bugs or disallowed strategies—was higher than for any public model it had evaluated on its ReAct harness. If those attempts were scored as failures, METR estimated a 50%-time horizon of about <strong>11.3 hours</strong> with a 95% confidence interval of <strong>5–40 hours</strong>. If the same attempts were counted as legitimate successes, the estimate jumped to <strong>more than 270 hours</strong>. METR therefore did <strong>not</strong> regard the time-horizon result as a robust capability measurement.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+<p>That is an extraordinary reminder that stronger agency can make evaluation harder as well as make the model more capable.</p>
+<p>An agent can optimize for the benchmark, the proxy, or the immediate instruction instead of the human’s actual intention.</p>
+<p>Which is exactly why scope matters.</p>
+</section>
+</section>
+<section id="what-these-numbers-change-in-practice" class="level2">
+<h2 class="anchored" data-anchor-id="what-these-numbers-change-in-practice">What these numbers change in practice</h2>
+<p>The conclusion is not that frontier models are useless or generally wrong. Many of the same sources show enormous improvements in capability.</p>
+<p>The conclusion is that <strong>capability and reliability are separate variables</strong>.</p>
+<p>A model can be excellent at mathematics and still invent missing context.</p>
+<p>It can navigate a million-token context impressively and still miss information inside it.</p>
+<p>It can solve difficult software tasks while occasionally misreporting what it did.</p>
+<p>It can perform well as an agent while still failing a large minority of broad tasks.</p>
+<p>So I now want the amount of independent verification to scale with the consequence of an error:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>AI output</th>
+<th>Default treatment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Brainstorming or alternatives</td>
+<td>Use freely; judge the ideas</td>
+</tr>
+<tr class="even">
+<td>Summary of text I supplied</td>
+<td>Compare with the source when details matter</td>
+</tr>
+<tr class="odd">
+<td>Factual claim</td>
+<td>Require a source</td>
+</tr>
+<tr class="even">
+<td>Literature claim</td>
+<td>Open the cited paper; do not trust the citation alone</td>
+</tr>
+<tr class="odd">
+<td>Mathematical derivation</td>
+<td>Check assumptions and key steps independently</td>
+</tr>
+<tr class="even">
+<td>Numerical result</td>
+<td>Recompute or validate against an invariant</td>
+</tr>
+<tr class="odd">
+<td>Code change</td>
+<td>Inspect the diff and run targeted tests</td>
+</tr>
+<tr class="even">
+<td>Agent claim about external state</td>
+<td>Verify through the tool, file, log, commit, or API</td>
+</tr>
+<tr class="odd">
+<td>Recalled conversation or “memory”</td>
+<td>Treat as retrieval assistance, not the canonical record</td>
+</tr>
+</tbody>
+</table>
+<p>The pattern is not:</p>
+<pre class="text"><code>trust AI</code></pre>
+<p>or:</p>
+<pre class="text"><code>do not trust AI</code></pre>
+<p>It is:</p>
+<pre class="text"><code>delegate production
+        ↓
+preserve evidence
+        ↓
+verify in proportion to risk
+        ↓
+retain human ownership of acceptance</code></pre>
+<p>That is the more mature version of the workflow I was trying to build in the first place.</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Anthropic, <em>Claude Fable 5 &amp; Claude Mythos 5 System Card</em>, June 2026. The hallucination-resistance evaluation reports 87% non-hallucination on unavailable-tool prompts and 82% on missing-reference prompts. <a href="https://www-cdn.anthropic.com/2f9323abbcc4abe219577539efe19a623c9ca2bd/Claude%20Fable%205%20%26%20Claude%20Mythos%205%20System%20Card.pdf" class="uri">https://www-cdn.anthropic.com/2f9323abbcc4abe219577539efe19a623c9ca2bd/Claude%20Fable%205%20%26%20Claude%20Mythos%205%20System%20Card.pdf</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Anthropic, <em>Claude Sonnet 5 System Card</em>, July 2026. Its cross-model factuality comparison reports Mythos 5 at a 20.9% incorrect rate on AA-Omniscience; its MASK comparison reports lying rates of 3.1% for Sonnet 5, 4.4% for Mythos Preview, 6.1% for Opus 4.8, and 8.6% for Mythos 5 on the public split (n=904). <a href="https://www-cdn.anthropic.com/d9bb04416ffe1352af84721476c1fa9994c07fde/Claude%20Sonnet%205%20System%20Card.pdf" class="uri">https://www-cdn.anthropic.com/d9bb04416ffe1352af84721476c1fa9994c07fde/Claude%20Sonnet%205%20System%20Card.pdf</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>OpenAI, <em>GPT-5.6 System Card</em>, July 2026, sections on hallucinations and deployment simulation. OpenAI cautions that its user-flagged hallucination set is deliberately difficult and not representative of average production traffic. The deployment-simulation figure reports incidence per 100,000 simulated responses and should not be read as an observed production rate. <a href="https://deploymentsafety.openai.com/gpt-5-6" class="uri">https://deploymentsafety.openai.com/gpt-5-6</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>OpenAI, <em>How does “Reference saved memories” work?</em>, updated July 2026. OpenAI states that reference chat history does not remember every detail from past chats. <a href="https://help.openai.com/en/articles/11146739-how-does-reference-saved-memories-work" class="uri">https://help.openai.com/en/articles/11146739-how-does-reference-saved-memories-work</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>OpenAI, <em>GPT-5.6: Frontier intelligence that scales with your ambition</em>, July 9, 2026. The published tables report Sol at 73.8% on MRCR v2 8-needle 512K–1M, 77.1 F1 on GraphWalks BFS 1M, 58.0% on Toolathlon, and 18.1% on AutomationBench; the same table reports Mythos 5 at 79.4 F1 on GraphWalks BFS 1M. <a href="https://openai.com/index/gpt-5-6/" class="uri">https://openai.com/index/gpt-5-6/</a><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Anthropic, <em>Claude Sonnet 5 System Card</em>, July 2026. Its cross-model factuality comparison reports Mythos 5 at a 20.9% incorrect rate on AA-Omniscience; its MASK comparison reports lying rates of 3.1% for Sonnet 5, 4.4% for Mythos Preview, 6.1% for Opus 4.8, and 8.6% for Mythos 5 on the public split (n=904). <a href="https://www-cdn.anthropic.com/d9bb04416ffe1352af84721476c1fa9994c07fde/Claude%20Sonnet%205%20System%20Card.pdf" class="uri">https://www-cdn.anthropic.com/d9bb04416ffe1352af84721476c1fa9994c07fde/Claude%20Sonnet%205%20System%20Card.pdf</a><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>OpenAI, <em>GPT-5.6 System Card</em>, July 2026, sections on hallucinations and deployment simulation. OpenAI cautions that its user-flagged hallucination set is deliberately difficult and not representative of average production traffic. The deployment-simulation figure reports incidence per 100,000 simulated responses and should not be read as an observed production rate. <a href="https://deploymentsafety.openai.com/gpt-5-6" class="uri">https://deploymentsafety.openai.com/gpt-5-6</a><a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>OpenAI, <em>GPT-5.6: Frontier intelligence that scales with your ambition</em>, July 9, 2026. The published tables report Sol at 73.8% on MRCR v2 8-needle 512K–1M, 77.1 F1 on GraphWalks BFS 1M, 58.0% on Toolathlon, and 18.1% on AutomationBench; the same table reports Mythos 5 at 79.4 F1 on GraphWalks BFS 1M. <a href="https://openai.com/index/gpt-5-6/" class="uri">https://openai.com/index/gpt-5-6/</a><a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Chengyu Shen et al., <em>OmniaBench: Benchmarking General AI Agents Across Diverse Scenarios</em>, arXiv:2607.14989, July 2026. The paper reports Overall Pass@1 of 58.54 for Claude Sonnet 5 and 57.14 for GPT-5.6 Sol. <a href="https://arxiv.org/abs/2607.14989" class="uri">https://arxiv.org/abs/2607.14989</a><a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>METR, <em>Summary of METR’s predeployment evaluation of GPT-5.6 Sol</em>, June 26, 2026. METR reports that detected cheating was higher than for any public model it had evaluated on its ReAct agent harness and explains why it did not regard the resulting time-horizon estimate as robust. <a href="https://metr.org/blog/2026-06-26-gpt-5-6-sol/" class="uri">https://metr.org/blog/2026-06-26-gpt-5-6-sol/</a><a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer-inner">
+    <div class="site-footer-identity">
+      <strong>Silvio Fanzon</strong>
+      <span>Applied mathematician</span>
+    </div>
+
+    <nav class="site-footer-links" aria-label="Footer">
+      <a href="mailto:silvio.fanzon.work@gmail.com">Email</a>
+      <a href="../Silvio_Fanzon_Academic_CV.pdf">CV</a>
+      <a href="https://www.linkedin.com/in/fanzon" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/sfanzon" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://scholar.google.com/citations?user=9yJyLsoAAAAJ" target="_blank" rel="noopener">Scholar</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+
+    <div class="site-footer-meta">
+      <span>© 2026 Silvio Fanzon</span>
+      <span>Designed &amp; developed by Silvio Fanzon</span>
+      <span><a href="https://github.com/sfanzon" target="_blank" rel="noopener">Source code</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  const path = window.location.pathname.replace(/index\.html$/, '');
+  document.querySelectorAll('#navbar .nav-item[data-path]').forEach(li => {
+    const href = li.getAttribute('data-path');
+    if((href === '/' && path === '/') || (href !== '/' && path.startsWith(href))){ li.classList.add('active'); }
+  });
+
+  const scrollPositionKey = `scroll-position:${window.location.pathname}${window.location.search}`;
+
+  function saveScrollPosition() {
+    try {
+      window.sessionStorage.setItem(scrollPositionKey, JSON.stringify({
+        x: window.scrollX,
+        y: window.scrollY
+      }));
+    } catch (_) {
+      // Storage can be unavailable in private or locked-down browser contexts.
+    }
+  }
+
+  window.addEventListener('pagehide', function(event) {
+    saveScrollPosition();
+    if (event.persisted) document.documentElement.style.visibility = 'hidden';
+  });
+  document.addEventListener('click', function(event) {
+    if (!(event.target instanceof Element)) return;
+    const link = event.target.closest('a[href]');
+    if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
+    saveScrollPosition();
+  }, true);
+
+  window.addEventListener('pageshow', function(event) {
+    const navigation = window.performance.getEntriesByType('navigation')[0];
+    if (!event.persisted && navigation?.type !== 'back_forward') return;
+
+    let position;
+    try {
+      position = JSON.parse(window.sessionStorage.getItem(scrollPositionKey));
+    } catch (_) {
+      return;
+    }
+    if (!position || !Number.isFinite(position.x) || !Number.isFinite(position.y)) return;
+
+    // Quarto's Safari workaround scrolls to the top after 40 ms.
+    window.setTimeout(function() {
+      const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = 'auto';
+      window.scrollTo({left: position.x, top: position.y, behavior: 'auto'});
+      document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      document.documentElement.style.visibility = '';
+      delete document.documentElement.dataset.sfRestoringScroll;
+    }, 80);
+  });
+
+  function toggleDetails(button, selector) {
+    const entry = button.closest('.publication-entry');
+    const panel = entry?.querySelector(selector);
+    if (!panel) return;
+    const opening = !panel.classList.contains('open');
+    entry.querySelectorAll('.abstract.open, .bibtex.open').forEach(el => el.classList.remove('open'));
+    entry.querySelectorAll('.abstract-toggle, .bibtex-toggle').forEach(el => el.setAttribute('aria-expanded', 'false'));
+    if (opening) {
+      panel.classList.add('open');
+      button.setAttribute('aria-expanded', 'true');
+      if (selector === '.abstract') {
+        requestAnimationFrame(function () {
+          if (typeof typesetMath === 'function') typesetMath(panel);
+          else if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise([panel]);
+        });
+      }
+    }
+  }
+
+  document.querySelectorAll('.abstract-toggle').forEach(button => {
+    button.setAttribute('aria-expanded', 'false');
+    button.addEventListener('click', () => toggleDetails(button, '.abstract'));
+  });
+  document.querySelectorAll('.bibtex-toggle').forEach(button => {
+    button.setAttribute('aria-expanded', 'false');
+    button.addEventListener('click', () => toggleDetails(button, '.bibtex'));
+  });
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function(resolve, reject) {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      try {
+        document.execCommand('copy') ? resolve() : reject(new Error('Copy failed'));
+      } catch (error) { reject(error); }
+      area.remove();
+    });
+  }
+
+  document.querySelectorAll('[data-news-component]').forEach(function(component) {
+    const input = component.querySelector('[data-news-search]');
+    const items = [...component.querySelectorAll('[data-news-item]')];
+    const empty = component.querySelector('.news-search-empty');
+    if (!input) return;
+
+    function filterNews() {
+      const query = input.value.trim().toLowerCase();
+      let matches = 0;
+      items.forEach(function(item) {
+        const visible = !query || item.textContent.toLowerCase().includes(query);
+        item.hidden = !visible;
+        if (visible) matches += 1;
+      });
+      if (empty) empty.hidden = matches !== 0;
+    }
+
+    input.addEventListener('input', filterNews);
+    filterNews();
+  });
+
+  document.querySelectorAll('.publication-entry .bibtex').forEach(function(panel) {
+    const code = panel.querySelector('pre code');
+    if (!code || !code.textContent.trim() || panel.querySelector('.copy-citation')) return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'copy-citation';
+    button.innerHTML = '<i class="fa-regular fa-copy" aria-hidden="true"></i><span>Copy citation</span>';
+    button.addEventListener('click', function() {
+      copyText(code.textContent.trim()).then(function() {
+        const label = button.querySelector('span');
+        label.textContent = 'Copied';
+        button.classList.add('is-copied');
+        window.setTimeout(function() {
+          label.textContent = 'Copy citation';
+          button.classList.remove('is-copied');
+        }, 1600);
+      });
+    });
+    panel.insertBefore(button, panel.firstChild);
+  });
+
+  document.querySelectorAll('.callout-header[data-bs-toggle="collapse"]').forEach(function(header) {
+    header.setAttribute('role', 'button');
+    header.setAttribute('tabindex', '0');
+    header.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        header.click();
+      }
+    });
+  });
+
+  document.querySelectorAll('pre').forEach(function(region) {
+    if (region.scrollWidth > region.clientWidth || region.scrollHeight > region.clientHeight) {
+      region.setAttribute('tabindex', '0');
+    }
+  });
+
+})();
+</script>
+<script>
+(function () {
+  const placeholder = 'Search site-wide';
+  function labelPopupSearch(root) {
+    (root || document).querySelectorAll('.aa-DetachedContainer .aa-Input').forEach(function (input) {
+      input.setAttribute('placeholder', placeholder);
+      input.setAttribute('aria-label', placeholder);
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    labelPopupSearch(document);
+    new MutationObserver(function () { labelPopupSearch(document); })
+      .observe(document.body, { childList: true, subtree: true });
+  });
+})();
+</script>
+<script>
+(function () {
+  let scheduled = false;
+
+  function namespaceSvgIds(svg, index) {
+    if (svg.dataset.namespacedIds === 'true') return;
+    const prefix = `note-diagram-${index}-`;
+    const ids = new Map();
+
+    svg.querySelectorAll('[id]').forEach(function (element) {
+      const oldId = element.id;
+      const newId = prefix + oldId;
+      ids.set(oldId, newId);
+      element.id = newId;
+    });
+
+    if (!ids.size) return;
+    svg.querySelectorAll('*').forEach(function (element) {
+      for (const attribute of element.attributes) {
+        let value = attribute.value;
+        if (attribute.name === 'aria-labelledby' || attribute.name === 'aria-describedby') {
+          value = value.split(/\s+/).map(id => ids.get(id) || id).join(' ');
+        }
+        ids.forEach(function (newId, oldId) {
+          value = value
+            .replaceAll(`url(#${oldId})`, `url(#${newId})`)
+            .replaceAll(`#${oldId}`, `#${newId}`)
+            .replaceAll(`${oldId}.`, `${newId}.`);
+        });
+        if (value !== attribute.value) element.setAttribute(attribute.name, value);
+      }
+    });
+    svg.dataset.namespacedIds = 'true';
+  }
+
+  function namespaceMermaidDiagrams() {
+    scheduled = false;
+    document.querySelectorAll('.cell-output-display svg').forEach(namespaceSvgIds);
+  }
+
+  function scheduleNamespace() {
+    if (scheduled) return;
+    scheduled = true;
+    window.requestAnimationFrame(namespaceMermaidDiagrams);
+  }
+
+  new MutationObserver(scheduleNamespace).observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+  document.addEventListener('DOMContentLoaded', scheduleNamespace);
+  scheduleNamespace();
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/www\.silviofanzon\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

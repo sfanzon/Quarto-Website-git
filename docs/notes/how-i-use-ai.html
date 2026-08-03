@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Silvio Fanzon">
+<meta name="dcterms.date" content="2026-07-30">
+<meta name="description" content="A practical account of how I use AI across research, scientific computing and technical communication: where it adds leverage, where I retain control, and how I verify what matters.">
+
+<title>How I use AI in technical work – Silvio Fanzon</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../assets/img/brand/favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-db354705f7efee7bab7ccc1cd4295b40.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-cfe3e5ff2f3ea9255f7413f9677f1952.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-db354705f7efee7bab7ccc1cd4295b40.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+(function () {
+  const navigation = window.performance.getEntriesByType('navigation')[0];
+  if (navigation?.type !== 'back_forward') return;
+
+  const key = `scroll-position:${window.location.pathname}${window.location.search}`;
+  try {
+    const position = JSON.parse(window.sessionStorage.getItem(key));
+    if (!position || !Number.isFinite(position.x) || !Number.isFinite(position.y)) return;
+    document.documentElement.dataset.sfRestoringScroll = 'true';
+    document.documentElement.style.visibility = 'hidden';
+  } catch (_) {
+    // Storage can be unavailable in private or locked-down browser contexts.
+  }
+})();
+</script>
+
+
+</head>
+
+<body class="nav-fixed standard-page note-page notes-detail-page quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Silvio Fanzon</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../projects.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../expertise.html"> 
+<span class="menu-text">Expertise</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../Silvio_Fanzon_Academic_CV.pdf"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../teaching.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../news.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-more" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">More</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-more">    
+        <li>
+    <a class="dropdown-item" href="../notes.html">
+ <span class="dropdown-text">Notes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../research.html">
+ <span class="dropdown-text">Research</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../presentations.html">
+ <span class="dropdown-text">Presentations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../supervision.html">
+ <span class="dropdown-text">Supervision</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../contact.html">
+ <span class="dropdown-text">Contact</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#from-a-difficult-question-to-a-defensible-result" id="toc-from-a-difficult-question-to-a-defensible-result" class="nav-link active" data-scroll-target="#from-a-difficult-question-to-a-defensible-result">From a difficult question to a defensible result</a></li>
+  <li><a href="#what-i-delegate" id="toc-what-i-delegate" class="nav-link" data-scroll-target="#what-i-delegate">What I delegate</a></li>
+  <li><a href="#what-i-retain" id="toc-what-i-retain" class="nav-link" data-scroll-target="#what-i-retain">What I retain</a></li>
+  <li><a href="#research-accelerate-exploration-preserve-evidence" id="toc-research-accelerate-exploration-preserve-evidence" class="nav-link" data-scroll-target="#research-accelerate-exploration-preserve-evidence">Research: accelerate exploration, preserve evidence</a></li>
+  <li><a href="#scientific-software-narrow-changes-beat-autonomous-improvement" id="toc-scientific-software-narrow-changes-beat-autonomous-improvement" class="nav-link" data-scroll-target="#scientific-software-narrow-changes-beat-autonomous-improvement">Scientific software: narrow changes beat autonomous improvement</a></li>
+  <li><a href="#separate-audit-from-implementation" id="toc-separate-audit-from-implementation" class="nav-link" data-scroll-target="#separate-audit-from-implementation">Separate audit from implementation</a></li>
+  <li><a href="#tests-should-protect-ideas-not-just-code" id="toc-tests-should-protect-ideas-not-just-code" class="nav-link" data-scroll-target="#tests-should-protect-ideas-not-just-code">Tests should protect ideas, not just code</a></li>
+  <li><a href="#benchmarks-are-part-of-the-scientific-argument" id="toc-benchmarks-are-part-of-the-scientific-argument" class="nav-link" data-scroll-target="#benchmarks-are-part-of-the-scientific-argument">Benchmarks are part of the scientific argument</a></li>
+  <li><a href="#agents-capability-changes-the-failure-mode" id="toc-agents-capability-changes-the-failure-mode" class="nav-link" data-scroll-target="#agents-capability-changes-the-failure-mode">Agents: capability changes the failure mode</a></li>
+  <li><a href="#memory-and-long-context-are-retrieval-aids-not-canonical-records" id="toc-memory-and-long-context-are-retrieval-aids-not-canonical-records" class="nav-link" data-scroll-target="#memory-and-long-context-are-retrieval-aids-not-canonical-records">Memory and long context are retrieval aids, not canonical records</a></li>
+  <li><a href="#fluent-output-is-not-evidence" id="toc-fluent-output-is-not-evidence" class="nav-link" data-scroll-target="#fluent-output-is-not-evidence">Fluent output is not evidence</a></li>
+  <li><a href="#reversibility-is-a-feature" id="toc-reversibility-is-a-feature" class="nav-link" data-scroll-target="#reversibility-is-a-feature">Reversibility is a feature</a></li>
+  <li><a href="#keep-one-source-of-truth" id="toc-keep-one-source-of-truth" class="nav-link" data-scroll-target="#keep-one-source-of-truth">Keep one source of truth</a></li>
+  <li><a href="#technical-communication-transformation-is-a-high-value-use" id="toc-technical-communication-transformation-is-a-high-value-use" class="nav-link" data-scroll-target="#technical-communication-transformation-is-a-high-value-use">Technical communication: transformation is a high-value use</a></li>
+  <li><a href="#ai-assisted-does-not-mean-ai-generated" id="toc-ai-assisted-does-not-mean-ai-generated" class="nav-link" data-scroll-target="#ai-assisted-does-not-mean-ai-generated">AI-assisted does not mean AI-generated</a></li>
+  <li><a href="#my-working-protocol" id="toc-my-working-protocol" class="nav-link" data-scroll-target="#my-working-protocol">My working protocol</a></li>
+  <li><a href="#where-this-leaves-me" id="toc-where-this-leaves-me" class="nav-link" data-scroll-target="#where-this-leaves-me">Where this leaves me</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">How I use AI in technical work</h1>
+<p class="subtitle lead">Accelerating research, scientific software and communication without outsourcing judgment.</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">AI</div>
+    <div class="quarto-category">Workflow</div>
+    <div class="quarto-category">Research</div>
+    <div class="quarto-category">Scientific computing</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A practical account of how I use AI across research, scientific computing and technical communication: where it adds leverage, where I retain control, and how I verify what matters.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Silvio Fanzon </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 30, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>AI is now part of my technical workflow.</p>
+<p>I use it to search, compare, draft, test, review and implement faster. In research, it can shorten the distance between a question and a useful map of the literature. In scientific software, it can explain unfamiliar code, trace a bug, propose a regression test or implement a narrowly specified change. In technical communication, it can help turn the same underlying work into a paper, a reproducible repository, a technical walkthrough or an accessible project page.</p>
+<p>That is substantial leverage.</p>
+<p>It is also easy to misuse.</p>
+<p>A model can produce convincing work very quickly, including work that is unnecessary, poorly scoped or simply wrong. An agent can go further: it can act on a mistaken inference, alter the environment, and then continue reasoning from the state it has created.</p>
+<p>So I do not think the useful distinction is between <em>using AI</em> and <em>not using AI</em>. The more important distinction is between <strong>delegating production</strong> and <strong>delegating judgment</strong>.</p>
+<p>My aim is to do the first aggressively and the second cautiously.</p>
+<section id="from-a-difficult-question-to-a-defensible-result" class="level2">
+<h2 class="anchored" data-anchor-id="from-a-difficult-question-to-a-defensible-result">From a difficult question to a defensible result</h2>
+<p>The broader way I work predates current AI tools.</p>
+<p>I tend to start with an open-ended problem and try to make it precise: identify the assumptions, decide what is observable, formulate a model, implement it, test what the evidence supports, and communicate the result clearly.</p>
+<p>In compact form:</p>
+<pre class="text"><code>frame the problem
+        ↓
+model and explore
+        ↓
+build and test
+        ↓
+evaluate the evidence
+        ↓
+communicate the result</code></pre>
+<p>AI fits naturally into this process, but it does not replace the process.</p>
+<p>A useful division of labour is:</p>
+<pre class="text"><code>                 HUMAN
+          define the problem
+                 │
+                 ▼
+        ┌───────────────────┐
+        │        AI         │
+        │                   │
+        │ search            │
+        │ read              │
+        │ compare           │
+        │ calculate         │
+        │ draft             │
+        │ test              │
+        │ review            │
+        │ implement         │
+        └───────────────────┘
+                 │
+                 ▼
+                 HUMAN
+       verify and decide</code></pre>
+<p>The boundary is deliberately porous. AI can suggest a better question, challenge an assumption or notice something I missed. I can also ask it to criticise my conclusions.</p>
+<p>What does not move is responsibility for deciding what the project is trying to establish and whether the evidence actually establishes it.</p>
+</section>
+<section id="what-i-delegate" class="level2">
+<h2 class="anchored" data-anchor-id="what-i-delegate">What I delegate</h2>
+<p>There is a large amount of technical work between having an idea and deciding what it means.</p>
+<p>That middle is where I find AI most valuable.</p>
+<p>Typical uses include:</p>
+<ul>
+<li>literature reconnaissance and source discovery;</li>
+<li>comparing papers, assumptions and methods;</li>
+<li>summarising unfamiliar technical material before reading it closely;</li>
+<li>exploring alternative formulations or special cases;</li>
+<li>generating small numerical experiments;</li>
+<li>explaining an unfamiliar codebase;</li>
+<li>tracing bugs and edge cases;</li>
+<li>implementing tightly scoped changes;</li>
+<li>proposing regression tests;</li>
+<li>reviewing code and documentation for inconsistencies;</li>
+<li>checking whether several representations of a project still agree;</li>
+<li>restructuring technical writing for different audiences;</li>
+<li>converting material between Markdown, Quarto, LaTeX and code;</li>
+<li>extracting decisions, unresolved questions and reusable notes from long working sessions.</li>
+</ul>
+<p>Individually, many of these tasks are mundane. Collectively, they consume a great deal of time and attention.</p>
+<p>Making them cheaper leaves more time for the parts of the work where judgment matters most.</p>
+</section>
+<section id="what-i-retain" class="level2">
+<h2 class="anchored" data-anchor-id="what-i-retain">What I retain</h2>
+<p>Some decisions sit too close to the substance of the problem to be treated as implementation details.</p>
+<p>I retain responsibility for:</p>
+<p><strong>Problem formulation.</strong> What question are we actually answering? What assumptions are legitimate? What would count as a useful result?</p>
+<p><strong>Mathematical reasoning.</strong> Definitions, derivations, hypotheses, theoretical claims and the distinction between a plausible argument and a proof.</p>
+<p><strong>Experimental design.</strong> What is being measured? Are methods being compared fairly? Has a software change silently changed the scientific experiment?</p>
+<p><strong>Source selection.</strong> Which document, dataset, paper or repository is authoritative?</p>
+<p><strong>Interpretation.</strong> What does the result establish, what remains uncertain, and which conclusions go beyond the evidence?</p>
+<p><strong>Scope.</strong> Is a proposed improvement worth the additional complexity?</p>
+<p><strong>Acceptance.</strong> Does an AI-generated output actually become part of the project?</p>
+<p>This is less about protecting tasks from automation than about keeping the chain of reasoning visible.</p>
+</section>
+<section id="research-accelerate-exploration-preserve-evidence" class="level2">
+<h2 class="anchored" data-anchor-id="research-accelerate-exploration-preserve-evidence">Research: accelerate exploration, preserve evidence</h2>
+<p>Research is one of the strongest uses I have found for AI.</p>
+<p>At the beginning of a topic, a model can help build an initial map:</p>
+<pre class="text"><code>question
+   ↓
+literature reconnaissance
+   ↓
+methods and assumptions
+   ↓
+agreements and disagreements
+   ↓
+promising directions</code></pre>
+<p>That is particularly useful when moving into an adjacent area. It can identify terminology, suggest relevant papers, compare formulations and expose assumptions that deserve attention.</p>
+<p>For mathematical work, I also use AI as an interactive second reader. Useful questions include:</p>
+<ul>
+<li>What happens in the simplest non-trivial case?</li>
+<li>Which assumption is doing the real work?</li>
+<li>Is there an obvious counterexample if this hypothesis is removed?</li>
+<li>Can this statement be reformulated geometrically?</li>
+<li>What numerical experiment would distinguish these two explanations?</li>
+<li>Which result in the literature is closest to this argument?</li>
+<li>Where might this proof fail?</li>
+</ul>
+<p>The important distinction is between <strong>discovery</strong> and <strong>evidence</strong>.</p>
+<p>A model telling me that a paper proves something is not evidence that the paper proves it. A plausible derivation is not a theorem. A numerical value appearing in a conversation is not a reproducible result.</p>
+<p>AI can make the route to verification much shorter. It does not eliminate the final verification step.</p>
+</section>
+<section id="scientific-software-narrow-changes-beat-autonomous-improvement" class="level2">
+<h2 class="anchored" data-anchor-id="scientific-software-narrow-changes-beat-autonomous-improvement">Scientific software: narrow changes beat autonomous improvement</h2>
+<p>Coding makes the strengths and weaknesses of AI especially visible.</p>
+<p>A model can understand a small research repository surprisingly quickly. It can follow execution paths, explain numerical routines, generate test cases and implement changes across several files.</p>
+<p>That makes broad prompts tempting:</p>
+<blockquote class="blockquote">
+<p>Improve this repository.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Make this code more robust.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Refactor this implementation.</p>
+</blockquote>
+<p>I increasingly avoid them for established work.</p>
+<p>Those prompts allow the model to define both the problem and the meaning of <em>better</em>. A small correction can then expand into a new API, new metadata, new configuration, new benchmark rules and new infrastructure. Every addition may be individually defensible while the project as a whole becomes less transparent.</p>
+<p>For technical repositories I prefer:</p>
+<pre class="text"><code>trusted baseline
+      ↓
+specific observed problem
+      ↓
+diagnosis
+      ↓
+small proposed change
+      ↓
+targeted test
+      ↓
+inspect the diff
+      ↓
+stop</code></pre>
+<p>The word <em>stop</em> matters.</p>
+<p>AI already makes adding code cheap. The workflow needs to make unnecessary complexity expensive again.</p>
+</section>
+<section id="separate-audit-from-implementation" class="level2">
+<h2 class="anchored" data-anchor-id="separate-audit-from-implementation">Separate audit from implementation</h2>
+<p>A particularly useful discipline is to separate finding problems from fixing them.</p>
+<section id="audit" class="level3">
+<h3 class="anchored" data-anchor-id="audit">1. Audit</h3>
+<p>Ask the model to inspect the project, classify issues and provide evidence.</p>
+<p>Do not change anything.</p>
+</section>
+<section id="select" class="level3">
+<h3 class="anchored" data-anchor-id="select">2. Select</h3>
+<p>Decide which findings are:</p>
+<ul>
+<li>genuine correctness problems;</li>
+<li>reproducibility problems;</li>
+<li>documentation problems;</li>
+<li>intentional simplifications;</li>
+<li>theoretical limitations;</li>
+<li>optional improvements that are not worth their complexity.</li>
+</ul>
+</section>
+<section id="implement" class="level3">
+<h3 class="anchored" data-anchor-id="implement">3. Implement</h3>
+<p>Choose one issue and make the smallest justified intervention.</p>
+<p>This prevents an audit from becoming an automatic mandate to rewrite every imperfect part of a project.</p>
+<p>It also produces a cleaner review trail: diagnosis, decision, patch.</p>
+</section>
+</section>
+<section id="tests-should-protect-ideas-not-just-code" class="level2">
+<h2 class="anchored" data-anchor-id="tests-should-protect-ideas-not-just-code">Tests should protect ideas, not just code</h2>
+<p>AI is very good at generating tests.</p>
+<p>That is valuable, but a large test suite can create false confidence if the tests merely repeat the assumptions of the implementation.</p>
+<p>For numerical and mathematical software, I prefer tests based on independent properties:</p>
+<ul>
+<li>a known closed-form solution;</li>
+<li>scale invariance;</li>
+<li>a conserved quantity;</li>
+<li>a theoretical bound;</li>
+<li>monotonicity where theory genuinely guarantees it;</li>
+<li>agreement with an independently implemented calculation;</li>
+<li>explicit failure when convergence is not achieved.</li>
+</ul>
+<p>The question is not simply:</p>
+<blockquote class="blockquote">
+<p>Does the test pass?</p>
+</blockquote>
+<p>It is:</p>
+<blockquote class="blockquote">
+<p>Would this test still expose the error if the implementation and its internal conventions were both wrong in the same way?</p>
+</blockquote>
+<p>That is a much stronger standard.</p>
+</section>
+<section id="benchmarks-are-part-of-the-scientific-argument" class="level2">
+<h2 class="anchored" data-anchor-id="benchmarks-are-part-of-the-scientific-argument">Benchmarks are part of the scientific argument</h2>
+<p>Software changes can alter scientific conclusions without changing the underlying model.</p>
+<p>Suppose one optimisation method requires a step-size estimate. Replacing an unsafe estimate with a conservative bound may be mathematically valid, but if the new bound is unnecessarily large, the method takes unnecessarily small steps.</p>
+<p>The code is now safer.</p>
+<p>The benchmark may now be less fair.</p>
+<p>Similarly, a timing comparison can change depending on whether preprocessing is included, whether one method receives information derived from the optimum, how frequently objectives are evaluated, or whether stopping criteria represent genuinely comparable accuracy.</p>
+<p>That is why I treat benchmark design as part of the scientific work rather than as implementation plumbing.</p>
+<p>A benchmark change deserves the same question as a modelling change:</p>
+<blockquote class="blockquote">
+<p>What exactly are we comparing now?</p>
+</blockquote>
+</section>
+<section id="agents-capability-changes-the-failure-mode" class="level2">
+<h2 class="anchored" data-anchor-id="agents-capability-changes-the-failure-mode">Agents: capability changes the failure mode</h2>
+<p>An agent is more than a chatbot with a terminal.</p>
+<p>It can inspect files, call tools, edit code, run tests and respond to the results. That can remove a remarkable amount of mechanical work.</p>
+<p>It also allows mistakes to propagate.</p>
+<pre class="text"><code>wrong inference
+      ↓
+tool action
+      ↓
+changed environment
+      ↓
+next inference uses changed state
+      ↓
+further action</code></pre>
+<p>For that reason, I prefer agents with explicit boundaries:</p>
+<ul>
+<li>a trusted starting state;</li>
+<li>a specific objective;</li>
+<li>a clear list of files or systems they may change;</li>
+<li>explicit things they must not change;</li>
+<li>tests or other evidence for success;</li>
+<li>a diff or audit trail before acceptance.</li>
+</ul>
+<p>This is not because current agents are incapable. It is because capability and reliability are different properties.</p>
+<section id="frontier-models-are-still-imperfect-agents" class="level3">
+<h3 class="anchored" data-anchor-id="frontier-models-are-still-imperfect-agents">Frontier models are still imperfect agents</h3>
+<p>Current benchmarks make that distinction concrete.</p>
+<p>As of July 2026, OpenAI reports <strong>58.0% on Toolathlon</strong> and <strong>18.1% on AutomationBench</strong> for GPT-5.6 Sol. On the same Toolathlon table, Claude Mythos 5 scores <strong>61.7%</strong>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>An independent general-agent benchmark, OmniaBench, reports Overall Pass@1 of <strong>58.54% for Claude Sonnet 5</strong> and <strong>57.14% for GPT-5.6 Sol</strong> across 1,431 tasks.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>These benchmarks test different environments and should not be compared as if they were one common error rate. They are also not estimates of failure frequency in ordinary day-to-day use.</p>
+<p>Their importance is more basic: even frontier systems that are extremely capable can still fail a substantial fraction of demanding agentic tasks.</p>
+<p>The right response is not to avoid agents. It is to design workflows in which failure is visible and reversible.</p>
+</section>
+</section>
+<section id="memory-and-long-context-are-retrieval-aids-not-canonical-records" class="level2">
+<h2 class="anchored" data-anchor-id="memory-and-long-context-are-retrieval-aids-not-canonical-records">Memory and long context are retrieval aids, not canonical records</h2>
+<p>Another easy mistake is to confuse <em>available somewhere</em> with <em>reliably retrievable</em>.</p>
+<p>A long conversation, large context window or persistent memory system can contain the information needed to answer a question and still fail to surface the right detail.</p>
+<p>Again, current benchmark results illustrate the point. OpenAI reports GPT-5.6 Sol at <strong>73.8%</strong> on its MRCR v2 eight-needle test at 512K–1M tokens and <strong>77.1 F1</strong> on the one-million-token GraphWalks BFS evaluation; Claude Mythos 5 scores <strong>79.4 F1</strong> on the latter.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>Those are strong long-context results. They are not perfect recall.</p>
+<p>They also do <strong>not</strong> measure a product’s cross-conversation personal-memory feature, and I would not treat them as if they did.</p>
+<p>For my own work, the practical conclusion is:</p>
+<pre class="text"><code>chat history / model memory
+            ↓
+useful retrieval layer
+            ↓
+not the source of truth</code></pre>
+<p>Important decisions, results, references and project state belong in durable artefacts: repositories, Markdown notes, Quarto documents, data files and documentation.</p>
+<p>AI can help maintain and interrogate that record.</p>
+<p>It should not be the record.</p>
+</section>
+<section id="fluent-output-is-not-evidence" class="level2">
+<h2 class="anchored" data-anchor-id="fluent-output-is-not-evidence">Fluent output is not evidence</h2>
+<p>Modern models are unusually persuasive because uncertainty is not always visible in the prose.</p>
+<p>A claim can be specific, well written and wrong.</p>
+<p>A citation can look plausible and not support the sentence attached to it.</p>
+<p>An agent can say a file was changed, a test passed or a search found nothing.</p>
+<p>For consequential work, I try to attach claims to the thing that can actually establish them:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Claim</th>
+<th>Evidence I want</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A paper says X</td>
+<td>The paper</td>
+</tr>
+<tr class="even">
+<td>A factual statement is current</td>
+<td>A current primary or authoritative source</td>
+</tr>
+<tr class="odd">
+<td>A derivation is correct</td>
+<td>Assumptions and an independent mathematical check</td>
+</tr>
+<tr class="even">
+<td>A numerical result holds</td>
+<td>Reproducible computation or an invariant</td>
+</tr>
+<tr class="odd">
+<td>A code change works</td>
+<td>Diff + targeted tests</td>
+</tr>
+<tr class="even">
+<td>An agent changed something</td>
+<td>File, commit, API response or tool output</td>
+</tr>
+<tr class="odd">
+<td>A previous decision was made</td>
+<td>Durable project notes or source history</td>
+</tr>
+</tbody>
+</table>
+<p>The required level of verification scales with the consequence of being wrong.</p>
+<p>Brainstorming should remain cheap.</p>
+<p>Published claims, mathematical conclusions and repository changes should not.</p>
+</section>
+<section id="reversibility-is-a-feature" class="level2">
+<h2 class="anchored" data-anchor-id="reversibility-is-a-feature">Reversibility is a feature</h2>
+<p>The safest AI workflow is not one in which the model never makes a poor decision.</p>
+<p>It is one in which a poor decision is cheap to undo.</p>
+<p>For software:</p>
+<pre class="text"><code>main
+  ↓
+small branch
+  ↓
+diff
+  ↓
+test
+  ↓
+review
+  ↓
+merge</code></pre>
+<p>For writing:</p>
+<pre class="text"><code>canonical text
+      ↓
+AI revision
+      ↓
+compare
+      ↓
+accept selected changes</code></pre>
+<p>For research:</p>
+<pre class="text"><code>established model
+      ↓
+experimental extension
+      ↓
+theoretical / numerical check
+      ↓
+promote only if justified</code></pre>
+<p>This is one reason version control matters even more when generation becomes cheap.</p>
+</section>
+<section id="keep-one-source-of-truth" class="level2">
+<h2 class="anchored" data-anchor-id="keep-one-source-of-truth">Keep one source of truth</h2>
+<p>AI makes it almost frictionless to produce another version of something.</p>
+<p>A project can quickly acquire:</p>
+<pre class="text"><code>paper
+  ↓
+repository
+  ↓
+technical walkthrough
+  ↓
+project page
+  ↓
+presentation
+  ↓
+CV summary</code></pre>
+<p>Those are useful layers for different audiences.</p>
+<p>They become a liability when each begins to contain its own version of the facts.</p>
+<p>I therefore try to make one source authoritative for each type of information and derive or verify downstream representations against it.</p>
+<p>A repository can own implementation and version history. A paper can own a published result. Structured project data can own canonical links. A technical walkthrough can explain the implementation without becoming a second implementation.</p>
+<p>AI is particularly useful for transforming one authoritative source for another audience.</p>
+<p>That is very different from letting it invent five loosely related versions.</p>
+</section>
+<section id="technical-communication-transformation-is-a-high-value-use" class="level2">
+<h2 class="anchored" data-anchor-id="technical-communication-transformation-is-a-high-value-use">Technical communication: transformation is a high-value use</h2>
+<p>One of my favourite uses of AI is changing the level of explanation without changing the underlying substance.</p>
+<p>The same work may need to serve several readers:</p>
+<pre class="text"><code>research paper
+      ↓
+technical repository
+      ↓
+technical walkthrough
+      ↓
+industry-facing explanation
+      ↓
+short professional summary</code></pre>
+<p>AI can help identify which details each audience needs, remove unnecessary notation, generate an outline, or compare the public explanation against the technical source for drift.</p>
+<p>This is a good form of delegation because the transformation can be checked against something authoritative.</p>
+<p>The goal is not to make difficult work sound simple.</p>
+<p>It is to make the right part of the difficulty visible to the right reader.</p>
+</section>
+<section id="ai-assisted-does-not-mean-ai-generated" class="level2">
+<h2 class="anchored" data-anchor-id="ai-assisted-does-not-mean-ai-generated">AI-assisted does not mean AI-generated</h2>
+<p>I do not think every project needs an AI badge.</p>
+<p>In some projects AI has played a meaningful role: repository audit, test generation, code review, documentation checks, literature reconnaissance or communication across several technical layers.</p>
+<p>Those contributions are worth describing when they illuminate the workflow.</p>
+<p>In other cases AI may have been no more important than the editor, version-control system or plotting library.</p>
+<p>There is no value in labelling everything.</p>
+<p>The interesting question is:</p>
+<blockquote class="blockquote">
+<p>What did AI make possible, faster or easier—and what evidence was used to decide that its output was good enough?</p>
+</blockquote>
+<p>That is the distinction I want project pages to make when AI is genuinely part of the story.</p>
+</section>
+<section id="my-working-protocol" class="level2">
+<h2 class="anchored" data-anchor-id="my-working-protocol">My working protocol</h2>
+<p>For consequential AI-assisted work, I now use a simple sequence.</p>
+<pre class="text"><code>1. Define
+   State the actual problem.
+
+2. Freeze
+   Identify the trusted baseline.
+
+3. Diagnose
+   Understand the issue before changing it.
+
+4. Select
+   Decide which problem is actually worth solving.
+
+5. Constrain
+   State what must remain unchanged.
+
+6. Delegate
+   Use AI for the expensive middle.
+
+7. Verify
+   Test the relevant property independently.
+
+8. Inspect
+   Look at the output, source, diff or evidence.
+
+9. Accept
+   Decide whether the result belongs in the project.
+
+10. Stop
+    Do not turn a completed task into an unsolicited redesign.</code></pre>
+<p>The protocol is intentionally conservative.</p>
+<p>AI already supplies the speed.</p>
+<p>The workflow needs to supply the control.</p>
+</section>
+<section id="where-this-leaves-me" class="level2">
+<h2 class="anchored" data-anchor-id="where-this-leaves-me">Where this leaves me</h2>
+<p>I expect AI systems to become much more capable.</p>
+<p>That makes me more interested in using them, not less.</p>
+<p>But as production becomes cheaper, other parts of technical work become relatively more important:</p>
+<ul>
+<li>choosing worthwhile questions;</li>
+<li>making assumptions explicit;</li>
+<li>selecting authoritative evidence;</li>
+<li>designing meaningful experiments;</li>
+<li>noticing when complexity adds nothing;</li>
+<li>validating results;</li>
+<li>communicating uncertainty;</li>
+<li>deciding when the work is finished.</li>
+</ul>
+<p>The opportunity is not simply to automate the work I already do.</p>
+<p>It is to spend less time on the mechanical middle and more time on those decisions.</p>
+<p><strong>Delegate production. Preserve evidence. Verify what matters. Retain ownership of the decision.</strong></p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>OpenAI, <a href="https://openai.com/index/gpt-5-6/"><em>GPT-5.6: Frontier intelligence that scales with your ambition</em></a>, 9 July 2026. The published evaluation table reports GPT-5.6 Sol at 58.0% on Toolathlon, 18.1% on AutomationBench, 73.8% on MRCR v2 eight-needle at 512K–1M tokens and 77.1 F1 on GraphWalks BFS at one million tokens; it reports Claude Mythos 5 at 61.7% on Toolathlon and 79.4 F1 on the one-million-token GraphWalks evaluation.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Chengyu Shen et al., <a href="https://arxiv.org/abs/2607.14989"><em>OmniaBench: Benchmarking General AI Agents Across Diverse Scenarios</em></a>, arXiv:2607.14989, 16 July 2026. The benchmark contains 1,431 tasks and reports Overall Pass@1 of 58.54% for Claude Sonnet 5 and 57.14% for GPT-5.6 Sol.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>OpenAI, <a href="https://openai.com/index/gpt-5-6/"><em>GPT-5.6: Frontier intelligence that scales with your ambition</em></a>, 9 July 2026. The published evaluation table reports GPT-5.6 Sol at 58.0% on Toolathlon, 18.1% on AutomationBench, 73.8% on MRCR v2 eight-needle at 512K–1M tokens and 77.1 F1 on GraphWalks BFS at one million tokens; it reports Claude Mythos 5 at 61.7% on Toolathlon and 79.4 F1 on the one-million-token GraphWalks evaluation.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer-inner">
+    <div class="site-footer-identity">
+      <strong>Silvio Fanzon</strong>
+      <span>Applied mathematician</span>
+    </div>
+
+    <nav class="site-footer-links" aria-label="Footer">
+      <a href="mailto:silvio.fanzon.work@gmail.com">Email</a>
+      <a href="../Silvio_Fanzon_Academic_CV.pdf">CV</a>
+      <a href="https://www.linkedin.com/in/fanzon" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/sfanzon" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://scholar.google.com/citations?user=9yJyLsoAAAAJ" target="_blank" rel="noopener">Scholar</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+
+    <div class="site-footer-meta">
+      <span>© 2026 Silvio Fanzon</span>
+      <span>Designed &amp; developed by Silvio Fanzon</span>
+      <span><a href="https://github.com/sfanzon" target="_blank" rel="noopener">Source code</a></span>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  const path = window.location.pathname.replace(/index\.html$/, '');
+  document.querySelectorAll('#navbar .nav-item[data-path]').forEach(li => {
+    const href = li.getAttribute('data-path');
+    if((href === '/' && path === '/') || (href !== '/' && path.startsWith(href))){ li.classList.add('active'); }
+  });
+
+  const scrollPositionKey = `scroll-position:${window.location.pathname}${window.location.search}`;
+
+  function saveScrollPosition() {
+    try {
+      window.sessionStorage.setItem(scrollPositionKey, JSON.stringify({
+        x: window.scrollX,
+        y: window.scrollY
+      }));
+    } catch (_) {
+      // Storage can be unavailable in private or locked-down browser contexts.
+    }
+  }
+
+  window.addEventListener('pagehide', function(event) {
+    saveScrollPosition();
+    if (event.persisted) document.documentElement.style.visibility = 'hidden';
+  });
+  document.addEventListener('click', function(event) {
+    if (!(event.target instanceof Element)) return;
+    const link = event.target.closest('a[href]');
+    if (!link || link.target === '_blank' || link.hasAttribute('download')) return;
+    saveScrollPosition();
+  }, true);
+
+  window.addEventListener('pageshow', function(event) {
+    const navigation = window.performance.getEntriesByType('navigation')[0];
+    if (!event.persisted && navigation?.type !== 'back_forward') return;
+
+    let position;
+    try {
+      position = JSON.parse(window.sessionStorage.getItem(scrollPositionKey));
+    } catch (_) {
+      return;
+    }
+    if (!position || !Number.isFinite(position.x) || !Number.isFinite(position.y)) return;
+
+    // Quarto's Safari workaround scrolls to the top after 40 ms.
+    window.setTimeout(function() {
+      const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = 'auto';
+      window.scrollTo({left: position.x, top: position.y, behavior: 'auto'});
+      document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      document.documentElement.style.visibility = '';
+      delete document.documentElement.dataset.sfRestoringScroll;
+    }, 80);
+  });
+
+  function toggleDetails(button, selector) {
+    const entry = button.closest('.publication-entry');
+    const panel = entry?.querySelector(selector);
+    if (!panel) return;
+    const opening = !panel.classList.contains('open');
+    entry.querySelectorAll('.abstract.open, .bibtex.open').forEach(el => el.classList.remove('open'));
+    entry.querySelectorAll('.abstract-toggle, .bibtex-toggle').forEach(el => el.setAttribute('aria-expanded', 'false'));
+    if (opening) {
+      panel.classList.add('open');
+      button.setAttribute('aria-expanded', 'true');
+      if (selector === '.abstract') {
+        requestAnimationFrame(function () {
+          if (typeof typesetMath === 'function') typesetMath(panel);
+          else if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise([panel]);
+        });
+      }
+    }
+  }
+
+  document.querySelectorAll('.abstract-toggle').forEach(button => {
+    button.setAttribute('aria-expanded', 'false');
+    button.addEventListener('click', () => toggleDetails(button, '.abstract'));
+  });
+  document.querySelectorAll('.bibtex-toggle').forEach(button => {
+    button.setAttribute('aria-expanded', 'false');
+    button.addEventListener('click', () => toggleDetails(button, '.bibtex'));
+  });
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function(resolve, reject) {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      try {
+        document.execCommand('copy') ? resolve() : reject(new Error('Copy failed'));
+      } catch (error) { reject(error); }
+      area.remove();
+    });
+  }
+
+  document.querySelectorAll('[data-news-component]').forEach(function(component) {
+    const input = component.querySelector('[data-news-search]');
+    const items = [...component.querySelectorAll('[data-news-item]')];
+    const empty = component.querySelector('.news-search-empty');
+    if (!input) return;
+
+    function filterNews() {
+      const query = input.value.trim().toLowerCase();
+      let matches = 0;
+      items.forEach(function(item) {
+        const visible = !query || item.textContent.toLowerCase().includes(query);
+        item.hidden = !visible;
+        if (visible) matches += 1;
+      });
+      if (empty) empty.hidden = matches !== 0;
+    }
+
+    input.addEventListener('input', filterNews);
+    filterNews();
+  });
+
+  document.querySelectorAll('.publication-entry .bibtex').forEach(function(panel) {
+    const code = panel.querySelector('pre code');
+    if (!code || !code.textContent.trim() || panel.querySelector('.copy-citation')) return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'copy-citation';
+    button.innerHTML = '<i class="fa-regular fa-copy" aria-hidden="true"></i><span>Copy citation</span>';
+    button.addEventListener('click', function() {
+      copyText(code.textContent.trim()).then(function() {
+        const label = button.querySelector('span');
+        label.textContent = 'Copied';
+        button.classList.add('is-copied');
+        window.setTimeout(function() {
+          label.textContent = 'Copy citation';
+          button.classList.remove('is-copied');
+        }, 1600);
+      });
+    });
+    panel.insertBefore(button, panel.firstChild);
+  });
+
+  document.querySelectorAll('.callout-header[data-bs-toggle="collapse"]').forEach(function(header) {
+    header.setAttribute('role', 'button');
+    header.setAttribute('tabindex', '0');
+    header.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        header.click();
+      }
+    });
+  });
+
+  document.querySelectorAll('pre').forEach(function(region) {
+    if (region.scrollWidth > region.clientWidth || region.scrollHeight > region.clientHeight) {
+      region.setAttribute('tabindex', '0');
+    }
+  });
+
+})();
+</script>
+<script>
+(function () {
+  const placeholder = 'Search site-wide';
+  function labelPopupSearch(root) {
+    (root || document).querySelectorAll('.aa-DetachedContainer .aa-Input').forEach(function (input) {
+      input.setAttribute('placeholder', placeholder);
+      input.setAttribute('aria-label', placeholder);
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    labelPopupSearch(document);
+    new MutationObserver(function () { labelPopupSearch(document); })
+      .observe(document.body, { childList: true, subtree: true });
+  });
+})();
+</script>
+<script>
+(function () {
+  let scheduled = false;
+
+  function namespaceSvgIds(svg, index) {
+    if (svg.dataset.namespacedIds === 'true') return;
+    const prefix = `note-diagram-${index}-`;
+    const ids = new Map();
+
+    svg.querySelectorAll('[id]').forEach(function (element) {
+      const oldId = element.id;
+      const newId = prefix + oldId;
+      ids.set(oldId, newId);
+      element.id = newId;
+    });
+
+    if (!ids.size) return;
+    svg.querySelectorAll('*').forEach(function (element) {
+      for (const attribute of element.attributes) {
+        let value = attribute.value;
+        if (attribute.name === 'aria-labelledby' || attribute.name === 'aria-describedby') {
+          value = value.split(/\s+/).map(id => ids.get(id) || id).join(' ');
+        }
+        ids.forEach(function (newId, oldId) {
+          value = value
+            .replaceAll(`url(#${oldId})`, `url(#${newId})`)
+            .replaceAll(`#${oldId}`, `#${newId}`)
+            .replaceAll(`${oldId}.`, `${newId}.`);
+        });
+        if (value !== attribute.value) element.setAttribute(attribute.name, value);
+      }
+    });
+    svg.dataset.namespacedIds = 'true';
+  }
+
+  function namespaceMermaidDiagrams() {
+    scheduled = false;
+    document.querySelectorAll('.cell-output-display svg').forEach(namespaceSvgIds);
+  }
+
+  function scheduleNamespace() {
+    if (scheduled) return;
+    scheduled = true;
+    window.requestAnimationFrame(namespaceMermaidDiagrams);
+  }
+
+  new MutationObserver(scheduleNamespace).observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+  document.addEventListener('DOMContentLoaded', scheduleNamespace);
+  scheduleNamespace();
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/www\.silviofanzon\.com");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

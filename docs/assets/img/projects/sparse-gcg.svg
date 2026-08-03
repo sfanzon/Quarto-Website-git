@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" role="img" aria-labelledby="title desc">
+  <title id="title">Sparse optimisation with FC-GCG</title>
+  <desc id="desc">A sparse collection of atoms selected along a converging optimisation path.</desc>
+  <defs>
+    <linearGradient id="gcg-path" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#55778a"/>
+      <stop offset="1" stop-color="#a8522f"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="440" fill="none"/>
+  <g stroke="#55778a" stroke-width="2" opacity=".15">
+    <path d="M105 80V360M205 80V360M305 80V360M405 80V360M505 80V360M605 80V360M705 80V360"/>
+    <path d="M105 80H705M105 150H705M105 220H705M105 290H705M105 360H705"/>
+  </g>
+  <g fill="#55778a" opacity=".35">
+    <circle cx="105" cy="290" r="8"/><circle cx="155" cy="120" r="8"/>
+    <circle cx="205" cy="245" r="8"/><circle cx="255" cy="335" r="8"/>
+    <circle cx="305" cy="105" r="8"/><circle cx="355" cy="260" r="8"/>
+    <circle cx="405" cy="175" r="8"/><circle cx="455" cy="325" r="8"/>
+    <circle cx="505" cy="110" r="8"/><circle cx="555" cy="235" r="8"/>
+    <circle cx="605" cy="315" r="8"/><circle cx="655" cy="145" r="8"/>
+    <circle cx="705" cy="270" r="8"/>
+  </g>
+  <path d="M105 290L205 245L305 105L405 175L505 110L655 145"
+        fill="none" stroke="url(#gcg-path)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#a8522f" stroke="#f8f3eb" stroke-width="5">
+    <circle cx="105" cy="290" r="14"/>
+    <circle cx="205" cy="245" r="14"/>
+    <circle cx="305" cy="105" r="14"/>
+    <circle cx="405" cy="175" r="14"/>
+    <circle cx="505" cy="110" r="14"/>
+    <circle cx="655" cy="145" r="14"/>
+  </g>
+  <path d="M105 360C180 350 211 317 270 300C337 281 373 245 430 233C510 216 558 190 618 184C655 180 681 177 705 176"
+        fill="none" stroke="#55778a" stroke-width="4" stroke-linecap="round" opacity=".72"/>
+  <path d="M105 360H705" fill="none" stroke="#a8522f" stroke-width="3" stroke-dasharray="9 10" opacity=".55"/>
+</svg>

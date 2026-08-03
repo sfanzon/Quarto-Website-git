@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" role="img" aria-labelledby="title desc">
+  <title id="title">From chatbot to automation</title>
+  <desc id="desc">Five connected stages: chatbot, coding assistant, agent, reliable workflow and automation.</desc>
+  <rect width="1000" height="500" fill="none"/>
+  <path d="M120 250H880" fill="none" stroke="#55778a" stroke-width="5" stroke-linecap="round" opacity=".35"/>
+  <g font-family="system-ui, sans-serif" text-anchor="middle">
+    <g fill="#edf1f2" stroke="#55778a" stroke-width="3">
+      <circle cx="120" cy="250" r="70"/>
+      <circle cx="310" cy="250" r="70"/>
+      <circle cx="500" cy="250" r="70"/>
+    </g>
+    <g fill="#efe0d6" stroke="#a8522f" stroke-width="3">
+      <circle cx="690" cy="250" r="70"/>
+      <circle cx="880" cy="250" r="70"/>
+    </g>
+    <g fill="#a8522f" font-size="16" font-weight="750">
+      <text x="120" y="160">01</text><text x="310" y="160">02</text><text x="500" y="160">03</text>
+      <text x="690" y="160">04</text><text x="880" y="160">05</text>
+    </g>
+    <g fill="#1c1c1d" font-size="18" font-weight="680">
+      <text x="120" y="246">CHATBOT</text><text x="120" y="272" font-size="14" font-weight="500">ask + answer</text>
+      <text x="310" y="238">CODING</text><text x="310" y="262">ASSISTANT</text><text x="310" y="284" font-size="14" font-weight="500">suggest changes</text>
+      <text x="500" y="246">AGENT</text><text x="500" y="272" font-size="14" font-weight="500">observe + act</text>
+      <text x="690" y="238">RELIABLE</text><text x="690" y="262">WORKFLOW</text><text x="690" y="284" font-size="14" font-weight="500">verify results</text>
+      <text x="880" y="246">AUTOMATION</text><text x="880" y="272" font-size="14" font-weight="500">repeat safely</text>
+    </g>
+  </g>
+</svg>
