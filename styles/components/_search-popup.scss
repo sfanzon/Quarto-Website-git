@@ -1,0 +1,211 @@
+/* ============================================================
+   SITE SEARCH POPUP — EDITORIAL REDESIGN
+   Popup only: deliberately contains no navbar selectors.
+   ============================================================ */
+
+.aa-DetachedOverlay {
+  background: color-mix(in srgb, #15120f 58%, transparent) !important;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+.aa-DetachedContainer {
+  width: min(760px, calc(100vw - 2rem)) !important;
+  max-height: min(78vh, 760px) !important;
+  margin: clamp(4.5rem, 11vh, 8rem) auto 0 !important;
+  overflow: hidden !important;
+  color: var(--global-text-color) !important;
+  background: var(--global-bg-color) !important;
+  border: 1px solid var(--global-divider-color) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 28px 80px rgba(28, 22, 17, .22) !important;
+}
+
+.aa-DetachedFormContainer {
+  padding: 1rem 1rem .75rem !important;
+  background: color-mix(in srgb, var(--global-bg-color) 94%, var(--global-theme-color) 6%) !important;
+  border-bottom: 1px solid var(--global-divider-color) !important;
+}
+
+.aa-DetachedContainer .aa-Form {
+  min-height: 52px !important;
+  background: var(--global-bg-color) !important;
+  border: 1px solid color-mix(in srgb, var(--global-text-color) 19%, transparent) !important;
+  border-radius: 13px !important;
+  box-shadow: none !important;
+  transition: border-color .16s ease, box-shadow .16s ease !important;
+}
+
+.aa-DetachedContainer .aa-Form:focus-within {
+  border-color: var(--global-theme-color) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--global-theme-color) 16%, transparent) !important;
+}
+
+.aa-DetachedContainer .aa-Input,
+.aa-DetachedContainer .aa-Input::placeholder {
+  font-family: inherit !important;
+}
+
+.aa-DetachedContainer .aa-Input {
+  color: var(--global-text-color) !important;
+  background: transparent !important;
+  font-size: 1rem !important;
+  line-height: 1.35 !important;
+}
+
+.aa-DetachedContainer .aa-Input::placeholder {
+  color: var(--global-text-color-light) !important;
+  opacity: .88 !important;
+}
+
+.aa-DetachedContainer .aa-SubmitIcon,
+.aa-DetachedContainer .aa-ClearIcon {
+  color: var(--global-theme-color) !important;
+}
+
+.aa-DetachedContainer .aa-DetachedCancelButton {
+  margin-left: .75rem !important;
+  color: var(--global-theme-color) !important;
+  background: transparent !important;
+  border: 0 !important;
+  font: inherit !important;
+  font-size: .82rem !important;
+  font-weight: 650 !important;
+}
+
+.aa-DetachedContainer .aa-Panel {
+  color: var(--global-text-color) !important;
+  background: var(--global-bg-color) !important;
+}
+
+.aa-DetachedContainer .aa-PanelLayout {
+  padding: .65rem !important;
+  scrollbar-color: color-mix(in srgb, var(--global-text-color) 25%, transparent) transparent;
+}
+
+.aa-DetachedContainer .aa-SourceHeader {
+  margin: .45rem .55rem .2rem !important;
+  border-bottom: 0 !important;
+}
+
+.aa-DetachedContainer .aa-SourceHeaderTitle {
+  color: var(--global-text-color-light) !important;
+  font-size: .68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .12em !important;
+  text-transform: uppercase !important;
+}
+
+.aa-DetachedContainer .aa-Item {
+  margin: .12rem 0 !important;
+  color: var(--global-text-color) !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 11px !important;
+}
+
+.aa-DetachedContainer .aa-Item:hover,
+.aa-DetachedContainer .aa-Item[aria-selected="true"] {
+  color: var(--global-text-color) !important;
+  background: color-mix(in srgb, var(--global-theme-color) 9%, var(--global-bg-color)) !important;
+  border-color: color-mix(in srgb, var(--global-theme-color) 22%, transparent) !important;
+}
+
+.aa-DetachedContainer .aa-ItemLink,
+.aa-DetachedContainer .aa-ItemContent,
+.aa-DetachedContainer .aa-ItemContentBody,
+.aa-DetachedContainer .aa-ItemContentTitle,
+.aa-DetachedContainer .aa-ItemContentDescription {
+  color: inherit !important;
+}
+
+.aa-DetachedContainer .aa-ItemContentTitle,
+.aa-DetachedContainer .search-result-title {
+  color: var(--global-text-color) !important;
+  font-family: var(--global-heading-font-family, inherit) !important;
+  font-size: .98rem !important;
+  font-weight: 650 !important;
+  line-height: 1.25 !important;
+}
+
+.aa-DetachedContainer .aa-ItemContentDescription,
+.aa-DetachedContainer .search-result-text,
+.aa-DetachedContainer .search-result-section {
+  color: var(--global-text-color-light) !important;
+  font-size: .82rem !important;
+  line-height: 1.45 !important;
+}
+
+.aa-DetachedContainer .aa-Item[aria-selected="true"] *,
+.aa-DetachedContainer .aa-Item[aria-selected="true"] a {
+  color: var(--global-text-color) !important;
+}
+
+.aa-DetachedContainer .aa-Item[aria-selected="true"] .aa-ItemContentDescription,
+.aa-DetachedContainer .aa-Item[aria-selected="true"] .search-result-text,
+.aa-DetachedContainer .aa-Item[aria-selected="true"] .search-result-section {
+  color: var(--global-text-color-light) !important;
+}
+
+.aa-DetachedContainer mark {
+  color: inherit !important;
+  background: color-mix(in srgb, var(--global-theme-color) 22%, transparent) !important;
+  border-radius: 3px;
+  padding: 0 .08em;
+}
+
+.aa-DetachedContainer .aa-GradientBottom,
+.aa-DetachedContainer .aa-Footer {
+  background: linear-gradient(transparent, var(--global-bg-color)) !important;
+}
+
+.aa-DetachedContainer .aa-NoResults {
+  padding: 2.5rem 1.5rem !important;
+  color: var(--global-text-color-light) !important;
+  text-align: center !important;
+}
+
+@media (max-width: 640px) {
+  .aa-DetachedContainer {
+    width: calc(100vw - 1rem) !important;
+    max-height: calc(100dvh - 1rem) !important;
+    margin: .5rem auto 0 !important;
+    border-radius: 14px !important;
+  }
+
+  .aa-DetachedFormContainer {
+    padding: .7rem !important;
+  }
+
+  .aa-DetachedContainer .aa-Form {
+    min-height: 48px !important;
+  }
+
+  .aa-DetachedContainer .aa-PanelLayout {
+    padding: .45rem !important;
+  }
+}
+
+
+/* Search popup hover tweak */
+#quarto-search-results .aa-Item:hover,
+#quarto-search-results .aa-Item[aria-selected="true"]{
+  background:#f6f3ee !important;
+}
+
+/* Search popup result hover/selection only: prevent Quarto's dark active blue */
+.aa-DetachedContainer li.aa-Item:hover .search-item,
+.aa-DetachedContainer li.aa-Item[aria-selected="true"] .search-item,
+.aa-DetachedContainer li.aa-Item:hover .search-result-more,
+.aa-DetachedContainer li.aa-Item:hover .search-result-section,
+.aa-DetachedContainer li.aa-Item:hover .search-result-text,
+.aa-DetachedContainer li.aa-Item:hover .search-result-title-container,
+.aa-DetachedContainer li.aa-Item:hover .search-result-text-container,
+.aa-DetachedContainer li.aa-Item[aria-selected="true"] .search-result-more,
+.aa-DetachedContainer li.aa-Item[aria-selected="true"] .search-result-section,
+.aa-DetachedContainer li.aa-Item[aria-selected="true"] .search-result-text,
+.aa-DetachedContainer li.aa-Item[aria-selected="true"] .search-result-title-container,
+.aa-DetachedContainer li.aa-Item[aria-selected="true"] .search-result-text-container {
+  background-color: #f6f3ee !important;
+  color: var(--global-text-color) !important;
+}

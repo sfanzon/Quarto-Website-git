@@ -77,7 +77,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/main/_00-tokens.scss` | Design tokens (CSS custom properties, colours, spacing, typography) |
 | `styles/main/_01-foundation.scss` | Base element styles, typography, layout primitives |
 | `styles/main/_02-editorial.scss` | Editorial components (hero, publications, teaching, news, etc.) |
-| `styles/main/_03-overrides.scss` | Late cascade/integration layer — Quarto/Bootstrap overrides plus retained component corrections (Expertise, About, search popup) whose ordering still matters |
+| `styles/main/_03-overrides.scss` | Late cascade/integration layer — Quarto/Bootstrap overrides plus retained component corrections (Expertise and About) whose ordering still matters |
 | `styles/main/_10-navbar.scss` | Navigation bar styles |
 | `styles/main/_11-footer.scss` | Footer styles |
 | `styles/main/_12-page-shell.scss` | Page shell and layout container styles |
@@ -87,6 +87,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/components/_teaching.scss` | Teaching introduction, role/year hierarchy, course lists and material actions |
 | `styles/components/_contact.scss` | Contact details, email and professional-profile directory |
 | `styles/components/_news.scss` | Homepage News preview, News archive, search and responsive disclosure rows |
+| `styles/components/_search-popup.scss` | Detached site-search overlay, form, results and responsive presentation |
 
 `styles/project-pages.css` and `styles/project-navigation.css` are standalone CSS files loaded separately on project pages. They are **not** part of the `styles/main.scss` SCSS import chain.
 
@@ -101,6 +102,7 @@ already exists.
 |---|---|---|
 | Design tokens, colours and shared widths | `styles/main/_00-tokens.scss` | Canonical |
 | Navbar and mobile navigation | `styles/main/_10-navbar.scss` | Canonical, pending consolidation |
+| Search popup | `styles/components/_search-popup.scss` | Canonical |
 | Footer | `styles/main/_11-footer.scss` | Canonical |
 | Outer page shell | `styles/main/_12-page-shell.scss` | Canonical |
 | Homepage note selection | `styles/components/_notes.scss` | Canonical |
