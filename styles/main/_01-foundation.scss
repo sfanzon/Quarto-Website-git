@@ -313,21 +313,6 @@ pre {
 
 
 /* ============================================================
-   NEWS TABLE
-   ------------------------------------------------------------
-   Removes heavy table borders and makes news entries match the
-   understated al-folio style.
-   ============================================================ */
-
-.news table { color: var(--global-text-color); }
-.news th { color: var(--global-text-color-light); font-weight: 600; white-space: nowrap; padding-right: 1rem; }
-.news td { color: var(--global-text-color); }
-.news .table { border-color: transparent; }
-.news .table td, .news .table th { border-top: 0; padding-top: .35rem; padding-bottom: .35rem; }
-
-
-
-/* ============================================================
    GENERIC COMPONENT COLOURS
    ------------------------------------------------------------
    Gives horizontal rules, cards, and callouts the
@@ -514,8 +499,6 @@ body.publications-page main.content {
   padding: 0;
   cursor: pointer;
 }
-.news-preview { border-top:1px solid var(--global-divider-color); padding-top:2rem; }
-
 .compact-page-hero { padding:clamp(3rem,7vw,6rem) 0 2.5rem; max-width:900px; }
 .compact-page-hero > p:last-child { font-size:1.15rem; color:var(--global-text-color-light); }
 .publication-section { margin-bottom:5rem; }

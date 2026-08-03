@@ -566,23 +566,6 @@ body.home-page .home-role span {
   .research-contributions > div { grid-template-columns: 1fr; gap: .25rem; }
 }
 
-/* Correct mobile ordering for the generated News component. */
-@media (max-width: 767.98px) {
-  body.home-page .news-component { order: 1; }
-}
-
-/* News has an older authoritative grid rule; override it so the mobile CTA
-   participates in the section flex order and appears after the news list. */
-@media (max-width: 767.98px) {
-  body.home-page .news-preview .home-editorial-heading {
-    display: contents !important;
-  }
-  body.home-page .news-preview .home-editorial-heading .section-title {
-    min-width: 0;
-    margin: 0 !important;
-  }
-}
-
 /* Publication-grounded project pages — July 2026 */
 .capability-grid > article {
   display: flex;

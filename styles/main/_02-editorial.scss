@@ -262,18 +262,6 @@ body.standard-page #title-block-header {
   letter-spacing: .025em;
 }
 
-/* File-generated news: compact accordions at home, expanded archive by year. */
-.news-preview {
-  border-top: 1px solid var(--global-divider-color);
-  padding-top: 2rem;
-}
-
-.home-page .news-preview {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-top: 0;
-}
-
 body.home-page main.content {
   display: flex !important;
   flex-direction: column;
