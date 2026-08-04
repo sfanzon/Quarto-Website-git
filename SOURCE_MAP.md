@@ -90,6 +90,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/components/_search-popup.scss` | Detached site-search overlay, form, results and responsive presentation |
 | `styles/components/_expertise.scss` | Homepage Expertise preview and full Expertise page |
 | `styles/components/_about.scss` | Homepage background/approach previews and full About page |
+| `styles/components/_research.scss` | Research page hierarchy, themes, evidence and related links |
 
 `styles/project-pages.css` and `styles/project-navigation.css` are standalone CSS files loaded separately on project pages. They are **not** part of the `styles/main.scss` SCSS import chain.
 
@@ -107,6 +108,7 @@ already exists.
 | Search popup | `styles/components/_search-popup.scss` | Canonical |
 | Homepage Expertise preview and Expertise page | `styles/components/_expertise.scss` | Canonical |
 | Homepage background/approach previews and About page | `styles/components/_about.scss` | Canonical |
+| Research page | `styles/components/_research.scss` (`.about-section-heading` remains shared from `_about.scss`) | Canonical |
 | Footer | `styles/main/_11-footer.scss` | Canonical |
 | Outer page shell | `styles/main/_12-page-shell.scss` | Canonical |
 | Homepage note selection | `styles/components/_notes.scss` | Canonical |
@@ -120,7 +122,6 @@ already exists.
 | Teaching | `styles/components/_teaching.scss` | Canonical |
 | Contact | `styles/components/_contact.scss` | Canonical |
 | News | `styles/components/_news.scss` | Canonical |
-| Research | `styles/main/_04-current-pages.scss` | Transitional |
 
 ## Lua filters
 
