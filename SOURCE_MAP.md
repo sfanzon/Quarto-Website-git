@@ -77,7 +77,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/main/_00-tokens.scss` | Design tokens (CSS custom properties, colours, spacing, typography) |
 | `styles/main/_01-foundation.scss` | Base element styles, typography, layout primitives |
 | `styles/main/_02-editorial.scss` | Editorial components (hero, publications, teaching, news, etc.) |
-| `styles/main/_03-overrides.scss` | Late cascade/integration layer — Quarto/Bootstrap overrides plus retained About corrections whose ordering still matters |
+| `styles/main/_03-overrides.scss` | Late cascade/integration layer — Quarto/Bootstrap overrides plus transitional homepage and publication corrections |
 | `styles/main/_10-navbar.scss` | Navigation bar styles |
 | `styles/main/_11-footer.scss` | Footer styles |
 | `styles/main/_12-page-shell.scss` | Page shell and layout container styles |
@@ -89,6 +89,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/components/_news.scss` | Homepage News preview, News archive, search and responsive disclosure rows |
 | `styles/components/_search-popup.scss` | Detached site-search overlay, form, results and responsive presentation |
 | `styles/components/_expertise.scss` | Homepage Expertise preview and full Expertise page |
+| `styles/components/_about.scss` | Homepage background/approach previews and full About page |
 
 `styles/project-pages.css` and `styles/project-navigation.css` are standalone CSS files loaded separately on project pages. They are **not** part of the `styles/main.scss` SCSS import chain.
 
@@ -105,6 +106,7 @@ already exists.
 | Navbar and mobile navigation | `styles/main/_10-navbar.scss` | Canonical, pending consolidation |
 | Search popup | `styles/components/_search-popup.scss` | Canonical |
 | Homepage Expertise preview and Expertise page | `styles/components/_expertise.scss` | Canonical |
+| Homepage background/approach previews and About page | `styles/components/_about.scss` | Canonical |
 | Footer | `styles/main/_11-footer.scss` | Canonical |
 | Outer page shell | `styles/main/_12-page-shell.scss` | Canonical |
 | Homepage note selection | `styles/components/_notes.scss` | Canonical |
@@ -118,7 +120,7 @@ already exists.
 | Teaching | `styles/components/_teaching.scss` | Canonical |
 | Contact | `styles/components/_contact.scss` | Canonical |
 | News | `styles/components/_news.scss` | Canonical |
-| About and Research | `styles/main/_03-overrides.scss`, `_04-current-pages.scss` | Transitional |
+| Research | `styles/main/_04-current-pages.scss` | Transitional |
 
 ## Lua filters
 

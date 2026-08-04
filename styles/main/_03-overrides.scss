@@ -336,19 +336,6 @@ body.home-page .home-portrait {
   }
 }
 
-/* Restrained About page. */
-.about-hero { max-width: 920px; }
-.about-hero .eyebrow {
-  margin: 0 0 .65rem;
-  color: var(--global-theme-color);
-  font-size: .76rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-.about-hero h1 { max-width: 780px; }
-.about-hero > p:last-child { max-width: 720px; }
-
 /* ============================================================
    PUBLICATIONS — CURATED EDITORIAL HIERARCHY
    ============================================================ */
