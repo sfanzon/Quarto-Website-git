@@ -487,22 +487,8 @@ body.publications-page main.content {
   display: none;
   content: none;
 }
-.paper-meta { color:var(--global-text-color-light); margin-bottom:1.2rem; }
-.paper-actions { display:flex; flex-wrap:wrap; align-items:center; }
-.paper-action {
-  color: var(--global-theme-color);
-  font-weight: 600;
-  font-size: .77rem !important;
-  letter-spacing: .025em;
-  border: 0;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-}
 .compact-page-hero { padding:clamp(3rem,7vw,6rem) 0 2.5rem; max-width:900px; }
 .compact-page-hero > p:last-child { font-size:1.15rem; color:var(--global-text-color-light); }
-.publication-section { margin-bottom:5rem; }
-.pub-main h3 { margin:0 0 .3rem; font-size:1.08rem; }
 .abstract.hidden,.bibtex.hidden { display:none; }
 .abstract.open,.bibtex.open { display:block; margin-top:1rem; padding:1rem; background:var(--global-code-bg-color); border-radius:6px; }
 .bibtex pre { white-space:pre-wrap; margin:0; }

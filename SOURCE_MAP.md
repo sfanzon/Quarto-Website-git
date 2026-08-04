@@ -76,8 +76,8 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/main.scss` | SCSS entry point — imports all files below |
 | `styles/main/_00-tokens.scss` | Design tokens (CSS custom properties, colours, spacing, typography) |
 | `styles/main/_01-foundation.scss` | Base element styles, typography, layout primitives |
-| `styles/main/_02-editorial.scss` | Editorial components (hero, publications, teaching, news, etc.) |
-| `styles/main/_03-overrides.scss` | Late cascade/integration layer — Quarto/Bootstrap overrides plus transitional homepage and publication corrections |
+| `styles/main/_02-editorial.scss` | Shared editorial and archive primitives plus transitional components |
+| `styles/main/_03-overrides.scss` | Late cascade/integration layer — Quarto/Bootstrap overrides plus transitional homepage corrections |
 | `styles/main/_10-navbar.scss` | Navigation bar styles |
 | `styles/main/_11-footer.scss` | Footer styles |
 | `styles/main/_12-page-shell.scss` | Page shell and layout container styles |
@@ -91,6 +91,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/components/_expertise.scss` | Homepage Expertise preview and full Expertise page |
 | `styles/components/_about.scss` | Homepage background/approach previews and full About page |
 | `styles/components/_research.scss` | Research page hierarchy, themes, evidence and related links |
+| `styles/components/_publications.scss` | Homepage publication selections and Publications archive presentation |
 
 `styles/project-pages.css` and `styles/project-navigation.css` are standalone CSS files loaded separately on project pages. They are **not** part of the `styles/main.scss` SCSS import chain.
 
@@ -118,7 +119,7 @@ already exists.
 | Project article presentation | `styles/project-pages.css` | Canonical, project-only |
 | Project chapter navigation | `styles/project-navigation.css` | Canonical, project-only |
 | Homepage and general page composition | `styles/main/_03-overrides.scss`, `styles/main/_04-current-pages.scss` | Transitional |
-| Publications | `styles/main/_01-foundation.scss`, `_02-editorial.scss`, `_03-overrides.scss`, `_04-current-pages.scss` | Transitional |
+| Homepage publication selections and Publications archive | `styles/components/_publications.scss` (shared archive/disclosure primitives remain in `_01-foundation.scss` and `_02-editorial.scss`) | Canonical |
 | Teaching | `styles/components/_teaching.scss` | Canonical |
 | Contact | `styles/components/_contact.scss` | Canonical |
 | News | `styles/components/_news.scss` | Canonical |
