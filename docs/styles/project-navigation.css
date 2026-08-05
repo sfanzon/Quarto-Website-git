@@ -1,7 +1,5 @@
 /* Reusable project chapter navigation.
-   Default: desktop left rail and compact floating tab on narrower screens.
-   Add body class `project-nav-secondary-bar` to restore a full-width
-   secondary bar, which is useful for long lecture notes. */
+   Default: desktop left rail and compact floating tab on narrower screens. */
 
 .project-chapter-rail {
   position: fixed;
@@ -103,8 +101,7 @@
 .project-chapter-backdrop {
   display: none;
 }
-.project-chapter-toggle,
-.project-secondary-nav-label {
+.project-chapter-toggle {
   display: none;
 }
 
@@ -285,15 +282,6 @@ body.project-detail-page main.content h2 {
     transform: rotate(180deg);
   }
 
-  .project-secondary-nav-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-
   .project-chapter-rail ol {
     gap: .12rem;
     padding: 0;
@@ -330,21 +318,6 @@ body.project-detail-page main.content h2 {
     scroll-margin-top: calc(var(--project-navbar-height, 64px) + 1rem);
   }
 
-  /* Optional lecture-note mode keeps the drawer behavior but reserves the
-     traditional secondary-bar offset when that body class is explicitly used. */
-  body.project-nav-secondary-bar #quarto-content {
-    padding-top: var(--project-secondary-height, 46px);
-  }
-  body.project-nav-secondary-bar .project-chapter-backdrop,
-  body.project-nav-secondary-bar .project-chapter-rail {
-    top: var(--project-navigation-stack-height, 110px);
-  }
-  body.project-nav-secondary-bar section.level2[id],
-  body.project-nav-secondary-bar main.content h2 {
-    scroll-margin-top: calc(
-      var(--project-navigation-stack-height, 110px) + 1rem
-    );
-  }
 }
 
 

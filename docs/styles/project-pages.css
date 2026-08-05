@@ -79,7 +79,6 @@ body.project-detail-page main.content h2 {
   margin-bottom: 1rem;
   padding-top: 0;
   border-top: 0 !important;
-  scroll-margin-top: 145px;
   font-size: clamp(1.38rem, 2.15vw, 1.85rem);
   letter-spacing: -.035em;
 }
@@ -152,9 +151,7 @@ body.project-detail-page nav#TOC {
 }
 
 body.project-detail-page main.content {
-  width: min(var(--site-content-width), 100%);
   max-width: var(--site-content-width);
-  margin-inline: auto;
   padding-top: clamp(1.5rem, 4vw, 3rem);
   padding-inline: var(--site-content-gutter);
   background: transparent;
@@ -687,11 +684,6 @@ body.project-detail-page main.content .project-related-heading h2 {
 }
 
 @media (max-width: 720px) {
-  body.project-detail-page main.content {
-    width: 100%;
-    padding-left: 3.45rem;
-    padding-right: 1rem;
-  }
   .project-detail-hero {
     margin-bottom: 1.4rem;
     padding-top: 1.6rem;
@@ -823,10 +815,7 @@ body.project-detail-page main.content .project-related-heading h2 {
 
 @media (prefers-reduced-motion: reduce) {
   .project-resource-link,
-  .project-related-card,
-  .project-chapter-rail,
-  .project-chapter-rail a,
-  .project-chapter-rail a::before { transition: none; }
+  .project-related-card { transition: none; }
 }
 
 

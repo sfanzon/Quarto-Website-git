@@ -1354,13 +1354,10 @@ figures/04_teammate_gaps.png</code></pre>
 </script>
 <!-- Reusable project chapter navigation.
      Desktop: permanent left rail.
-     Narrow screens: drawer with an attached pull tab.
-     Add body class `project-nav-secondary-bar` for a full-width secondary bar,
-     useful for long lecture notes. -->
+     Narrow screens: drawer with an attached pull tab. -->
 <script>
 (function () {
   const MOBILE_BREAKPOINT = 1200;
-  const FULL_BAR_HEIGHT = 46;
 
   function headingText(heading) {
     const clone = heading.cloneNode(true);
@@ -1482,11 +1479,6 @@ figures/04_teammate_gaps.png</code></pre>
       '<i class="bi bi-chevron-right" aria-hidden="true"></i>';
     nav.appendChild(toggle);
 
-    const currentLabel = document.createElement('span');
-    currentLabel.className = 'project-secondary-nav-label';
-    currentLabel.setAttribute('aria-live', 'polite');
-    nav.appendChild(currentLabel);
-
     document.body.appendChild(nav);
 
     const backdrop = document.createElement('div');
@@ -1528,26 +1520,11 @@ figures/04_teammate_gaps.png</code></pre>
       );
     }
 
-    function secondaryNavigationHeight() {
-      return document.body.classList.contains('project-nav-secondary-bar')
-        ? FULL_BAR_HEIGHT
-        : 0;
-    }
-
     function updateNavigationGeometry() {
       const height = navbarHeight();
-      const secondaryHeight = secondaryNavigationHeight();
       document.documentElement.style.setProperty(
         '--project-navbar-height',
         height + 'px'
-      );
-      document.documentElement.style.setProperty(
-        '--project-secondary-height',
-        FULL_BAR_HEIGHT + 'px'
-      );
-      document.documentElement.style.setProperty(
-        '--project-navigation-stack-height',
-        (height + secondaryHeight) + 'px'
       );
     }
 
@@ -1573,14 +1550,13 @@ figures/04_teammate_gaps.png</code></pre>
         if (active) link.setAttribute('aria-current', 'location');
         else link.removeAttribute('aria-current');
       });
-      currentLabel.textContent = entries[index].shortLabel;
       toggle.title = 'Sections · ' + entries[index].shortLabel;
     }
 
     function scrollOffset() {
       return desktopQuery.matches
         ? navbarHeight() + 22
-        : navbarHeight() + secondaryNavigationHeight() + 16;
+        : navbarHeight() + 16;
     }
 
     function scrollToEntry(entry, index, updateHash) {
