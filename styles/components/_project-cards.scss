@@ -1,7 +1,7 @@
 /* ===========================================================================
    PROJECT CARDS
-   Canonical owner for the shared YAML-generated cards on the homepage and
-   Projects archive. Homepage section placement remains page composition.
+   Canonical owner for the shared YAML-generated cards and Projects archive.
+   Homepage section placement remains page composition.
    ========================================================================== */
 
 .home-project-grid,
@@ -121,4 +121,69 @@
   .projects-card-grid { grid-template-columns: 1fr; }
   .home-project-visual { min-height: 225px; }
   .home-project-visual img { height: 210px; }
+}
+
+/* Projects archive introduction, heading and capability grid. */
+.projects-page .projects-positioning {
+  max-width: 880px;
+  margin: 0 0 clamp(1.8rem, 3.5vw, 2.8rem);
+  padding: 1.15rem 1.3rem;
+  border-left: 3px solid var(--global-theme-color);
+  background: var(--global-section-bg);
+  color: var(--global-text-color-light);
+}
+
+.projects-page .projects-positioning p {
+  margin: 0;
+}
+
+.projects-page .project-page-heading {
+  margin-bottom: 1rem;
+  padding-bottom: .75rem;
+  border-bottom: 1px solid var(--global-divider-color);
+}
+
+.projects-page .project-capabilities {
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+.projects-page .capability-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid var(--global-divider-color);
+  background: var(--global-divider-color);
+}
+
+.projects-page .capability-grid > article {
+  display: flex;
+  min-height: 170px;
+  flex-direction: column;
+  gap: .55rem;
+  padding: 1.3rem;
+  background: var(--global-card-bg-color);
+}
+
+.projects-page .capability-grid > article h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.projects-page .capability-grid > article p {
+  margin: 0;
+  color: var(--global-text-color-light);
+  font-size: .9rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 860px) {
+  .projects-page .capability-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .projects-page .capability-grid {
+    grid-template-columns: 1fr;
+  }
 }

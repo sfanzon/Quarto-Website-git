@@ -215,45 +215,6 @@ body.home-page .home-portrait {
   }
 }
 
-/* Employer-facing projects page */
-.projects-positioning {
-  max-width: 880px;
-  margin: 0 0 clamp(2.5rem, 5vw, 4.5rem);
-  padding: 1.15rem 1.3rem;
-  border-left: 3px solid var(--global-theme-color);
-  background: var(--global-section-bg);
-  color: var(--global-text-color-light);
-}
-.projects-positioning p { margin: 0; }
-.project-page-heading {
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--global-divider-color);
-}
-.project-capabilities { margin-top: clamp(3rem, 6vw, 5rem); }
-.capability-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--global-divider-color);
-  border: 1px solid var(--global-divider-color);
-}
-.capability-grid > div {
-  display: flex;
-  flex-direction: column;
-  gap: .55rem;
-  padding: 1.3rem;
-  background: var(--global-card-bg-color);
-}
-.capability-grid strong { font-size: 1.05rem; }
-.capability-grid span { color: var(--global-text-color-light); font-size: .9rem; }
-@media (max-width: 860px) {
-  .capability-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 520px) {
-  .capability-grid { grid-template-columns: 1fr; }
-}
-
-
 /* Definitive homepage section rhythm fix.
    The previous large gap came from Featured Projects' bottom margin plus
    extra padding on the first publication, not from the publications section itself. */
