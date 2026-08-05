@@ -55,9 +55,9 @@ this order:
 7. `_12-page-shell.scss`
 8. `_04-current-pages.scss` — imported last so it could override earlier rules
 
-That transitional partial has since been removed. Its remaining archive,
-homepage and project rules now live with their canonical component owners; see
-`SOURCE_MAP.md` for the current import and ownership map.
+Both transitional partials have since been removed. Their remaining archive,
+homepage, project, shared-disclosure and page-heading rules now live with their
+canonical owners; see `SOURCE_MAP.md` for the current import and ownership map.
 
 Quarto 1.9.38 follows the imports during SCSS analysis and appends its generated
 CSS variable-export block. This changes the generated Bootstrap CSS hashes but

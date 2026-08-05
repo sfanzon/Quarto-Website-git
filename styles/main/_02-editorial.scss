@@ -30,6 +30,17 @@ body.standard-page #title-block-header {
   margin-bottom: 0.8rem;
 }
 
+body.standard-page .compact-page-hero h1 {
+  font-size: clamp(2rem, 3.4vw, 3rem) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -.035em !important;
+}
+
+body.standard-page .compact-page-hero {
+  padding-top: clamp(2.1rem, 4vw, 3.5rem);
+  padding-bottom: clamp(1.7rem, 3vw, 2.6rem);
+}
+
 
 .publication-entry .title {
   margin: 0 0 0.55rem;

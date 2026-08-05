@@ -77,7 +77,6 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/main/_00-tokens.scss` | Design tokens (CSS custom properties, colours, spacing, typography) |
 | `styles/main/_01-foundation.scss` | Base element styles, typography, layout primitives |
 | `styles/main/_02-editorial.scss` | Shared editorial and archive primitives plus transitional components |
-| `styles/main/_03-overrides.scss` | Late cascade/integration layer — Quarto/Bootstrap overrides and shared page-heading adjustments |
 | `styles/main/_10-navbar.scss` | Navigation bar styles |
 | `styles/main/_11-footer.scss` | Footer styles |
 | `styles/main/_12-page-shell.scss` | Page shell and layout container styles |
@@ -122,7 +121,6 @@ already exists.
 | Project chapter navigation | `styles/project-navigation.css` | Canonical, project-only |
 | Homepage composition | `styles/components/_home.scss` | Canonical |
 | Expandable abstracts and BibTeX panels | `styles/components/_disclosures.scss` | Canonical |
-| Shared Quarto/Bootstrap integration | `styles/main/_03-overrides.scss` | Transitional |
 | Homepage publication selections and Publications archive | `styles/components/_publications.scss` (shared archive/disclosure primitives remain in `_01-foundation.scss` and `_02-editorial.scss`) | Canonical |
 | Teaching | `styles/components/_teaching.scss` | Canonical |
 | Contact | `styles/components/_contact.scss` | Canonical |

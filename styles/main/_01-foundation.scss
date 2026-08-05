@@ -98,6 +98,10 @@ b {
   font-weight: 600;
 }
 
+:where(a, button, summary, input, select, textarea):focus-visible {
+  outline-color: var(--global-blue-accent) !important;
+}
+
 
 
 /* ============================================================
