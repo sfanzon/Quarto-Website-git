@@ -78,35 +78,6 @@
     ]
   },
   {
-    "id": "f1-previous-explainer",
-    "title": "F1 compact overview (archive)",
-    "eyebrow": "Statistical modelling",
-    "labels": [
-      "Statistical modelling",
-      "Archive"
-    ],
-    "summary": "The shorter dual-page overview retained as a visible backup after the richer industry-facing post became canonical.",
-    "image": "projects/f1-time-rank-duality/figures/02_team_effects.png",
-    "href": "projects/f1-time-rank-duality-previous/index.html",
-    "featured": false,
-    "archived": true,
-    "related": [
-      "f1-benchmarking",
-      "sparse-gcg",
-      "statistical-models-teaching"
-    ],
-    "at_a_glance": [
-      {
-        "label": "Status",
-        "text": "Archived but readable; it is no longer the canonical project page."
-      },
-      {
-        "label": "Format",
-        "text": "A compact account of the modelling idea and constructor regression, without the fuller visual narrative and corrected reproducibility detail."
-      }
-    ]
-  },
-  {
     "id": "sparse-gcg",
     "title": "Sparse optimisation with FC-GCG",
     "eyebrow": "Optimisation",

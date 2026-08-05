@@ -157,9 +157,6 @@ projects/
 │   ├── snapshots/         # Markdown included by the two detailed views
 │   ├── figures/
 │   └── downloads/         # complete repository snapshot
-├── f1-time-rank-duality-previous/
-│   ├── index.qmd          # visible archived website version
-│   └── images/
 └── sparse-gcg/
     ├── index.qmd          # conceptual explainer + pedagogical demo
     └── images/
