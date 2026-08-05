@@ -43,7 +43,8 @@ Playwright comparisons passed.
 
 This historical five-partial chain is no longer the current architecture. The
 three structural partials — navbar, footer and page shell — were subsequently
-extracted. The current entrypoint imports eight partials in this order:
+extracted. At that later checkpoint, the entrypoint imported eight partials in
+this order:
 
 1. `_00-tokens.scss`
 2. `_01-foundation.scss`
@@ -52,7 +53,11 @@ extracted. The current entrypoint imports eight partials in this order:
 5. `_10-navbar.scss`
 6. `_11-footer.scss`
 7. `_12-page-shell.scss`
-8. `_04-current-pages.scss` — imported last so it can override earlier rules
+8. `_04-current-pages.scss` — imported last so it could override earlier rules
+
+That transitional partial has since been removed. Its remaining archive,
+homepage and project rules now live with their canonical component owners; see
+`SOURCE_MAP.md` for the current import and ownership map.
 
 Quarto 1.9.38 follows the imports during SCSS analysis and appends its generated
 CSS variable-export block. This changes the generated Bootstrap CSS hashes but

@@ -77,11 +77,12 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/main/_00-tokens.scss` | Design tokens (CSS custom properties, colours, spacing, typography) |
 | `styles/main/_01-foundation.scss` | Base element styles, typography, layout primitives |
 | `styles/main/_02-editorial.scss` | Shared editorial and archive primitives plus transitional components |
-| `styles/main/_03-overrides.scss` | Late cascade/integration layer — Quarto/Bootstrap overrides plus transitional homepage corrections |
+| `styles/main/_03-overrides.scss` | Late cascade/integration layer — Quarto/Bootstrap overrides and shared page-heading adjustments |
 | `styles/main/_10-navbar.scss` | Navigation bar styles |
 | `styles/main/_11-footer.scss` | Footer styles |
 | `styles/main/_12-page-shell.scss` | Page shell and layout container styles |
-| `styles/main/_04-current-pages.scss` | Transitional page-specific rules imported before migrated component owners |
+| `styles/components/_archive.scss` | Shared archive headings, actions and compact inline icons |
+| `styles/components/_home.scss` | Homepage hero, profile, section composition and responsive ordering |
 | `styles/components/_notes.scss` | Homepage note rows, Notes archive and long-form note pages |
 | `styles/components/_project-cards.scss` | Shared homepage and Projects archive cards, including labels and archived state |
 | `styles/components/_teaching.scss` | Teaching introduction, role/year hierarchy, course lists and material actions |
@@ -118,7 +119,8 @@ already exists.
 | Homepage and Projects archive cards | `styles/components/_project-cards.scss` | Canonical |
 | Project article presentation | `styles/project-pages.css` | Canonical, project-only |
 | Project chapter navigation | `styles/project-navigation.css` | Canonical, project-only |
-| Homepage and general page composition | `styles/main/_03-overrides.scss`, `styles/main/_04-current-pages.scss` | Transitional |
+| Homepage composition | `styles/components/_home.scss` | Canonical |
+| Shared Quarto/Bootstrap integration | `styles/main/_03-overrides.scss` | Transitional |
 | Homepage publication selections and Publications archive | `styles/components/_publications.scss` (shared archive/disclosure primitives remain in `_01-foundation.scss` and `_02-editorial.scss`) | Canonical |
 | Teaching | `styles/components/_teaching.scss` | Canonical |
 | Contact | `styles/components/_contact.scss` | Canonical |
