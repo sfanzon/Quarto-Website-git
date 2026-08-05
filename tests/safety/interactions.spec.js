@@ -118,6 +118,21 @@ test.describe("critical interactions", () => {
     await expect(entry.locator(".abstract")).not.toHaveClass(/\bopen\b/);
   });
 
+  test("presentation and supervision abstracts open", async ({ page }) => {
+    for (const path of ["/presentations.html", "/supervision.html"]) {
+      await page.goto(path);
+
+      const entry = page.locator(".publication-entry").filter({
+        has: page.locator(".abstract-toggle")
+      }).first();
+      const abstractToggle = entry.locator(".abstract-toggle");
+
+      await abstractToggle.click();
+      await expect(abstractToggle).toHaveAttribute("aria-expanded", "true");
+      await expect(entry.locator(".abstract")).toHaveClass(/\bopen\b/);
+    }
+  });
+
   test("news search filters entries and reports an empty result", async ({
     page
   }) => {

@@ -117,6 +117,16 @@ test("retired component classes remain absent from the rendered site", async () 
   }
 });
 
+test("archive entry markup does not render as code", async () => {
+  for (const relativePath of ["presentations.html", "supervision.html"]) {
+    const html = fs.readFileSync(path.join(docsRoot, relativePath), "utf8");
+    expect(
+      html,
+      `${relativePath} contains archive HTML rendered as a code block`
+    ).not.toMatch(/<pre><code>&lt;div class="(?:talk_title|title|periodical|links archive-actions)/);
+  }
+});
+
 test("source markup keeps presentation styles in reusable classes", async () => {
   const sourceMarkupFiles = [
     ...fs.globSync("**/*.qmd", { cwd: repositoryRoot }),
