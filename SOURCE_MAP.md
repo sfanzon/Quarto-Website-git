@@ -83,6 +83,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/main/_12-page-shell.scss` | Page shell and layout container styles |
 | `styles/components/_archive.scss` | Shared archive headings, actions and compact inline icons |
 | `styles/components/_home.scss` | Homepage hero, profile, section composition and responsive ordering |
+| `styles/components/_disclosures.scss` | Shared expandable abstract and BibTeX panels |
 | `styles/components/_notes.scss` | Homepage note rows, Notes archive and long-form note pages |
 | `styles/components/_project-cards.scss` | Shared homepage and Projects archive cards, including labels and archived state |
 | `styles/components/_teaching.scss` | Teaching introduction, role/year hierarchy, course lists and material actions |
@@ -120,6 +121,7 @@ already exists.
 | Project article presentation | `styles/project-pages.css` | Canonical, project-only |
 | Project chapter navigation | `styles/project-navigation.css` | Canonical, project-only |
 | Homepage composition | `styles/components/_home.scss` | Canonical |
+| Expandable abstracts and BibTeX panels | `styles/components/_disclosures.scss` | Canonical |
 | Shared Quarto/Bootstrap integration | `styles/main/_03-overrides.scss` | Transitional |
 | Homepage publication selections and Publications archive | `styles/components/_publications.scss` (shared archive/disclosure primitives remain in `_01-foundation.scss` and `_02-editorial.scss`) | Canonical |
 | Teaching | `styles/components/_teaching.scss` | Canonical |

@@ -1,0 +1,39 @@
+/* ===========================================================================
+   INLINE DISCLOSURES
+   Shared expandable abstracts and BibTeX panels used by publications and
+   teaching records.
+   ========================================================================== */
+
+.publication-entry .abstract.open,
+.publication-entry .bibtex.open {
+  display: block !important;
+  margin-top: .85rem;
+  padding: .9rem 1rem;
+  color: var(--global-text-color-light);
+  background: var(--global-code-bg-color);
+  border: 0;
+  border-radius: 5px;
+  line-height: 1.65;
+}
+
+.publication-entry .abstract.open > :last-child,
+.publication-entry .bibtex.open > :last-child {
+  margin-bottom: 0;
+}
+
+.publication-entry .bibtex.open pre {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.publication-entry h2,
+.publication-entry h3,
+.publication-entry h4,
+.publication-entry h2 a,
+.publication-entry h3 a,
+.publication-entry h4 a {
+  text-decoration: none !important;
+}
