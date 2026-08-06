@@ -409,25 +409,8 @@ blockquote.block-danger h6 {
 /* ============================================================
    2026 EDITORIAL HOMEPAGE + PUBLICATIONS
    ============================================================ */
-body.home-page main.content,
 body.publications-page main.content {
   padding-inline: clamp(1rem, 3vw, 2.5rem) !important;
-}
-
-.home-hero {
-  min-height: calc(100vh - 110px);
-  display: grid;
-  grid-template-columns: minmax(280px, 0.86fr) minmax(360px, 1.35fr);
-  gap: clamp(3rem, 7vw, 7rem);
-  align-items: center;
-  padding: clamp(3rem, 7vh, 6rem) 0;
-}
-.home-portrait {
-  width: 100%;
-  max-height: 68vh;
-  object-fit: cover;
-  object-position: center 35%;
-  border-radius: 10px;
 }
 .eyebrow {
   margin: 0 0 .7rem;
@@ -437,60 +420,9 @@ body.publications-page main.content {
   letter-spacing: .12em;
   text-transform: uppercase;
 }
-.home-profile-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .55rem 1.35rem;
-  margin-top: 1.55rem;
-  padding-top: 1.15rem;
-  border-top: 1px solid var(--global-divider-color);
-  font-size: .92rem;
-}
-.home-profile-links a {
-  color: var(--global-text-color);
-  font-weight: 600;
-  text-decoration: none;
-}
-.home-profile-links a::after {
-  content: " ↗";
-  color: var(--global-theme-color);
-  font-size: .78em;
-}
-.home-profile-links a:first-child::after,
-.home-profile-links a:nth-child(2)::after {
-  content: "";
-}
-.home-profile-links a:hover { color: var(--global-theme-color); }
-.home-section { margin: 0 0 clamp(3rem, 6vw, 5rem); }
-.home-page .home-section {
-  padding-block: clamp(2rem, 4vw, 3.25rem);
-  border-top: 0;
-}
-.home-page .home-section:nth-of-type(2),
-.home-page .home-section:nth-of-type(4) {
-  background: var(--global-section-bg);
-  box-shadow: 0 0 0 100vmax var(--global-section-bg);
-  clip-path: inset(0 -100vmax);
-}
 .section-heading { display:flex; justify-content:space-between; align-items:baseline; gap:1rem; margin-bottom:1rem; }
 .section-heading .eyebrow { margin:0; }
 .section-heading > span { color:var(--global-text-color-light); font-size:.9rem; }
-.home-page .section-heading .section-title {
-  margin: 0;
-  padding-bottom: 0;
-  border-bottom: 0;
-  font-size: clamp(1.45rem, 2.4vw, 1.9rem);
-  font-weight: 650;
-  line-height: 1.15;
-  letter-spacing: -.025em;
-  text-decoration: none;
-}
-
-.home-page .section-heading .section-title::before,
-.home-page .section-heading .section-title::after {
-  display: none;
-  content: none;
-}
 .compact-page-hero { padding:clamp(3rem,7vw,6rem) 0 2.5rem; max-width:900px; }
 .compact-page-hero > p:last-child { font-size:1.15rem; color:var(--global-text-color-light); }
 .abstract.hidden,.bibtex.hidden { display:none; }
@@ -498,10 +430,6 @@ body.publications-page main.content {
 .bibtex pre { white-space:pre-wrap; margin:0; }
 
 @media (max-width: 900px) {
-  body.home-page main.content, body.publications-page main.content { padding-inline:1rem !important; }
-  .home-hero { min-height:auto; grid-template-columns:1fr; gap:1.5rem; padding:2rem 0 3.5rem; }
-  .home-portrait { width:min(100%,520px); max-height:none; margin:auto; aspect-ratio:4/3; }
-  .home-name { font-size:clamp(2.7rem,14vw,4.4rem); }
   .section-heading { align-items:flex-start; }
   .section-heading > a { font-size:.85rem; text-align:right; }
 }

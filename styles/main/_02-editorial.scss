@@ -55,10 +55,6 @@ body.standard-page .compact-page-hero {
    PUBLICATION LIST — QUIET EDITORIAL REVISION
    ============================================================ */
 
-.home-lead strong {
-  font-weight: 600;
-}
-
 .section-jump {
   display: flex;
   flex-wrap: wrap;
@@ -86,36 +82,6 @@ body.standard-page .compact-page-hero {
   color: var(--global-theme-color);
 }
 
-/* ============================================================
-   HOMEPAGE TYPOGRAPHY
-   ============================================================ */
-
-.home-lead,
-.home-summary {
-  max-width: 42rem;
-}
-
-.home-name {
-  display: block !important;
-  margin: 0 0 0.32rem !important;
-  font-size: clamp(3rem, 5.2vw, 4.6rem) !important;
-  line-height: 0.96 !important;
-  font-weight: 650 !important;
-  letter-spacing: -0.045em !important;
-  white-space: nowrap;
-}
-
-.home-intro .home-role {
-  display: block !important;
-  margin: 0 0 .32rem !important;
-}
-
-@media (max-width: 767.98px) {
-  .home-name {
-    font-size: clamp(2.35rem, 10.5vw, 3.2rem) !important;
-  }
-}
-
 /* CV identity line. */
 .cv-credentials {
   margin: 0 0 .55rem !important;
@@ -123,19 +89,4 @@ body.standard-page .compact-page-hero {
   font-size: .9rem !important;
   font-weight: 600;
   letter-spacing: .025em;
-}
-
-body.home-page main.content {
-  display: flex !important;
-  flex-direction: column;
-  margin-bottom: 0 !important;
-}
-
-@media (max-width: 680px) {
-  .home-page .section-heading {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: .3rem;
-  }
-  .home-page .section-heading > a { text-align: left; }
 }
