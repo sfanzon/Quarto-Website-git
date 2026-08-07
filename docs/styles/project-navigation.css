@@ -146,14 +146,6 @@ body.project-detail-page main.content h2 {
     margin-right: auto !important;
   }
 
-  /* Quarto-native wide block + fallback for this site's custom block layout. */
-  body.project-detail-page main.content > .project-related.column-page {
-    width: 100% !important;
-    max-width: none !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-
   /* Leave clear vertical room above the ending/related-content region. */
   .project-chapter-rail {
     bottom: max(6rem, 12vh);
