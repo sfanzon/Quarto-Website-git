@@ -96,7 +96,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/components/_research.scss` | Research page hierarchy, themes, evidence and related links |
 | `styles/components/_publications.scss` | Homepage publication selections and Publications archive presentation |
 
-`styles/project-pages.css`, `styles/project-article-controls.css` and `styles/project-navigation.css` are standalone CSS files loaded separately on project pages. They are **not** part of the `styles/main.scss` SCSS import chain.
+`styles/project.scss` is the project-only SCSS entry point. It compiles the partials under `styles/project/` separately from the global `styles/main.scss` chain.
 
 ### Style control index
 
@@ -119,9 +119,9 @@ already exists.
 | Notes archive | `styles/components/_notes.scss` | Canonical |
 | Long-form note pages | `styles/components/_notes.scss` | Canonical |
 | Homepage and Projects archive cards | `styles/components/_project-cards.scss` | Canonical |
-| Project article foundation and presentation | `styles/project-pages.css` | Canonical, project-only |
-| Project article context controls | `styles/project-article-controls.css` | Canonical, project-only |
-| Project chapter navigation | `styles/project-navigation.css` | Canonical, project-only |
+| Project article foundation and presentation | `styles/project/_article.scss` | Canonical, project-only |
+| Project article context controls | `styles/project/_article-controls.scss` | Canonical, project-only |
+| Project chapter navigation | `styles/project/_navigation.scss` | Canonical, project-only |
 | Homepage composition | `styles/components/_home.scss` | Canonical |
 | Bootstrap-era archive rows | `styles/components/_archive-entries.scss` | Canonical |
 | Archive section jumps | `styles/components/_section-jump.scss` | Canonical |

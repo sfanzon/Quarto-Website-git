@@ -8,10 +8,15 @@ execute:
 
 format:
   html:
-    css:
-      - ../styles/project-pages.css
-      - ../styles/project-navigation.css
-      - ../styles/project-article-controls.css
+    theme:
+      light:
+        - flatly
+        - ../styles/main.scss
+        - ../styles/project.scss
+      dark:
+        - darkly
+        - ../styles/main.scss
+        - ../styles/project.scss
     include-after-body:
       - ../includes/project-navigation.html
 
