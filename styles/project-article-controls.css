@@ -56,6 +56,15 @@
   .project-resource-link { transition: none; }
 }
 
+@media (min-width: 1400px) {
+  body.project-detail-page main.content > .project-related.column-page {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
 /* Related-article navigation. */
 .project-related-heading { display: flex; min-height: 0; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: .5rem; }
 .project-related-heading .project-category { margin: 0; font-size: .52rem; }
