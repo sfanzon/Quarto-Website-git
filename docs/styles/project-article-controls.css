@@ -47,6 +47,28 @@
   line-height: 1.44;
 }
 
+/* End-of-article return and resource controls. */
+.project-end-back-link {
+  display: inline-flex;
+  align-items: center;
+  margin: .45rem 0 .35rem;
+  color: var(--project-ink-muted);
+  font-size: .82rem;
+  font-weight: 620;
+  text-decoration: none;
+}
+
+.project-end-back-link:hover { color: var(--global-theme-color); }
+
+.project-end-footer {
+  width: min(var(--site-reading-width), 100%);
+  margin: .75rem auto .4rem;
+}
+
+.project-page-end {
+  margin-block: 1.4rem .4rem;
+}
+
 @media (max-width: 720px) {
   .project-at-a-glance,
   .project-at-a-glance-2 {
