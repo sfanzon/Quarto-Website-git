@@ -1,10 +1,9 @@
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 from urllib.parse import urlsplit
 import html, json, re, yaml
 
-root=Path(__file__).resolve().parents[1]
-COAUTHOR_URLS = {}
+DEFAULT_ROOT = Path(__file__).resolve().parents[1]
 
 
 def is_external_reference(value):
@@ -14,7 +13,7 @@ def is_external_reference(value):
     return bool(re.match(r'^(?:https?:|mailto:|tel:|data:|javascript:|//)', value.strip(), re.I))
 
 
-def local_reference_path(value, base=None):
+def local_reference_path(value, base=None, site_root=None):
     """Resolve a generated/local URL to its source or rendered file.
 
     Quarto URLs are checked against the source tree before rendering: an HTML
@@ -22,8 +21,9 @@ def local_reference_path(value, base=None):
     """
     if not isinstance(value, str) or not value.strip() or is_external_reference(value):
         return None
+    site_root = site_root or DEFAULT_ROOT
     path = urlsplit(value.strip()).path
-    candidate = root / path.lstrip('/') if path.startswith('/') else (base or root) / path
+    candidate = site_root / path.lstrip('/') if path.startswith('/') else (base or site_root) / path
     candidates = [candidate]
     if candidate.is_dir():
         candidates.extend([candidate / 'index.html', candidate / 'index.qmd'])
@@ -34,13 +34,14 @@ def local_reference_path(value, base=None):
     return next((item for item in candidates if item.is_file()), candidate)
 
 
-def validate_local_assets(projects, publications, teaching_courses):
+def validate_local_assets(projects, publications, teaching_courses, site_root=None):
     """Validate repository references and return external links skipped.
 
     Local references fail together so a single build reports every broken
     source value. External URLs are deliberately non-blocking and are returned
     separately for an audit summary; no network requests are made here.
     """
+    site_root = site_root or DEFAULT_ROOT
     missing = []
     external = []
 
@@ -52,7 +53,7 @@ def validate_local_assets(projects, publications, teaching_courses):
             external.append((label, value))
             return
         generated = f'/{asset_prefix.strip("/")}/{value.lstrip("/")}' if asset_prefix else value
-        target = local_reference_path(generated, base=base)
+        target = local_reference_path(generated, base=base, site_root=site_root)
         if target is None or not target.is_file():
             missing.append(f'{label}: {value} (expected {target})')
 
@@ -61,7 +62,10 @@ def validate_local_assets(projects, publications, teaching_courses):
         check(project.get('image'), f'project {project_id} image')
         project_href = project.get('href')
         check(project_href, f'project {project_id} href')
-        project_base = root / Path(urlsplit(project_href or '').path).parent if project_href else root
+        project_base = (
+            site_root / Path(urlsplit(project_href or '').path).parent
+            if project_href else site_root
+        )
         article = project.get('article') or {}
         for resource in article.get('resources') or []:
             check(resource.get('href'), f'project {project_id} resource {resource.get("label", "<unnamed>")}')
@@ -451,9 +455,10 @@ def news_summary(source, limit=142):
 def display_news_date(value):
     return value.strftime('%b %Y')
 
-def load_news():
+def load_news(site_root=None):
+    site_root = site_root or DEFAULT_ROOT
     items = []
-    news_dir = root / 'news'
+    news_dir = site_root / 'news'
     if not news_dir.exists():
         raise FileNotFoundError('Missing news/ directory. Add dated Markdown files such as news/2026-03-17.md')
     for path in news_dir.glob('*.md'):
@@ -574,14 +579,14 @@ def publication_side_meta(p):
     return f'<div class="publication-theme-rail">{publication_theme_pills(p)}</div>'
 
 
-def linked_authors(authors):
+def linked_authors(authors, coauthor_urls=None):
     result = authors.replace('<em>Silvio Fanzon</em>', '<span class="author-self">Silvio Fanzon</span>')
-    for name, url in COAUTHOR_URLS.items():
+    for name, url in (coauthor_urls or {}).items():
         result = result.replace(name, f'<a class="author-link" href="{url}">{name}</a>')
     return result
 
-def render_publication_entry(p, row_id, row_classes, actions):
-    authors = linked_authors(p['authors'])
+def render_publication_entry(p, row_id, row_classes, actions, coauthor_urls=None):
+    authors = linked_authors(p['authors'], coauthor_urls)
     side_meta = publication_side_meta(p)
     return f'''<article class="{row_classes} publication-entry" id="{html.escape(row_id, quote=True)}"><div class="home-publication-main pub-main"><h3>{p['title']}</h3><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{p['periodical']}</span></div><div class="paper-actions">{actions}</div><div class="abstract hidden">{publication_abstract_html(p)}</div><div class="bibtex hidden"><pre><code>{html.escape(p['bibtex'])}</code></pre></div></div>{side_meta}</article>'''
 
@@ -605,9 +610,10 @@ def render_project_card(project):
     </article>'''
 
 
-def load_featured_notes(notes_dir=None):
+def load_featured_notes(notes_dir=None, site_root=None):
     """Load homepage-selected notes from their canonical front matter."""
-    notes_dir = notes_dir or root / 'notes'
+    site_root = site_root or DEFAULT_ROOT
+    notes_dir = notes_dir or site_root / 'notes'
     featured = []
     required = ('title', 'description', 'date', 'image', 'image-alt', 'featured-order')
     for path in sorted(notes_dir.glob('*.qmd')):
@@ -619,7 +625,11 @@ def load_featured_notes(notes_dir=None):
             raise ValueError(
                 f'Featured note {path.name} is missing metadata: {", ".join(missing)}'
             )
-        image_path = local_reference_path(str(metadata['image']), base=path.parent)
+        image_path = local_reference_path(
+            str(metadata['image']),
+            base=path.parent,
+            site_root=site_root,
+        )
         if image_path is None or not image_path.is_file():
             raise ValueError(
                 f'Featured note {path.name} image does not exist: {metadata["image"]}'
@@ -640,7 +650,7 @@ def load_featured_notes(notes_dir=None):
         featured.append({
             **metadata,
             'href': f'/notes/{path.stem}.html',
-            'image_url': '/' + image_path.resolve().relative_to(root.resolve()).as_posix(),
+            'image_url': '/' + image_path.resolve().relative_to(site_root.resolve()).as_posix(),
             'date_iso': date_iso,
             'date_display': date_display,
         })
@@ -700,23 +710,30 @@ def render_news_component(items, empty_message, searchable=True):
 
 
 # Homepage: latest eight only. The News page uses the same component for all items.
-# Write Quarto fragments with an explicit raw-HTML fence. This avoids the HTML
+# Render Quarto fragments with an explicit raw-HTML fence. This avoids the HTML
 # being interpreted as literal text when the fragment is included during render.
-def write_news_qmd(path, items, empty_message, searchable=True):
+def render_news_qmd(items, empty_message, searchable=True):
     markup = render_news_component(items, empty_message, searchable=searchable)
-    path.write_text(f"```{{=html}}\n{markup}\n```\n", encoding='utf-8')
+    return f"```{{=html}}\n{markup}\n```\n"
 
 
-def main():
-    global COAUTHOR_URLS
+def main(site_root=None):
+    site_root = site_root or DEFAULT_ROOT
+    projects = yaml.safe_load((site_root / 'data/projects.yml').read_text()) or []
+    coauthor_urls = yaml.safe_load((site_root / 'data/coauthors.yml').read_text()) or {}
+    pubs = load_publications(site_root / 'data/publications.bib')
+    featured_notes = load_featured_notes(site_root=site_root)
+    lecturer_courses = read_bibtex_entries(site_root / 'data/teaching_lecturer.bib')
+    tutor_courses = read_bibtex_entries(site_root / 'data/teaching_tutor.bib')
+    news = load_news(site_root=site_root)
 
-    projects = yaml.safe_load((root / 'data/projects.yml').read_text()) or []
-    (root / 'data/projects.generated.json').write_text(
-        json.dumps(projects, ensure_ascii=False, indent=2) + '\n',
-        encoding='utf-8',
+    external_assets = validate_local_assets(
+        projects,
+        pubs,
+        [('teaching_lecturer.bib', lecturer_courses), ('teaching_tutor.bib', tutor_courses)],
+        site_root=site_root,
     )
-    COAUTHOR_URLS = yaml.safe_load((root / 'data/coauthors.yml').read_text()) or {}
-    pubs = load_publications(root / 'data/publications.bib')
+    print(f'Asset validation: local references passed; skipped {len(external_assets)} external references.')
 
     # Long-form project heroes, F1 resource navigation and related-project
     # suggestions are rendered at Quarto render-time by filters/project-components.lua.
@@ -724,20 +741,14 @@ def main():
     project_cards = [render_project_card(p) for p in featured_projects]
     project_archive = [render_project_card(p) for p in projects]
     selected = [p for p in pubs if p.get('selected') is True]
-    featured_notes = load_featured_notes()
-    (root / 'includes/home-projects.html').write_text('\n'.join(project_cards))
-    (root / 'includes/home-notes.html').write_text(
-        '\n'.join(render_featured_note(note) for note in featured_notes),
-        encoding='utf-8',
-    )
-    (root / 'includes/projects-portfolio.html').write_text(
-        '''<section class="projects-section project-portfolio">
+    home_projects_html = '\n'.join(project_cards)
+    home_notes_html = '\n'.join(render_featured_note(note) for note in featured_notes)
+    projects_portfolio_html = '''<section class="projects-section project-portfolio">
   <div class="section-heading project-page-heading"><div><p class="eyebrow">Selected work</p><span>Projects, implementations and reproducible outputs</span></div></div>
   <div class="projects-card-grid">
 ''' + '\n'.join(project_archive) + '''
   </div>
 </section>'''
-    )
 
     home_pub_rows = [
         render_publication_entry(
@@ -745,10 +756,11 @@ def main():
             f"home-list-{p['id']}",
             'home-publication-row',
             pub_actions(p),
+            coauthor_urls,
         )
         for p in selected
     ]
-    (root / 'includes/home-publications-list.html').write_text('\n'.join(home_pub_rows))
+    home_publications_html = '\n'.join(home_pub_rows)
 
     publication_categories = list(dict.fromkeys(p['category'] for p in pubs))
     allbits = []
@@ -759,6 +771,7 @@ def main():
                 p['id'],
                 'home-publication-row publication-archive-row',
                 pub_actions(p),
+                coauthor_urls,
             )
             for p in pubs
             if p['category'] == group
@@ -768,16 +781,8 @@ def main():
             allbits.append(
                 f'''<section class="publication-category" id="{group_id}"><h2>{group}</h2><div class="publication-category-list">{''.join(rows)}</div></section>'''
             )
-    (root / 'includes/publications-all.html').write_text('\n'.join(allbits))
+    publications_html = '\n'.join(allbits)
 
-    lecturer_courses = read_bibtex_entries(root / 'data/teaching_lecturer.bib')
-    tutor_courses = read_bibtex_entries(root / 'data/teaching_tutor.bib')
-    external_assets = validate_local_assets(
-        projects,
-        pubs,
-        [('teaching_lecturer.bib', lecturer_courses), ('teaching_tutor.bib', tutor_courses)],
-    )
-    print(f'Asset validation: local references passed; skipped {len(external_assets)} external references.')
     teaching_html = [
         teaching_section(
             'lecturer',
@@ -792,11 +797,29 @@ def main():
             teaching_years(tutor_courses, 'teaching_tutor.bib'),
         ),
     ]
-    (root / 'includes/teaching-list.html').write_text('\n'.join(teaching_html))
+    teaching_list_html = '\n'.join(teaching_html)
 
-    news = load_news()
-    write_news_qmd(root / 'includes/home-news.qmd', news[:8], 'No recent announcements.', searchable=False)
-    write_news_qmd(root / 'includes/news-all.qmd', news, 'No announcements yet.')
+    outputs = {
+        'data/projects.generated.json': json.dumps(
+            projects,
+            ensure_ascii=False,
+            indent=2,
+        ) + '\n',
+        'includes/home-projects.html': home_projects_html,
+        'includes/home-notes.html': home_notes_html,
+        'includes/projects-portfolio.html': projects_portfolio_html,
+        'includes/home-publications-list.html': home_publications_html,
+        'includes/publications-all.html': publications_html,
+        'includes/teaching-list.html': teaching_list_html,
+        'includes/home-news.qmd': render_news_qmd(
+            news[:8],
+            'No recent announcements.',
+            searchable=False,
+        ),
+        'includes/news-all.qmd': render_news_qmd(news, 'No announcements yet.'),
+    }
+    for relative_path, content in outputs.items():
+        (site_root / relative_path).write_text(content, encoding='utf-8')
 
 
 if __name__ == '__main__':

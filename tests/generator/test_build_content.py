@@ -89,13 +89,8 @@ class BuildContentTests(unittest.TestCase):
         invalid_news = Path(directory.name) / "news"
         invalid_news.mkdir()
         (invalid_news / "not-a-date.md").write_text("Update", encoding="utf-8")
-        original_root = build_content.root
-        build_content.root = Path(directory.name)
-        try:
-            with self.assertRaisesRegex(ValueError, "YYYY-MM-DD"):
-                build_content.load_news()
-        finally:
-            build_content.root = original_root
+        with self.assertRaisesRegex(ValueError, "YYYY-MM-DD"):
+            build_content.load_news(site_root=Path(directory.name))
 
     def test_project_card_renders_valid_yaml_data(self):
         project = {
@@ -139,18 +134,13 @@ Body text.
             template.format(title="First", description="First note.", day=21, image="first.svg", alt="First visual", order=1),
             encoding="utf-8",
         )
-        original_root = build_content.root
-        build_content.root = fixture_root
-        try:
-            notes = build_content.load_featured_notes(notes_dir)
-            self.assertEqual([note["title"] for note in notes], ["First", "Second"])
-            self.assertEqual(notes[0]["href"], "/notes/first.html")
-            self.assertEqual(notes[0]["image_url"], "/assets/img/notes/first.svg")
-            rendered = build_content.render_featured_note(notes[0])
-            self.assertIn("First note.", rendered)
-            self.assertIn('alt="First visual"', rendered)
-        finally:
-            build_content.root = original_root
+        notes = build_content.load_featured_notes(notes_dir, site_root=fixture_root)
+        self.assertEqual([note["title"] for note in notes], ["First", "Second"])
+        self.assertEqual(notes[0]["href"], "/notes/first.html")
+        self.assertEqual(notes[0]["image_url"], "/assets/img/notes/first.svg")
+        rendered = build_content.render_featured_note(notes[0])
+        self.assertIn("First note.", rendered)
+        self.assertIn('alt="First visual"', rendered)
 
     def test_local_asset_validation_checks_assets_and_skips_external_urls(self):
         directory = tempfile.TemporaryDirectory()
@@ -162,33 +152,25 @@ Body text.
         (fixture_root / "assets/img/project.svg").write_text("<svg/>", encoding="utf-8")
         (fixture_root / "projects/demo").mkdir(parents=True)
         (fixture_root / "projects/demo/index.qmd").write_text("# Demo", encoding="utf-8")
-        original_root = build_content.root
-        build_content.root = fixture_root
-        try:
-            external = build_content.validate_local_assets(
-                [{"id": "demo", "image": "assets/img/project.svg", "href": "projects/demo/index.html"}],
-                [{"id": "pub", "pdf": "/assets/pdf/notes.pdf", "code": "https://github.com/example/repo"}],
-                [("teaching.bib", [{"id": "course", "taster": "notes.pdf", "webpage": "/blog/course"}])],
-            )
-            self.assertEqual(len(external), 2)
-        finally:
-            build_content.root = original_root
+        external = build_content.validate_local_assets(
+            [{"id": "demo", "image": "assets/img/project.svg", "href": "projects/demo/index.html"}],
+            [{"id": "pub", "pdf": "/assets/pdf/notes.pdf", "code": "https://github.com/example/repo"}],
+            [("teaching.bib", [{"id": "course", "taster": "notes.pdf", "webpage": "/blog/course"}])],
+            site_root=fixture_root,
+        )
+        self.assertEqual(len(external), 2)
 
     def test_local_asset_validation_reports_all_missing_references(self):
         directory = tempfile.TemporaryDirectory()
         self.addCleanup(directory.cleanup)
-        original_root = build_content.root
-        build_content.root = Path(directory.name)
-        try:
-            with self.assertRaisesRegex(ValueError, "project demo image") as context:
-                build_content.validate_local_assets(
-                    [{"id": "demo", "image": "missing.svg", "href": "missing.html"}],
-                    [{"id": "pub", "pdf": "/missing.pdf"}],
-                    [],
-                )
-            self.assertIn("publication pub pdf", str(context.exception))
-        finally:
-            build_content.root = original_root
+        with self.assertRaisesRegex(ValueError, "project demo image") as context:
+            build_content.validate_local_assets(
+                [{"id": "demo", "image": "missing.svg", "href": "missing.html"}],
+                [{"id": "pub", "pdf": "/missing.pdf"}],
+                [],
+                site_root=Path(directory.name),
+            )
+        self.assertIn("publication pub pdf", str(context.exception))
 
     def test_main_generates_complete_deterministic_output(self):
         directory = tempfile.TemporaryDirectory()
@@ -292,23 +274,35 @@ Note body.
             "includes/teaching-list.html",
         }
 
-        original_root = build_content.root
-        build_content.root = fixture_root
-        try:
-            build_content.main()
-            first_run = {
-                path: (fixture_root / path).read_bytes()
-                for path in expected_outputs
-            }
-            build_content.main()
-            second_run = {
-                path: (fixture_root / path).read_bytes()
-                for path in expected_outputs
-            }
-        finally:
-            build_content.root = original_root
+        build_content.main(site_root=fixture_root)
+        first_run = {
+            path: (fixture_root / path).read_bytes()
+            for path in expected_outputs
+        }
+        build_content.main(site_root=fixture_root)
+        second_run = {
+            path: (fixture_root / path).read_bytes()
+            for path in expected_outputs
+        }
 
         self.assertEqual(first_run, second_run)
+
+        projects_path = fixture_root / "data/projects.yml"
+        projects_path.write_text(
+            projects_path.read_text(encoding="utf-8").replace(
+                "https://example.com/project.svg",
+                "missing-project.svg",
+            ),
+            encoding="utf-8",
+        )
+        with self.assertRaisesRegex(ValueError, "Local asset validation failed"):
+            build_content.main(site_root=fixture_root)
+        after_failed_run = {
+            path: (fixture_root / path).read_bytes()
+            for path in expected_outputs
+        }
+        self.assertEqual(second_run, after_failed_run)
+
         self.assertIn(b"Example project", first_run["includes/home-projects.html"])
         self.assertIn(b"Generated note", first_run["includes/home-notes.html"])
         self.assertIn(b"A deterministic publication", first_run["includes/publications-all.html"])
