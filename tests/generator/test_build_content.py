@@ -190,6 +190,131 @@ Body text.
         finally:
             build_content.root = original_root
 
+    def test_main_generates_complete_deterministic_output(self):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        fixture_root = Path(directory.name)
+
+        for relative_directory in (
+            "assets/img/notes",
+            "data",
+            "includes",
+            "news",
+            "notes",
+        ):
+            (fixture_root / relative_directory).mkdir(parents=True)
+
+        (fixture_root / "assets/img/notes/example.svg").write_text(
+            "<svg xmlns=\"http://www.w3.org/2000/svg\"/>",
+            encoding="utf-8",
+        )
+        (fixture_root / "data/projects.yml").write_text(
+            """- id: example
+  title: Example project
+  summary: A generated project card.
+  image: https://example.com/project.svg
+  href: https://example.com/project
+  labels: [Modelling, Software]
+  featured: true
+""",
+            encoding="utf-8",
+        )
+        (fixture_root / "data/coauthors.yml").write_text(
+            "Ada Lovelace: https://example.com/ada\n",
+            encoding="utf-8",
+        )
+        (fixture_root / "data/publications.bib").write_text(
+            """@article{example,
+  category = {Articles},
+  abbr = {JT},
+  title = {A deterministic publication},
+  author = {Ada Lovelace and Silvio Fanzon},
+  year = {2026},
+  selected = {true},
+  preprint = {false},
+  journal = {Journal of Tests},
+  abstract = {A generated abstract.}
+}
+""",
+            encoding="utf-8",
+        )
+        teaching_record = """@misc{course,
+  title = {A generated course},
+  year = {2025},
+  yearacademic = {2025/26},
+  venue = {Test University}
+}
+"""
+        (fixture_root / "data/teaching_lecturer.bib").write_text(
+            teaching_record,
+            encoding="utf-8",
+        )
+        (fixture_root / "data/teaching_tutor.bib").write_text(
+            teaching_record
+            .replace("@misc{course,", "@misc{tutorial,")
+            .replace("A generated course", "A generated tutorial"),
+            encoding="utf-8",
+        )
+        (fixture_root / "news/2026-07-01.md").write_text(
+            """---
+title: Generated update
+category: Test
+---
+The generator produced this update.
+""",
+            encoding="utf-8",
+        )
+        (fixture_root / "notes/example.qmd").write_text(
+            """---
+title: Generated note
+description: A generated featured note.
+date: 2026-07-02
+image: ../assets/img/notes/example.svg
+image-alt: Generated note visual
+featured: true
+featured-order: 1
+categories: [Testing]
+---
+Note body.
+""",
+            encoding="utf-8",
+        )
+
+        expected_outputs = {
+            "data/projects.generated.json",
+            "includes/home-news.qmd",
+            "includes/home-notes.html",
+            "includes/home-projects.html",
+            "includes/home-publications-list.html",
+            "includes/news-all.qmd",
+            "includes/projects-portfolio.html",
+            "includes/publications-all.html",
+            "includes/teaching-list.html",
+        }
+
+        original_root = build_content.root
+        build_content.root = fixture_root
+        try:
+            build_content.main()
+            first_run = {
+                path: (fixture_root / path).read_bytes()
+                for path in expected_outputs
+            }
+            build_content.main()
+            second_run = {
+                path: (fixture_root / path).read_bytes()
+                for path in expected_outputs
+            }
+        finally:
+            build_content.root = original_root
+
+        self.assertEqual(first_run, second_run)
+        self.assertIn(b"Example project", first_run["includes/home-projects.html"])
+        self.assertIn(b"Generated note", first_run["includes/home-notes.html"])
+        self.assertIn(b"A deterministic publication", first_run["includes/publications-all.html"])
+        self.assertIn(b"2025/26", first_run["includes/teaching-list.html"])
+        self.assertIn(b"Generated update", first_run["includes/news-all.qmd"])
+
 
 if __name__ == "__main__":
     unittest.main()
