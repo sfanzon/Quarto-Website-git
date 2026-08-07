@@ -81,6 +81,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/main/_11-footer.scss` | Footer styles |
 | `styles/main/_12-page-shell.scss` | Page shell and layout container styles |
 | `styles/components/_archive.scss` | Shared archive headings, actions and compact inline icons |
+| `styles/components/_archive-entries.scss` | Shared archive rows, metadata, badges and actions |
 | `styles/components/_home.scss` | Homepage hero, profile, section composition and responsive ordering |
 | `styles/components/_disclosures.scss` | Shared expandable abstract and BibTeX panels |
 | `styles/components/_notes.scss` | Homepage note rows, Notes archive and long-form note pages |
@@ -120,8 +121,9 @@ already exists.
 | Project article presentation | `styles/project-pages.css` | Canonical, project-only |
 | Project chapter navigation | `styles/project-navigation.css` | Canonical, project-only |
 | Homepage composition | `styles/components/_home.scss` | Canonical |
+| Bootstrap-era archive rows | `styles/components/_archive-entries.scss` | Canonical |
 | Expandable abstracts and BibTeX panels | `styles/components/_disclosures.scss` | Canonical |
-| Homepage publication selections and Publications archive | `styles/components/_publications.scss` (shared archive/disclosure primitives remain in `_01-foundation.scss` and `_02-editorial.scss`) | Canonical |
+| Homepage publication selections and Publications archive | `styles/components/_publications.scss` (shared archive/disclosure primitives live in their dedicated components) | Canonical |
 | Teaching | `styles/components/_teaching.scss` | Canonical |
 | Contact | `styles/components/_contact.scss` | Canonical |
 | News | `styles/components/_news.scss` | Canonical |

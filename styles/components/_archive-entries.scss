@@ -1,0 +1,156 @@
+/* ===========================================================================
+   ARCHIVE ENTRIES
+   Shared Bootstrap-era archive rows, metadata, badges and actions used by
+   publications, presentations and supervision.
+   ========================================================================== */
+
+.publications {
+  margin-top: 1rem;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+.publications h2.year {
+  color: var(--global-text-color-light);
+  border-top: 1px solid var(--global-divider-color);
+  padding-top: 1rem;
+  margin-top: 2rem;
+  margin-bottom: -2rem;
+  text-align: right;
+  font-size: 1.65rem;
+  font-weight: 400;
+}
+
+.publication-entry.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 1.45rem;
+  padding-bottom: .3rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.publication-entry > .abbr {
+  flex: 0 0 8rem;
+  max-width: 8rem;
+  min-width: 0;
+  padding-left: 0;
+}
+
+.publication-entry > .col-sm-8 {
+  flex: 1 1 0;
+  max-width: none;
+  min-width: 0;
+}
+
+.abbr {
+  text-align: center;
+  font-size: .85rem;
+}
+
+abbr.badge {
+  display: inline-block;
+  color: #fff;
+  background-color: var(--global-theme-color);
+  font-size: .73rem;
+  font-weight: 600;
+  padding: .35rem .45rem;
+  white-space: normal;
+  line-height: 1.15;
+}
+
+.preview {
+  margin-top: .5rem;
+  max-width: 100%;
+  height: auto;
+}
+
+.title,
+.talk_title {
+  font-weight: 600;
+  color: var(--global-text-color);
+  font-size: 1rem;
+  line-height: 1.35;
+  margin-bottom: .2rem;
+}
+
+.author,
+.periodical,
+.conference_title,
+.conference_venue {
+  color: var(--global-text-color-light);
+  font-size: .93rem;
+  line-height: 1.45;
+}
+
+.author em {
+  color: var(--global-theme-color);
+  font-style: normal;
+  font-weight: 600;
+}
+
+.publication-entry .title,
+.publication-entry .author,
+.publication-entry .periodical,
+.publication-entry .conference_title,
+.publication-entry .conference_venue,
+.publication-entry .abstract,
+.publication-entry .bibtex {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.links,
+.publication-entry .links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .28rem;
+  max-width: 100%;
+}
+
+.links .btn,
+.btn.z-depth-0,
+a.btn.z-depth-0 {
+  color: var(--global-theme-color);
+  border: 1px solid var(--global-theme-color);
+  background: transparent;
+  margin: 0;
+  box-shadow: none;
+  border-radius: .2rem;
+  padding: .22rem .42rem;
+  font-size: .75rem;
+  white-space: normal;
+  max-width: 100%;
+}
+
+.links .btn:hover,
+.btn.z-depth-0:hover {
+  color: #fff;
+  background: var(--global-theme-color);
+  text-decoration: none;
+}
+
+@media (max-width: 575.98px) {
+  .publication-entry.row {
+    display: block;
+  }
+
+  .publication-entry > .abbr,
+  .publication-entry > .col-sm-8 {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .publication-entry > .abbr {
+    text-align: left;
+    margin-bottom: .4rem;
+  }
+
+  abbr.badge {
+    width: auto !important;
+    max-width: 100%;
+  }
+}
