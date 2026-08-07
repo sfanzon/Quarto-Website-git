@@ -534,9 +534,6 @@ body.project-detail-page main.content .project-related-heading h2 {
 
 } */
 
-@media (max-width: 980px) {
-}
-
 @media (max-width: 720px) {
   .project-detail-hero {
     margin-bottom: 1.4rem;
