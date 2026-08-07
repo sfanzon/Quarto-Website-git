@@ -1,4 +1,5 @@
 import importlib.util
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -6,6 +7,7 @@ from pathlib import Path
 import yaml
 
 SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "build-content.py"
+sys.path.insert(0, str(SCRIPT.parent))
 spec = importlib.util.spec_from_file_location("build_content", SCRIPT)
 build_content = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(build_content)
