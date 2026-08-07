@@ -601,14 +601,6 @@ body.project-detail-page .project-page-end {
   margin-right: auto !important;
 }
 
-body.project-detail-page .project-page-end .project-resource-map,
-body.project-detail-page .project-resource-map-end {
-  width: min(var(--site-reading-width), 100%) !important;
-  max-width: var(--site-reading-width) !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
 
 /* Article controls used with the project chapter navigation. */
 .headline-box {

@@ -138,6 +138,14 @@
   margin-block: 1.4rem .4rem;
 }
 
+body.project-detail-page .project-page-end .project-resource-map,
+body.project-detail-page .project-resource-map-end {
+  width: min(var(--site-reading-width), 100%) !important;
+  max-width: var(--site-reading-width) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 @media (max-width: 720px) {
   .project-at-a-glance,
   .project-at-a-glance-2 {
