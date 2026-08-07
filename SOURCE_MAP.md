@@ -119,7 +119,7 @@ already exists.
 | Notes archive | `styles/components/_notes.scss` | Canonical |
 | Long-form note pages | `styles/components/_notes.scss` | Canonical |
 | Homepage and Projects archive cards | `styles/components/_project-cards.scss` | Canonical |
-| Project article presentation and controls | `styles/project-pages.css` | Canonical, project-only |
+| Project article foundation and presentation | `styles/project-pages.css` | Canonical, project-only |
 | Project article context controls | `styles/project-article-controls.css` | Canonical, project-only |
 | Project chapter navigation | `styles/project-navigation.css` | Canonical, project-only |
 | Homepage composition | `styles/components/_home.scss` | Canonical |
