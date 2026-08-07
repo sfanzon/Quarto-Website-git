@@ -435,7 +435,8 @@ body.project-detail-page main.content h3 {
   font-size: 1.08rem;
   letter-spacing: -.015em;
 }
-body.project-detail-page main.content > .project-related.column-page {
+/* Related-project controls moved to project-article-controls.css. */
+/* body.project-detail-page main.content > .project-related.column-page {
   width: 100%;
   max-width: none !important;
   margin: clamp(4.6rem, 8vw, 6.4rem) auto .8rem;
@@ -531,6 +532,8 @@ body.project-detail-page main.content .project-related-heading h2 {
   font-weight: 700;
 }
 
+} */
+
 @media (max-width: 980px) {
 }
 
@@ -573,28 +576,8 @@ body.project-detail-page main.content .project-related-heading h2 {
   .project-primary-links a:not(:last-child)::after {
     margin-left: .8rem;
   }
-  .project-related {
-    margin-top: 3.6rem;
-    padding-top: .85rem;
-  }
-  .project-related-heading {
-    display: grid;
-    gap: .22rem;
-  }
-  .project-related-grid { grid-template-columns: 1fr; }
-  .project-related-card {
-    grid-template-rows: auto auto auto auto;
-    min-height: 0;
-    padding: .72rem .15rem .76rem;
-    border-right: 0;
-    border-bottom: 1px solid var(--project-line);
-  }
-  .project-related-card:last-child { border-bottom: 0; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .project-related-card { transition: none; }
-}
 
 
 /* Wide related-project breakout is intentionally isolated.
@@ -626,17 +609,6 @@ body.project-detail-page .project-resource-map-end {
   margin-right: auto !important;
 }
 
-@media (max-width: 720px) {
-  .project-related-card strong {
-    font-size: .9rem;
-  }
-  .project-related-card small {
-    font-size: .74rem;
-  }
-  .project-related-action {
-    font-size: .68rem;
-  }
-}
 
 /* Article controls used with the project chapter navigation. */
 .headline-box {
