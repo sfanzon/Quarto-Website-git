@@ -83,7 +83,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/components/_archive.scss` | Shared archive headings, actions and compact inline icons |
 | `styles/components/_archive-entries.scss` | Shared archive rows, metadata, badges and actions |
 | `styles/components/_home.scss` | Homepage hero, profile, section composition and responsive ordering |
-| `styles/components/_disclosures.scss` | Shared expandable abstract and BibTeX panels |
+| `styles/components/_disclosures.scss` | Shared abstract/BibTeX visibility, panels and inline controls |
 | `styles/components/_notes.scss` | Homepage note rows, Notes archive and long-form note pages |
 | `styles/components/_project-cards.scss` | Shared homepage and Projects archive cards, including labels and archived state |
 | `styles/components/_teaching.scss` | Teaching introduction, role/year hierarchy, course lists and material actions |

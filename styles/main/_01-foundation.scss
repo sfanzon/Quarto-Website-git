@@ -129,18 +129,6 @@ body.project-detail-page main.content p a.uri {
   text-underline-offset: .16em;
 }
 
-.abstract.hidden,
-.bibtex.hidden {
-  display: none;
-}
-
-.abstract.hidden.open,
-.bibtex.hidden.open {
-  display: block;
-  margin-top: .75rem;
-  color: var(--global-text-color);
-}
-
 .bibtex pre,
 pre {
   background: var(--global-code-bg-color);
@@ -262,10 +250,6 @@ body.publications-page main.content {
 .section-heading > span { color:var(--global-text-color-light); font-size:.9rem; }
 .compact-page-hero { padding:clamp(3rem,7vw,6rem) 0 2.5rem; max-width:900px; }
 .compact-page-hero > p:last-child { font-size:1.15rem; color:var(--global-text-color-light); }
-.abstract.hidden,.bibtex.hidden { display:none; }
-.abstract.open,.bibtex.open { display:block; margin-top:1rem; padding:1rem; background:var(--global-code-bg-color); border-radius:6px; }
-.bibtex pre { white-space:pre-wrap; margin:0; }
-
 @media (max-width: 900px) {
   .section-heading { align-items:flex-start; }
   .section-heading > a { font-size:.85rem; text-align:right; }

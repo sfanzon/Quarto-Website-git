@@ -4,6 +4,37 @@
    teaching records.
    ========================================================================== */
 
+.abstract.hidden,
+.bibtex.hidden {
+  display: none;
+}
+
+.abstract.hidden.open,
+.bibtex.hidden.open {
+  display: block;
+  margin-top: .75rem;
+  color: var(--global-text-color);
+}
+
+.abstract.hidden,
+.bibtex.hidden {
+  display: none;
+}
+
+.abstract.open,
+.bibtex.open {
+  display: block;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--global-code-bg-color);
+  border-radius: 6px;
+}
+
+.bibtex pre {
+  white-space: pre-wrap;
+  margin: 0;
+}
+
 .publication-entry .abstract.open,
 .publication-entry .bibtex.open {
   display: block !important;
