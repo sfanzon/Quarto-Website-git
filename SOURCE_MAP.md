@@ -76,7 +76,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `styles/main.scss` | SCSS entry point — imports all files below |
 | `styles/main/_00-tokens.scss` | Design tokens (CSS custom properties, colours, spacing, typography) |
 | `styles/main/_01-foundation.scss` | Base element styles, typography, layout primitives |
-| `styles/main/_02-editorial.scss` | Shared editorial and archive primitives plus transitional components |
+| `styles/main/_02-shared-editorial.scss` | Shared standard-page and compact-hero editorial primitives |
 | `styles/main/_10-navbar.scss` | Navigation bar styles |
 | `styles/main/_11-footer.scss` | Footer styles |
 | `styles/main/_12-page-shell.scss` | Page shell and layout container styles |
