@@ -13,7 +13,6 @@ image: figures/04_teammate_gaps.png
 body-classes: standard-page project-detail-page project-custom-hero f1-project-page
 format:
   html:
-    css: ../../styles/project-f1.css
     toc: false
     code-fold: true
     code-summary: Show the R code
