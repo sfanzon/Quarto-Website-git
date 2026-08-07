@@ -124,6 +124,10 @@
 }
 
 /* Projects archive introduction, heading and capability grid. */
+.projects-section {
+  margin-bottom: clamp(3.5rem, 7vw, 5.75rem);
+}
+
 .projects-page .projects-positioning {
   max-width: 880px;
   margin: 0 0 clamp(1.8rem, 3.5vw, 2.8rem);

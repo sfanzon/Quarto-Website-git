@@ -101,6 +101,15 @@ abbr.badge {
   overflow-wrap: anywhere;
 }
 
+.publication-entry .title {
+  margin: 0 0 0.55rem;
+  max-width: 62rem;
+  font-size: clamp(1.08rem, 1.65vw, 1.35rem) !important;
+  line-height: 1.35;
+  letter-spacing: -0.012em;
+  font-weight: 600;
+}
+
 .links,
 .publication-entry .links {
   display: flex;
