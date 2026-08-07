@@ -11,6 +11,7 @@ format:
     css:
       - ../styles/project-pages.css
       - ../styles/project-navigation.css
+      - ../styles/project-article-controls.css
     include-after-body:
       - ../includes/project-navigation.html
 

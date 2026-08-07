@@ -1,0 +1,67 @@
+/* Shared context controls for long-form project articles. */
+.project-detail-hero.has-at-a-glance {
+  margin-bottom: clamp(1rem, 2vw, 1.45rem);
+}
+
+.project-at-a-glance {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: min(820px, 100%);
+  margin: 0 auto 1.55rem;
+  border-top: 1px solid var(--project-line);
+  border-bottom: 1px solid var(--project-line);
+}
+
+.project-at-a-glance-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.project-glance-item {
+  min-width: 0;
+  padding: .78rem .9rem .82rem;
+  border-right: 1px solid var(--project-line);
+}
+
+.project-glance-item:first-child { padding-left: .1rem; }
+
+.project-glance-item:last-child {
+  padding-right: .1rem;
+  border-right: 0;
+}
+
+.project-glance-label {
+  display: block;
+  margin-bottom: .34rem;
+  color: var(--homepage-orange-accent, var(--global-theme-color));
+  font-size: .52rem;
+  font-weight: 760;
+  letter-spacing: .1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.project-glance-item p {
+  margin: 0;
+  color: var(--project-ink-muted);
+  font-size: .64rem;
+  line-height: 1.44;
+}
+
+@media (max-width: 720px) {
+  .project-at-a-glance,
+  .project-at-a-glance-2 {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .project-glance-item,
+  .project-glance-item:first-child,
+  .project-glance-item:last-child {
+    padding: .68rem .1rem .72rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--project-line);
+  }
+
+  .project-glance-item:last-child { border-bottom: 0; }
+  .project-glance-item p { font-size: .62rem; }
+}
