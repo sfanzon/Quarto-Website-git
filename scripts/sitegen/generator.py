@@ -13,11 +13,11 @@ from .portfolio import (
     render_featured_projects,
     render_projects_portfolio,
 )
-from .publications import (
-    load_publications,
+from .publication_rendering import (
     render_publication_archive,
     render_selected_publications,
 )
+from .publications import load_publications
 from .teaching import teaching_section, teaching_years
 
 
