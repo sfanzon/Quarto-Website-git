@@ -5,7 +5,8 @@ import json
 import yaml
 
 from .bibtex import read_bibtex_entries
-from .core import DEFAULT_ROOT, validate_local_assets
+from .assets import validate_local_assets
+from .core import DEFAULT_ROOT
 from .news import load_news, render_news_qmd
 from .portfolio import (
     load_featured_notes,

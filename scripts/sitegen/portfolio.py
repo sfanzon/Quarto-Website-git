@@ -3,7 +3,8 @@
 import html
 from datetime import datetime
 
-from .core import DEFAULT_ROOT, local_reference_path, read_front_matter
+from .assets import local_reference_path
+from .core import DEFAULT_ROOT, read_front_matter
 
 
 def render_project_card(project):
