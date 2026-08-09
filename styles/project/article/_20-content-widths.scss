@@ -1,0 +1,110 @@
+/* The page shell remains 1180px wide, while the readable article column stays
+   at 820px and is centered inside it.
+   Sustained prose (sections, paragraphs, lists, details) uses the narrower
+   720px prose width for comfortable reading. */
+body.project-detail-page main.content > section.level2,
+body.project-detail-page main.content > p,
+body.project-detail-page main.content > ol,
+body.project-detail-page main.content > ul,
+body.project-detail-page main.content > figure,
+body.project-detail-page main.content > details,
+body.project-detail-page main.content > .callout,
+body.project-detail-page main.content > .project-role-note {
+  margin-left: auto;
+  margin-right: auto;
+}
+body.project-detail-page main.content > section.level2,
+body.project-detail-page main.content > p,
+body.project-detail-page main.content > ol,
+body.project-detail-page main.content > ul,
+body.project-detail-page main.content > details {
+  width: min(var(--site-prose-width), 100%);
+}
+body.project-detail-page main.content > figure,
+body.project-detail-page main.content > .callout,
+body.project-detail-page main.content > .project-role-note {
+  width: min(var(--site-reading-width), 100%);
+}
+body.project-detail-page .project-evidence-strip,
+body.project-detail-page .project-resource-map {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body.project-detail-page main.content h3 {
+  max-width: var(--site-prose-width);
+  margin-top: 2rem;
+  font-size: 1.08rem;
+  letter-spacing: -.015em;
+}
+
+@media (max-width: 720px) {
+  .project-detail-hero {
+    margin-bottom: 1.4rem;
+    padding-top: 1.6rem;
+    padding-bottom: 1.1rem;
+  }
+
+  .project-category {
+    margin-bottom: .7rem;
+  }
+
+  body.project-detail-page .project-detail-hero h1 {
+    font-size: clamp(1.46rem, 5.5vw, 1.76rem);
+    line-height: 1.1;
+    letter-spacing: -.032em;
+  }
+
+  .project-detail-lead {
+    font-size: .94rem;
+    line-height: 1.52;
+  }
+
+  .project-meta {
+    gap: .58rem .9rem;
+    margin-top: .88rem;
+    padding-top: .62rem;
+  }
+
+  .project-meta-resources {
+    padding-top: .58rem;
+  }
+
+  .project-meta-item {
+    gap: .18rem;
+  }
+
+  .project-primary-links {
+    gap: .4rem .8rem;
+    margin-top: 1rem;
+  }
+
+  .project-primary-links a {
+    font-size: .76rem;
+  }
+
+  .project-primary-links a:not(:last-child)::after {
+    margin-left: .8rem;
+  }
+}
+
+/* Wide related-project breakout is intentionally isolated.
+   Bibliographies and the F1 completion explorer remain part of the readable
+   article column even when main.content expands for `.column-page`. */
+body.project-detail-page main.content > #refs,
+body.project-detail-page main.content > .references,
+body.project-detail-page main.content > .csl-bib-body,
+body.project-detail-page main.content .references,
+body.project-detail-page main.content .csl-bib-body {
+  width: min(var(--site-prose-width), 100%);
+  max-width: var(--site-prose-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body.project-detail-page .project-page-end {
+  width: min(var(--site-reading-width), 100%) !important;
+  max-width: var(--site-reading-width) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
