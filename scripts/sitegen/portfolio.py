@@ -27,6 +27,24 @@ def render_project_card(project):
     </article>'''
 
 
+def render_featured_projects(projects, limit=3):
+    featured = [project for project in projects if project.get('featured') is True]
+    return '\n'.join(
+        render_project_card(project)
+        for project in featured[:limit]
+    )
+
+
+def render_projects_portfolio(projects):
+    cards = '\n'.join(render_project_card(project) for project in projects)
+    return '''<section class="projects-section project-portfolio">
+  <div class="section-heading project-page-heading"><div><p class="eyebrow">Selected work</p><span>Projects, implementations and reproducible outputs</span></div></div>
+  <div class="projects-card-grid">
+''' + cards + '''
+  </div>
+</section>'''
+
+
 def load_featured_notes(notes_dir=None, site_root=None):
     """Load homepage-selected notes from their canonical front matter."""
     site_root = site_root or DEFAULT_ROOT
