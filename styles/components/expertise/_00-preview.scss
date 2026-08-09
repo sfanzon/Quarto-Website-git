@@ -1,0 +1,101 @@
+/* ===========================================================================
+   Expertise preview and page
+   =========================================================================== */
+
+.home-expertise-preview {
+  margin-top: clamp(1.5rem, 4vw, 3rem) !important;
+  padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 3.5rem);
+  background: var(--expertise-paper);
+  color: var(--expertise-ink);
+}
+
+.expertise-preview-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2rem;
+  align-items: end;
+  margin-bottom: clamp(2rem, 4vw, 3.4rem);
+}
+
+.expertise-hero .eyebrow,
+.expertise-footer-cta .eyebrow {
+  margin: 0 0 .65rem;
+  color: var(--expertise-accent);
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.expertise-preview-header h2 {
+  margin: 0 0 .75rem;
+  color: var(--expertise-ink);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -.045em;
+}
+
+.expertise-preview-header p {
+  max-width: 48rem;
+  margin: 0;
+  color: var(--expertise-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.expertise-overview-link {
+  padding-bottom: .18rem;
+  border-bottom: 1px solid var(--expertise-accent);
+  color: var(--expertise-ink);
+  font-size: .88rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.expertise-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-top: 1px solid var(--expertise-line);
+}
+
+.expertise-preview-item {
+  display: flex;
+  min-height: 235px;
+  flex-direction: column;
+  padding: 1.35rem 1.2rem 1.5rem;
+  border-right: 1px solid var(--expertise-line);
+  color: var(--expertise-ink);
+  text-decoration: none;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.expertise-preview-item:last-child { border-right: 0; }
+.expertise-preview-item:hover,
+.expertise-preview-item:focus-visible {
+  background: var(--expertise-paper-soft);
+  color: var(--expertise-ink);
+  transform: translateY(-2px);
+}
+
+.expertise-index {
+  margin-bottom: auto;
+  color: var(--expertise-accent);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+.expertise-preview-item h3 {
+  margin: 2.25rem 0 .65rem;
+  color: var(--expertise-ink);
+  font-size: 1.05rem;
+  line-height: 1.25;
+  letter-spacing: -.018em;
+}
+
+.expertise-preview-item p {
+  margin: 0;
+  color: var(--expertise-muted);
+  font-size: .85rem;
+  line-height: 1.62;
+}
