@@ -1,0 +1,31 @@
+/* ==========================================================================
+   Desktop navigation refinements
+   ========================================================================== */
+
+@media (min-width: 992px) {
+  /* Quarto gives the search overlay an extra right margin. Keep the control's
+     target size, but align its outer edge with the navbar shell. */
+  #quarto-header .navbar #quarto-search {
+    margin-right: 0 !important;
+  }
+
+  #quarto-header .navbar #quarto-search.type-overlay .aa-Autocomplete,
+  #quarto-header .navbar #quarto-search.type-overlay .aa-DetachedSearchButton {
+    display: flex !important;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 !important;
+  }
+
+  .navbar .navbar-nav {
+    align-items: center;
+    gap: .12rem;
+  }
+
+  .navbar .nav-link {
+    min-height: 38px;
+    padding-inline: .65rem !important;
+  }
+}

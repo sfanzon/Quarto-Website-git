@@ -1,0 +1,93 @@
+/* ==========================================================================
+   Navigation links
+   ========================================================================== */
+
+.navbar-nav {
+  margin-left: auto;
+}
+
+.navbar .nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--global-navbar-text-color) !important;
+  font-size: 0.84rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em;
+  padding: 0 0.5rem !important;
+  border-radius: 7px;
+  transition: color .15s ease, background-color .15s ease;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+  color: var(--global-navbar-hover-color) !important;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus-visible {
+  background: color-mix(in srgb, var(--global-navbar-hover-color) 14%, transparent) !important;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.navbar .nav-link:focus,
+.navbar .dropdown-toggle.show {
+  outline: 0;
+  box-shadow: none !important;
+}
+
+/* Active link */
+
+.navbar .nav-item.active > .nav-link,
+.navbar .nav-link.active,
+.navbar .navbar-nav .nav-item.active > .nav-link {
+  background-color: inherit !important;
+  font-weight: 500 !important;
+  color: var(--global-navbar-active-text-color) !important;
+  text-decoration-line: underline !important;
+  text-decoration-color: currentColor !important;
+  text-decoration-thickness: 1.5px !important;
+  text-underline-offset: .48em !important;
+}
+
+.navbar .nav-item.active > .nav-link::after,
+.navbar .nav-link.active::after {
+  content: none;
+}
+
+.navbar .nav-item.active > .nav-link:hover,
+.navbar .nav-link.active:hover {
+  color: var(--global-navbar-hover-color) !important;
+}
+
+/* ==========================================================================
+   Dropdowns
+   ========================================================================== */
+
+.navbar .dropdown-menu {
+  margin-top: 0 !important;
+  padding: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 10px;
+  background: var(--global-navbar-color) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.navbar .dropdown-item {
+  border-radius: 7px;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.84rem;
+  color: var(--global-navbar-text-color) !important;
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus,
+.navbar .dropdown-item:focus-visible {
+  color: var(--global-navbar-hover-color) !important;
+  background: color-mix(in srgb, var(--global-navbar-hover-color) 14%, transparent) !important;
+  outline: 0;
+  box-shadow: none !important;
+}

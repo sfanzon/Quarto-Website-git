@@ -1,0 +1,104 @@
+/* ==========================================================================
+   Shell
+   ========================================================================== */
+
+#navbar,
+#quarto-header nav.navbar,
+.navbar {
+  width: 100% !important;
+  max-width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  min-height: 56px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  background: color-mix(in srgb, var(--global-navbar-color) 94%, transparent) !important;
+  color: var(--global-navbar-text-color) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--global-navbar-text-color) 12%, transparent) !important;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.07) !important;
+  opacity: 1.0;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Quarto's base navbar rule adds a 1em gutter to the outer nav element.
+   Remove it so the navbar and footer use the same shell edges. */
+#quarto-header > nav.navbar {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Quarto compensates for the desktop scrollbar with a right margin on the
+   header. The footer has no equivalent margin, so remove it for shared edges. */
+@media (min-width: 992px) {
+  #quarto-header {
+    margin-right: 0 !important;
+  }
+}
+
+/* Container: constrained inner content */
+
+#quarto-header .navbar .navbar-container,
+#navbar .container,
+#quarto-header .navbar .container,
+#quarto-header .navbar .container-fluid {
+  width: min(calc(100% - 2 * var(--navbar-shell-padding)), var(--site-chrome-width));
+  max-width: var(--site-chrome-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  min-height: 56px !important;
+}
+
+/* Quarto adds .mx-auto to this wrapper by default, which centers the brand.
+   Keep the identity at the left edge and let the navigation stay right-aligned. */
+#quarto-header .navbar .navbar-brand-container,
+.navbar .navbar-brand-container {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
+
+.navbar a,
+.navbar a:hover,
+.navbar a:focus {
+  text-decoration: none !important;
+}
+
+/* ==========================================================================
+   Brand
+   ========================================================================== */
+
+.navbar-brand,
+.navbar-brand.title,
+.navbar-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--global-navbar-text-color) !important;
+  font-size: 1.3rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+  visibility: visible !important;
+  padding: 0 !important;
+  min-height: 42px;
+  margin: 0 .15rem 0 0;
+  border-radius: 7px;
+  transition: color .15s ease, background-color .15s ease;
+}
+
+.navbar-brand:hover,
+.navbar-brand:focus,
+.navbar-brand:hover .navbar-title,
+.navbar-brand:focus .navbar-title {
+  color: var(--global-navbar-hover-color) !important;
+}
+
+.navbar-brand:hover,
+.navbar-brand:focus-visible {
+  background: color-mix(in srgb, var(--global-navbar-hover-color) 14%, transparent) !important;
+  outline: 0;
+  box-shadow: none !important;
+}
