@@ -123,6 +123,7 @@ Results:
 ### Task 3 — Generator ownership and editability audit
 
 **Model:** Terra  
+**Status:** complete
 **Risk:** medium  
 **Depends on:** Task 2
 
@@ -143,9 +144,19 @@ the generator remains readable without premature abstraction.
 
 Suggested commit message: `refactor: clarify generated content ownership`
 
+Results:
+
+- `SOURCE_MAP.md` now maps every generated file to its canonical data source,
+  loader and renderer;
+- the audit found no dead production helper or import to remove;
+- the separate publication, presentation, supervision, teaching, project and
+  news paths are intentional: their validation and rendering rules differ, so
+  merging them would obscure ownership without removing meaningful duplication.
+
 ### Task 4 — Includes and runtime JavaScript audit
 
 **Model:** Terra  
+**Status:** complete
 **Risk:** medium  
 **Depends on:** Task 1
 
@@ -164,6 +175,15 @@ Done when every include and handler has a documented purpose and no proven dead
 runtime code remains.
 
 Suggested commit message: `refactor: remove unused runtime site code`
+
+Results:
+
+- `SOURCE_MAP.md` now records every hand-written runtime handler, its markup
+  target and purpose;
+- removed the obsolete custom navbar-active handler: current Quarto navigation
+  has no `data-path` attributes for it to act on;
+- retained the supported Quarto/Bootstrap callout, search, Mermaid, theme and
+  navigation integrations, with their ownership made explicit.
 
 ### Task 5 — Stylesheet evidence audit
 

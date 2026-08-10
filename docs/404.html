@@ -418,12 +418,6 @@ ul.task-list li input[type="checkbox"] {
 </footer>
 <script>
 (function(){
-  const path = window.location.pathname.replace(/index\.html$/, '');
-  document.querySelectorAll('#navbar .nav-item[data-path]').forEach(li => {
-    const href = li.getAttribute('data-path');
-    if((href === '/' && path === '/') || (href !== '/' && path.startsWith(href))){ li.classList.add('active'); }
-  });
-
   const scrollPositionKey = `scroll-position:${window.location.pathname}${window.location.search}`;
 
   function saveScrollPosition() {
