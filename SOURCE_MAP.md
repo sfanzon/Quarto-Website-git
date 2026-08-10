@@ -44,6 +44,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `data/teaching.yml` | Single teaching record, with `role: lecturer` or `role: tutor` |
 | `data/coauthors.yml` | Co-author homepage URL map |
 | `data/citations/numeric.csl` | Shared citation style for project pages |
+| `data/optional-local-assets.txt` | Intentionally absent local downloads, with their future repository paths |
 | `news/*.md` | Dated news entries (filenames: `YYYY-MM-DD.md`) |
 | `notes/*.qmd` | Long-form technical notes |
 | `notes/_metadata.yml` | Shared note-page defaults |

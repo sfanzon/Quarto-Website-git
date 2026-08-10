@@ -4,6 +4,15 @@ const { test, expect } = require("@playwright/test");
 const { docsRoot, htmlPages, repositoryRoot } = require("./site");
 
 const ignoredSchemes = /^(?:data:|mailto:|tel:|javascript:|blob:)/i;
+const optionalLocalAssets = new Set(
+  fs.readFileSync(
+    path.join(repositoryRoot, "data/optional-local-assets.txt"),
+    "utf8"
+  )
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith("#"))
+);
 
 function localTarget(reference, sourceRelativePath) {
   const trimmed = reference.trim();
@@ -61,7 +70,7 @@ test("all generated HTML and CSS references resolve locally", async () => {
       const target = localTarget(match[1], pageTarget.relativePath);
       if (!target) continue;
       const file = targetFile(target.relativePath);
-      if (!file) {
+      if (!file && !optionalLocalAssets.has(target.relativePath)) {
         missing.add(`${pageTarget.relativePath} -> ${match[1]}`);
       } else if (!fragmentExists(file, target.fragment)) {
         missing.add(

@@ -1,0 +1,12 @@
+# Deliberately omitted from this lightweight repository snapshot.
+# Keep their references in the presentation archive; add the PDFs later at
+# the paths below, then remove the corresponding lines from this file.
+assets/pdf/seminars/slides/2018/2018-Graz-Slides.pdf
+assets/pdf/seminars/slides/2018/2018-Lisbon-Slides.pdf
+assets/pdf/seminars/slides/2019/2019-Berlin-Slides.pdf
+assets/pdf/seminars/slides/2019/2019-Paris-Slides.pdf
+assets/pdf/seminars/slides/2019/2019-Vienna-Slides.pdf
+assets/pdf/seminars/slides/2021/2021-Parma-Slides.pdf
+assets/pdf/seminars/slides/2022/2022-Edinburgh-Slides.pdf
+assets/pdf/seminars/slides/2022/2022-Graz-Slides.pdf
+assets/pdf/seminars/slides/2022/2022-Sussex-Slides.pdf
