@@ -2,6 +2,9 @@
 
 > "I want to change X on the site. Which source file should I inspect first?"
 
+Platform suitability and the threshold for changing it are documented in
+`PLATFORM_DECISION.md`.
+
 ## Top-level pages
 
 | File | Description |

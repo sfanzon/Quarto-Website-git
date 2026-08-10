@@ -28,6 +28,7 @@ It combines mathematical depth with inspectable modelling, algorithms, scientifi
 - `styles/main.scss` — site-wide visual system
 - `docs/` — pre-rendered website for deployment
 - `ARCHITECTURE.md` — source ownership and project-page architecture
+- `PLATFORM_DECISION.md` — current Quarto fit and migration threshold
 - `DESIGN.md` — visual and editorial design rules
 - `AGENTS.md` — operating rules for coding agents
 
@@ -165,6 +166,9 @@ Every deliberately omitted local asset is listed in `data/optional-local-assets.
 See `DESIGN.md` for visual and editorial rules.
 
 See `ARCHITECTURE.md` for source ownership, project-page behaviour and implementation details.
+
+See `PLATFORM_DECISION.md` for the current platform decision and the evidence
+required before reconsidering Astro.
 
 ## Project architecture
 
