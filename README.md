@@ -37,7 +37,26 @@ The site deliberately separates:
 
 ## Build locally
 
-Install Quarto and Python with PyYAML, then run:
+The supported toolchain is Quarto 1.9.38, Node.js 22, and Python 3.12 with
+PyYAML 6.0.3. Node is required for browser tests; Quarto and Python are
+required for every render.
+
+From a fresh clone:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+npm ci
+npx playwright install chromium
+quarto render
+npm run test:quick
+```
+
+On Linux CI hosts, use `npx playwright install --with-deps chromium` instead.
+
+For local development after installation, run:
 
 ```bash
 quarto preview
