@@ -113,7 +113,7 @@ behaviour listed above.
 | `styles/main/_00-tokens.scss` | Design tokens (CSS custom properties, colours, spacing, typography) |
 | `styles/main/_01-foundation.scss` | Base element styles, typography, layout primitives |
 | `styles/main/_02-shared-editorial.scss` | Shared standard-page and compact-hero editorial primitives |
-| `styles/main/_10-navbar.scss` | Navigation bar styles |
+| `styles/main/_10-navbar.scss` + `styles/main/navbar/` | Navigation bar; intentional subcomponents for shell/brand, links, controls, mobile, desktop and toggler behaviour |
 | `styles/main/_11-footer.scss` | Footer styles |
 | `styles/main/_12-page-shell.scss` | Page shell and layout container styles |
 | `styles/components/_archive.scss` | Shared archive headings, actions and compact inline icons |
@@ -162,7 +162,7 @@ already exists.
 | Visible area | Current owner | Status |
 |---|---|---|
 | Design tokens, colours and shared widths | `styles/main/_00-tokens.scss` | Canonical |
-| Navbar and mobile navigation | `styles/main/_10-navbar.scss` | Canonical |
+| Navbar and mobile navigation | `styles/main/_10-navbar.scss` + `styles/main/navbar/` | Canonical, intentionally split by interaction and viewport responsibility |
 | Search popup | `styles/components/_search-popup.scss` | Canonical |
 | Homepage Expertise preview and Expertise page | `styles/components/_expertise.scss` | Canonical |
 | Homepage background/approach previews and About page | `styles/components/_about.scss` | Canonical |
