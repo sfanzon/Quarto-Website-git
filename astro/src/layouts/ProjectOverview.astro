@@ -1,0 +1,76 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import '../styles/project-overview.css';
+
+interface Resource {
+	label: string;
+	href: string;
+}
+
+interface GlanceItem {
+	label: string;
+	text: string;
+}
+
+interface ViewItem {
+	number: string;
+	title: string;
+	description: string;
+	href: string;
+}
+
+interface Props {
+	title: string;
+	eyebrow: string;
+	lead: string;
+	author: string;
+	published: string;
+	resources: Resource[];
+	glance: GlanceItem[];
+	views: ViewItem[];
+}
+
+const frontmatter = Astro.props.frontmatter ?? Astro.props;
+const { title, eyebrow, lead, author, published, resources, glance, views } = frontmatter;
+const isCurrent = (href: string) => href.endsWith('/projects/f1-time-rank-duality/');
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`${title} | Silvio Fanzon`} description={lead} />
+	</head>
+	<body class="project-detail-page">
+		<Header />
+		<main class="content project-overview">
+			<header class="project-detail-hero has-at-a-glance">
+				<p class="project-category">{eyebrow}</p>
+				<h1>{title}</h1>
+				<p class="project-detail-lead">{lead}</p>
+				<div class="project-meta" aria-label="Project metadata">
+					<div class="project-meta-item"><span class="project-meta-label">Author</span><span class="project-meta-value">{author}</span></div>
+					<div class="project-meta-item"><span class="project-meta-label">Published</span><time class="project-meta-value">{published}</time></div>
+					<div class="project-meta-resources"><span class="project-meta-label">Resources</span><nav class="project-primary-links" aria-label="Primary project links">{resources.map((resource) => <a href={resource.href}>{resource.label}</a>)}</nav></div>
+				</div>
+			</header>
+
+			<section class="project-at-a-glance" aria-label="Project at a glance">
+				{glance.map((item) => <div class="project-glance-item"><span class="project-glance-label">{item.label}</span><p>{item.text}</p></div>)}
+			</section>
+
+			<nav class="project-resource-map" aria-label="Ways to explore this project">
+				<div class="project-resource-intro"><span>Explore project</span><strong>Choose the level of detail you need.</strong></div>
+				{views.map((view) => <a class:list={['project-resource-link', { 'is-current': isCurrent(view.href) }]} href={view.href} aria-current={isCurrent(view.href) ? 'page' : undefined}>
+					<span class="project-resource-number">{view.number}</span><span class="project-resource-copy"><strong>{view.title}</strong><small>{view.description}</small></span>{isCurrent(view.href) && <span class="project-resource-status">Current</span>}
+				</a>)}
+			</nav>
+
+			<article class="project-article">
+				<slot />
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
