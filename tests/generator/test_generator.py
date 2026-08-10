@@ -49,21 +49,20 @@ class GeneratorTests(GeneratorTestCase):
 """,
             encoding="utf-8",
         )
-        teaching_record = """@misc{course,
-  title = {A generated course},
-  year = {2025},
-  yearacademic = {2025/26},
-  venue = {Test University}
-}
-"""
-        (fixture_root / "data/teaching_lecturer.bib").write_text(
-            teaching_record,
-            encoding="utf-8",
-        )
-        (fixture_root / "data/teaching_tutor.bib").write_text(
-            teaching_record
-            .replace("@misc{course,", "@misc{tutorial,")
-            .replace("A generated course", "A generated tutorial"),
+        (fixture_root / "data/teaching.yml").write_text(
+            """- id: course
+  role: lecturer
+  title: A generated course
+  year: '2025'
+  yearacademic: 2025/26
+  venue: Test University
+- id: tutorial
+  role: tutor
+  title: A generated tutorial
+  year: '2025'
+  yearacademic: 2025/26
+  venue: Test University
+""",
             encoding="utf-8",
         )
         (fixture_root / "news/2026-07-01.md").write_text(

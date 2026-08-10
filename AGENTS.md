@@ -52,7 +52,7 @@ Do not create a large plan for a small, local change.
 | Site config/navigation | `_quarto.yml` |
 | Projects | `data/projects.yml` |
 | Publications | `data/publications.bib` |
-| Teaching | `data/teaching_lecturer.bib`, `data/teaching_tutor.bib` |
+| Teaching | `data/teaching.yml` |
 | News | `news/*.md` |
 | Notes | `notes.qmd`, `notes/*.qmd` |
 | Project renderer | `filters/project-components.lua` |

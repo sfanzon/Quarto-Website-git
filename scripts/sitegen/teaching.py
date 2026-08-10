@@ -3,8 +3,39 @@
 import html
 import re
 
+import yaml
+
 
 ACADEMIC_YEAR_PATTERN = re.compile(r'^(?P<start>\d{4})/(?P<end>\d{2})$')
+REQUIRED_FIELDS = ('id', 'role', 'title', 'venue', 'year', 'yearacademic')
+VALID_ROLES = {'lecturer', 'tutor'}
+
+
+def load_teaching(path):
+    """Load and validate the single canonical teaching record source."""
+    courses = yaml.safe_load(path.read_text())
+    if not isinstance(courses, list):
+        raise ValueError(f'{path.name} must contain a YAML list of courses')
+
+    seen_ids = set()
+    for index, course in enumerate(courses, start=1):
+        if not isinstance(course, dict):
+            raise ValueError(f'{path.name} entry {index} must be a mapping')
+        missing = [field for field in REQUIRED_FIELDS if not course.get(field)]
+        if missing:
+            raise ValueError(
+                f'{path.name} entry {index} is missing required field(s): '
+                + ', '.join(missing)
+            )
+        if course['role'] not in VALID_ROLES:
+            raise ValueError(
+                f'{path.name} entry {course["id"]} has invalid role: '
+                f'{course["role"]!r}'
+            )
+        if course['id'] in seen_ids:
+            raise ValueError(f'{path.name} has duplicate course id: {course["id"]}')
+        seen_ids.add(course['id'])
+    return courses
 
 
 def teaching_link(value, asset=False):

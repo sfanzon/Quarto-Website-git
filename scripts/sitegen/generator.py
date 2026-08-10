@@ -4,7 +4,6 @@ import json
 
 import yaml
 
-from .bibtex import read_bibtex_entries
 from .assets import validate_local_assets
 from .core import DEFAULT_ROOT
 from .news import load_news, render_news_qmd
@@ -19,7 +18,7 @@ from .publication_rendering import (
     render_selected_publications,
 )
 from .publications import load_publications
-from .teaching import teaching_section, teaching_years
+from .teaching import load_teaching, teaching_section, teaching_years
 
 
 def generate_site(site_root=None):
@@ -29,20 +28,20 @@ def generate_site(site_root=None):
     coauthor_urls = yaml.safe_load((site_root / 'data/coauthors.yml').read_text()) or {}
     publications = load_publications(site_root / 'data/publications.bib')
     featured_notes = load_featured_notes(site_root=site_root)
-    lecturer_courses = read_bibtex_entries(
-        site_root / 'data/teaching_lecturer.bib'
-    )
-    tutor_courses = read_bibtex_entries(
-        site_root / 'data/teaching_tutor.bib'
-    )
+    teaching_courses = load_teaching(site_root / 'data/teaching.yml')
+    lecturer_courses = [
+        course for course in teaching_courses if course['role'] == 'lecturer'
+    ]
+    tutor_courses = [
+        course for course in teaching_courses if course['role'] == 'tutor'
+    ]
     news = load_news(site_root=site_root)
 
     external_assets = validate_local_assets(
         projects,
         publications,
         [
-            ('teaching_lecturer.bib', lecturer_courses),
-            ('teaching_tutor.bib', tutor_courses),
+            ('teaching.yml', teaching_courses),
         ],
         site_root=site_root,
     )
@@ -73,13 +72,13 @@ def generate_site(site_root=None):
             'lecturer',
             'Lecturer',
             lecturer_courses,
-            teaching_years(lecturer_courses, 'teaching_lecturer.bib'),
+            teaching_years(lecturer_courses, 'teaching.yml'),
         ),
         teaching_section(
             'tutor',
             'Teaching assistant',
             tutor_courses,
-            teaching_years(tutor_courses, 'teaching_tutor.bib'),
+            teaching_years(tutor_courses, 'teaching.yml'),
         ),
     ]
 

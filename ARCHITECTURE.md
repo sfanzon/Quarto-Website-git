@@ -11,7 +11,7 @@ in:
 
 - `data/publications.bib` for publications;
 - `data/projects.yml` for project cards, metadata and navigation;
-- `data/teaching_lecturer.bib` and `data/teaching_tutor.bib` for teaching;
+- `data/teaching.yml` for teaching, with one record per course and a role;
 - `news/*.md` for dated news entries.
 - `notes/*.qmd` for long-form technical notes.
 - `data/citations/numeric.csl` for shared project citation formatting.
