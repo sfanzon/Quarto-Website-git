@@ -52,7 +52,7 @@ function writeSitemap() {
 function requireShellArtifact(name) {
 	const path = join(shellRoot, name);
 	if (!existsSync(path)) throw new Error(`Astro did not emit required shell artifact: ${relative(astroRoot, path)}`);
-	return readFileSync(path, 'utf8');
+	return readFileSync(path, 'utf8').replace(/^<!DOCTYPE html>/i, '');
 }
 
 function replaceOnce(html, pattern, replacement, description) {
@@ -67,9 +67,10 @@ function replaceOnce(html, pattern, replacement, description) {
 
 function applySharedShell(quartoHtml, header, footer) {
 	let html = replaceOnce(quartoHtml, /<header id="quarto-header"[\s\S]*?<\/header>\s*/, '', 'Quarto header');
-	html = replaceOnce(html, /<footer class="site-footer"[\s\S]*?<\/footer>/, footer, 'Quarto footer');
+	html = replaceOnce(html, /<footer class="site-footer"[\s\S]*?<\/footer>/, '', 'Quarto footer');
 	html = replaceOnce(html, /<body([^>]*)>/, (_match, attributes) => `<body${attributes}>${header}`, 'body opening tag');
 	html = replaceOnce(html, /<\/head>/, '<link rel="stylesheet" href="/site-shell/site.css"></head>', 'head closing tag');
+	html = replaceOnce(html, /<\/body>/, `${footer}</body>`, 'body closing tag');
 	return html.replace(/<div id="quarto-search-results"><\/div>\s*/, '');
 }
 

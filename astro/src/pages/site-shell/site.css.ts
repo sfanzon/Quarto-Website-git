@@ -1,4 +1,4 @@
-import css from '../../styles/global.css?raw';
+import css from '../../styles/shell.css?raw';
 
 export const prerender = true;
 

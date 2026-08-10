@@ -12,7 +12,8 @@ individual project page. Do not infer a source move from a matching public URL.
 |---|---|
 | `astro/src/components/Header.astro` | Canonical shared navbar, theme control and mobile navigation |
 | `astro/src/components/Footer.astro` | Canonical shared footer |
-| `astro/src/styles/global.css` | Astro global design tokens and shell styling |
+| `astro/src/styles/shell.css` | Canonical shared shell tokens, navbar, footer and responsive shell styling |
+| `astro/src/styles/global.css` | Ordinary Astro page styling; imports `shell.css` for Astro-page use |
 | `astro/src/pages/site-shell/header.astro` | Build-only navbar fragment for Quarto documents; removed from the final site after merge |
 | `astro/src/pages/site-shell/footer.astro` | Build-only footer fragment for Quarto documents; removed from the final site after merge |
 | `astro/src/pages/site-shell/site.css.ts` | Explicit emitted stylesheet artifact for Quarto documents |
@@ -189,13 +190,13 @@ already exists.
 
 | Visible area | Current owner | Status |
 |---|---|---|
-| Production design tokens, colours and shared widths | `astro/src/styles/global.css` | Canonical |
-| Production navbar and mobile navigation | `astro/src/components/Header.astro` + `astro/src/styles/global.css` | Canonical |
+| Production design tokens, colours and shared widths | `astro/src/styles/shell.css` | Canonical |
+| Production navbar and mobile navigation | `astro/src/components/Header.astro` + `astro/src/styles/shell.css` | Canonical |
 | Search popup | `styles/components/_search-popup.scss` | Canonical |
 | Homepage Expertise preview and Expertise page | `styles/components/_expertise.scss` | Canonical |
 | Homepage background/approach previews and About page | `styles/components/_about.scss` | Canonical |
 | Research page | `styles/components/_research.scss` (`.about-section-heading` remains shared from `_about.scss`) | Canonical |
-| Production footer | `astro/src/components/Footer.astro` + `astro/src/styles/global.css` | Canonical |
+| Production footer | `astro/src/components/Footer.astro` + `astro/src/styles/shell.css` | Canonical |
 | Outer page shell | `styles/main/_12-page-shell.scss` | Canonical |
 | Homepage note selection | `styles/components/_notes.scss` | Canonical |
 | Notes archive | `styles/components/_notes.scss` | Canonical |

@@ -30,7 +30,9 @@ is the sole owner of `/projects/f1-time-rank-duality/`, from `index.qmd`.
 The migrated `/projects/` catalogue reads `data/projects.yml` directly. Its
 Astro page and styles are canonical for that route; `styles/components/_project-cards.scss`
 remains canonical only for legacy Quarto rendering. Likewise, Astro's Header,
-Footer and `global.css` are the production global-shell owners. Quarto global
+Footer and `shell.css` are the production global-shell owners. `global.css`
+imports that shell stylesheet for Astro pages and owns only ordinary Astro page
+styling. Quarto global
 shell styles remain only to support unmigrated Quarto pages during transition;
 `styles/project/**` remains canonical for Quarto project-document presentation.
 
