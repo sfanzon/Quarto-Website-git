@@ -188,6 +188,7 @@ Results:
 ### Task 5 — Stylesheet evidence audit
 
 **Model:** Terra  
+**Status:** complete
 **Risk:** high  
 **Depends on:** Tasks 1 and 4
 
@@ -211,9 +212,23 @@ shows no unintended change.
 
 Suggested commit message: `refactor: remove proven unused site styles`
 
+Results:
+
+- the 53 SCSS files form one explicit global entry chain and one separate
+  project-only entry chain; component manifests make the import order and
+  ownership of homepage, expertise and publication refinements explicit;
+- no unowned override file, duplicate import path or safely removable rule was
+  found;
+- the 586 `!important` declarations are concentrated in canonical
+  Quarto/Bootstrap boundary owners (page shell, navbar, archive entries and
+  project layouts), rather than isolated late patches. They are retained to
+  preserve the tested visual identity and recorded as Quarto friction for
+  Task 9, not treated as a count to reduce blindly.
+
 ### Task 6 — Asset and link integrity audit
 
 **Model:** Luna  
+**Status:** complete
 **Risk:** low  
 **Depends on:** Tasks 2 and 3
 
@@ -232,9 +247,21 @@ explicitly retained for compatibility.
 
 Suggested commit message: `chore: remove unreferenced site assets`
 
+Results:
+
+- all 57 tracked source assets have a canonical-source reference; no asset met
+  the deletion threshold;
+- all nine intentionally absent local presentation files remain declared only
+  in `data/optional-local-assets.txt` and are not present unexpectedly;
+- browser validation confirms the 22 rendered HTML pages resolve local targets
+  and fragments correctly;
+- `docs/assets` is the required Quarto deployment copy of tracked `assets/`,
+  not a competing source archive.
+
 ### Task 7 — Documentation consistency pass
 
 **Model:** Luna  
+**Status:** complete
 **Risk:** low  
 **Depends on:** Tasks 1–6
 
@@ -254,9 +281,21 @@ and “what do I test?” without reading implementation history.
 
 Suggested commit message: `docs: reconcile repository editing guidance`
 
+Results:
+
+- README now states the current tracked-`docs/` GitHub Pages deployment model
+  and makes clear that this repository has no deployment workflow to edit;
+- test documentation now matches the current 16 generator tests and 121-test
+  Chromium `test:full` command, while preserving the separate Firefox/WebKit
+  command;
+- redundant generated-JSON documentation was removed from the source map;
+- canonical-source, render and test guidance is consistent across the editor
+  documentation set.
+
 ### Task 8 — Final validation and cleanup report
 
 **Model:** Terra  
+**Status:** complete
 **Risk:** medium  
 **Depends on:** Tasks 1–7
 
@@ -275,9 +314,23 @@ explicit.
 
 Suggested commit message: `chore: complete repository cleanup validation`
 
+Results:
+
+- `quarto render` completed successfully for all 22 source pages, with content
+  generation and local asset validation passing;
+- 16 generator tests, 47 Chromium functional tests, 44 Chromium accessibility
+  tests and 18 Firefox/WebKit critical-path tests passed;
+- no visual baselines were updated. Pixel comparisons remain CI-authoritative
+  because the local font environment differs from the controlled Linux runner;
+- the cleanup removed only proven unused source material and consolidated
+  editable records into their documented canonical sources. Remaining accepted
+  limits are the nine intentionally omitted assets, tracked `docs/` deployment
+  output, and Quarto's documented fresh-checkout timestamp/mtime churn.
+
 ### Task 9 — Quarto fit assessment
 
 **Model:** Sol  
+**Status:** complete
 **Risk:** decision only  
 **Depends on:** Task 8
 
@@ -306,6 +359,11 @@ Done when `PLATFORM_DECISION.md` contains an evidence-based conclusion and the
 specific conditions that would justify revisiting it.
 
 Suggested commit message: `docs: assess Quarto after repository cleanup`
+
+Result: retain Quarto for the whole site through the next normal maintenance
+cycle, while monitoring the customized shell. `PLATFORM_DECISION.md` records
+the technical-document value, measured shell friction, render-stability result
+and concrete threshold for approving a separately scoped platform experiment.
 
 ## Task discipline
 
