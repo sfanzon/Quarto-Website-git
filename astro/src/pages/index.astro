@@ -1,197 +1,61 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
-import bibFileRaw from '../data/publications.bib?raw';
-import { url } from '../utils/paths';
-
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-).slice(0, 3);
-
-interface Author {
-	first: string;
-	last: string;
-}
-
-interface BibEntry {
-	type: string;
-	key: string;
-	fields: Record<string, string>;
-	authors: Author[];
-}
-
-function parseBibTeX(input: string): BibEntry[] {
-    const entries: BibEntry[] = [];
-    const rawEntries = input.split(/@(\w+)\s*\{/g).slice(1);
-
-    for (let i = 0; i < rawEntries.length; i += 2) {
-        const type = rawEntries[i].trim();
-        const body = rawEntries[i+1];
-        if (!body) continue;
-
-        const keyMatch = body.match(/^\s*([^,]+),/);
-        const key = keyMatch ? keyMatch[1].trim() : 'unknown';
-        
-        const fields: Record<string, string> = { title: "Untitled", year: "0000" };
-        const fieldRegex = /(\w+)\s*=\s*(?:\{((?:[^{}]|{[^{}]*})*)\}|"((?:[^"]|\\")*)"|(\d+))/g;
-        
-        let match;
-        while ((match = fieldRegex.exec(body)) !== null) {
-            const fieldKey = match[1].toLowerCase();
-            const val = match[2] || match[3] || match[4] || "";
-            fields[fieldKey] = val.replace(/\s+/g, ' ').trim();
-        }
-
-        let authors: Author[] = [];
-        if (fields.author) {
-            authors = fields.author.split(/\s+and\s+/i).map(str => {
-                const parts = str.split(',');
-                if (parts.length > 1) {
-                    return { first: parts[1].trim(), last: parts[0].trim() };
-                } else {
-                    const names = str.trim().split(' ');
-                    const last = names.pop() || "";
-                    const first = names.join(' ');
-                    return { first, last };
-                }
-            });
-        }
-        entries.push({ type, key, fields, authors });
-    }
-    return entries;
-}
-
-const publications = parseBibTeX(bibFileRaw).sort((a, b) => {
-    return (parseInt(b.fields.year) || 0) - (parseInt(a.fields.year) || 0);
-}).slice(0, 3);
-
-const formatAuthor = (auth: Author) => {
-    return auth.first ? `${auth.first} ${auth.last}` : auth.last;
-};
+import Header from '../components/Header.astro';
+import '../styles/home.css';
 ---
-
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			.hero {
-				display: flex;
-				align-items: center;
-				gap: 4rem;
-				padding: 4rem 0;
-				margin-bottom: 2rem;
-			}
-			.hero-content { flex: 3; }
-			.hero-image { 
-				flex: 2; 
-				text-align: center;
-                position: relative;
-			}
-			.hero-image img {
-				width: 280px;
-				height: 280px;
-				object-fit: cover;
-				border-radius: 50%;
-				border: 6px solid var(--color-bg);
-				box-shadow: 0 0 0 1px var(--color-border), var(--shadow-lg);
-			}
-            
-            .pub-mini-item {
-                margin-bottom: 1.5rem;
-                padding-bottom: 1.5rem;
-                border-bottom: 1px solid var(--color-border);
-            }
-            .pub-mini-item:last-child { border-bottom: none; margin-bottom: 0; }
-            .pub-title { font-weight: 700; color: var(--color-text-main); display: block; margin-bottom: 0.25rem; font-family: var(--font-serif); font-size: 1.1rem; }
-            .pub-meta { font-size: 0.9rem; color: var(--color-text-muted); }
-
-			.hero-buttons {
-				display: flex;
-				gap: 1rem;
-				flex-wrap: wrap;
-			}
-			@media (max-width: 768px) {
-				.hero { flex-direction: column-reverse; text-align: center; padding: 2rem 0; gap: 2rem; }
-                .hero-image img { width: 200px; height: 200px; }
-                .hero-buttons { justify-content: center; }
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section class="hero">
-				<div class="hero-content">
-					<h1 style="margin-bottom: 0.5rem; font-size: 3rem;">Friedrich Nietzsche</h1>
-					<h2 style="font-weight: 400; color: var(--color-text-muted); margin-bottom: 1.5rem; font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 0.05em; font-size: 1rem; border-bottom: none; padding-bottom: 0; display: block; margin-top: 0;">
-						Professor of Philosophy<br/>
-						Institute for Advanced Study
-					</h2>
-					<p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem;">
-						Welcome to my academic portfolio. My research focuses on <strong>Philosophy of Culture, Morality, and the Will to Power</strong>. I lead the Philosophy Group where we challenge conventional thinking and explore the transformation of human values and civilization.
-					</p>
-					<div class="hero-buttons">
-						<a href={url('/publications')} class="btn">View Publications</a>
-						<a href={url('/projects')} class="btn btn-outline">Current Projects</a>
-					</div>
-				</div>
-				<div class="hero-image">
-					<Image src={url('/nietzsche.jpg')} width={280} height={280} alt="Professor Portrait" fetchpriority="high" decoding="async" />
-				</div>
-			</section>
-
-			<hr style="margin: 3rem 0; border-top: 1px solid var(--color-border);" />
-
-			<div class="grid-2" style="gap: 4rem; margin-top: 0;">
-                <section>
-                    <h2 style="margin-top: 0;">Selected Publications</h2>
-                    <div class="publication-list">
-                        {publications.length > 0 ? publications.map((pub) => (
-                            <div class="pub-mini-item">
-                                <span class="pub-title">{pub.fields.title.replace(/[{}]/g, '')}</span>
-                                <div class="pub-meta">
-                                    {pub.authors.map(a => formatAuthor(a)).join(', ')}
-                                    <br/>
-                                    <span style="font-style: italic; color: var(--color-accent);">
-                                        {(pub.fields.journal || pub.fields.booktitle || pub.fields.publisher || "Preprint").replace(/[{}]/g, '')}
-                                    </span>
-                                    {pub.fields.year && <span>, {pub.fields.year}</span>}
-                                </div>
-                            </div>
-                        )) : <p>No publications found.</p>}
-                    </div>
-                    <div style="margin-top: 1.5rem;">
-                        <a href={url('/publications')} style="font-weight: 600;">View Full List &rarr;</a>
-                    </div>
-                </section>
-
-                <section>
-                    <h2 style="margin-top: 0;">Lab News</h2>
-                    <ul style="list-style: none; padding: 0;">
-                        {posts.map((post) => (
-                            <li style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px dashed var(--color-border);">
-                                <a href={url(`/blog/${post.id}/`)} style="display: block; font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600; color: var(--color-text-main); margin-bottom: 0.25rem;">
-                                    {post.data.title}
-                                </a>
-                                <small style="color: var(--color-text-muted); text-transform: uppercase; font-size: 0.8rem;">
-                                    {post.data.pubDate.toLocaleDateString('en-us', {
-                                        year: 'numeric',
-                                        month: 'short',
-                                        day: 'numeric',
-                                    })}
-                                </small>
-                            </li>
-                        ))}
-                    </ul>
-                    <a href={url('/blog')} style="font-weight: 600;">View Blog &rarr;</a>
-                </section>
-            </div>
-		</main>
-		<Footer />
-	</body>
+<head><BaseHead title="Silvio Fanzon" description="Silvio Fanzon — applied mathematics, statistical modelling, optimisation and scientific computing" /></head>
+<body class="home-page">
+<Header />
+<main class="content home-content">
+<section class="home-hero">
+<img class="home-portrait" src="https://www.silviofanzon.com/assets/img/profile/silvioimg.png" alt="Portrait of Silvio Fanzon" fetchpriority="high" />
+<div class="home-intro">
+<div class="home-name" role="heading" aria-level="1">Silvio Fanzon <span class="home-degree">PhD</span></div>
+<p class="home-role">Applied mathematician · Statistical modeller</p>
+<div class="home-bio-copy"><p class="home-lead">I build interpretable models, optimisation methods and reproducible computational tools for complex systems.</p><p class="home-summary">My work connects data science, operational research and scientific computing, with applications in medical imaging, sports analytics and decision-making under uncertainty.</p></div>
+<nav class="home-profile-links" aria-label="Profile links"><a href="mailto:silvio.fanzon.work@gmail.com">Email</a><a href="https://www.silviofanzon.com/Silvio_Fanzon_Academic_CV.pdf">CV</a><a href="https://www.linkedin.com/in/fanzon" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/sfanzon" target="_blank" rel="noopener">GitHub</a><a href="https://scholar.google.com/citations?user=9yJyLsoAAAAJ" target="_blank" rel="noopener">Scholar</a><a href="https://www.silviofanzon.com/contact.html">Contact</a></nav>
+</div>
+<a class="home-scroll-cue" href="#home-expertise-title" aria-label="Explore the rest of the homepage"><span>Explore my work</span><span class="home-scroll-arrow" aria-hidden="true">↓</span></a>
+</section>
+<section class="home-section home-expertise-preview" aria-labelledby="home-expertise-title"><div class="expertise-preview-header"><div><p class="eyebrow">Expertise</p><h2 id="home-expertise-title">What I bring to complex problems</h2><p>A capability-led view of the modelling, computation and communication skills behind my research and applied work.</p></div><a class="section-link" href="https://www.silviofanzon.com/expertise.html">Explore my expertise →</a></div><div class="expertise-preview-grid">
+<a class="expertise-preview-item" href="https://www.silviofanzon.com/expertise.html#statistical-modelling"><span>01</span><h3>Statistical modelling</h3><p>Interpretable models for prediction, ranking, forecasting and uncertainty.</p></a>
+<a class="expertise-preview-item" href="https://www.silviofanzon.com/expertise.html#optimisation"><span>02</span><h3>Optimisation &amp; decision science</h3><p>Methods for choosing well under constraints, uncertainty and limited information.</p></a>
+<a class="expertise-preview-item" href="https://www.silviofanzon.com/expertise.html#scientific-computing"><span>03</span><h3>Scientific computing</h3><p>Numerical implementation, simulation and reproducible computational workflows.</p></a>
+<a class="expertise-preview-item" href="https://www.silviofanzon.com/expertise.html#inverse-problems"><span>04</span><h3>Inverse problems &amp; imaging</h3><p>Recovering useful structure from incomplete, indirect or noisy observations.</p></a>
+<a class="expertise-preview-item" href="https://www.silviofanzon.com/expertise.html#communication-leadership"><span>05</span><h3>Communication &amp; leadership</h3><p>Clear documentation, programme delivery, collaboration and technical mentoring.</p></a>
+</div></section>
+<section class="home-section home-editorial-section home-projects-section"><div class="section-heading"><div><p class="eyebrow">Projects</p><h2>Selected work</h2><p class="section-intro">Three examples showing modelling, implementation and communication—not only technical mathematics.</p></div><a class="section-link" href="https://www.silviofanzon.com/projects.html">View all projects →</a></div><div class="home-project-grid">
+<article class="home-project-card"><div class="home-project-visual"><img src="https://www.silviofanzon.com/assets/img/projects/f1-benchmarking.svg" alt="Abstract visual for Who’s actually the best F1 driver?"></div><div class="home-project-copy"><p class="project-labels">Statistical modelling · Sports analytics · R</p><h3>Who’s actually the best F1 driver?</h3><p>An industry-facing explanation of how 2022 race results and 2023 betting odds separate driver performance from constructor advantage.</p><div class="home-project-actions"><a href="/projects/f1-time-rank-duality/">Read project <span aria-hidden="true">→</span></a><a href="https://github.com/sfanzon/F1-Paper-Code">Code</a></div></div></article>
+<article class="home-project-card"><div class="home-project-visual"><img src="https://www.silviofanzon.com/assets/img/projects/sparse-gcg.svg" alt="Abstract visual for Sparse optimisation with FC-GCG"></div><div class="home-project-copy"><p class="project-labels">Optimisation · Algorithms · Python</p><h3>Sparse optimisation with FC-GCG</h3><p>A visual pedagogical implementation showing how fully-corrective conditional gradients build sparse solutions one atom at a time.</p><div class="home-project-actions"><a href="https://www.silviofanzon.com/projects/sparse-gcg/index.html">Read project <span aria-hidden="true">→</span></a><a href="https://github.com/sfanzon/sparse-gcg-paper-explainer">Code</a></div></div></article>
+<article class="home-project-card"><div class="home-project-visual"><img src="https://www.silviofanzon.com/assets/img/projects/teaching.svg" alt="Abstract visual for An applied statistical modelling course"></div><div class="home-project-copy"><p class="project-labels">Statistics · Teaching · R</p><h3>An applied statistical modelling course</h3><p>A complete R-based learning system combining lectures, worked examples, practical exercises and accessible digital publishing.</p><div class="home-project-actions"><a href="https://www.silviofanzon.com/blog/2026/Statistical-Models/">Read project <span aria-hidden="true">→</span></a></div></div></article>
+</div></section>
+<section class="home-section home-editorial-section home-approach-section" aria-labelledby="home-approach-title"><div class="section-heading"><div><p class="eyebrow">Approach</p><h2 id="home-approach-title">From a difficult question to a defensible result</h2><p class="section-intro">I work from problem formulation through modelling, implementation and validation to clear communication. The standard is consistent across the work: make assumptions visible, build reproducibly, test what the evidence supports and explain the result clearly.</p></div><a class="section-link" href="https://www.silviofanzon.com/about.html">About how I work →</a></div><div class="about-capabilities" aria-label="How I work"><article><span>01</span><h3>Frame the problem</h3><p>Turn an open-ended question into assumptions, objectives, constraints and measurable outcomes.</p></article><article><span>02</span><h3>Build and test</h3><p>Translate mathematical and statistical ideas into models, algorithms and reproducible computational experiments.</p></article><article><span>03</span><h3>Explain clearly</h3><p>Communicate the substance for technical, professional and wider audiences without hiding assumptions or unnecessary complexity.</p></article><article><span>04</span><h3>Lead collaboratively</h3><p>Coordinate programmes and projects, mentor researchers, build collaborations and connect people with different expertise.</p></article></div></section>
+<section class="home-section home-notes-section home-editorial-section"><div class="section-heading"><div><p class="eyebrow">Notes</p><h2>Selected notes</h2><p class="section-intro">Practical writing on AI-assisted technical work, scope, verification and agent workflows.</p></div><a class="section-link" href="https://www.silviofanzon.com/notes.html">View all notes →</a></div><div class="home-notes-list">
+<article class="home-note-row"><a class="home-note-row-visual" href="https://www.silviofanzon.com/notes/how-i-use-ai.html" aria-label="Read How I use AI in technical work"><img src="https://www.silviofanzon.com/assets/img/notes/ai-agent-stack.svg" alt="A five-layer diagram of an AI agent workflow, from model to human review"></a><div class="home-note-row-copy"><div class="home-note-row-meta"><time>30 July 2026</time><span>AI · Workflow · Research</span></div><h3><a href="https://www.silviofanzon.com/notes/how-i-use-ai.html">How I use AI in technical work</a></h3><p>A practical account of how I use AI across research, scientific computing and technical communication: where it adds leverage, where I retain control, and how I verify what matters.</p><a class="home-note-row-link" href="https://www.silviofanzon.com/notes/how-i-use-ai.html">Read note <span aria-hidden="true">→</span></a></div></article>
+<article class="home-note-row"><a class="home-note-row-visual" href="https://www.silviofanzon.com/notes/ai-real-project-lessons.html" aria-label="Read What I Learned From Letting AI Work on a Real Project"><img src="https://www.silviofanzon.com/assets/img/notes/scope-control.svg" alt="A bounded technical task contrasted with expanding scope and complexity"></a><div class="home-note-row-copy"><div class="home-note-row-meta"><time>30 July 2026</time><span>AI · Workflow · Research</span></div><h3><a href="https://www.silviofanzon.com/notes/ai-real-project-lessons.html">What I Learned From Letting AI Work on a Real Project</a></h3><p>A practical framework for using AI on serious technical work without losing control of the problem.</p><a class="home-note-row-link" href="https://www.silviofanzon.com/notes/ai-real-project-lessons.html">Read note <span aria-hidden="true">→</span></a></div></article>
+<article class="home-note-row"><a class="home-note-row-visual" href="https://www.silviofanzon.com/notes/ai-agents-practical-stack-2026-qwen9-128k-copilot-opencode-no-gemini-free.html" aria-label="Read From Chatbots to Agents: How I Built My AI Stack in 2026"><img src="https://www.silviofanzon.com/assets/img/notes/agent-stack-evolution.svg" alt="A progression from chatbot to coding assistant, agent, workflow and automation"></a><div class="home-note-row-copy"><div class="home-note-row-meta"><time>26 July 2026</time><span>AI · Tools · Workflow</span></div><h3><a href="https://www.silviofanzon.com/notes/ai-agents-practical-stack-2026-qwen9-128k-copilot-opencode-no-gemini-free.html">From Chatbots to Agents: How I Built My AI Stack in 2026</a></h3><p>A practical account of how I moved from using ChatGPT as a chatbot to building a working stack around Codex, OpenCode, DeepSeek, OpenClaw and automation.</p><a class="home-note-row-link" href="https://www.silviofanzon.com/notes/ai-agents-practical-stack-2026-qwen9-128k-copilot-opencode-no-gemini-free.html">Read note <span aria-hidden="true">→</span></a></div></article>
+</div></section>
+<section class="home-section selected-publications-section home-editorial-section"><div class="section-heading"><div><p class="eyebrow">Publications</p><h2>Research outputs</h2><p class="section-intro">Selected work spanning optimisation, statistical modelling, inverse problems and applied mathematics.</p></div><a class="section-link" href="https://www.silviofanzon.com/publications.html">View all publications →</a></div><div class="home-publications-list">
+<article class="home-publication-row"><div class="publication-theme-rail"><span>Statistical modelling</span><span>Sports analytics</span></div><div class="home-publication-main"><h3>Benchmarking Formula 1 results using a normal model</h3><div class="paper-meta"><span>John Fry, <u>Silvio Fanzon</u>, Mark Austin and Tom Brighton</span><span><em>ArXiv Preprint</em> · 2026</span></div><div class="paper-actions"><a href="https://www.silviofanzon.com/assets/pdf/journal/2026-Fry-Fan-Aus-Bri.pdf">PDF</a><a href="https://arxiv.org/abs/2603.15192">arXiv</a><details><summary>Abstract</summary><p>There is enduring interest in disentangling the effects of skill and luck in sport. A key issue in Formula 1 is distinguishing between car-level and driver-level effects. Four elite teams currently dominate Formula 1 and have won every major race for the last four years.</p></details><details><summary>Cite</summary><pre><code>@article&#123;2026-Fry-Fan-Aus-Bri, title = &#123;Benchmarking Formula 1 results using a normal model&#125;, author = &#123;Fry, John and Fanzon, Silvio and Austin, Mark and Brighton, Tom&#125;, year = &#123;2026&#125;&#125;</code></pre></details></div></div></article>
+<article class="home-publication-row"><div class="publication-theme-rail"><span>Optimisation</span><span>Numerical algorithms</span></div><div class="home-publication-main"><h3>Asymptotic linear convergence of Fully–Corrective Generalized Conditional Gradient methods</h3><div class="paper-meta"><span>Kristian Bredies, Marcello Carioni, <u>Silvio Fanzon</u> and Daniel Walter</span><span><em>Mathematical Programming</em> · 2024</span></div><div class="paper-actions"><a href="https://www.silviofanzon.com/assets/pdf/journal/2024-Bre-Car-Fan-Wal.pdf">PDF</a><a href="https://doi.org/10.1007/s10107-023-01975-z">Journal</a><details><summary>Abstract</summary><p>We propose a fully-corrective generalized conditional gradient method for the minimization of a smooth convex loss and a convex one-homogeneous regularizer over a Banach space. Under standard hypotheses we show that the algorithm converges sublinearly, subsequently improving this to a linear rate.</p></details><a href="https://www.silviofanzon.com/projects/sparse-gcg/index.html">Explainer</a><a href="https://github.com/sfanzon/sparse-gcg-paper-explainer">Code</a><a href="https://www.silviofanzon.com/assets/pdf/journal/slides/2024-Bre-Car-Fan-Wal-Slides-Short.pdf">Slides</a></div></div></article>
+<article class="home-publication-row"><div class="publication-theme-rail"><span>Statistical modelling</span><span>Sports analytics</span></div><div class="home-publication-main"><h3>Faster identification of faster Formula 1 drivers via time-rank duality</h3><div class="paper-meta"><span>John Fry, Tom Brighton and <u>Silvio Fanzon</u></span><span><em>Economics Letters</em> · 2024</span></div><div class="paper-actions"><a href="https://www.silviofanzon.com/assets/pdf/journal/2024-Fry-Bri-Fan.pdf">PDF</a><a href="https://doi.org/10.1016/j.econlet.2024.111671">Journal</a><details><summary>Abstract</summary><p>Two natural ways of modelling Formula 1 race outcomes are a probabilistic approach, based on the exponential distribution, and econometric modelling of the ranks. Both approaches lead to exactly soluble race-winning probabilities.</p></details><a href="/projects/f1-time-rank-duality/">Explainer</a><a href="https://github.com/sfanzon/F1-Paper-Code">Code</a></div></div></article>
+<article class="home-publication-row"><div class="publication-theme-rail"><span>Inverse problems</span><span>Optimal transport</span></div><div class="home-publication-main"><h3>A Generalized Conditional Gradient Method for Dynamic Inverse Problems with Optimal Transport Regularization</h3><div class="paper-meta"><span>Kristian Bredies, Marcello Carioni, <u>Silvio Fanzon</u> and Francisco Romero</span><span><em>Foundations of Computational Mathematics</em> · 2023</span></div><div class="paper-actions"><a href="https://www.silviofanzon.com/assets/pdf/journal/2023-Bre-Car-Fan-Rom.pdf">PDF</a><a href="https://doi.org/10.1007/s10208-022-09561-z">Journal</a><details><summary>Abstract</summary><p>We develop a dynamic generalized conditional gradient method for dynamic inverse problems with optimal transport regularization. We propose a dynamic generalization and prove sublinear convergence.</p></details><a href="https://github.com/sfanzon/DGCG_algorithm">Code</a><a href="https://www.silviofanzon.com/assets/pdf/journal/poster/2023-Bre-Car-Fan-Rom-Poster.pdf">Poster</a><a href="https://youtu.be/wO8j1fSpd-k">Video</a></div></div></article>
+</div></section>
+<section class="home-section news-preview home-editorial-section"><div class="section-heading"><div><p class="eyebrow">News</p><h2>Latest updates</h2><p class="section-intro">Recent updates on research, publications, software, teaching and professional activity.</p></div><a class="section-link" href="https://www.silviofanzon.com/news.html">View all news →</a></div><div class="news-list">
+<details class="news-item"><summary><time>Mar 2026</time><span>PREPRINT</span><strong>Formula 1 benchmarking preprint released</strong><i aria-hidden="true"></i></summary><div><p>Our new paper, <a href="https://www.silviofanzon.com/publications.html#2026-Fry-Fan-Aus-Bri">Benchmarking Formula 1 results using a normal model</a>, is now available as a preprint. A long-standing question in sport is how to separate the effects of skill and luck.</p></div></details>
+<details class="news-item"><summary><time>Feb 2026</time><span>TALK</span><strong>Presenting at the University of Hull Research Sandpit</strong><i aria-hidden="true"></i></summary><div><p>On 11th February, I will be taking part in the Annual Research Sandpit Event hosted by the School of Digital and Physical Sciences at the University of Hull. My slides are available <a href="https://www.silviofanzon.com/assets/pdf/seminars/slides/2026/2026-Hull-Research-Event-Slides.pdf">here</a>.</p></div></details>
+<details class="news-item"><summary><time>Dec 2025</time><span>TALK</span><strong>Speaking at the Young Analysts in Rome workshop</strong><i aria-hidden="true"></i></summary><div><p>From 17-19 December I will be at the 1st Workshop of Young Analysts in Rome conference at Sapienza University in Rome (Italy). Here are the <a href="https://www.silviofanzon.com/assets/pdf/seminars/slides/2025/2025-Sapienza-Slides.pdf">slides</a>.</p></div></details>
+<details class="news-item"><summary><time>Aug 2025</time><span>TEACHING</span><strong>Awarded Fellowship of the Higher Education Academy</strong><i aria-hidden="true"></i></summary><div><p>I have successfully completed the Postgraduate Certificate in Academic Practice programme at the University of Hull. As a result, I have been awarded the Fellowship of the Higher Education Academy.</p></div></details>
+<details class="news-item"><summary><time>Mar 2025</time><span>TEACHING</span><strong>Teaching philosophy statement published</strong><i aria-hidden="true"></i></summary><div><p>I have just completed writing my teaching philosophy statement! It was a thoughtful process reflecting on my approach, values, and goals as an educator. I am sharing it now - check it out <a href="https://www.silviofanzon.com/assets/pdf/news/2025/Fanzon_Teaching_Philosophy.pdf">here</a>.</p></div></details>
+<details class="news-item"><summary><time>Feb 2025</time><span>JOURNAL</span><strong>Curling strategy paper published in Managerial Finance</strong><i aria-hidden="true"></i></summary><div><p>Our paper <a href="https://www.silviofanzon.com/publications.html#2025-Fry-Aus-Fan">Elementary econometric and strategic analysis of curling matches</a> has been published on Managerial Finance.</p></div></details>
+<details class="news-item"><summary><time>Jan 2025</time><span>TEACHING</span><strong>Teaching Statistical Models in 2024/25</strong><i aria-hidden="true"></i></summary><div><p>I am teaching Statistical Models at the University of Hull. Here are the module <a href="https://www.silviofanzon.com/blog/2025/Statistical-Models">Webpage</a> and <a href="https://www.silviofanzon.com/2025-Statistical-Models-Slides/">Slides</a>.</p></div></details>
+<details class="news-item"><summary><time>Sep 2024</time><span>TEACHING</span><strong>Teaching in Autumn 2024</strong><i aria-hidden="true"></i></summary><div><p>During T1 of the 2024/25 academic year, I am teaching Numbers, Sequences and Series and Differential Geometry at the University of Hull.</p></div></details>
+</div></section>
+<section class="home-section home-background-section"><div class="home-background-copy"><p class="eyebrow">Background</p><h2>A research career across the UK and Austria</h2><p>My approach was shaped by an EPSRC-funded PhD at the University of Sussex, postdoctoral research in motion-aware medical imaging at the University of Graz, and faculty roles in Austria and the UK.</p><p>At the University of Hull I held a permanent Lecturer in Applied Mathematics post—the UK academic grade closest to Assistant Professor—and served as Programme Director for the MSc in Mathematics. That career also developed my skills in leadership, collaboration, supervision, technical documentation and communication.</p></div><a class="section-link" href="https://www.silviofanzon.com/about.html">About my background →</a></section>
+</main>
+<Footer />
+</body>
 </html>
