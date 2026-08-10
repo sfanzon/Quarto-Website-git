@@ -119,7 +119,7 @@ behaviour listed above.
 | `styles/components/_archive.scss` | Shared archive headings, actions and compact inline icons |
 | `styles/components/_archive-entries.scss` | Shared archive rows, metadata, badges and actions |
 | `styles/components/_section-jump.scss` | Shared publication and teaching in-page navigation |
-| `styles/components/_home.scss` | Temporary homepage manifest — imports `styles/components/home/` in intentional cascade order; will become the canonical homepage owner during stylesheet consolidation |
+| `styles/components/_home.scss` | Homepage layout, profile, editorial, and responsive refinements; later sections intentionally refine earlier rules |
 | `styles/components/_disclosures.scss` | Shared abstract/BibTeX visibility, panels and inline controls |
 | `styles/components/_notes.scss` | Homepage note rows, Notes archive and long-form note pages |
 | `styles/components/_project-cards.scss` | Shared homepage and Projects archive cards, including labels and archived state |
@@ -127,10 +127,10 @@ behaviour listed above.
 | `styles/components/_contact.scss` | Contact details, email and professional-profile directory |
 | `styles/components/_news.scss` | Homepage News preview, News archive, search and responsive disclosure rows |
 | `styles/components/_search-popup.scss` | Detached site-search overlay, form, results and responsive presentation |
-| `styles/components/_expertise.scss` | Temporary Expertise manifest — imports `styles/components/expertise/` in intentional cascade order; will become the canonical Expertise owner during stylesheet consolidation |
+| `styles/components/_expertise.scss` | Homepage Expertise preview and full Expertise page; later sections intentionally refine shared preview rules |
 | `styles/components/_about.scss` | Homepage background/approach previews and full About page |
 | `styles/components/_research.scss` | Research page hierarchy, themes, evidence and related links |
-| `styles/components/_publications.scss` | Temporary Publications manifest — imports `styles/components/publications/` in intentional cascade order; will become the canonical Publications owner during stylesheet consolidation |
+| `styles/components/_publications.scss` | Homepage publication selections and Publications archive; later sections intentionally refine shared entry styles |
 
 `styles/project.scss` is the project-only SCSS entry point. It compiles the
 partials under `styles/project/` separately from the global `styles/main.scss`
@@ -164,7 +164,7 @@ already exists.
 | Design tokens, colours and shared widths | `styles/main/_00-tokens.scss` | Canonical |
 | Navbar and mobile navigation | `styles/main/_10-navbar.scss` | Canonical |
 | Search popup | `styles/components/_search-popup.scss` | Canonical |
-| Homepage Expertise preview and Expertise page | `styles/components/_expertise.scss` + `styles/components/expertise/` | Transitional manifest; consolidate next |
+| Homepage Expertise preview and Expertise page | `styles/components/_expertise.scss` | Canonical |
 | Homepage background/approach previews and About page | `styles/components/_about.scss` | Canonical |
 | Research page | `styles/components/_research.scss` (`.about-section-heading` remains shared from `_about.scss`) | Canonical |
 | Footer | `styles/main/_11-footer.scss` | Canonical |
@@ -173,14 +173,14 @@ already exists.
 | Notes archive | `styles/components/_notes.scss` | Canonical |
 | Long-form note pages | `styles/components/_notes.scss` | Canonical |
 | Homepage and Projects archive cards | `styles/components/_project-cards.scss` | Canonical |
-| Project article foundation and presentation | `styles/project/_article.scss` + `styles/project/article/` | Transitional manifest, project-only |
-| Project article context controls | `styles/project/_article-controls.scss` + `styles/project/article-controls/` | Transitional manifest, project-only |
+| Project article foundation and presentation | `styles/project/_article.scss` | Canonical, project-only |
+| Project article context controls | `styles/project/_article-controls.scss` | Canonical, project-only |
 | Project chapter navigation | `styles/project/_navigation.scss` | Canonical, project-only |
-| Homepage composition | `styles/components/_home.scss` + `styles/components/home/` | Transitional manifest; consolidate after Publications |
+| Homepage composition | `styles/components/_home.scss` | Canonical |
 | Bootstrap-era archive rows | `styles/components/_archive-entries.scss` | Canonical |
 | Archive section jumps | `styles/components/_section-jump.scss` | Canonical |
 | Expandable abstracts and BibTeX panels | `styles/components/_disclosures.scss` | Canonical |
-| Homepage publication selections and Publications archive | `styles/components/_publications.scss` + `styles/components/publications/` (shared archive/disclosure primitives live in their dedicated components) | Transitional manifest; consolidate after Expertise |
+| Homepage publication selections and Publications archive | `styles/components/_publications.scss` (shared archive/disclosure primitives live in their dedicated components) | Canonical |
 | Teaching | `styles/components/_teaching.scss` | Canonical |
 | Contact | `styles/components/_contact.scss` | Canonical |
 | News | `styles/components/_news.scss` | Canonical |
