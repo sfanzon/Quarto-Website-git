@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import 'katex/dist/katex.min.css';
 import '../styles/project-overview.css';
 
 interface Resource {
@@ -34,7 +35,12 @@ interface Props {
 
 const frontmatter = Astro.props.frontmatter ?? Astro.props;
 const { title, eyebrow, lead, author, published, resources, glance, views } = frontmatter;
-const isCurrent = (href: string) => href.endsWith('/projects/f1-time-rank-duality/');
+const normalizePath = (pathname: string) => pathname.replace(/\/index\.html$/, '').replace(/\/$/, '') || '/';
+const currentPath = normalizePath(Astro.url.pathname);
+const isCurrent = (href: string) => {
+	const target = new URL(href, Astro.url);
+	return target.origin === Astro.url.origin && normalizePath(target.pathname) === currentPath;
+};
 ---
 
 <!doctype html>

@@ -337,6 +337,33 @@ body.project-detail-page {
 	font-size: .78rem;
 }
 
+.project-code-disclosure {
+	width: min(var(--site-reading-width), 100%);
+	margin: -0.8rem auto 2rem;
+	border-top: 1px solid var(--project-line);
+	border-bottom: 1px solid var(--project-line);
+}
+
+.project-code-disclosure summary {
+	padding: .7rem 0;
+	color: var(--project-ink-muted);
+	font-size: .82rem;
+	font-weight: 650;
+	cursor: pointer;
+}
+
+.project-code-disclosure summary:focus-visible {
+	outline: 2px solid var(--global-theme-color);
+	outline-offset: 3px;
+}
+
+.project-code-disclosure pre {
+	width: 100%;
+	box-sizing: border-box;
+	max-height: 28rem;
+	margin: 0 0 .85rem;
+}
+
 @media (max-width: 980px) {
 	.analysis-pipeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 	.analysis-pipeline > div:nth-child(2)::after { display: none; }

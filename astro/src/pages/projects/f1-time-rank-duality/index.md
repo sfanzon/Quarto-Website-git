@@ -31,7 +31,7 @@ views:
   - number: '03'
     title: Code & data
     description: R scripts, data and reproducibility files
-    href: https://github.com/sfanzon/F1-Paper-Code
+    href: https://www.silviofanzon.com/projects/f1-time-rank-duality/code.html
 ---
 
 <aside class="project-role-note">
@@ -89,6 +89,89 @@ The first picture is deliberately descriptive. Each point is a driver’s averag
   <figcaption>Each driver’s observed average finishing position in 2022, grouped by constructor. Lower positions are better.</figcaption>
 </figure>
 
+<details class="project-code-disclosure">
+  <summary>Show the base-R code for this figure</summary>
+  <pre><code>#' Figure 3: each driver's observed 2022 average, grouped by constructor
+#'
+#' This is a descriptive plot of the historical dataset. It is useful for
+#' seeing the large constructor differences and the within-team spreads, but
+#' it is not the Section 5 driver-versus-car calculation. Section 5 uses the
+#' 2023 odds-implied expected ranks shown in Figure 4.
+#'
+#' @param driver_table output from driver_average_table()
+#' @param file output PNG path
+plot_driver_vs_team &lt;- function(
+    driver_table,
+    file = "figures/03_driver_vs_team.png"
+) {
+  team_order &lt;- c(
+    "RedBull", "Mercedes", "Ferrari", "McLaren", "Alpine",
+    "AstonMartin", "Haas", "AlphaTauri", "AlfaRomeo", "Williams"
+  )
+  axis_labels &lt;- c(
+    "RedBull", "Mercedes", "Ferrari", "Mclaren", "Alpine",
+    "AstonMartin", "Haas", "AlfaTauri", "AlfaRomeo", "Williams"
+  )
+
+  dt &lt;- driver_table
+  dt&#36;constructor &lt;- factor(dt&#36;constructor, levels = team_order)
+  dt &lt;- dt[order(dt&#36;constructor, dt&#36;second_driver), , drop = FALSE]
+
+  teammate_number &lt;- ave(
+    seq_len(nrow(dt)),
+    dt&#36;constructor,
+    FUN = seq_along
+  )
+  x &lt;- as.numeric(dt&#36;constructor) + ifelse(teammate_number == 1, -0.15, 0.15)
+  last_name &lt;- sub("([A-Z][a-z]+)([A-Z].*)", "\\2", dt&#36;driver)
+
+  # Small label adjustments keep neighbouring names readable while preserving
+  # the original plot's side-by-side structure.
+  y_shift &lt;- rep(0.48, nrow(dt))
+  y_shift[last_name %in% c("Russel", "Leclerc", "Bottas")] &lt;- -0.48
+  y_shift[last_name %in% c("Magnussen", "Schumacher", "Tsunoda", "Guanyu")] &lt;- 0.62
+
+  png(file, width = 1000, height = 680, res = 130)
+  op &lt;- par(mar = c(7, 5, 3, 1))
+  on.exit({
+    par(op)
+    dev.off()
+  }, add = TRUE)
+
+  plot(
+    x,
+    dt&#36;avg_position,
+    pch = 19,
+    col = "#cc0164",
+    cex = 1.3,
+    xaxt = "n",
+    xlab = "",
+    ylab = "average finishing position (2022 season)",
+    xlim = c(min(x) - 0.4, max(x) + 0.3),
+    ylim = c(min(dt&#36;avg_position) - 0.8, max(dt&#36;avg_position) + 1.3),
+    main = paste(
+      "Each driver's actual average position, by team",
+      "(teammates plotted side by side)",
+      sep = "\\n"
+    )
+  )
+
+  axis(1, at = seq_along(team_order), labels = axis_labels, las = 2)
+  for (i in seq_along(team_order)) {
+    abline(v = i, col = "gray90", lty = 3)
+  }
+  points(x, dt&#36;avg_position, pch = 19, col = "#cc0164", cex = 1.3)
+  text(
+    x,
+    dt&#36;avg_position + y_shift,
+    labels = last_name,
+    cex = 0.65
+  )
+
+  invisible(file)
+}</code></pre>
+</details>
+
 The large jumps between constructors show immediately why car quality cannot be ignored. Red Bull, Mercedes and Ferrari occupy a very different part of the plot from the back of the grid. The smaller gaps within each constructor suggest an additional driver-level effect — but these raw averages are **not** the final comparison.
 
 ## Estimate the car effect rather than eyeballing it
@@ -99,6 +182,73 @@ The regression uses all 500 driver-race observations. It explains finishing posi
   <img src="https://www.silviofanzon.com/projects/f1-time-rank-duality/figures/02_team_effects.png" alt="Constructor coefficients from the 2022 Formula 1 regression with confidence intervals." loading="lazy" />
   <figcaption>Estimated constructor effects from the selected 2022 regression, with 95% confidence intervals.</figcaption>
 </figure>
+
+<details class="project-code-disclosure">
+  <summary>Show the base-R code for this figure</summary>
+  <pre><code>#' Figure 2: constructor effects from the selected 2022 regression
+#'
+#' @param model fitted model returned by select_models()&#36;stepwise
+#' @param file output PNG path
+plot_team_effects &lt;- function(
+    model,
+    file = "figures/02_team_effects.png"
+) {
+  tab &lt;- regression_table(model)
+  model_terms &lt;- c(
+    "RedBull", "Mercedes", "Ferrari", "McLaren", "Alpine", "AstonMartin"
+  )
+  display_names &lt;- c(
+    RedBull = "RedBull",
+    Mercedes = "Mercedes",
+    Ferrari = "Ferrari",
+    McLaren = "Mclaren",
+    Alpine = "Alpine",
+    AstonMartin = "AstonMartin"
+  )
+
+  rows &lt;- match(model_terms, tab&#36;term)
+  est &lt;- tab&#36;estimate[rows]
+  se &lt;- tab&#36;std_error[rows]
+  names(est) &lt;- model_terms
+  names(se) &lt;- model_terms
+  ord &lt;- order(est)
+
+  png(file, width = 950, height = 650, res = 130)
+  op &lt;- par(mar = c(5, 9, 3, 1))
+  on.exit({
+    par(op)
+    dev.off()
+  }, add = TRUE)
+
+  y &lt;- barplot(
+    est[ord],
+    horiz = TRUE,
+    names.arg = unname(display_names[names(est)[ord]]),
+    las = 1,
+    col = "#1f3a5f",
+    border = NA,
+    xlim = c(min(est - 2 * se), 1),
+    xlab = "effect on average finishing position (vs. baseline teams)",
+    main = paste(
+      "Team effect, 2022 season",
+      "(negative = better average finishing position)",
+      sep = "\\n"
+    )
+  )
+
+  arrows(
+    est[ord] - 1.96 * se[ord], y,
+    est[ord] + 1.96 * se[ord], y,
+    angle = 90,
+    code = 3,
+    length = 0.05,
+    col = "black"
+  )
+  abline(v = 0, lty = 2, col = "gray40")
+
+  invisible(file)
+}</code></pre>
+</details>
 
 The ordering matches the intuitive picture, but the model makes the comparison explicit. Red Bull has the largest estimated advantage, followed by Mercedes and Ferrari. The estimated second-driver penalty is only $0.216$ positions and is statistically uncertain; its 95% confidence interval is $(-0.581,\ 1.013)$.
 
@@ -112,6 +262,55 @@ Bookmaker odds for the Qatar Grand Prix are converted into implied win probabili
   <img src="https://www.silviofanzon.com/projects/f1-time-rank-duality/figures/04_teammate_gaps.png" alt="Odds-implied Formula 1 teammate gaps, with Verstappen and Alonso above the historical threshold." loading="lazy" />
   <figcaption>Odds-implied teammate gaps for the 2023 Qatar Grand Prix. The dashed line is the 1.013-position historical threshold.</figcaption>
 </figure>
+
+<details class="project-code-disclosure">
+  <summary>Show the base-R code for this figure</summary>
+  <pre><code>#' Figure 4: odds-implied teammate gaps compared with the historical threshold
+#'
+#' @param gaps output from teammate_gaps()
+#' @param threshold upper endpoint from second_driver_ci()
+#' @param file output PNG path
+plot_teammate_gaps &lt;- function(
+    gaps,
+    threshold,
+    file = "figures/04_teammate_gaps.png"
+) {
+  gaps &lt;- gaps[order(-gaps&#36;gap), , drop = FALSE]
+  labels &lt;- paste0(gaps&#36;leading_driver, "  (", gaps&#36;team, ")")
+  cols &lt;- ifelse(gaps&#36;outperforms_car, "#C8102E", "grey65")
+
+  png(file, width = 1800, height = 1050, res = 180)
+  op &lt;- par(mar = c(5, 15, 3, 2), xpd = NA)
+  on.exit({
+    par(op)
+    dev.off()
+  }, add = TRUE)
+
+  bp &lt;- barplot(
+    rev(gaps&#36;gap),
+    horiz = TRUE,
+    col = rev(cols),
+    border = NA,
+    names.arg = rev(labels),
+    las = 1,
+    cex.names = 0.78,
+    xlim = c(0, max(gaps&#36;gap) * 1.08),
+    xlab = "Expected-position gap to team-mate (odds-implied)",
+    main = "Which drivers outperform their car?"
+  )
+
+  abline(v = threshold, lty = 2, lwd = 2)
+  text(
+    threshold,
+    max(bp),
+    pos = 4,
+    cex = 0.8,
+    labels = sprintf("car-only threshold = %.3f", threshold)
+  )
+
+  invisible(file)
+}</code></pre>
+</details>
 
 Two drivers — and only two — clear the threshold:
 
