@@ -2,7 +2,7 @@
 title: "A Portable Rule System for Working with AI"
 subtitle: "How I moved from long, messy chats to concise, version-controlled instructions"
 author: "Anonymous"
-date: today
+date: 2026-07-31
 image: ../assets/img/notes/portable-rules.svg
 image-alt: "A canonical AI rules file branching into portable task-specific presets"
 format:

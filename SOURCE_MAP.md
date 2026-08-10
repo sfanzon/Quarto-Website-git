@@ -14,6 +14,7 @@
 | `publications.qmd` | Full publication archive |
 | `teaching.qmd` | Teaching activity |
 | `news.qmd` | News archive page |
+| `notes.qmd` | Notes archive page |
 | `contact.qmd` | Contact information |
 | `cv.qmd` | Curriculum vitae |
 | `presentations.qmd` | Presentations |
@@ -27,6 +28,8 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | File | Description |
 |---|---|
 | `projects/*/index.qmd` | Long-form project explainer pages |
+| `projects/f1-time-rank-duality/technical.qmd` | Formula 1 technical note |
+| `projects/f1-time-rank-duality/code.qmd` | Formula 1 code companion |
 | `projects/_metadata.yml` | Shared project page defaults |
 | `filters/project-components.lua` | Quarto Lua filter — renders project heroes, resource links, At-a-glance summaries, Explore Project navigation, and related-project suggestions |
 
@@ -39,7 +42,10 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `data/teaching_lecturer.bib` | Lecturer teaching record |
 | `data/teaching_tutor.bib` | Tutor/TA teaching record |
 | `data/coauthors.yml` | Co-author homepage URL map |
+| `data/citations/numeric.csl` | Shared citation style for project pages |
 | `news/*.md` | Dated news entries (filenames: `YYYY-MM-DD.md`) |
+| `notes/*.qmd` | Long-form technical notes |
+| `notes/_metadata.yml` | Shared note-page defaults |
 
 ## Generated content
 
@@ -53,6 +59,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | File | Source |
 |---|---|
 | `includes/home-news.qmd` | `news/*.md` (latest 8) |
+| `includes/home-notes.html` | `notes/*.qmd` (latest 4) |
 | `includes/home-projects.html` | `data/projects.yml` (featured) |
 | `includes/home-publications-list.html` | `data/publications.bib` (selected) |
 | `includes/news-all.qmd` | `news/*.md` (all) |
@@ -68,6 +75,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `includes/project-navigation.html` | Project-page left-rail / drawer navigation |
 | `includes/after-body.html` | Scripts and markup injected after `</body>` |
 | `includes/scroll-restoration-head.html` | Scroll position restoration injected into `<head>` |
+| `includes/mermaid-svg-ids.html` | Mermaid SVG ID normalization injected into `<head>` |
 
 ## Styles
 
@@ -108,7 +116,7 @@ already exists.
 | Visible area | Current owner | Status |
 |---|---|---|
 | Design tokens, colours and shared widths | `styles/main/_00-tokens.scss` | Canonical |
-| Navbar and mobile navigation | `styles/main/_10-navbar.scss` | Canonical, pending consolidation |
+| Navbar and mobile navigation | `styles/main/_10-navbar.scss` | Canonical |
 | Search popup | `styles/components/_search-popup.scss` | Canonical |
 | Homepage Expertise preview and Expertise page | `styles/components/_expertise.scss` | Canonical |
 | Homepage background/approach previews and About page | `styles/components/_about.scss` | Canonical |

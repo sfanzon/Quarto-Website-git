@@ -23,7 +23,7 @@ execute:
   warning: false
 image: figures/04_teammate_gaps.png
 nocite: '@*'
-csl: f1-numeric.csl
+csl: ../../data/citations/numeric.csl
 date: '2024-03-18'
 project-id: f1-benchmarking
 project-view: technical

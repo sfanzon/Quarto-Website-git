@@ -24,7 +24,7 @@ format:
 execute:
   enabled: false
 bibliography: gcg-references.bib
-csl: gcg-numeric.csl
+csl: ../../data/citations/numeric.csl
 link-citations: true
 citations-hover: true
 nocite: '@*'
