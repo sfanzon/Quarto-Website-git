@@ -52,30 +52,61 @@ const moreLinks = [
 </header>
 
 <script>
-	const root = document.documentElement;
-	const themeButton = document.querySelector<HTMLButtonElement>('.theme-toggle');
-	const menuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
-	const navLinks = document.querySelector<HTMLElement>('#navbar-links');
+	const initialiseShell = () => {
+		const root = document.documentElement;
+		const themeButton = document.querySelector<HTMLButtonElement>('.theme-toggle');
+		const menuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
+		const navLinks = document.querySelector<HTMLElement>('#navbar-links');
+		const quartoToggle = () => (window as Window & { quartoToggleColorScheme?: () => void }).quartoToggleColorScheme;
 
-	const setThemeLabel = () => {
-		const dark = root.dataset.theme === 'dark';
-		themeButton?.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+		const setThemeLabel = () => {
+			const dark = root.dataset.theme === 'dark';
+			themeButton?.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+		};
+
+		const syncQuartoTheme = () => {
+			const dark = document.body.classList.contains('quarto-dark');
+			root.dataset.theme = dark ? 'dark' : 'light';
+			root.style.colorScheme = dark ? 'dark' : 'light';
+			localStorage.setItem('theme', dark ? 'dark' : 'light');
+			setThemeLabel();
+		};
+
+		themeButton?.addEventListener('click', () => {
+			const toggle = quartoToggle();
+			if (toggle) {
+				toggle();
+				syncQuartoTheme();
+				return;
+			}
+			const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+			root.dataset.theme = theme;
+			root.style.colorScheme = theme;
+			localStorage.setItem('theme', theme);
+			setThemeLabel();
+		});
+
+		menuButton?.addEventListener('click', () => {
+			const open = menuButton.getAttribute('aria-expanded') !== 'true';
+			menuButton.setAttribute('aria-expanded', String(open));
+			menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+			navLinks?.classList.toggle('is-open', open);
+		});
+
+		const toggle = quartoToggle();
+		if (toggle) {
+			const requested = localStorage.getItem('theme');
+			const currentDark = document.body.classList.contains('quarto-dark');
+			if ((requested === 'dark' || requested === 'light') && (requested === 'dark') !== currentDark) toggle();
+			syncQuartoTheme();
+		} else {
+			setThemeLabel();
+		}
 	};
 
-	themeButton?.addEventListener('click', () => {
-		const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-		root.dataset.theme = theme;
-		root.style.colorScheme = theme;
-		localStorage.setItem('theme', theme);
-		setThemeLabel();
-	});
-
-	menuButton?.addEventListener('click', () => {
-		const open = menuButton.getAttribute('aria-expanded') !== 'true';
-		menuButton.setAttribute('aria-expanded', String(open));
-		menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-		navLinks?.classList.toggle('is-open', open);
-	});
-
-	setThemeLabel();
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initialiseShell, { once: true });
+	} else {
+		initialiseShell();
+	}
 </script>

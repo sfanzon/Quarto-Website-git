@@ -2,9 +2,30 @@
 
 ## Source and build
 
-This repository contains the Quarto source and the pre-rendered `docs/` output
-used for deployment. Run `quarto preview` for local development and
-`quarto render` for a complete build.
+The production site has two rendering owners and one final static output:
+
+- Astro owns ordinary professional pages, `/projects/`, and the shared site
+  shell.
+- Quarto owns every document below `projects/**`, including every project
+  overview, technical walkthrough and code companion.
+- `npm run build:site` from `astro/` builds Astro, renders Quarto projects to
+  an isolated temporary directory, then deterministically merges them into
+  `astro/dist/`. Neither renderer writes into the other's output directory.
+
+Astro emits the shell as explicit static artifacts under `/site-shell/`:
+`header/index.html`, `footer/index.html` and `site.css`. The production merge injects those
+artifacts into rendered Quarto project documents and structurally removes the
+Quarto global header/footer. It does not extract markup or CSS from an Astro
+page, and it does not alter Quarto's article body, document scripts, project
+navigation or project assets.
+
+`docs/` remains legacy Quarto-generated output and is never a source or merge
+target. It stays untouched until deployment is switched to `astro/dist/`.
+
+Until an ordinary page is migrated, its root `.qmd` remains canonical. The
+Astro F1 overview is an accepted comparison artifact only: production
+`/projects/f1-time-rank-duality/` is written by Quarto from `index.qmd` during
+the merge.
 
 The pre-render hook runs `scripts/build-content.py`. Structured content is kept
 in:
@@ -40,8 +61,9 @@ repository snapshot. Other unlinked archive material is maintained outside it.
 
 ## Project pages
 
-Portfolio explainers live under `projects/` and inherit their defaults from
-`projects/_metadata.yml`. Shared presentation and navigation are implemented by:
+Portfolio explainers live under `projects/`, are rendered by Quarto, and
+inherit their defaults from `projects/_metadata.yml`. Shared presentation and
+navigation are implemented by:
 
 - `styles/project.scss` and the partials under `styles/project/`;
 - `includes/project-navigation.html`;
@@ -54,6 +76,21 @@ Level-two headings become navigation entries automatically. Use
 
 On wide screens the navigation is a left rail. On narrower screens it becomes
 an accessible drawer positioned below the measured Quarto navbar.
+
+## Production build
+
+The production command is:
+
+```bash
+cd astro
+npm run build:site
+```
+
+It builds Astro first, renders only `projects/**/*.qmd` to a temporary staging
+directory, replaces Quarto's global shell with Astro's explicit shell
+artifacts, copies each rendered project page and referenced assets into
+`astro/dist/`, then indexes the completed result. `npm run build:hybrid`
+remains a compatibility alias while the POC branch is active.
 
 ## Style maintenance
 
