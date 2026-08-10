@@ -51,6 +51,22 @@ Level-two headings become navigation entries automatically. Use
 On wide screens the navigation is a left rail. On narrower screens it becomes
 an accessible drawer positioned below the measured Quarto navbar.
 
+## Style maintenance
+
+Current style ownership lives in `SOURCE_MAP.md`; edit the owner for a visible
+component rather than adding a late override. Keep project-only styles under
+`styles/project/` and global components under `styles/main/` or
+`styles/components/`.
+
+Quarto, Bootstrap, search and runtime navigation can emit classes absent from
+authored source. Confirm a selector is absent from rendered output and runtime
+code before removing it. Use `!important` only when an external runtime style
+cannot be overridden structurally, and document the component owner rather
+than treating declaration count as a quality metric.
+
+For material style changes, render first and use the visual CI workflow in
+addition to the proportionate functional tests described in `TESTING.md`.
+
 ## Formula 1 project
 
 The main website owns three presentation views:

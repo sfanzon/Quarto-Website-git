@@ -38,6 +38,7 @@ Pixel-level screenshot comparisons are only reproducible when font rendering is 
 Visual tests run in GitHub Actions on `ubuntu-22.04` with:
 
 - **Node**: 22
+- **Python**: 3.12 with PyYAML 6.0.3 from `requirements.txt`
 - **Playwright**: 1.62.0 (exact, pinned in `package.json`)
 - **Chromium**: version bundled with Playwright 1.62.0
 - **Quarto**: 1.9.38 (site is rendered from source in CI before screenshots)
