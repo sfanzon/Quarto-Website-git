@@ -64,29 +64,27 @@ The following work is already complete and should not be repeated:
 ### Task 1 — Reproducibility audit
 
 **Model:** Terra  
-**Risk:** medium  
-**Depends on:** none
+**Status:** complete
 
-Verify that a clean source checkout can install dependencies, generate content
-and render the tracked deployment output using the documented toolchain.
+Results:
 
-Work:
+- the content generator is byte-stable across consecutive runs;
+- full Quarto renders are byte-stable within one checkout;
+- all generated includes have canonical-source coverage in the generated-output
+  guard;
+- rendered Quarto listing and Mermaid support assets are present;
+- fresh checkouts differ only in Quarto's sitemap timestamps and hidden Notes
+  listing file-modification sort metadata, documented in `TESTING.md`.
 
-- run the generator twice and verify byte-stable outputs;
-- run two complete Quarto renders and inspect unexplained churn;
-- confirm every generated file has a canonical source and guard coverage;
-- confirm `docs/` contains all Quarto support assets referenced by rendered
-  pages;
-- document unavoidable nondeterminism rather than hiding it.
+No source workaround was added. These are retained as explicit Quarto friction
+for Task 9 rather than disguised by post-processing generated output.
 
-Done when the build is reproducible or every remaining difference is explained
-with an owner and follow-up task.
-
-Suggested commit message: `build: make generated site output reproducible`
+Commit message: `docs: record Quarto render reproducibility limits`
 
 ### Task 2 — Structured-data schema audit
 
 **Model:** Terra  
+**Status:** complete
 **Risk:** medium  
 **Depends on:** Task 1
 
@@ -107,6 +105,20 @@ Done when malformed or ambiguous records fail early with actionable messages
 and legitimate optional fields remain supported.
 
 Suggested commit message: `test: strengthen structured content validation`
+
+Results:
+
+- publication, presentation, supervision and teaching IDs are unique within
+  their rendered archive pages; publication IDs now receive the same early
+  duplicate check as the other BibTeX archives;
+- project metadata now has one loader that validates required card fields,
+  unique project IDs, label shape, optional `featured` flags and related-project
+  references before both generated cards and the Lua filter consume it;
+- all current records pass these checks;
+- standard BibTeX fields such as DOI, URL, volume and pages remain deliberately
+  preserved for reusable citations even where the archive does not display
+  every field; optional local download links remain governed by
+  `data/optional-local-assets.txt`.
 
 ### Task 3 — Generator ownership and editability audit
 

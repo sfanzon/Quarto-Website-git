@@ -9,6 +9,7 @@ from .core import DEFAULT_ROOT
 from .news import load_news, render_news_qmd
 from .portfolio import (
     load_featured_notes,
+    load_projects,
     render_featured_note,
     render_featured_projects,
     render_projects_portfolio,
@@ -26,7 +27,7 @@ from .teaching import load_teaching, teaching_section, teaching_years
 def generate_site(site_root=None):
     """Generate every data-derived include after validating all source data."""
     site_root = site_root or DEFAULT_ROOT
-    projects = yaml.safe_load((site_root / 'data/projects.yml').read_text()) or []
+    projects = load_projects(site_root / 'data/projects.yml')
     coauthor_urls = yaml.safe_load((site_root / 'data/coauthors.yml').read_text()) or {}
     publications = load_publications(site_root / 'data/publications.bib')
     presentations = load_presentations(site_root)

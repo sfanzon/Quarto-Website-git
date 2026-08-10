@@ -22,3 +22,15 @@ class PublicationTests(GeneratorTestCase):
 }"""
         with self.assertRaisesRegex(ValueError, "venue"):
             load_publications(self.write_fixture(source, "publications.bib"))
+
+    def test_validation_rejects_duplicate_ids(self):
+        source = """@article{duplicate,
+  category = {Articles}, abbr = {A}, title = {First}, author = {Author},
+  year = {2025}, selected = {false}, preprint = {false}, journal = {Journal}
+}
+@article{duplicate,
+  category = {Articles}, abbr = {A}, title = {Second}, author = {Author},
+  year = {2024}, selected = {false}, preprint = {false}, journal = {Journal}
+}"""
+        with self.assertRaisesRegex(ValueError, "duplicate publication id"):
+            load_publications(self.write_fixture(source, "publications.bib"))

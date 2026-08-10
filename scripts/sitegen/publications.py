@@ -92,6 +92,7 @@ def load_publications(path):
     records = read_bibtex_entries(path)
     required = {'category', 'abbr', 'title', 'author', 'year', 'selected', 'preprint'}
     publications = []
+    seen_ids = set()
     for record in records:
         missing = sorted(field for field in required if not record.get(field))
         if missing:
@@ -99,6 +100,11 @@ def load_publications(path):
                 f'Publication {record.get("id", "<unknown>")} is missing required '
                 f'BibTeX fields: {", ".join(missing)}'
             )
+        if record['id'] in seen_ids:
+            raise ValueError(
+                f'{path.name} has duplicate publication id: {record["id"]}'
+            )
+        seen_ids.add(record['id'])
         selected_value = record['selected'].strip().lower()
         if selected_value not in {'true', 'false'}:
             raise ValueError(
