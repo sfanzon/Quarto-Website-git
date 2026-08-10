@@ -3,7 +3,11 @@
 ## Decision
 
 Keep Quarto for the whole website through the next normal maintenance cycle.
-Do not start an Astro migration, a hybrid build, or a shell prototype now.
+Do not start an Astro migration or a hybrid build now.
+
+An isolated, reversible Astro shell and About-page proof of concept under
+`astro/` is approved for comparison. This experiment leaves the Quarto site
+canonical and is not a migration decision.
 
 This is not a claim that Quarto is the ideal general-purpose website shell.
 The cleanup shows meaningful shell friction. It is a judgment that a migration

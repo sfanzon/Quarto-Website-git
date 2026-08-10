@@ -1,31 +1,87 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
 ---
 
-<Layout
-	title="About Friedrich Nietzsche"
-	description="Learn about the life and profound contributions of Friedrich Nietzsche, the visionary philosopher who revolutionized Western thought and challenged conventional morality."
-	pubDate={new Date('October 15 1844')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Friedrich Wilhelm Nietzsche (October 15, 1844 – August 25, 1900) was a German philosopher, cultural critic, composer, poet, and philologist. His philosophical works on morality, the will to power, and the concept of the Übermensch have exerted a profound influence on Western philosophy, literature, psychology, and politics. He is widely recognized as one of the most influential philosophers of all time, whose ideas have fundamentally shaped modern intellectual discourse and challenged fundamental assumptions about morality, truth, and human nature.
-	</p>
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="About | Silvio Fanzon"
+			description="About Silvio Fanzon — academic background, applied mathematics, modelling and professional transition"
+		/>
+	</head>
+	<body class="standard-page about-page">
+		<Header />
+		<main class="content">
+			<header class="page-hero compact-page-hero about-hero">
+				<p class="eyebrow">About</p>
+				<h1>From mathematical research to applied modelling and decision tools.</h1>
+				<p>I am an applied mathematician and statistician with a career spanning research, university teaching and programme leadership. I now bring that background to industry-facing work in data science, optimisation, operational research and scientific computing.</p>
+			</header>
 
-	<p>
-		Nietzsche was born in Röcken, a small village near Lützen in the Prussian Province of Saxony. His father, Carl Ludwig Nietzsche, was a Lutheran minister, and his mother, Franziska Oehler, came from a devout Protestant family. He received his education at several prestigious institutions, culminating in his studies at the University of Bonn and later at the University of Leipzig, where he studied classical philology. In 1869, at the remarkably young age of 24, Nietzsche was appointed professor of classical philology at the University of Basel in Switzerland, a position he obtained without even holding a doctorate, based on the strength of his scholarly work and recommendations.
-	</p>
+			<section class="about-opening">
+				<div class="about-opening-lead">
+					<p>I have spent my career learning how to take difficult, ambiguous problems and make them precise: identify the right assumptions, build a defensible model, implement it computationally, test what it can and cannot say, and explain the result clearly.</p>
+					<p>My academic work ranges from optimisation algorithms and dynamic MRI reconstruction to statistical models for Formula 1 and curling. Alongside research, I have led degree programmes, designed data-science teaching, supervised projects and built technical resources for varied audiences.</p>
+				</div>
+				<dl class="about-facts" aria-label="Career at a glance">
+					<div><dt>11</dt><dd>peer-reviewed journal articles</dd></div>
+					<div><dt>21</dt><dd>university modules taught</dd></div>
+					<div><dt>9</dt><dd>research students supervised</dd></div>
+					<div><dt>3</dt><dd>countries in my academic career</dd></div>
+				</dl>
+			</section>
 
-	<p>
-		Nietzsche's philosophical career was marked by profound intellectual independence and radical innovation. He published numerous groundbreaking works including "The Birth of Tragedy" (1872), "Thus Spoke Zarathustra" (1883-1885), "Beyond Good and Evil" (1886), and "On the Genealogy of Morals" (1887). His ideas about the reevaluation of all values, the critique of Judeo-Christian morality, and the vision of the Übermensch presented a fundamental challenge to Victorian sensibilities and conventional philosophical thought. His concept of "will to power" offered a revolutionary perspective on human motivation and the driving forces behind human behavior and culture.
-	</p>
+			<section class="about-career" aria-labelledby="career-title">
+				<div class="about-section-heading">
+					<p class="eyebrow">Academic career</p>
+					<h2 id="career-title">Research, teaching and leadership across three universities</h2>
+				</div>
+				<div class="career-timeline">
+					<article class="career-stage">
+						<div class="career-period">2014–2018</div>
+						<div class="career-copy"><p class="career-place">University of Sussex · UK</p><h3>EPSRC-funded PhD in Mathematics</h3><p>Studied variational models, PDEs and material microstructures, graduating with a viva outcome of pass with no corrections. I also worked as an Associate Tutor across analysis, geometry, probability and statistics.</p></div>
+					</article>
+					<article class="career-stage">
+						<div class="career-period">2018–2021</div>
+						<div class="career-copy"><p class="career-place">University of Graz · Austria</p><h3>Postdoctoral Researcher</h3><p>Worked on an Austrian Science Fund project in motion-aware medical imaging, developing mathematical frameworks and optimisation algorithms for dynamic inverse problems under severe noise and undersampling.</p></div>
+					</article>
+					<article class="career-stage">
+						<div class="career-period">2022–2023</div>
+						<div class="career-copy"><p class="career-place">University of Graz · Austria</p><h3>Faculty member · University Assistant</h3><p>Contributed to the Inverse Problems and Mathematical Imaging group through research, undergraduate and postgraduate teaching, supervision and grant-development activity.</p></div>
+					</article>
+					<article class="career-stage">
+						<div class="career-period">2023–2026</div>
+						<div class="career-copy"><p class="career-place">University of Hull · UK</p><h3>Permanent Lecturer in Applied Mathematics</h3><p>This is the UK academic grade closest to Assistant Professor. I combined research with module leadership, PhD and dissertation supervision, and later served as Programme Director for the MSc in Mathematics.</p></div>
+					</article>
+				</div>
+			</section>
 
-	<p>
-		Due to deteriorating health, Nietzsche resigned from his academic position in 1879 and spent the following years traveling throughout Europe, living a life of philosophical contemplation and creative productivity. Despite chronic illness that plagued him throughout his later years, he produced some of his most significant works during this period of withdrawal from academic life. He lived in various locations including Basel, Genoa, Nice, and Turin, finding inspiration in different environments while continuing his prolific philosophical and literary output.
-	</p>
+			<section class="about-transition">
+				<div><p class="eyebrow">What comes next</p><h2>Carrying the strongest parts of academia into industry</h2></div>
+				<div><p>In 2026 I chose to leave my permanent academic post and transition toward industry. That career remains the foundation of how I work: rigorous problem formulation, evidence-based reasoning, long-horizon project ownership and the ability to communicate technical ideas to different audiences.</p><p>I am particularly interested in roles where mathematical modelling, statistics and computation support prediction, operational decisions or scientific discovery.</p></div>
+			</section>
 
-	<p>
-		In 1889, Nietzsche suffered a mental breakdown in Turin, Italy, from which he never fully recovered. He lived his remaining years under the care of his mother and sister in Weimar, Germany. He died in Weimar on August 25, 1900, at age 55. His intellectual legacy has profoundly influenced philosophy, psychology, literature, theology, and cultural criticism throughout the twentieth and twenty-first centuries. His ideas continue to inspire and provoke critical thinking about the nature of morality, human excellence, and the transformation of human civilization.
-	</p>
-</Layout>
+			<section class="about-capabilities" aria-label="How I work">
+				<article><span>01</span><h3>Frame the problem</h3><p>Turn an open-ended question into assumptions, objectives, constraints and measurable outcomes.</p></article>
+				<article><span>02</span><h3>Build and test</h3><p>Translate mathematical and statistical ideas into models, algorithms and reproducible computational experiments.</p></article>
+				<article><span>03</span><h3>Explain clearly</h3><p>Communicate the substance for technical, professional and wider audiences without hiding assumptions or unnecessary complexity.</p></article>
+				<article><span>04</span><h3>Lead collaboratively</h3><p>Coordinate programmes and projects, mentor researchers, build collaborations and connect people with different expertise.</p></article>
+			</section>
+
+			<section class="about-international">
+				<div><p class="eyebrow">International perspective</p><h2>Experience across the UK, Austria and Italy</h2></div>
+				<p>I have studied and worked in different university systems, collaborated through international research networks, and taught students from varied educational and cultural backgrounds. This has made me comfortable adapting quickly, communicating across disciplines and working with people whose assumptions and priorities differ from my own.</p>
+			</section>
+
+			<section class="about-links" aria-label="Related pages">
+				<a href="https://www.silviofanzon.com/expertise.html"><span>Capabilities</span><strong>Explore my expertise →</strong></a>
+				<a href="https://www.silviofanzon.com/research.html"><span>Academic work</span><strong>Read about my research →</strong></a>
+				<a href="https://www.silviofanzon.com/projects.html"><span>Evidence</span><strong>View selected projects →</strong></a>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
