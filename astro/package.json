@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:hybrid": "node scripts/build-hybrid.mjs",
     "postbuild": "pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro"

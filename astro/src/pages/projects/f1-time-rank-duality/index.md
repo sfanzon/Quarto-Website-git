@@ -27,7 +27,7 @@ views:
   - number: '02'
     title: Technical walkthrough
     description: Paper and R code, step by step
-    href: https://www.silviofanzon.com/projects/f1-time-rank-duality/technical.html
+    href: /projects/f1-time-rank-duality/technical.html
   - number: '03'
     title: Code & data
     description: R scripts, data and reproducibility files
@@ -320,7 +320,7 @@ Two drivers — and only two — clear the threshold:
 The remaining within-team gaps are below 1.013. In the language of the model, Verstappen and Alonso are the two drivers whose market-implied advantage over their teammates is too large to attribute to the car-only benchmark learned from 2022.
 
 <aside class="project-callout important">
-<strong>What this does not say:</strong> the raw 2022 teammate averages are not tested against the threshold. They are useful context, while the final comparison uses the <strong>2023 odds-implied expected ranks</strong>. The <a href="https://www.silviofanzon.com/projects/f1-time-rank-duality/technical.html">technical walkthrough</a> documents the distinction and reproduces the relevant tables and checks.
+<strong>What this does not say:</strong> the raw 2022 teammate averages are not tested against the threshold. They are useful context, while the final comparison uses the <strong>2023 odds-implied expected ranks</strong>. The <a href="/projects/f1-time-rank-duality/technical.html">technical walkthrough</a> documents the distinction and reproduces the relevant tables and checks.
 </aside>
 
 ## From a paper to a reproducible analysis
