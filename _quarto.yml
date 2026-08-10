@@ -9,7 +9,6 @@ project:
   - '!includes/*.qmd'
   resources:
   - assets/pdf/**
-  - listings.json
 website:
   title: Silvio Fanzon
   site-url: https://www.silviofanzon.com
