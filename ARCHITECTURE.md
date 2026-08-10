@@ -24,10 +24,8 @@ project navigation or project assets.
 `docs/` remains legacy Quarto-generated output and is never a source or merge
 target. It stays untouched until deployment is switched to `astro/dist/`.
 
-Until an ordinary page is migrated, its root `.qmd` remains canonical. The
-Astro F1 overview is an accepted comparison artifact only: production
-`/projects/f1-time-rank-duality/` is written by Quarto from `index.qmd` during
-the merge.
+Until an ordinary page is migrated, its root `.qmd` remains canonical. Quarto
+is the sole owner of `/projects/f1-time-rank-duality/`, from `index.qmd`.
 
 The migrated `/projects/` catalogue reads `data/projects.yml` directly. Its
 Astro page and styles are canonical for that route; `styles/components/_project-cards.scss`
@@ -98,8 +96,9 @@ npm run build:site
 It builds Astro first, renders only `projects/**/*.qmd` to a temporary staging
 directory, replaces Quarto's global shell with Astro's explicit shell
 artifacts, copies each rendered project page and referenced assets into
-`astro/dist/`, then indexes the completed result. `npm run build:hybrid`
-remains a compatibility alias while the POC branch is active.
+`astro/dist/`, writes the sitemap from the completed public HTML tree, then
+indexes the completed result. `npm run build:hybrid` remains a compatibility
+alias while the POC branch is active.
 
 ## Style maintenance
 

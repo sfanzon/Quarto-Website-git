@@ -10,6 +10,7 @@ const projectsRoot = join(repoRoot, 'projects');
 const distRoot = join(astroRoot, 'dist');
 const stageRoot = mkdtempSync(join(tmpdir(), 'astro-quarto-projects-'));
 const shellRoot = join(distRoot, 'site-shell');
+const siteUrl = 'https://www.silviofanzon.com';
 
 function findProjectSources(directory) {
 	return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -21,6 +22,31 @@ function findProjectSources(directory) {
 
 function outputPath(source) {
 	return relative(repoRoot, source).replace(/\.qmd$/, '.html');
+}
+
+function findHtmlFiles(directory) {
+	return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+		const path = join(directory, entry.name);
+		if (entry.isDirectory()) return findHtmlFiles(path);
+		return entry.isFile() && entry.name.endsWith('.html') ? [path] : [];
+	});
+}
+
+function sitemapUrl(path) {
+	const output = relative(distRoot, path).replaceAll('\\', '/');
+	if (output === 'index.html') return `${siteUrl}/`;
+	if (output.startsWith('projects/') && output.endsWith('/index.html')) return `${siteUrl}/${output}`;
+	if (output.endsWith('/index.html')) return `${siteUrl}/${output.slice(0, -'index.html'.length)}`;
+	return `${siteUrl}/${output}`;
+}
+
+function writeSitemap() {
+	const urls = findHtmlFiles(distRoot)
+		.filter((path) => relative(distRoot, path) !== '404.html')
+		.map(sitemapUrl)
+		.sort();
+	const entries = urls.map((url) => `  <url><loc>${url}</loc></url>`).join('\n');
+	writeFileSync(join(distRoot, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}\n</urlset>\n`);
 }
 
 function requireShellArtifact(name) {
@@ -96,6 +122,7 @@ try {
 		}
 	}
 
+	writeSitemap();
 	execFileSync('npm', ['run', 'postbuild'], { cwd: astroRoot, stdio: 'inherit' });
 	console.log(`Production site build complete: ${sources.length} Quarto project pages merged into dist/`);
 } finally {

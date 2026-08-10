@@ -16,14 +16,13 @@ individual project page. Do not infer a source move from a matching public URL.
 | `astro/src/pages/site-shell/header.astro` | Build-only navbar fragment for Quarto documents; removed from the final site after merge |
 | `astro/src/pages/site-shell/footer.astro` | Build-only footer fragment for Quarto documents; removed from the final site after merge |
 | `astro/src/pages/site-shell/site.css.ts` | Explicit emitted stylesheet artifact for Quarto documents |
-| `astro/scripts/build-site.mjs` | Builds Astro, renders Quarto projects in isolation, then merges them into `astro/dist/` |
+| `astro/scripts/build-site.mjs` | Builds Astro, renders Quarto projects in isolation, merges them into `astro/dist/`, then writes the final sitemap and Pagefind index |
 | `astro/src/pages/projects.astro` | Production owner for the `/projects/` catalogue |
 | `astro/src/data/projects.ts` | Astro loader for canonical `data/projects.yml` |
 | `astro/src/styles/projects.css` | Production `/projects/` catalogue styling |
 
-The Astro F1 overview under `astro/src/pages/projects/f1-time-rank-duality/`
-is a POC comparison source only. It is not a production owner: Quarto's
-`projects/f1-time-rank-duality/index.qmd` wins for that URL during the merge.
+Quarto's `projects/f1-time-rank-duality/index.qmd` is the sole owner of the
+F1 overview URL; no Astro detail route exists.
 
 ## Top-level pages
 
