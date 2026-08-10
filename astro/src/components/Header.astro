@@ -1,10 +1,11 @@
 ---
 const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isAbout = currentPath === '/about';
+const isProjects = currentPath === '/projects' || currentPath.startsWith('/projects/');
 
 const primaryLinks = [
-	{ label: 'About', href: '/about/', local: true },
-	{ label: 'Projects', href: 'https://www.silviofanzon.com/projects.html' },
+	{ label: 'About', href: '/about/', active: isAbout },
+	{ label: 'Projects', href: '/projects/', active: isProjects, section: 'projects' },
 	{ label: 'Expertise', href: 'https://www.silviofanzon.com/expertise.html' },
 	{ label: 'CV', href: 'https://www.silviofanzon.com/Silvio_Fanzon_Academic_CV.pdf' },
 	{ label: 'Publications', href: 'https://www.silviofanzon.com/publications.html' },
@@ -23,11 +24,11 @@ const moreLinks = [
 
 <header class="site-header">
 	<nav class="site-navbar" aria-label="Primary navigation">
-		<a class="site-brand" href="https://www.silviofanzon.com">Silvio Fanzon</a>
+		<a class="site-brand" href="/">Silvio Fanzon</a>
 
 		<div class="navbar-links" id="navbar-links">
 			{primaryLinks.map((link) => (
-				<a href={link.href} class:list={{ active: link.local && isAbout }} aria-current={link.local && isAbout ? 'page' : undefined}>
+				<a href={link.href} data-nav-section={link.section} class:list={{ active: link.active }} aria-current={link.active ? 'page' : undefined}>
 					{link.label}
 				</a>
 			))}
@@ -57,6 +58,7 @@ const moreLinks = [
 		const themeButton = document.querySelector<HTMLButtonElement>('.theme-toggle');
 		const menuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
 		const navLinks = document.querySelector<HTMLElement>('#navbar-links');
+		const projectsLink = navLinks?.querySelector<HTMLAnchorElement>('[data-nav-section="projects"]');
 		const quartoToggle = () => (window as Window & { quartoToggleColorScheme?: () => void }).quartoToggleColorScheme;
 
 		const setThemeLabel = () => {
@@ -94,6 +96,11 @@ const moreLinks = [
 		});
 
 		const toggle = quartoToggle();
+		const path = window.location.pathname.replace(/\/+$/, '') || '/';
+		const projectsActive = path === '/projects' || path.startsWith('/projects/');
+		projectsLink?.classList.toggle('active', projectsActive);
+		if (projectsActive) projectsLink?.setAttribute('aria-current', 'page');
+		else projectsLink?.removeAttribute('aria-current');
 		if (toggle) {
 			const requested = localStorage.getItem('theme');
 			const currentDark = document.body.classList.contains('quarto-dark');

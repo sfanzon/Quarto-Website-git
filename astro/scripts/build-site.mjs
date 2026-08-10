@@ -76,6 +76,8 @@ try {
 	execFileSync('npm', ['run', 'build:astro'], { cwd: astroRoot, stdio: 'inherit' });
 	const header = requireShellArtifact('header/index.html');
 	const footer = requireShellArtifact('footer/index.html');
+	rmSync(join(shellRoot, 'header'), { recursive: true, force: true });
+	rmSync(join(shellRoot, 'footer'), { recursive: true, force: true });
 	execFileSync('quarto', ['render', ...sources, '--output-dir', stageRoot], { cwd: repoRoot, stdio: 'inherit' });
 
 	const copied = new Set();

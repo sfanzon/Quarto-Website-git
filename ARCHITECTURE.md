@@ -12,12 +12,14 @@ The production site has two rendering owners and one final static output:
   an isolated temporary directory, then deterministically merges them into
   `astro/dist/`. Neither renderer writes into the other's output directory.
 
-Astro emits the shell as explicit static artifacts under `/site-shell/`:
-`header/index.html`, `footer/index.html` and `site.css`. The production merge injects those
-artifacts into rendered Quarto project documents and structurally removes the
-Quarto global header/footer. It does not extract markup or CSS from an Astro
-page, and it does not alter Quarto's article body, document scripts, project
-navigation or project assets.
+Astro emits explicit build-only header/footer fragments plus `/site-shell/site.css`.
+The merge reads the fragments, removes them from the final output, and injects
+their content into rendered Quarto project documents. The stylesheet remains a
+served asset because those documents require it. This keeps helper fragments
+out of public routes, the sitemap and Pagefind while avoiding extraction from a
+rendered Astro page. The merge structurally removes the Quarto global
+header/footer and does not alter the Quarto article body, document scripts,
+project navigation or project assets.
 
 `docs/` remains legacy Quarto-generated output and is never a source or merge
 target. It stays untouched until deployment is switched to `astro/dist/`.
@@ -26,6 +28,13 @@ Until an ordinary page is migrated, its root `.qmd` remains canonical. The
 Astro F1 overview is an accepted comparison artifact only: production
 `/projects/f1-time-rank-duality/` is written by Quarto from `index.qmd` during
 the merge.
+
+The migrated `/projects/` catalogue reads `data/projects.yml` directly. Its
+Astro page and styles are canonical for that route; `styles/components/_project-cards.scss`
+remains canonical only for legacy Quarto rendering. Likewise, Astro's Header,
+Footer and `global.css` are the production global-shell owners. Quarto global
+shell styles remain only to support unmigrated Quarto pages during transition;
+`styles/project/**` remains canonical for Quarto project-document presentation.
 
 The pre-render hook runs `scripts/build-content.py`. Structured content is kept
 in:

@@ -13,7 +13,7 @@ export default defineConfig({
 	base: '/',
 	integrations: [
 		mdx(),
-		sitemap()
+		sitemap({ filter: (page) => !page.includes('/site-shell/') })
 	],
 	markdown: {
 		shikiConfig: {

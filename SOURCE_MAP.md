@@ -13,11 +13,13 @@ individual project page. Do not infer a source move from a matching public URL.
 | `astro/src/components/Header.astro` | Canonical shared navbar, theme control and mobile navigation |
 | `astro/src/components/Footer.astro` | Canonical shared footer |
 | `astro/src/styles/global.css` | Astro global design tokens and shell styling |
-| `astro/src/pages/site-shell/header.astro` | Explicit emitted navbar artifact for Quarto documents |
-| `astro/src/pages/site-shell/footer.astro` | Explicit emitted footer artifact for Quarto documents |
+| `astro/src/pages/site-shell/header.astro` | Build-only navbar fragment for Quarto documents; removed from the final site after merge |
+| `astro/src/pages/site-shell/footer.astro` | Build-only footer fragment for Quarto documents; removed from the final site after merge |
 | `astro/src/pages/site-shell/site.css.ts` | Explicit emitted stylesheet artifact for Quarto documents |
 | `astro/scripts/build-site.mjs` | Builds Astro, renders Quarto projects in isolation, then merges them into `astro/dist/` |
 | `astro/src/pages/projects.astro` | Production owner for the `/projects/` catalogue |
+| `astro/src/data/projects.ts` | Astro loader for canonical `data/projects.yml` |
+| `astro/src/styles/projects.css` | Production `/projects/` catalogue styling |
 
 The Astro F1 overview under `astro/src/pages/projects/f1-time-rank-duality/`
 is a POC comparison source only. It is not a production owner: Quarto's
@@ -127,8 +129,9 @@ renderers add co-author homepage links. It does not produce its own include.
 | `includes/project-navigation.html` | `.project-detail-page` headings and Quarto navbar | Builds the responsive project chapter rail/drawer and synchronizes its geometry and active section. |
 | `includes/mermaid-svg-ids.html` | Mermaid SVGs under `.cell-output-display` | Namespaces diagram IDs after Quarto/Mermaid render so multiple diagrams cannot collide. |
 
-Quarto itself owns the Bootstrap navbar, dropdowns, search implementation,
-Mermaid loading and theme controls. These includes only add the site-specific
+Astro owns the production navbar, footer and theme control, including on merged
+Quarto project documents. Quarto still supplies document-specific Bootstrap,
+search and Mermaid behaviour; these legacy includes add only the site-specific
 behaviour listed above.
 
 ## Styles
@@ -136,11 +139,11 @@ behaviour listed above.
 | File | Description |
 |---|---|
 | `styles/main.scss` | SCSS entry point — imports all files below |
-| `styles/main/_00-tokens.scss` | Design tokens (CSS custom properties, colours, spacing, typography) |
+| `styles/main/_00-tokens.scss` | Legacy Quarto global tokens required while ordinary Quarto pages remain in transition |
 | `styles/main/_01-foundation.scss` | Base element styles, typography, layout primitives |
 | `styles/main/_02-shared-editorial.scss` | Shared standard-page and compact-hero editorial primitives |
-| `styles/main/_10-navbar.scss` + `styles/main/navbar/` | Navigation bar; intentional subcomponents for shell/brand, links, controls, mobile, desktop and toggler behaviour |
-| `styles/main/_11-footer.scss` | Footer styles |
+| `styles/main/_10-navbar.scss` + `styles/main/navbar/` | Legacy Quarto navbar required while ordinary Quarto pages remain in transition |
+| `styles/main/_11-footer.scss` | Legacy Quarto footer required while ordinary Quarto pages remain in transition |
 | `styles/main/_12-page-shell.scss` | Page shell and layout container styles |
 | `styles/components/_archive.scss` | Shared archive headings, actions and compact inline icons |
 | `styles/components/_archive-entries.scss` | Shared archive rows, metadata, badges and actions |
@@ -187,18 +190,18 @@ already exists.
 
 | Visible area | Current owner | Status |
 |---|---|---|
-| Design tokens, colours and shared widths | `styles/main/_00-tokens.scss` | Canonical |
-| Navbar and mobile navigation | `styles/main/_10-navbar.scss` + `styles/main/navbar/` | Canonical, intentionally split by interaction and viewport responsibility |
+| Production design tokens, colours and shared widths | `astro/src/styles/global.css` | Canonical |
+| Production navbar and mobile navigation | `astro/src/components/Header.astro` + `astro/src/styles/global.css` | Canonical |
 | Search popup | `styles/components/_search-popup.scss` | Canonical |
 | Homepage Expertise preview and Expertise page | `styles/components/_expertise.scss` | Canonical |
 | Homepage background/approach previews and About page | `styles/components/_about.scss` | Canonical |
 | Research page | `styles/components/_research.scss` (`.about-section-heading` remains shared from `_about.scss`) | Canonical |
-| Footer | `styles/main/_11-footer.scss` | Canonical |
+| Production footer | `astro/src/components/Footer.astro` + `astro/src/styles/global.css` | Canonical |
 | Outer page shell | `styles/main/_12-page-shell.scss` | Canonical |
 | Homepage note selection | `styles/components/_notes.scss` | Canonical |
 | Notes archive | `styles/components/_notes.scss` | Canonical |
 | Long-form note pages | `styles/components/_notes.scss` | Canonical |
-| Homepage and Projects archive cards | `styles/components/_project-cards.scss` | Canonical |
+| Legacy Quarto project cards | `styles/components/_project-cards.scss` | Canonical for legacy Quarto rendering; `astro/src/styles/projects.css` owns the migrated Astro catalogue |
 | Project article foundation and presentation | `styles/project/_article.scss` | Canonical, project-only |
 | Project article context controls | `styles/project/_article-controls.scss` | Canonical, project-only |
 | Project chapter navigation | `styles/project/_navigation.scss` | Canonical, project-only |
