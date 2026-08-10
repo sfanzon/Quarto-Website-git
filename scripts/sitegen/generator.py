@@ -19,6 +19,7 @@ from .publication_rendering import (
 )
 from .presentations import load_presentations, render_presentations_archive
 from .publications import load_publications
+from .supervision import load_supervision, render_supervision_archive
 from .teaching import load_teaching, teaching_section, teaching_years
 
 
@@ -29,6 +30,7 @@ def generate_site(site_root=None):
     coauthor_urls = yaml.safe_load((site_root / 'data/coauthors.yml').read_text()) or {}
     publications = load_publications(site_root / 'data/publications.bib')
     presentations = load_presentations(site_root)
+    supervision = load_supervision(site_root)
     featured_notes = load_featured_notes(site_root=site_root)
     teaching_courses = load_teaching(site_root / 'data/teaching.yml')
     lecturer_courses = [
@@ -96,6 +98,7 @@ def generate_site(site_root=None):
         'includes/home-publications-list.html': home_publications_html,
         'includes/publications-all.html': publications_html,
         'includes/presentations.html': render_presentations_archive(presentations),
+        'includes/supervision.html': render_supervision_archive(supervision),
         'includes/teaching-list.html': '\n'.join(teaching_html),
         'includes/home-news.qmd': render_news_qmd(
             news[:8],

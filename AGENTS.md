@@ -53,6 +53,7 @@ Do not create a large plan for a small, local change.
 | Projects | `data/projects.yml` |
 | Publications | `data/publications.bib` |
 | Presentations | `data/presentations_*.bib` |
+| Supervision | `data/supervision_*.bib` |
 | Teaching | `data/teaching.yml` |
 | News | `news/*.md` |
 | Notes | `notes.qmd`, `notes/*.qmd` |

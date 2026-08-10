@@ -21,6 +21,7 @@ It combines mathematical depth with inspectable modelling, algorithms, scientifi
 - `data/publications.bib` — single publication source
 - `data/projects.yml` — single source for homepage and Projects-page cards
 - `data/teaching.yml` — single teaching record with lecturer/tutor roles
+- `data/supervision_*.bib` — supervision records grouped by degree level
 - `scripts/build-content.py` — generates reusable HTML/QMD fragments
 - `styles/main.scss` — site-wide visual system
 - `docs/` — pre-rendered website for deployment

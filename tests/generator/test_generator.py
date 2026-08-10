@@ -65,6 +65,20 @@ class GeneratorTests(GeneratorTestCase):
 """,
                 encoding="utf-8",
             )
+        for filename, record_id in (
+            ("supervision_master.bib", "master"),
+            ("supervision_undergraduate.bib", "undergraduate"),
+        ):
+            (fixture_root / "data" / filename).write_text(
+                f"""@misc{{{record_id},
+  title = {{A generated supervision project}},
+  year = {{2025/26}},
+  venue = {{Test University}},
+  abstract = {{A generated abstract.}}
+}}
+""",
+                encoding="utf-8",
+            )
         (fixture_root / "data/teaching.yml").write_text(
             """- id: course
   role: lecturer
@@ -116,6 +130,7 @@ Note body.
             "includes/projects-portfolio.html",
             "includes/publications-all.html",
             "includes/presentations.html",
+            "includes/supervision.html",
             "includes/teaching-list.html",
         }
 

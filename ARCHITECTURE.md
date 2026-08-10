@@ -11,6 +11,7 @@ in:
 
 - `data/publications.bib` for publications;
 - `data/presentations_*.bib` for talks, posters and institutional presentations;
+- `data/supervision_*.bib` for master’s and undergraduate supervision;
 - `data/projects.yml` for project cards, metadata and navigation;
 - `data/teaching.yml` for teaching, with one record per course and a role;
 - `news/*.md` for dated news entries.

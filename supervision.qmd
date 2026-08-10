@@ -1,6 +1,6 @@
 ---
 title: "Supervision"
-description: "PhD, master, and undergraduate supervision"
+description: "Master’s and undergraduate supervision"
 toc: false
 page-layout: full
 body-classes: standard-page supervision-page
@@ -9,116 +9,12 @@ body-classes: standard-page supervision-page
 ```{=html}
 <header class="page-hero compact-page-hero">
   <h1>Supervision</h1>
-  <p>PhD, master’s and undergraduate projects I have supervised.</p>
+  <p>Master’s and undergraduate projects I have supervised.</p>
 </header>
 ```
 
 <p>Browse supervision by degree level:</p>
-<ul><li><a href="#phd"><b>PhD Students</b></a></li><li><a href="#master"><b>Master Students</b></a></li><li><a href="#undergraduate"><b>Undergraduate Students</b></a></li></ul>
+<ul><li><a href="#master"><b>Master Students</b></a></li><li><a href="#undergraduate"><b>Undergraduate Students</b></a></li></ul>
 <div><p>Interested in dissertation projects? <a href="mailto:S.Fanzon@hull.ac.uk"><b>Email me</b></a>!</p></div>
-<div class="publications">
-<a id="phd"><h3 class="archive-section-heading archive-section-heading--entry-next"><b>PhD Students</b></h3></a>
-<div class="row publication-entry" id="2025-Austin">
-  <div class="col col-sm-2 abbr"></div>
-  <div class="col-sm-8">
-<div class="title">Statistical Models for Sports</div>
-<div class="periodical">University of Hull, UK · Joint supervision with John Fry, Start 2025</div>
-<div class="periodical">Start 2025</div>
-<div class="links archive-actions"><a class="btn btn-sm z-depth-0 abstract-toggle" role="button">Abs</a><a href="https://www.silviofanzon.com/supervision/#2025-Austin" class="btn btn-sm z-depth-0 " role="button">URL</a></div>
-<div class="abstract hidden"><p>Coming soon!</p></div>
-  </div>
-</div>
-<a id="master"><h3 class="archive-section-heading archive-section-heading--spacious"><b>Master Students</b></h3></a>
-<h2 class="year archive-year">2023/24</h2>
-<div class="row publication-entry" id="2024-Arowobusoye">
-  <div class="col col-sm-2 abbr"></div>
-  <div class="col-sm-8">
-<div class="title">A Complex Analysis approach to the isoperimetric inequality</div>
-<div class="periodical">University of Hull, UK</div>
-<div class="periodical">2023/24</div>
-<div class="links archive-actions"><a class="btn btn-sm z-depth-0 abstract-toggle" role="button">Abs</a><a href="https://www.silviofanzon.com/supervision/#2024-Arowobusoye" class="btn btn-sm z-depth-0 " role="button">URL</a></div>
-<div class="abstract hidden"><p>Mathematicians consider the isoperimetric inequality a fundamental principle which states that among simple closed curves of a given length, circle has the largest possible area. This work proves the isoperimetric inequality through the application of complex analysis, specifically the Riemann mapping theorem. Each idea is inspired by Peter L. Duren's monograph, Univalent Functions and Robert Osserman's paper. The thesis covers a brief history of the inequality and presents a survey of classic proofs of the inequality while giving a constructive proof based on Riemann mapping theorem from the complex analysis. Practical applications will also be explored.</p></div>
-  </div>
-</div>
-<div class="row publication-entry" id="2024-Ekeshili">
-  <div class="col col-sm-2 abbr"></div>
-  <div class="col-sm-8">
-<div class="title">The Euler-Lagrange equation</div>
-<div class="periodical">University of Hull, UK</div>
-<div class="periodical">2023/24</div>
-<div class="links archive-actions"><a class="btn btn-sm z-depth-0 abstract-toggle" role="button">Abs</a><a href="https://www.silviofanzon.com/supervision/#2024-Ekeshili" class="btn btn-sm z-depth-0 " role="button">URL</a></div>
-<div class="abstract hidden"><p>This dissertation inquires into the Euler-Lagrange equation and the method of Lagrange multipliers, with special emphasis on how they apply to variational problems. In particular we are illustrating through some example problems such as the brachistochrone problem that both of these mathematical tools are necessary when seeking an optimal solution for particular field tasks. A marriage of the Euler-Lagrange equation with Lagrange multipliers can turn an obejctive into manageable problems and remove all of their complications. The dissertation tests and verifies the cycloid as the curve of quickest descent in practice, thus confirming the practical usefulness of these methods. More broadly, the dissertation highlights the wide-ranging application and importance of these tools for tackling complex optimization problems.</p></div>
-  </div>
-</div>
-<h2 class="year archive-year">2022/23</h2>
-<div class="row publication-entry" id="2023-Awuku">
-  <div class="col col-sm-2 abbr"></div>
-  <div class="col-sm-8">
-<div class="title">The Isoperimetric Problem</div>
-<div class="periodical">University of Hull, UK</div>
-<div class="periodical">2022/23</div>
-<div class="links archive-actions"><a class="btn btn-sm z-depth-0 abstract-toggle" role="button">Abs</a><a href="https://www.silviofanzon.com/supervision/#2023-Awuku" class="btn btn-sm z-depth-0 " role="button">URL</a></div>
-<div class="abstract hidden"><p>A closed curve's perimeter and the area it encloses are related by the isoperimetric inequality. It claims that a circle is the closed curve with the biggest area enclosed for all closed curves with a specified perimeter.
- A circle with the same perimeter as the curve will enclose the maximum feasible area for any closed curve enclosing a region. No other form can include as much space around a set boundary. 
- This thesis presents a comprehensive proof of the isoperimetric inequality in the Euclidean plane \(R^2\).
-The proof relies on the Fourier analysis-based Wirtinger inequality. By reparameterizing an arbitrary curve on \([-1,1]\) and applying Wirtinger, the inequality is shown to hold for smooth curves. A density argument extends the conclusion to all finite-length Sobolev curves. The equality case precisely corresponds to circular curves. Applications like deriving explicit a priori PDE estimates and bounding ellipse parameters are explored, demonstrating the inequality's utility beyond circles.  It highlights the inequality's theoretical significance while exploring practical uses in mathematics and physics. The journey elucidates deep connections between geometry and analysis via an elegant isoperimetric constraint.</p></div>
-  </div>
-</div>
-<a id="undergraduate"><h3 class="archive-section-heading archive-section-heading--spacious"><b>Undergraduate Students</b></h3></a>
-<h2 class="year archive-year">2025/26</h2>
-<div class="row publication-entry" id="2025-Cawthorne">
-  <div class="col col-sm-2 abbr"></div>
-  <div class="col-sm-8">
-<div class="title">Inverse Problems in Imaging</div>
-<div class="periodical">University of Hull, UK</div>
-<div class="periodical">2025/26</div>
-<div class="links archive-actions"><a class="btn btn-sm z-depth-0 abstract-toggle" role="button">Abs</a><a href="https://www.silviofanzon.com/supervision/#2025-Cawthorne" class="btn btn-sm z-depth-0 " role="button">URL</a></div>
-<div class="abstract hidden"><p>Coming soon!</p></div>
-  </div>
-</div>
-<div class="row publication-entry" id="2025-Kubiliute">
-  <div class="col col-sm-2 abbr"></div>
-  <div class="col-sm-8">
-<div class="title">Optimal Transport, with applications to Tennis</div>
-<div class="periodical">University of Hull, UK</div>
-<div class="periodical">2025/26</div>
-<div class="links archive-actions"><a class="btn btn-sm z-depth-0 abstract-toggle" role="button">Abs</a><a href="https://www.silviofanzon.com/supervision/#2025-Kubiliute" class="btn btn-sm z-depth-0 " role="button">URL</a></div>
-<div class="abstract hidden"><p>Coming soon!</p></div>
-  </div>
-</div>
-<h2 class="year archive-year">2024/25</h2>
-<div class="row publication-entry" id="2024-Fowler">
-  <div class="col col-sm-2 abbr"></div>
-  <div class="col-sm-8">
-<div class="title">Optimal Transport, with applications to Logistic problems</div>
-<div class="periodical">University of Hull, UK</div>
-<div class="periodical">2024/25</div>
-<div class="links archive-actions"><a class="btn btn-sm z-depth-0 abstract-toggle" role="button">Abs</a><a href="https://www.silviofanzon.com/supervision/#2024-Fowler" class="btn btn-sm z-depth-0 " role="button">URL</a></div>
-<div class="abstract hidden"><p>In this Thesis we discuss the formation, foundation and application of Optimal Transport. We explore the motivation for the founding of the field and how it evolves into a widely applicable area of mathematics.
 
-To consolidate the content of this thesis we explore an example of the primal use of Optimal Transport - logistics. In this example we consider Royal Air Force Lossiemouth. In our problem we must find the cheapest was of supplying the base with enough aviation fuel in order to maintain it's operational capabilities as a base. We have three transport methods available to us and four other Royal Air force bases to supply the required fuel. This is done by setting up a Partial Optimal Transport problem and using Python code to find a solution numerically.
-
-Our findings suggest that all fuel from the selected Royal Air Force stations to RAF Lossiemouth should be moved via Tanker Truck, which coincides with the cheaper option.</p></div>
-  </div>
-</div>
-<div class="row publication-entry" id="2024-Hodges">
-  <div class="col col-sm-2 abbr"></div>
-  <div class="col-sm-8">
-<div class="title">Why study mathematics if it cannot prove everything? Life after Godel&#x27;s First Incompleteness Theorem</div>
-<div class="periodical">University of Hull, UK</div>
-<div class="periodical">2024/25</div>
-<div class="links archive-actions"><a class="btn btn-sm z-depth-0 abstract-toggle" role="button">Abs</a><a href="https://www.silviofanzon.com/supervision/#2024-Hodges" class="btn btn-sm z-depth-0 " role="button">URL</a></div>
-<div class="abstract hidden"><p>This dissertation explores the enduring nature of mathematics following the revelation of Godel's first Incompleteness Theorem. It provides the building blocks required to construct a formal proof of the theorem, complete with examples of key concepts along the way. The inherent difference between truth and provability is carefully considered; both mathematically and philosophically. Following the proof, a discussion into life after Godel's publication is carried out. The rebuttal of Wittgenstein; as well as the work of other philosophers was considered. This dissertation mirrors Camus' approach to the absurd by considering the notion of mathematical suicide: a metaphor for the existential crisis following the collapse of Hilbert's formalist dream. The development of computational theory from incompleteness is investigated through the Halting Problem, before considering the current P vs NP problem. Then, by examining the nature of uncertainty in quantum mechanics, and the Axiom of Choice and Continuum Hypothesis alongside Zermelo-Fraenkel set theory, this dissertation proposes a new visualisation for the structure of a mathematical universe. Finally, the title question is answered by arguing that incompleteness is not a failure of mathematics, it is a feature. Whilst its discovery means that consideration must be made when forming systems, it resonates with the human existential dialogue with the uncertain, making mathematics more alive than ever.</p></div>
-  </div>
-</div>
-<div class="row publication-entry" id="2024-Varley">
-  <div class="col col-sm-2 abbr"></div>
-  <div class="col-sm-8">
-<div class="title">Geodesics, old and new</div>
-<div class="periodical">University of Hull, UK</div>
-<div class="periodical">2024/25</div>
-<div class="links archive-actions"><a class="btn btn-sm z-depth-0 abstract-toggle" role="button">Abs</a><a href="https://www.silviofanzon.com/supervision/#2024-Varley" class="btn btn-sm z-depth-0 " role="button">URL</a></div>
-<div class="abstract hidden"><p>In this thesis I will look at geodesics and how the shortest path between 2 points is influenced by the surface it is on. I find the geodesics on a helicoid as well as more generally for surfaces of revolution. Then I will finish the project by looking at these problems in the context of the more abstract riemannian geometry.</p></div>
-  </div>
-</div>
-</div>
+{{< include includes/supervision.html >}}

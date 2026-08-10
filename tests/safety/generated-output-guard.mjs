@@ -26,6 +26,7 @@ const GENERATED_PATHS = new Set([
   "includes/home-notes.html",
   "includes/home-projects.html",
   "includes/presentations.html",
+  "includes/supervision.html",
   "includes/home-publications-list.html",
   "includes/news-all.qmd",
   "includes/projects-portfolio.html",
