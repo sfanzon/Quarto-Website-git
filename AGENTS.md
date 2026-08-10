@@ -52,6 +52,7 @@ Do not create a large plan for a small, local change.
 | Site config/navigation | `_quarto.yml` |
 | Projects | `data/projects.yml` |
 | Publications | `data/publications.bib` |
+| Presentations | `data/presentations_*.bib` |
 | Teaching | `data/teaching.yml` |
 | News | `news/*.md` |
 | Notes | `notes.qmd`, `notes/*.qmd` |

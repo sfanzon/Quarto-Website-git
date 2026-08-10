@@ -16,6 +16,7 @@ test("rejects docs-only changes", () => {
 test("rejects generated include-only changes", () => {
   assert.equal(checkGuard(["includes/home-news.qmd"]).passed, false);
   assert.equal(checkGuard(["includes/home-notes.html"]).passed, false);
+  assert.equal(checkGuard(["includes/presentations.html"]).passed, false);
 });
 
 test("accepts generated output accompanied by canonical source", () => {

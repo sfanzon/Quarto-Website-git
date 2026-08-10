@@ -38,6 +38,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | File | Description |
 |---|---|
 | `data/publications.bib` | Single source for all publications |
+| `data/presentations_*.bib` | Presentation records grouped as talks, posters and institutional presentations |
 | `data/projects.yml` | Single source for project cards, metadata and navigation |
 | `data/teaching.yml` | Single teaching record, with `role: lecturer` or `role: tutor` |
 | `data/coauthors.yml` | Co-author homepage URL map |
@@ -64,6 +65,7 @@ Top-level `.qmd` files intentionally remain at repository root because Quarto mi
 | `includes/news-all.qmd` | `news/*.md` (all) |
 | `includes/projects-portfolio.html` | `data/projects.yml` (all) |
 | `includes/publications-all.html` | `data/publications.bib` (all, grouped) |
+| `includes/presentations.html` | `data/presentations_*.bib` |
 | `includes/teaching-list.html` | `data/teaching.yml` |
 
 ### Hand-written includes (canonical source)

@@ -49,6 +49,22 @@ class GeneratorTests(GeneratorTestCase):
 """,
             encoding="utf-8",
         )
+        for filename, record_id in (
+            ("presentations_talks.bib", "talk"),
+            ("presentations_posters.bib", "poster"),
+            ("presentations_institutional.bib", "institutional"),
+        ):
+            (fixture_root / "data" / filename).write_text(
+                f"""@misc{{{record_id},
+  title = {{A generated presentation}},
+  year = {{2025}},
+  date = {{1 Jan 2025}},
+  venue = {{Test University}},
+  event_title = {{Test event}}
+}}
+""",
+                encoding="utf-8",
+            )
         (fixture_root / "data/teaching.yml").write_text(
             """- id: course
   role: lecturer
@@ -99,6 +115,7 @@ Note body.
             "includes/news-all.qmd",
             "includes/projects-portfolio.html",
             "includes/publications-all.html",
+            "includes/presentations.html",
             "includes/teaching-list.html",
         }
 
