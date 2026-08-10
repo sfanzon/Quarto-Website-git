@@ -33,8 +33,8 @@ should not be edited manually. The hand-written exceptions are
 Directly referenced visual assets are stored under `assets/img/brand/`,
 `assets/img/profile/`, `assets/img/projects/` and `assets/img/notes/`.
 Directly referenced downloads are stored under `assets/pdf/`, grouped by
-journal, seminar, news, teaching and thesis purpose. The deliberately omitted
-presentation PDFs are listed in `data/optional-local-assets.txt`; add each file
+journal, seminar, news, teaching and thesis purpose. Every deliberately omitted
+local asset is listed in `data/optional-local-assets.txt`; add each source file
 at its listed path and remove its entry when it becomes part of this lightweight
 repository snapshot. Other unlinked archive material is maintained outside it.
 

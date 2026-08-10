@@ -1,6 +1,6 @@
 # Deliberately omitted from this lightweight repository snapshot.
-# Keep their references in the presentation archive; add the PDFs later at
-# the paths below, then remove the corresponding lines from this file.
+# List every intentionally absent local asset here, regardless of the page that
+# links to it. Add the source later at its path, then remove that line.
 assets/pdf/seminars/slides/2018/2018-Graz-Slides.pdf
 assets/pdf/seminars/slides/2018/2018-Lisbon-Slides.pdf
 assets/pdf/seminars/slides/2019/2019-Berlin-Slides.pdf
