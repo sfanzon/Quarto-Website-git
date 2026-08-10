@@ -3,7 +3,7 @@
 > "I want to change X on the site. Which source file should I inspect first?"
 
 Platform suitability and the threshold for changing it are documented in
-`PLATFORM_DECISION.md`.
+`PLATFORM_DECISION.md`; the staged experiment is in `ASTRO_QUARTO_PLAN.md`.
 
 ## Top-level pages
 

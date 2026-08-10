@@ -28,7 +28,8 @@ It combines mathematical depth with inspectable modelling, algorithms, scientifi
 - `styles/main.scss` — site-wide visual system
 - `docs/` — pre-rendered website for deployment
 - `ARCHITECTURE.md` — source ownership and project-page architecture
-- `PLATFORM_DECISION.md` — current Quarto fit and migration threshold
+- `PLATFORM_DECISION.md` — current platform decision and migration threshold
+- `ASTRO_QUARTO_PLAN.md` — staged Astro/Quarto integration experiment
 - `DESIGN.md` — visual and editorial design rules
 - `AGENTS.md` — operating rules for coding agents
 
@@ -169,6 +170,9 @@ See `ARCHITECTURE.md` for source ownership, project-page behaviour and implement
 
 See `PLATFORM_DECISION.md` for the current platform decision and the evidence
 required before reconsidering Astro.
+
+See `ASTRO_QUARTO_PLAN.md` for the current working plan. Quarto remains the
+required renderer for technical posts and lecture-note sites.
 
 ## Project architecture
 
