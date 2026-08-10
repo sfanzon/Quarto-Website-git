@@ -2,8 +2,8 @@
 
 > "I want to change X on the site. Which source file should I inspect first?"
 
-Platform suitability and the threshold for changing it are documented in
-`PLATFORM_DECISION.md`; the staged experiment is in `ASTRO_QUARTO_PLAN.md`.
+The active repository-cleanup sequence is in `CLEANUP_PLAN.md`. Platform
+suitability is assessed separately in `PLATFORM_DECISION.md` after cleanup.
 
 ## Top-level pages
 

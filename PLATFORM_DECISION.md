@@ -1,45 +1,40 @@
-# Platform decision: test Astro as the website owner
+# Platform assessment: cleanup before reconsideration
 
-## Decision
+## Current decision
 
-Keep the current Quarto site as production while building one isolated vertical
-slice that tests Astro as the owner of the professional website.
+Do not prototype, migrate to, or integrate Astro during this cleanup cycle.
+Keep the current Quarto site deployable while simplifying and documenting its
+actual implementation.
 
-Quarto is not being evaluated for removal. It remains the required renderer for:
+The purpose of this cycle is to discover how much complexity belongs to the
+website itself and how much is caused by working against Quarto. Assessing the
+platform before the cleanup is complete would measure historical clutter as if
+it were a framework limitation.
 
-- lecture-note websites;
-- mathematical and scientific technical posts;
-- documents that need citations, cross-references, executable code or other
-  document-oriented features.
+## Stable requirement
 
-The experiment asks only whether Astro should own the normal website shell,
-catalogues, landing pages and non-technical content.
+Lecture-note websites and technical posts that benefit from mathematics,
+citations, cross-references, executable code or document-oriented structure
+remain Quarto content regardless of the eventual main-site platform.
 
-## Current hypothesis
+## What will be assessed
 
-Astro is likely a better long-term owner for ordinary website architecture.
-Quarto remains the better specialist scientific-document renderer. Both must
-consume the same small visual contract so that moving between them feels like
-moving between pages of one website.
+At the end of the cleanup, evaluate Quarto against recorded evidence:
 
-The Astro implementation of al-folio in `dadangnh/as-folio` is evidence that
-Astro can cover the conventional academic-portfolio surface. It is a reference,
-not a dependency or an automatic migration target: this website has its own
-editorial identity, structured sources and project architecture.
+- authoring and editing cost;
+- build and deployment complexity;
+- amount and stability of custom SCSS, JavaScript, Lua and generated HTML;
+- frequency of Quarto-specific workarounds;
+- accessibility, responsive and theme behaviour;
+- suitability for technical documents;
+- maintenance cost of the current site shell.
 
-## Decision gate
+The result may be to retain Quarto, reconsider the main-site platform later, or
+run a separately approved experiment. No migration work is included in the
+current repository-cleanup plan.
 
-Do not migrate the full site until the vertical slice proves all of the
-following:
+`dadangnh/as-folio` remains useful evidence that Astro can implement an
+al-folio-shaped academic website, but it does not by itself show that migrating
+this cleaned, customised Quarto site would reduce maintenance.
 
-1. Astro and Quarto pages are visually seamless in light and dark modes.
-2. Existing public URLs can be preserved.
-3. Navigation, theme state, metadata, search and assets work across both
-   renderers.
-4. The complete site builds and previews with one documented command.
-5. Content and navigation have one canonical source rather than synchronized
-   manual copies.
-6. Ongoing editing is simpler than in the current all-Quarto implementation.
-
-If the proof fails any of these conditions, retain the cleaned-up Quarto site.
-The detailed experiment and migration sequence are in `ASTRO_QUARTO_PLAN.md`.
+See `CLEANUP_PLAN.md` for the active plan and final decision gate.

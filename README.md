@@ -29,7 +29,7 @@ It combines mathematical depth with inspectable modelling, algorithms, scientifi
 - `docs/` — pre-rendered website for deployment
 - `ARCHITECTURE.md` — source ownership and project-page architecture
 - `PLATFORM_DECISION.md` — current platform decision and migration threshold
-- `ASTRO_QUARTO_PLAN.md` — staged Astro/Quarto integration experiment
+- `CLEANUP_PLAN.md` — active cleanup sequence and model allocation
 - `DESIGN.md` — visual and editorial design rules
 - `AGENTS.md` — operating rules for coding agents
 
@@ -168,11 +168,9 @@ See `DESIGN.md` for visual and editorial rules.
 
 See `ARCHITECTURE.md` for source ownership, project-page behaviour and implementation details.
 
-See `PLATFORM_DECISION.md` for the current platform decision and the evidence
-required before reconsidering Astro.
-
-See `ASTRO_QUARTO_PLAN.md` for the current working plan. Quarto remains the
-required renderer for technical posts and lecture-note sites.
+See `CLEANUP_PLAN.md` for the active repository-cleanup sequence. See
+`PLATFORM_DECISION.md` for the evidence to collect before deciding whether the
+cleaned site is still fighting Quarto.
 
 ## Project architecture
 
