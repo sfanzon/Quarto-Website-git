@@ -199,8 +199,6 @@
 .navbar-links > a:focus-visible,
 .navbar-more > summary:hover,
 .navbar-more > summary:focus-visible,
-.theme-toggle:hover,
-.theme-toggle:focus-visible,
 .menu-toggle:hover,
 .menu-toggle:focus-visible {
 	background: color-mix(in srgb, var(--global-navbar-hover-color) 14%, transparent);
@@ -279,40 +277,23 @@
 }
 
 .theme-toggle { position: relative; }
-.theme-toggle::before,
-.theme-toggle::after {
+.theme-toggle::before {
 	content: '';
 	position: absolute;
+	box-sizing: border-box;
+	width: 16px;
+	height: 16px;
 	margin: 0;
 	padding: 0;
-	border: 0;
-	transition: transform 160ms ease, background-color 160ms ease;
-}
-
-.theme-toggle::before {
-	width: 25.6px;
-	height: 14.4px;
-	border: 1px solid color-mix(in srgb, var(--global-navbar-text-color) 32%, transparent);
-	border-radius: 999px;
-	background: color-mix(in srgb, var(--global-navbar-text-color) 14%, transparent);
-}
-
-.theme-toggle::after {
-	width: 10.4px;
-	height: 10.4px;
+	border: 1.25px solid currentColor;
 	border-radius: 50%;
-	background: var(--global-navbar-text-color);
-	transform: translateX(-5.6px);
+	background: linear-gradient(90deg, currentColor 0 50%, transparent 50% 100%);
 }
 
-:root[data-theme='dark'] .theme-toggle::after {
-	background: var(--global-navbar-active-text-color);
-	transform: translateX(5.6px);
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.theme-toggle::before,
-	.theme-toggle::after { transition: none; }
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+	background: transparent;
+	color: var(--global-navbar-text-color);
 }
 
 .menu-toggle { display: none; }
