@@ -126,6 +126,20 @@ npm run test:visual     # run locally (will differ from CI baselines)
 
 Local visual test results are informative but not authoritative. The CI run is the gate.
 
+### Hybrid visual QA pages
+
+```bash
+cd astro
+npm run build:qa
+npm run preview
+```
+
+Inspect `/dev/kitchen-sink/` for current production patterns and
+`/dev/viewports/` for real-route frames at 375, 430, 820, 1180 and 1440 CSS
+pixels. Use the navbar breakpoint mode to compare 991, 992 and 993 pixels.
+Normal `npm run build:site` removes these routes from `dist/`; neither build
+adds them to the sitemap or Pagefind.
+
 ## Test infrastructure files
 
 | File | Purpose |

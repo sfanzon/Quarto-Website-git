@@ -1,0 +1,87 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import '../../styles/dev-tools.css';
+
+const coreFrames = [
+	['Small phone', 375, 812, .5],
+	['Large phone', 430, 932, .46],
+	['Tablet portrait', 820, 1180, .39],
+	['Tablet landscape / small desktop', 1180, 820, .36],
+	['Desktop', 1440, 900, .32],
+];
+const breakpointFrames = [
+	['Below navbar breakpoint', 991, 800, .42],
+	['Navbar breakpoint', 992, 800, .42],
+	['Above navbar breakpoint', 993, 800, .42],
+];
+const routes = [
+	['Kitchen sink', '/dev/kitchen-sink/'], ['Homepage', '/'], ['About', '/about/'],
+	['Projects', '/projects/'], ['Publications', '/publications/'],
+	['F1 project', '/projects/f1-time-rank-duality/'],
+	['F1 technical', '/projects/f1-time-rank-duality/technical.html'],
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title="Viewport QA | Silvio Fanzon" description="Development-only responsive inspection dashboard" />
+		<meta name="robots" content="noindex,nofollow" />
+	</head>
+	<body class="standard-page" data-pagefind-ignore="all">
+		<Header />
+		<main class="content dev-content">
+			<header class="compact-page-hero dev-hero"><p class="eyebrow">Development QA</p><h1>Real-route viewport dashboard</h1><p>Independent same-origin frames rendered at their declared CSS-pixel dimensions.</p><nav class="dev-local-nav" aria-label="Development tools"><a href="/dev/kitchen-sink/">Kitchen sink</a><a href="/dev/viewports/" aria-current="page">Viewport dashboard</a></nav></header>
+
+			<div class="dev-toolbar" aria-label="Viewport QA controls">
+				<label>Route<select id="qa-route">{routes.map(([label, path]) => <option value={path}>{label}</option>)}</select></label>
+				<form class="dev-custom-route" id="qa-custom"><label>Custom local path<input id="qa-custom-path" type="text" inputmode="url" placeholder="/projects/" /></label><button type="submit">Load</button></form>
+				<label>Theme<select id="qa-theme"><option value="light">Light</option><option value="dark">Dark</option></select></label>
+				<div><span class="dev-sample-label">Viewport set</span><button type="button" data-qa-mode="core" aria-pressed="true">Core</button> <button type="button" data-qa-mode="breakpoint" aria-pressed="false">Navbar breakpoint</button></div>
+			</div>
+
+			{[['core', coreFrames], ['breakpoint', breakpointFrames]].map(([mode, frames]) => (
+				<section class="dev-frame-board" data-frame-set={mode} hidden={mode !== 'core'} aria-label={`${mode} viewport previews`}>
+					{frames.map(([label, width, height, scale]) => (
+						<article class="dev-frame-card"><header><strong>{label}</strong><span>{width} × {height}</span></header><div class="dev-frame-stage" style={`--frame-width:${width};--frame-height:${height};--frame-scale:${scale}`}><iframe src="/dev/kitchen-sink/" title={`${label}: ${width} by ${height} pixel preview`} loading="lazy"></iframe></div></article>
+					))}
+				</section>
+			))}
+		</main>
+		<Footer />
+
+		<script>
+			const defaultRoute = '/dev/kitchen-sink/';
+			const frames = () => [...document.querySelectorAll<HTMLIFrameElement>('.dev-frame-stage iframe')];
+			const routeSelect = document.querySelector<HTMLSelectElement>('#qa-route');
+			const themeSelect = document.querySelector<HTMLSelectElement>('#qa-theme');
+			const customForm = document.querySelector<HTMLFormElement>('#qa-custom');
+			const customPath = document.querySelector<HTMLInputElement>('#qa-custom-path');
+			const modeButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-qa-mode]')];
+
+			const loadRoute = (path: string) => {
+				const requestedPath = path.trim();
+				const localPath = requestedPath ? (requestedPath.startsWith('/') ? requestedPath : `/${requestedPath}`) : defaultRoute;
+				frames().forEach((frame) => { frame.src = localPath; });
+			};
+			const setTheme = (theme: string) => {
+				localStorage.setItem('theme', theme);
+				document.documentElement.dataset.theme = theme;
+				document.documentElement.style.colorScheme = theme;
+				frames().forEach((frame) => frame.contentWindow?.location.reload());
+			};
+
+			routeSelect?.addEventListener('change', () => loadRoute(routeSelect.value));
+			themeSelect?.addEventListener('change', () => setTheme(themeSelect.value));
+			customForm?.addEventListener('submit', (event) => { event.preventDefault(); if (customPath?.value.trim()) loadRoute(customPath.value); });
+			modeButtons.forEach((button) => button.addEventListener('click', () => {
+				const mode = button.dataset.qaMode;
+				modeButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+				document.querySelectorAll<HTMLElement>('[data-frame-set]').forEach((set) => { set.hidden = set.dataset.frameSet !== mode; });
+			}));
+			if (themeSelect) themeSelect.value = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
+		</script>
+	</body>
+</html>

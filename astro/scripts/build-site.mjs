@@ -10,7 +10,10 @@ const projectsRoot = join(repoRoot, 'projects');
 const distRoot = join(astroRoot, 'dist');
 const stageRoot = mkdtempSync(join(tmpdir(), 'astro-quarto-projects-'));
 const shellRoot = join(distRoot, 'site-shell');
+const devRoot = join(distRoot, 'dev');
+const stagedDevRoot = join(stageRoot, 'dev');
 const siteUrl = 'https://www.silviofanzon.com';
+const includeDevTools = process.argv.includes('--include-dev-tools');
 
 function findProjectSources(directory) {
 	return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -123,9 +126,14 @@ try {
 		}
 	}
 
+	if (existsSync(devRoot)) {
+		if (includeDevTools) cpSync(devRoot, stagedDevRoot, { recursive: true });
+		rmSync(devRoot, { recursive: true, force: true });
+	}
 	writeSitemap();
 	execFileSync('npm', ['run', 'postbuild'], { cwd: astroRoot, stdio: 'inherit' });
-	console.log(`Production site build complete: ${sources.length} Quarto project pages merged into dist/`);
+	if (includeDevTools) cpSync(stagedDevRoot, devRoot, { recursive: true });
+	console.log(`${includeDevTools ? 'QA' : 'Production'} site build complete: ${sources.length} Quarto project pages merged into dist/`);
 } finally {
 	rmSync(stageRoot, { recursive: true, force: true });
 }

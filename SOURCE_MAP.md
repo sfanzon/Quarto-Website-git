@@ -30,6 +30,15 @@ individual project page. Do not infer a source move from a matching public URL.
 Quarto's `projects/f1-time-rank-duality/index.qmd` is the sole owner of the
 F1 overview URL; no Astro detail route exists.
 
+## Development visual QA
+
+| File | Description |
+|---|---|
+| `astro/src/pages/dev/kitchen-sink.astro` | Development-only visual inventory of current production patterns |
+| `astro/src/pages/dev/viewports.astro` | Development-only real-route responsive viewport dashboard |
+| `astro/src/styles/dev-tools.css` | QA page chrome, token swatches, controls and viewport frames only |
+| `astro/scripts/build-site.mjs` + `npm run build:qa` | Retains `/dev/` locally while keeping it out of sitemap and Pagefind; production `build:site` removes it |
+
 ## Top-level pages
 
 | File | Description |
