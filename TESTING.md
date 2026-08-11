@@ -140,6 +140,17 @@ pixels. Use the navbar breakpoint mode to compare 991, 992 and 993 pixels.
 Normal `npm run build:site` removes these routes from `dist/`; neither build
 adds them to the sitemap or Pagefind.
 
+For an automatically rebuilt local hybrid site, use:
+
+```bash
+cd astro
+npm run dev:hybrid
+```
+
+It serves the QA merge from `astro/dist/`, including `/dev/`, and watches the
+Astro sources and canonical Quarto project inputs. Reload after its completed
+rebuild message; use `npm run dev` when only Astro routes are needed.
+
 ## Test infrastructure files
 
 | File | Purpose |

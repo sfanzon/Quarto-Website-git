@@ -102,6 +102,12 @@ artifacts, copies each rendered project page and referenced assets into
 indexes the completed result. `npm run build:hybrid` remains a compatibility
 alias while the POC branch is active.
 
+For local hybrid development, `npm run dev:hybrid` performs the same QA merge
+once, serves `astro/dist/`, and watches the Astro sources plus the canonical
+Quarto-project inputs. It rebuilds after a change without an explicit build
+command; reload the browser after the terminal reports the completed rebuild.
+`npm run dev` remains the faster Astro-only server for ordinary Astro routes.
+
 ## Complexity budget
 
 The Astro migration is a simplification programme. Keep every visible

@@ -23,6 +23,7 @@ individual project page. Do not infer a source move from a matching public URL.
 | `astro/src/pages/site-shell/footer.astro` | Build-only footer fragment for Quarto documents; removed from the final site after merge |
 | `astro/src/pages/site-shell/site.css.ts` | Explicit emitted stylesheet artifact for Quarto documents |
 | `astro/scripts/build-site.mjs` | Builds Astro, renders Quarto projects in isolation, merges them into `astro/dist/`, then writes the final sitemap and Pagefind index |
+| `astro/scripts/dev-site.mjs` | Local hybrid development watcher: invokes the QA merge, serves `astro/dist/`, and watches canonical Astro/Quarto project inputs for rebuilds |
 | `astro/src/pages/projects.astro` | Production owner for the `/projects/` catalogue |
 | `astro/src/data/projects.ts` | Astro loader for canonical `data/projects.yml` |
 | `astro/src/styles/projects.css` | Production `/projects/` catalogue styling |

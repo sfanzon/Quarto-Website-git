@@ -4,6 +4,7 @@
   "version": "0.6.1",
   "scripts": {
     "dev": "astro dev",
+    "dev:hybrid": "node scripts/dev-site.mjs",
     "build": "astro build",
     "build:astro": "astro build",
     "build:site": "node scripts/build-site.mjs",
