@@ -5,7 +5,7 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isAbout = currentPath === '/about';
 const isProjects = currentPath === '/projects' || currentPath.startsWith('/projects/');
 const isDev = currentPath === '/dev' || currentPath.startsWith('/dev/');
-const includeDevTools = process.env.SF_INCLUDE_DEV_TOOLS === '1';
+const includeDevTools = import.meta.env.DEV || process.env.SF_INCLUDE_DEV_TOOLS === '1';
 
 const primaryLinks = [
 	{ label: 'About', href: '/about/', active: isAbout },
@@ -116,6 +116,12 @@ const dropdowns = [
 		});
 
 		const desktopDropdown = () => window.matchMedia('(min-width: 992px) and (hover: hover)').matches;
+		const dropdowns = [...(navLinks?.querySelectorAll<HTMLDetailsElement>('[data-navbar-dropdown]') ?? [])];
+		const closeOtherDropdowns = (current: HTMLDetailsElement) => {
+			dropdowns.forEach((dropdown) => {
+				if (dropdown !== current) dropdown.open = false;
+			});
+		};
 		const setupNavbarDropdown = (dropdown: HTMLDetailsElement) => {
 			const summary = dropdown.querySelector<HTMLElement>('summary');
 			let closeTimer: number | undefined;
@@ -129,9 +135,13 @@ const dropdowns = [
 				if (!desktopDropdown()) return;
 				clearCloseTimer();
 				if (!dropdown.open) {
+					closeOtherDropdowns(dropdown);
 					dropdown.open = true;
 					openedByHover = true;
 				}
+			});
+			dropdown.addEventListener('toggle', () => {
+				if (dropdown.open) closeOtherDropdowns(dropdown);
 			});
 			dropdown.addEventListener('pointerleave', () => {
 				if (!desktopDropdown()) return;
@@ -155,7 +165,7 @@ const dropdowns = [
 			});
 		};
 
-		navLinks?.querySelectorAll<HTMLDetailsElement>('[data-navbar-dropdown]').forEach(setupNavbarDropdown);
+		dropdowns.forEach(setupNavbarDropdown);
 
 		const toggle = quartoToggle();
 		const path = window.location.pathname.replace(/\/+$/, '') || '/';
