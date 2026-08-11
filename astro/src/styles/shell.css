@@ -301,8 +301,8 @@
 	cursor: pointer;
 }
 
-.search-toggle,
-.theme-toggle { position: relative; transition: color 180ms ease; }
+/* Shared site search: rendered by SiteSearch.astro in Astro and merged Quarto pages. */
+.search-toggle { position: relative; transition: color 180ms ease; }
 
 .search-toggle::before {
 	content: '';
@@ -326,21 +326,7 @@
 	transform: rotate(45deg);
 }
 
-.theme-toggle::before {
-	content: '';
-	position: absolute;
-	box-sizing: border-box;
-	width: 16px;
-	height: 16px;
-	margin: 0;
-	padding: 0;
-	border: 1.25px solid currentColor;
-	border-radius: 50%;
-	background: linear-gradient(90deg, currentColor 0 50%, transparent 50% 100%);
-}
-
-.search-toggle:hover,
-.theme-toggle:hover {
+.search-toggle:hover {
 	color: var(--global-navbar-hover-color);
 }
 
@@ -380,6 +366,22 @@
 .site-search-result-list a:hover { color: var(--global-hover-color); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .site-search-result-list p { margin: 4px 0 0; color: var(--global-text-color-light); font-size: 14px; line-height: 1.45; }
 .site-search-result-list span { display: block; margin-top: 5px; color: var(--global-text-color-light); font-size: 12px; }
+
+/* Shared theme control. */
+.theme-toggle { position: relative; transition: color 180ms ease; }
+.theme-toggle::before {
+	content: '';
+	position: absolute;
+	box-sizing: border-box;
+	width: 16px;
+	height: 16px;
+	margin: 0;
+	padding: 0;
+	border: 1.25px solid currentColor;
+	border-radius: 50%;
+	background: linear-gradient(90deg, currentColor 0 50%, transparent 50% 100%);
+}
+.theme-toggle:hover { color: var(--global-navbar-hover-color); }
 
 .menu-toggle { display: none; }
 .menu-icon,

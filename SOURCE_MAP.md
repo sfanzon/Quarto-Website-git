@@ -14,9 +14,10 @@ individual project page. Do not infer a source move from a matching public URL.
 
 | File | Description |
 |---|---|
-| `astro/src/components/Header.astro` | Canonical shared navbar, theme control and mobile navigation |
+| `astro/src/components/Header.astro` | Canonical shared navbar structure, active navigation state, theme control, More dropdown and mobile navigation behaviour |
+| `astro/src/components/SiteSearch.astro` | Canonical shared search button, dialog and Pagefind lazy-loading/search behaviour |
 | `astro/src/components/Footer.astro` | Canonical shared footer |
-| `astro/src/styles/shell.css` | Canonical shared shell tokens, navbar, footer and responsive shell styling |
+| `astro/src/styles/shell.css` | Canonical shared shell tokens, navbar, footer, responsive shell and shared-search presentation |
 | `astro/src/styles/global.css` | Ordinary Astro page styling; imports `shell.css` for Astro-page use |
 | `astro/src/pages/site-shell/header.astro` | Build-only navbar fragment for Quarto documents; removed from the final site after merge |
 | `astro/src/pages/site-shell/footer.astro` | Build-only footer fragment for Quarto documents; removed from the final site after merge |
@@ -159,7 +160,7 @@ behaviour listed above.
 | `styles/components/_teaching.scss` | Teaching introduction, role/year hierarchy, course lists and material actions |
 | `styles/components/_contact.scss` | Contact details, email and professional-profile directory |
 | `styles/components/_news.scss` | Homepage News preview, News archive, search and responsive disclosure rows |
-| `styles/components/_search-popup.scss` | Detached site-search overlay, form, results and responsive presentation |
+| `styles/components/_search-popup.scss` | Legacy Quarto search overlay for unmigrated Quarto pages; not the production hybrid site-search owner |
 | `styles/components/_expertise.scss` | Homepage Expertise preview and full Expertise page; later sections intentionally refine shared preview rules |
 | `styles/components/_about.scss` | Homepage background/approach previews and full About page |
 | `styles/components/_research.scss` | Research page hierarchy, themes, evidence and related links |
@@ -195,8 +196,11 @@ already exists.
 | Visible area | Current owner | Status |
 |---|---|---|
 | Production design tokens, colours and shared widths | `astro/src/styles/shell.css` | Canonical |
-| Production navbar and mobile navigation | `astro/src/components/Header.astro` + `astro/src/styles/shell.css` | Canonical |
-| Search popup | `styles/components/_search-popup.scss` | Canonical |
+| Production navbar, theme control, More dropdown and mobile navigation behaviour | `astro/src/components/Header.astro` | Canonical |
+| Production navbar, footer and responsive shell presentation | `astro/src/styles/shell.css` | Canonical |
+| Production site-search behaviour | `astro/src/components/SiteSearch.astro` | Canonical |
+| Production site-search presentation | `astro/src/styles/shell.css` (`.site-search-*`) | Canonical |
+| Legacy Quarto search popup | `styles/components/_search-popup.scss` | Canonical only for unmigrated Quarto pages |
 | Homepage Expertise preview and Expertise page | `styles/components/_expertise.scss` | Canonical |
 | Homepage background/approach previews and About page | `styles/components/_about.scss` | Canonical |
 | Research page | `styles/components/_research.scss` (`.about-section-heading` remains shared from `_about.scss`) | Canonical |
