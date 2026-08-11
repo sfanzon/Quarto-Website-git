@@ -103,7 +103,11 @@ try {
 	const sources = findProjectSources(projectsRoot);
 	if (!sources.length) throw new Error('No Quarto project pages found');
 
-	execFileSync('npm', ['run', 'build:astro'], { cwd: astroRoot, stdio: 'inherit' });
+	execFileSync('npm', ['run', 'build:astro'], {
+		cwd: astroRoot,
+		env: { ...process.env, SF_INCLUDE_DEV_TOOLS: includeDevTools ? '1' : '0' },
+		stdio: 'inherit',
+	});
 	const header = requireShellArtifact('header/index.html');
 	const footer = requireShellArtifact('footer/index.html');
 	rmSync(join(shellRoot, 'header'), { recursive: true, force: true });

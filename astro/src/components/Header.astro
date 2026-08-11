@@ -4,6 +4,8 @@ import SiteSearch from './SiteSearch.astro';
 const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isAbout = currentPath === '/about';
 const isProjects = currentPath === '/projects' || currentPath.startsWith('/projects/');
+const isDev = currentPath === '/dev' || currentPath.startsWith('/dev/');
+const includeDevTools = process.env.SF_INCLUDE_DEV_TOOLS === '1';
 
 const primaryLinks = [
 	{ label: 'About', href: '/about/', active: isAbout },
@@ -15,12 +17,25 @@ const primaryLinks = [
 	{ label: 'News', href: 'https://www.silviofanzon.com/news.html' },
 ];
 
-const moreLinks = [
-	{ label: 'Notes', href: 'https://www.silviofanzon.com/notes.html' },
-	{ label: 'Research', href: 'https://www.silviofanzon.com/research.html' },
-	{ label: 'Presentations', href: 'https://www.silviofanzon.com/presentations.html' },
-	{ label: 'Supervision', href: 'https://www.silviofanzon.com/supervision.html' },
-	{ label: 'Contact', href: 'https://www.silviofanzon.com/contact.html' },
+const dropdowns = [
+	{
+		label: 'More',
+		links: [
+			{ label: 'Notes', href: 'https://www.silviofanzon.com/notes.html' },
+			{ label: 'Research', href: 'https://www.silviofanzon.com/research.html' },
+			{ label: 'Presentations', href: 'https://www.silviofanzon.com/presentations.html' },
+			{ label: 'Supervision', href: 'https://www.silviofanzon.com/supervision.html' },
+			{ label: 'Contact', href: 'https://www.silviofanzon.com/contact.html' },
+		],
+	},
+	...(includeDevTools ? [{
+		label: 'Dev',
+		active: isDev,
+		links: [
+			{ label: 'Kitchen sink', href: '/dev/kitchen-sink/' },
+			{ label: 'Viewports', href: '/dev/viewports/' },
+		],
+	}] : []),
 ];
 ---
 
@@ -34,12 +49,14 @@ const moreLinks = [
 					<span>{link.label}</span>
 				</a>
 			))}
-			<details class="navbar-more">
-				<summary><span>More</span></summary>
-				<div class="navbar-dropdown">
-					{moreLinks.map((link) => <a href={link.href}><span>{link.label}</span></a>)}
-				</div>
-			</details>
+			{dropdowns.map((dropdown) => (
+				<details class="navbar-menu-dropdown" data-navbar-dropdown>
+					<summary class:list={{ active: dropdown.active }} aria-current={dropdown.active ? 'page' : undefined}><span>{dropdown.label}</span></summary>
+					<div class="navbar-dropdown">
+						{dropdown.links.map((link) => <a href={link.href}><span>{link.label}</span></a>)}
+					</div>
+				</details>
+			))}
 		</div>
 
 		<div class="navbar-controls">
@@ -60,11 +77,7 @@ const moreLinks = [
 		const menuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
 		const navLinks = document.querySelector<HTMLElement>('#navbar-links');
 		const projectsLink = navLinks?.querySelector<HTMLAnchorElement>('[data-nav-section="projects"]');
-		const more = document.querySelector<HTMLDetailsElement>('.navbar-more');
-		const moreSummary = more?.querySelector<HTMLElement>('summary');
 		const quartoToggle = () => (window as Window & { quartoToggleColorScheme?: () => void }).quartoToggleColorScheme;
-		let moreCloseTimer: number | undefined;
-		let moreOpenedByHover = false;
 
 		const setThemeLabel = () => {
 			const dark = root.dataset.theme === 'dark';
@@ -102,39 +115,47 @@ const moreLinks = [
 			navLinks?.classList.toggle('is-open', open);
 		});
 
-		const clearMoreCloseTimer = () => {
-			if (moreCloseTimer !== undefined) window.clearTimeout(moreCloseTimer);
-			moreCloseTimer = undefined;
+		const desktopDropdown = () => window.matchMedia('(min-width: 992px) and (hover: hover)').matches;
+		const setupNavbarDropdown = (dropdown: HTMLDetailsElement) => {
+			const summary = dropdown.querySelector<HTMLElement>('summary');
+			let closeTimer: number | undefined;
+			let openedByHover = false;
+			const clearCloseTimer = () => {
+				if (closeTimer !== undefined) window.clearTimeout(closeTimer);
+				closeTimer = undefined;
+			};
+
+			dropdown.addEventListener('pointerenter', () => {
+				if (!desktopDropdown()) return;
+				clearCloseTimer();
+				if (!dropdown.open) {
+					dropdown.open = true;
+					openedByHover = true;
+				}
+			});
+			dropdown.addEventListener('pointerleave', () => {
+				if (!desktopDropdown()) return;
+				clearCloseTimer();
+				closeTimer = window.setTimeout(() => {
+					dropdown.open = false;
+					openedByHover = false;
+				}, 120);
+			});
+			summary?.addEventListener('click', (event) => {
+				if (!desktopDropdown() || !dropdown.open || !openedByHover) return;
+				event.preventDefault();
+				openedByHover = false;
+			});
+			dropdown.addEventListener('keydown', (event) => {
+				if (event.key !== 'Escape' || !dropdown.open) return;
+				event.preventDefault();
+				dropdown.open = false;
+				openedByHover = false;
+				summary?.focus();
+			});
 		};
-		const desktopMore = () => window.matchMedia('(min-width: 992px) and (hover: hover)').matches;
-		more?.addEventListener('pointerenter', () => {
-			if (!desktopMore()) return;
-			clearMoreCloseTimer();
-			if (!more.open) {
-				more.open = true;
-				moreOpenedByHover = true;
-			}
-		});
-		more?.addEventListener('pointerleave', () => {
-			if (!desktopMore()) return;
-			clearMoreCloseTimer();
-			moreCloseTimer = window.setTimeout(() => {
-				more.open = false;
-				moreOpenedByHover = false;
-			}, 120);
-		});
-		moreSummary?.addEventListener('click', (event) => {
-			if (!desktopMore() || !more?.open || !moreOpenedByHover) return;
-			event.preventDefault();
-			moreOpenedByHover = false;
-		});
-		more?.addEventListener('keydown', (event) => {
-			if (event.key !== 'Escape' || !more.open) return;
-			event.preventDefault();
-			more.open = false;
-			moreOpenedByHover = false;
-			moreSummary?.focus();
-		});
+
+		navLinks?.querySelectorAll<HTMLDetailsElement>('[data-navbar-dropdown]').forEach(setupNavbarDropdown);
 
 		const toggle = quartoToggle();
 		const path = window.location.pathname.replace(/\/+$/, '') || '/';

@@ -14,7 +14,7 @@ individual project page. Do not infer a source move from a matching public URL.
 
 | File | Description |
 |---|---|
-| `astro/src/components/Header.astro` | Canonical shared navbar structure, active navigation state, theme control, More dropdown and mobile navigation behaviour |
+| `astro/src/components/Header.astro` | Canonical shared navbar structure, active navigation state, theme control, data-driven dropdown menus and mobile navigation behaviour |
 | `astro/src/components/SiteSearch.astro` | Canonical shared search button, dialog and Pagefind lazy-loading/search behaviour |
 | `astro/src/components/Footer.astro` | Canonical shared footer |
 | `astro/src/styles/shell.css` | Canonical shared shell tokens, navbar, footer, responsive shell and shared-search presentation |
