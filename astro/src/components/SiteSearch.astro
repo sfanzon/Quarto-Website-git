@@ -57,13 +57,14 @@
 					link.textContent = result.meta.title || result.url;
 					const excerpt = document.createElement('p');
 					excerpt.textContent = result.excerpt.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-					item.append(link, excerpt);
+					link.append(excerpt);
 					const contextLabel = result.anchors?.[0]?.text || result.url;
 					if (contextLabel) {
 						const context = document.createElement('span');
 						context.textContent = contextLabel;
-						item.append(context);
+						link.append(context);
 					}
+					item.append(link);
 					list.append(item);
 				}
 				searchResults.append(list);
