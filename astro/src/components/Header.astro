@@ -35,12 +35,14 @@ const moreLinks = [
 			<details class="navbar-more">
 				<summary>More</summary>
 				<div class="navbar-dropdown">
-					{moreLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+					{moreLinks.map((link) => <a href={link.href}><span>{link.label}</span></a>)}
 				</div>
 			</details>
 		</div>
 
 		<div class="navbar-controls">
+			<button class="search-toggle" type="button" aria-label="Search site" aria-haspopup="dialog" aria-controls="site-search-dialog">
+			</button>
 			<button class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch colour theme">
 			</button>
 			<button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="navbar-links">
@@ -50,14 +52,98 @@ const moreLinks = [
 	</nav>
 </header>
 
+<dialog class="site-search-dialog" id="site-search-dialog" aria-labelledby="site-search-title">
+	<div class="site-search-panel">
+		<div class="site-search-heading">
+			<div>
+				<p>Search</p>
+				<h2 id="site-search-title">Search the site</h2>
+			</div>
+			<button class="site-search-close" type="button" aria-label="Close search">Close</button>
+		</div>
+		<label class="site-search-input-label" for="site-search-input">Search pages and project documents</label>
+		<input id="site-search-input" class="site-search-input" type="search" autocomplete="off" placeholder="Search the site" />
+		<div class="site-search-results" aria-live="polite"></div>
+	</div>
+</dialog>
+
 <script>
 	const initialiseShell = () => {
 		const root = document.documentElement;
+		const searchButton = document.querySelector<HTMLButtonElement>('.search-toggle');
+		const searchDialog = document.querySelector<HTMLDialogElement>('#site-search-dialog');
+		const searchCloseButton = document.querySelector<HTMLButtonElement>('.site-search-close');
+		const searchInput = document.querySelector<HTMLInputElement>('#site-search-input');
+		const searchResults = document.querySelector<HTMLElement>('.site-search-results');
 		const themeButton = document.querySelector<HTMLButtonElement>('.theme-toggle');
 		const menuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
 		const navLinks = document.querySelector<HTMLElement>('#navbar-links');
 		const projectsLink = navLinks?.querySelector<HTMLAnchorElement>('[data-nav-section="projects"]');
+		const more = document.querySelector<HTMLDetailsElement>('.navbar-more');
+		const moreSummary = more?.querySelector<HTMLElement>('summary');
 		const quartoToggle = () => (window as Window & { quartoToggleColorScheme?: () => void }).quartoToggleColorScheme;
+		let pagefindPromise: Promise<any> | undefined;
+		let searchRequest = 0;
+		let moreCloseTimer: number | undefined;
+		let moreOpenedByHover = false;
+
+		const pagefindUrl = '/pagefind/pagefind.js';
+		const loadPagefind = () => pagefindPromise ??= import(/* @vite-ignore */ pagefindUrl);
+		const renderSearchMessage = (message: string) => {
+			if (!searchResults) return;
+			searchResults.replaceChildren();
+			const paragraph = document.createElement('p');
+			paragraph.className = 'site-search-message';
+			paragraph.textContent = message;
+			searchResults.append(paragraph);
+		};
+		const renderSearchResults = async () => {
+			const query = searchInput?.value.trim() ?? '';
+			const request = ++searchRequest;
+			if (!query) {
+				renderSearchMessage('Search the professional site and project documents.');
+				return;
+			}
+			renderSearchMessage('Searching…');
+			try {
+				const pagefind = await loadPagefind();
+				const matches = await pagefind.search(query);
+				const results = await Promise.all(matches.results.slice(0, 12).map((match: any) => match.data()));
+				if (request !== searchRequest || !searchResults) return;
+				searchResults.replaceChildren();
+				if (!results.length) {
+					renderSearchMessage('No matching pages found.');
+					return;
+				}
+				const list = document.createElement('ol');
+				list.className = 'site-search-result-list';
+				for (const result of results) {
+					const item = document.createElement('li');
+					const link = document.createElement('a');
+					link.href = result.url;
+					link.textContent = result.meta.title || result.url;
+					const excerpt = document.createElement('p');
+					excerpt.textContent = result.excerpt.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+					item.append(link, excerpt);
+					const contextLabel = result.anchors?.[0]?.text || result.url;
+					if (contextLabel) {
+						const context = document.createElement('span');
+						context.textContent = contextLabel;
+						item.append(context);
+					}
+					list.append(item);
+				}
+				searchResults.append(list);
+			} catch {
+				if (request === searchRequest) renderSearchMessage('Search is temporarily unavailable.');
+			}
+		};
+		const openSearch = () => {
+			if (!searchDialog?.open) searchDialog?.showModal();
+			renderSearchResults();
+			requestAnimationFrame(() => searchInput?.focus());
+		};
+		const closeSearch = () => searchDialog?.close();
 
 		const setThemeLabel = () => {
 			const dark = root.dataset.theme === 'dark';
@@ -88,11 +174,65 @@ const moreLinks = [
 			setThemeLabel();
 		});
 
+		searchButton?.addEventListener('click', openSearch);
+		searchCloseButton?.addEventListener('click', closeSearch);
+		searchInput?.addEventListener('input', renderSearchResults);
+		searchDialog?.addEventListener('click', (event) => {
+			if (event.target === searchDialog) closeSearch();
+		});
+		searchDialog?.addEventListener('cancel', (event) => {
+			event.preventDefault();
+			closeSearch();
+		});
+		searchDialog?.addEventListener('close', () => {
+			searchRequest += 1;
+			searchButton?.focus();
+		});
+		document.addEventListener('keydown', (event) => {
+			if (event.key !== 'Escape' || !searchDialog?.open) return;
+			event.preventDefault();
+			closeSearch();
+		}, true);
+
 		menuButton?.addEventListener('click', () => {
 			const open = menuButton.getAttribute('aria-expanded') !== 'true';
 			menuButton.setAttribute('aria-expanded', String(open));
 			menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
 			navLinks?.classList.toggle('is-open', open);
+		});
+
+		const clearMoreCloseTimer = () => {
+			if (moreCloseTimer !== undefined) window.clearTimeout(moreCloseTimer);
+			moreCloseTimer = undefined;
+		};
+		const desktopMore = () => window.matchMedia('(min-width: 992px) and (hover: hover)').matches;
+		more?.addEventListener('pointerenter', () => {
+			if (!desktopMore()) return;
+			clearMoreCloseTimer();
+			if (!more.open) {
+				more.open = true;
+				moreOpenedByHover = true;
+			}
+		});
+		more?.addEventListener('pointerleave', () => {
+			if (!desktopMore()) return;
+			clearMoreCloseTimer();
+			moreCloseTimer = window.setTimeout(() => {
+				more.open = false;
+				moreOpenedByHover = false;
+			}, 120);
+		});
+		moreSummary?.addEventListener('click', (event) => {
+			if (!desktopMore() || !more?.open || !moreOpenedByHover) return;
+			event.preventDefault();
+			moreOpenedByHover = false;
+		});
+		more?.addEventListener('keydown', (event) => {
+			if (event.key !== 'Escape' || !more.open) return;
+			event.preventDefault();
+			more.open = false;
+			moreOpenedByHover = false;
+			moreSummary?.focus();
 		});
 
 		const toggle = quartoToggle();
