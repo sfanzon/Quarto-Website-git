@@ -157,7 +157,11 @@
 	border-radius: 7px;
 	align-items: center;
 	appearance: none;
-	background: transparent;
+	background-color: transparent;
+	background-image: linear-gradient(currentColor, currentColor);
+	background-position: 0 100%;
+	background-repeat: no-repeat;
+	background-size: 0 1px;
 	color: var(--global-navbar-text-color);
 	font-family: inherit;
 	font-size: 13.44px;
@@ -169,6 +173,7 @@
 	vertical-align: baseline;
 	cursor: pointer;
 	list-style: none;
+	transition: background-size 180ms ease, color 180ms ease;
 }
 
 .navbar-more {
@@ -193,23 +198,15 @@
 	transform: rotate(45deg);
 }
 
-.site-brand:hover,
-.site-brand:focus-visible,
 .navbar-links > a:hover,
-.navbar-links > a:focus-visible,
-.navbar-more > summary:hover,
-.navbar-more > summary:focus-visible,
-.menu-toggle:hover,
-.menu-toggle:focus-visible {
-	background: color-mix(in srgb, var(--global-navbar-hover-color) 14%, transparent);
+.navbar-more > summary:hover {
 	color: var(--global-navbar-hover-color);
+	background-size: 100% 1px;
 }
 
 .navbar-links > a.active {
 	color: var(--global-navbar-active-text-color);
-	text-decoration: underline;
-	text-decoration-thickness: 1.5px;
-	text-underline-offset: .48em;
+	background-size: 100% 1px;
 }
 
 .navbar-dropdown {
@@ -232,18 +229,34 @@
 	padding: 8px 11.2px;
 	border: 0;
 	border-radius: 7px;
-	background: transparent;
+	background-color: transparent;
+	background-image: linear-gradient(currentColor, currentColor);
+	background-position: 0 100%;
+	background-repeat: no-repeat;
+	background-size: 0 1px;
 	color: var(--global-navbar-text-color);
 	font-size: 13.44px;
 	font-weight: 400;
 	line-height: 22.176px;
 	text-decoration: none;
+	transition: background-size 180ms ease, color 180ms ease;
 }
 
-.navbar-dropdown a:hover,
-.navbar-dropdown a:focus-visible {
+.navbar-dropdown a:hover {
+	color: var(--global-navbar-hover-color);
+	background-size: 100% 1px;
+}
+
+.menu-toggle:hover,
+.menu-toggle:focus-visible {
 	background: color-mix(in srgb, var(--global-navbar-hover-color) 14%, transparent);
 	color: var(--global-navbar-hover-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.navbar-links > a,
+	.navbar-more > summary,
+	.navbar-dropdown a { transition: none; }
 }
 
 .navbar-controls {
