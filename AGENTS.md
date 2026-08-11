@@ -112,6 +112,43 @@ Prefer a coherent fix over layering another patch, but keep the solution proport
 
 Do not modify unrelated files merely because they could also be improved.
 
+## Maintainability and code budget
+
+The Astro migration must reduce implementation complexity, not reproduce the
+roughly 7,000-line SCSS accumulation of the previous Quarto implementation.
+Keep authored code minimal, explicit and auditable.
+
+- Give every visible component and behaviour one obvious canonical owner.
+- Edit that owner rather than adding override layers, catch-all
+  `patch`/`fix`/`misc` stylesheets, or compensating rules.
+- When ownership moves, delete obsolete or transitional implementations unless
+  they remain explicitly required during the migration.
+- Do not duplicate Astro and Quarto implementations when a shared owner can
+  serve the final hybrid site.
+- Do not add abstractions, frameworks or dependencies without a demonstrated
+  need that outweighs their maintenance cost.
+- Keep component and page styles with their narrow owners; do not let them
+  accumulate into a global monolith. Every file must have a narrow,
+  explainable responsibility.
+- Keep `SOURCE_MAP.md` sufficient for a maintainer to answer: “what controls
+  this?”
+- If a task requires substantial code growth, reconsider the design and
+  simplify before adding it.
+
+Code size is a review signal, not a quota. Around **+150 lines of authored
+CSS/JS** in one task requires an explicit complexity review. An authored
+CSS/JS file approaching or exceeding **~500 lines** requires review of whether
+its responsibilities should be split. In both cases, explain why the added
+complexity is necessary or reduce it before completion.
+
+Before declaring a substantial implementation task complete, check whether it:
+
+- introduced an override rather than changing the owner;
+- duplicated behaviour across renderers or components;
+- retained obsolete code after an ownership move;
+- obscured ownership in `SOURCE_MAP.md`; or
+- added code disproportionate to the requested behaviour.
+
 ## Design
 
 Read `DESIGN.md` before visual work.

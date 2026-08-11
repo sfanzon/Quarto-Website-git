@@ -102,6 +102,17 @@ artifacts, copies each rendered project page and referenced assets into
 indexes the completed result. `npm run build:hybrid` remains a compatibility
 alias while the POC branch is active.
 
+## Complexity budget
+
+The Astro migration is a simplification programme. Keep every visible
+component and behaviour under one explicit canonical owner, and remove
+superseded implementations when ownership moves. Prefer small, directly
+auditable components and styles with narrow responsibilities over migration
+layers, duplicate renderer implementations, catch-all overrides or additional
+frameworks. `SOURCE_MAP.md` is the required answer to “what controls this?”;
+substantial authored CSS/JS growth is a trigger to reconsider and simplify the
+design before it accumulates.
+
 ## Style maintenance
 
 Current style ownership lives in `SOURCE_MAP.md`; edit the owner for a visible

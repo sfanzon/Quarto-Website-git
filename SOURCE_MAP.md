@@ -2,6 +2,10 @@
 
 > "I want to change X on the site. Which source file should I inspect first?"
 
+This is the canonical “what controls what?” map for the hybrid Astro + Quarto
+production architecture. Keep every visible component and behaviour mapped to
+one obvious owner here when its ownership changes.
+
 The production platform boundary is recorded in `PLATFORM_DECISION.md`.
 Astro owns the main professional site and shared shell; Quarto owns every
 individual project page. Do not infer a source move from a matching public URL.
