@@ -118,6 +118,13 @@ The Astro migration must reduce implementation complexity, not reproduce the
 roughly 7,000-line SCSS accumulation of the previous Quarto implementation.
 Keep authored code minimal, explicit and auditable.
 
+Minimise **architectural / semantic complexity, not physical line count**.
+Human-readable source takes priority over artificially small LOC: use normal
+indentation and multiline nested markup, do not combine unrelated statements
+or logical elements merely to shrink a diff, and do not compress source as a
+project goal. Formatting-only line growth is not substantive complexity; the
+CSS/JS review signals below concern meaningful implementation complexity.
+
 - Give every visible component and behaviour one obvious canonical owner.
 - Edit that owner rather than adding override layers, catch-all
   `patch`/`fix`/`misc` stylesheets, or compensating rules.

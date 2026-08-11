@@ -40,34 +40,64 @@ const tokens = [
 				<p class="eyebrow">Development QA</p>
 				<h1>Production pattern kitchen sink</h1>
 				<p>Current site tokens, typography and reusable Astro-owned patterns rendered through their canonical production styles.</p>
-				<nav class="dev-local-nav" aria-label="Development tools"><a href="/dev/kitchen-sink/" aria-current="page">Astro kitchen sink</a><a href="/dev/quarto-kitchen-sink.html">Quarto kitchen sink</a><a href="/dev/viewports/">Viewport dashboard</a></nav>
+				<nav class="dev-local-nav" aria-label="Development tools">
+					<a href="/dev/kitchen-sink/" aria-current="page">Astro kitchen sink</a>
+					<a href="/dev/quarto-kitchen-sink.html">Quarto kitchen sink</a>
+					<a href="/dev/viewports/">Viewport dashboard</a>
+				</nav>
 			</header>
 
 			<section class="dev-section" aria-labelledby="qa-palette">
-				<header class="dev-section-header"><h2 id="qa-palette">Palette and tokens</h2><p>These swatches reference the live production variables and change with the real theme control.</p></header>
+				<header class="dev-section-header">
+					<h2 id="qa-palette">Palette and tokens</h2>
+					<p>These swatches reference the live production variables and change with the real theme control.</p>
+				</header>
 				<div class="dev-token-grid">
-					{tokens.map(([role, token]) => <article class="dev-token"><div class="dev-token-swatch" style={`--dev-swatch: var(${token})`}></div><strong>{role}</strong><code>{token}</code></article>)}
+					{tokens.map(([role, token]) => (
+						<article class="dev-token">
+							<div class="dev-token-swatch" style={`--dev-swatch: var(${token})`}></div>
+							<strong>{role}</strong>
+							<code>{token}</code>
+						</article>
+					))}
 				</div>
 			</section>
 
 			<section class="dev-section" aria-labelledby="qa-technical">
-				<header class="dev-section-header"><h2 id="qa-technical">Technical content</h2><p>Genuine Astro MDX rendered through the configured Markdown, Shiki and KaTeX pipeline.</p></header>
+				<header class="dev-section-header">
+					<h2 id="qa-technical">Technical content</h2>
+					<p>Genuine Astro MDX rendered through the configured Markdown, Shiki and KaTeX pipeline.</p>
+				</header>
 				<TechnicalSpecimens />
 			</section>
 
 			<section class="dev-section" aria-labelledby="qa-type">
-				<header class="dev-section-header"><h2 id="qa-type">Typography and content</h2><p>Current editorial hierarchy and ordinary readable content.</p></header>
+				<header class="dev-section-header">
+					<h2 id="qa-type">Typography and content</h2>
+					<p>Current editorial hierarchy and ordinary readable content.</p>
+				</header>
 				<div class="dev-type-grid">
 					<div class="dev-type-sample">
 						<p class="eyebrow">Eyebrow / kicker</p>
-						<h1>Heading level one</h1><h2>Heading level two</h2><h3>Heading level three</h3><h4>Heading level four</h4>
+						<h1>Heading level one</h1>
+						<h2>Heading level two</h2>
+						<h3>Heading level three</h3>
+						<h4>Heading level four</h4>
 						<p class="dev-prose">This longer paragraph checks the sustained reading measure, body rhythm and inline treatments. It contains an <a href="#qa-elements">inline link</a>, <strong>strong emphasis</strong>, <em>editorial emphasis</em> and <code>inline code</code> without introducing another typography system.</p>
 						<p class="dev-muted">Muted secondary text using the current production text token.</p>
 					</div>
 					<div>
 						<p class="dev-sample-label">Lists</p>
-						<ul><li>Problem formulation</li><li>Model implementation</li><li>Evidence and communication</li></ul>
-						<ol><li>Inspect</li><li>Validate</li><li>Explain</li></ol>
+						<ul>
+							<li>Problem formulation</li>
+							<li>Model implementation</li>
+							<li>Evidence and communication</li>
+						</ul>
+						<ol>
+							<li>Inspect</li>
+							<li>Validate</li>
+							<li>Explain</li>
+						</ol>
 						<hr />
 						<pre class="dev-code"><code>result = model.fit(data)
 validate(result)</code></pre>
@@ -76,39 +106,151 @@ validate(result)</code></pre>
 			</section>
 
 			<section class="dev-section" aria-labelledby="qa-editorial">
-				<header class="dev-section-header"><h2 id="qa-editorial">Editorial and interactive patterns</h2><p>Representative canonical class-based patterns from current Astro pages.</p></header>
-				<div class="dev-sample"><p class="dev-sample-label">Section heading</p><p class="dev-sample-description">Section introduction pairing an eyebrow, title, supporting text and optional destination link.</p><div class="section-heading"><div><p class="eyebrow">Section heading</p><h2>Selected evidence</h2><p class="section-intro">A production section header with its supporting introduction and action.</p></div><a class="section-link" href="/projects/">View projects →</a></div></div>
+				<header class="dev-section-header">
+					<h2 id="qa-editorial">Editorial and interactive patterns</h2>
+					<p>Representative canonical class-based patterns from current Astro pages.</p>
+				</header>
+
+				<div class="dev-sample">
+					<p class="dev-sample-label">Section heading</p>
+					<p class="dev-sample-description">Section introduction pairing an eyebrow, title, supporting text and optional destination link.</p>
+					<div class="section-heading">
+						<div>
+							<p class="eyebrow">Section heading</p>
+							<h2>Selected evidence</h2>
+							<p class="section-intro">A production section header with its supporting introduction and action.</p>
+						</div>
+						<a class="section-link" href="/projects/">View projects →</a>
+					</div>
+				</div>
 
 				<div class="dev-sample dev-project-example">
 					<p class="dev-sample-label">Project card</p>
 					<p class="dev-sample-description">Primary visual summary for project catalogue and featured work.</p>
-					<article class="home-project-card"><div class="home-project-visual"><img src="https://www.silviofanzon.com/assets/img/projects/f1-benchmarking.svg" alt="Abstract Formula 1 benchmarking visual" /></div><div class="home-project-copy"><p class="project-labels">Statistical modelling · Sports analytics · R</p><h3>Who’s actually the best F1 driver?</h3><p>A representative production card using the current project hierarchy.</p><div class="home-project-actions"><a href="/projects/f1-time-rank-duality/">Read project <span aria-hidden="true">→</span></a><a href="https://github.com/sfanzon/F1-Paper-Code">Code</a></div></div></article>
+					<article class="home-project-card">
+						<div class="home-project-visual">
+							<img src="https://www.silviofanzon.com/assets/img/projects/f1-benchmarking.svg" alt="Abstract Formula 1 benchmarking visual" />
+						</div>
+						<div class="home-project-copy">
+							<p class="project-labels">Statistical modelling · Sports analytics · R</p>
+							<h3>Who’s actually the best F1 driver?</h3>
+							<p>A representative production card using the current project hierarchy.</p>
+							<div class="home-project-actions">
+								<a href="/projects/f1-time-rank-duality/">Read project <span aria-hidden="true">→</span></a>
+								<a href="https://github.com/sfanzon/F1-Paper-Code">Code</a>
+							</div>
+						</div>
+					</article>
 				</div>
 
 				<div class="dev-sample">
 					<p class="dev-sample-label">Capability rows</p>
 					<p class="dev-sample-description">Compact text-led cards for communicating transferable skills or grouped evidence.</p>
-					<div class="capability-grid"><article><h3>Problem formulation</h3><p>Turn an ambiguous question into explicit assumptions and measurable outcomes.</p></article><article><h3>Implementation</h3><p>Build reproducible numerical and statistical workflows.</p></article><article><h3>Communication</h3><p>Explain the evidence clearly for different audiences.</p></article></div>
+					<div class="capability-grid">
+						<article>
+							<h3>Problem formulation</h3>
+							<p>Turn an ambiguous question into explicit assumptions and measurable outcomes.</p>
+						</article>
+						<article>
+							<h3>Implementation</h3>
+							<p>Build reproducible numerical and statistical workflows.</p>
+						</article>
+						<article>
+							<h3>Communication</h3>
+							<p>Explain the evidence clearly for different audiences.</p>
+						</article>
+					</div>
 				</div>
 
-				<div class="dev-sample"><p class="dev-sample-label">Note row</p><p class="dev-sample-description">Editorial list pattern combining date, topic metadata, summary and article action.</p><div class="home-notes-list">
-					<article class="home-note-row"><a class="home-note-row-visual" href="https://www.silviofanzon.com/notes/how-i-use-ai.html"><img src="https://www.silviofanzon.com/assets/img/notes/ai-agent-stack.svg" alt="AI-assisted technical workflow diagram" /></a><div class="home-note-row-copy"><div class="home-note-row-meta"><time>30 July 2026</time><span>AI · Workflow · Research</span></div><h3><a href="https://www.silviofanzon.com/notes/how-i-use-ai.html">How I use AI in technical work</a></h3><p>A representative current note row with metadata, summary and action.</p><a class="home-note-row-link" href="https://www.silviofanzon.com/notes/how-i-use-ai.html">Read note <span aria-hidden="true">→</span></a></div></article></div>
+				<div class="dev-sample">
+					<p class="dev-sample-label">Note row</p>
+					<p class="dev-sample-description">Editorial list pattern combining date, topic metadata, summary and article action.</p>
+					<div class="home-notes-list">
+						<article class="home-note-row">
+							<a class="home-note-row-visual" href="https://www.silviofanzon.com/notes/how-i-use-ai.html">
+								<img src="https://www.silviofanzon.com/assets/img/notes/ai-agent-stack.svg" alt="AI-assisted technical workflow diagram" />
+							</a>
+							<div class="home-note-row-copy">
+								<div class="home-note-row-meta">
+									<time>30 July 2026</time>
+									<span>AI · Workflow · Research</span>
+								</div>
+								<h3><a href="https://www.silviofanzon.com/notes/how-i-use-ai.html">How I use AI in technical work</a></h3>
+								<p>A representative current note row with metadata, summary and action.</p>
+								<a class="home-note-row-link" href="https://www.silviofanzon.com/notes/how-i-use-ai.html">Read note <span aria-hidden="true">→</span></a>
+							</div>
+						</article>
+					</div>
 				</div>
 
-				<div class="dev-sample"><p class="dev-sample-label">Publication row</p><p class="dev-sample-description">Research citation pattern with thematic labels, bibliographic metadata and optional expandable detail.</p><div class="home-publications-list">
-					<article class="home-publication-row"><div class="publication-theme-rail"><span>Optimisation</span><span>Numerical algorithms</span></div><div class="home-publication-main"><h3>Asymptotic linear convergence of Fully–Corrective Generalized Conditional Gradient methods</h3><div class="paper-meta"><span>Kristian Bredies, Marcello Carioni, <u>Silvio Fanzon</u> and Daniel Walter</span><span><em>Mathematical Programming</em> · 2024</span></div><div class="paper-actions"><a href="https://doi.org/10.1007/s10107-023-01975-z">Journal</a><details><summary>Abstract</summary><p>A representative expandable abstract using the production publication-row structure.</p></details></div></div></article></div>
+				<div class="dev-sample">
+					<p class="dev-sample-label">Publication row</p>
+					<p class="dev-sample-description">Research citation pattern with thematic labels, bibliographic metadata and optional expandable detail.</p>
+					<div class="home-publications-list">
+						<article class="home-publication-row">
+							<div class="publication-theme-rail">
+								<span>Optimisation</span>
+								<span>Numerical algorithms</span>
+							</div>
+							<div class="home-publication-main">
+								<h3>Asymptotic linear convergence of Fully–Corrective Generalized Conditional Gradient methods</h3>
+								<div class="paper-meta">
+									<span>Kristian Bredies, Marcello Carioni, <u>Silvio Fanzon</u> and Daniel Walter</span>
+									<span><em>Mathematical Programming</em> · 2024</span>
+								</div>
+								<div class="paper-actions">
+									<a href="https://doi.org/10.1007/s10107-023-01975-z">Journal</a>
+									<details>
+										<summary>Abstract</summary>
+										<p>A representative expandable abstract using the production publication-row structure.</p>
+									</details>
+								</div>
+							</div>
+						</article>
+					</div>
 				</div>
 
-				<div class="dev-sample"><p class="dev-sample-label">News disclosure</p><p class="dev-sample-description">Compact chronological update with category metadata and optional supporting detail.</p><div class="news-list">
-					<details class="news-item"><summary><time>Mar 2026</time><span>PREPRINT</span><strong>Formula 1 benchmarking preprint released</strong><i aria-hidden="true"></i></summary><div><p>A representative current News disclosure row.</p></div></details></div>
+				<div class="dev-sample">
+					<p class="dev-sample-label">News disclosure</p>
+					<p class="dev-sample-description">Compact chronological update with category metadata and optional supporting detail.</p>
+					<div class="news-list">
+						<details class="news-item">
+							<summary>
+								<time>Mar 2026</time>
+								<span>PREPRINT</span>
+								<strong>Formula 1 benchmarking preprint released</strong>
+								<i aria-hidden="true"></i>
+							</summary>
+							<div>
+								<p>A representative current News disclosure row.</p>
+							</div>
+						</details>
+					</div>
 				</div>
 
-				<div class="dev-sample"><p class="dev-sample-label">Search-like input</p><p class="dev-sample-description">Representative form control using the site's current input and action treatment.</p><form class="dev-form-example" id="qa-elements"><label>Search-like input<input class="site-search-input" type="search" placeholder="Search site-wide" /></label><button type="button">Action</button></form></div>
+				<div class="dev-sample">
+					<p class="dev-sample-label">Search-like input</p>
+					<p class="dev-sample-description">Representative form control using the site's current input and action treatment.</p>
+					<form class="dev-form-example" id="qa-elements">
+						<label>
+							Search-like input
+							<input class="site-search-input" type="search" placeholder="Search site-wide" />
+						</label>
+						<button type="button">Action</button>
+					</form>
+				</div>
 			</section>
 
 			<section class="dev-section" aria-labelledby="qa-quarto">
-				<header class="dev-section-header"><h2 id="qa-quarto">Quarto article QA</h2><p>Scientific document patterns remain Quarto-owned and are inspected at their real merged routes.</p></header>
-				<nav class="dev-route-list" aria-label="Quarto article QA routes"><a href="/projects/f1-time-rank-duality/">F1 overview</a><a href="/projects/f1-time-rank-duality/technical.html">F1 technical walkthrough</a><a href="/projects/f1-time-rank-duality/code.html">F1 code and data</a></nav>
+				<header class="dev-section-header">
+					<h2 id="qa-quarto">Quarto article QA</h2>
+					<p>Scientific document patterns remain Quarto-owned and are inspected at their real merged routes.</p>
+				</header>
+				<nav class="dev-route-list" aria-label="Quarto article QA routes">
+					<a href="/projects/f1-time-rank-duality/">F1 overview</a>
+					<a href="/projects/f1-time-rank-duality/technical.html">F1 technical walkthrough</a>
+					<a href="/projects/f1-time-rank-duality/code.html">F1 code and data</a>
+				</nav>
 			</section>
 		</main>
 		<Footer />

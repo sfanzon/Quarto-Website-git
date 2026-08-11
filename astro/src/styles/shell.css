@@ -279,21 +279,6 @@
 	color: var(--global-navbar-hover-color);
 }
 
-@media (prefers-reduced-motion: reduce) {
-	.navbar-links > a,
-	.navbar-menu-dropdown > summary,
-	.navbar-links > a > span,
-	.navbar-menu-dropdown > summary > span,
-	.navbar-dropdown a,
-	.navbar-dropdown a > span,
-	.navbar-links > a > span::after,
-	.navbar-menu-dropdown > summary > span::after,
-	.navbar-dropdown a > span::after,
-	.navbar-menu-dropdown > summary::after,
-	.theme-toggle,
-	.search-toggle { transition: none; }
-}
-
 .navbar-controls {
 	display: flex;
 	margin: 0 0 0 20px;
@@ -407,17 +392,57 @@
 .theme-toggle:hover { color: var(--global-navbar-hover-color); }
 
 .menu-toggle { display: none; }
+
 .menu-icon,
 .menu-icon::before,
-.menu-icon::after { display: block; width: 22px; height: 2px; margin: 0; padding: 0; border: 0; border-radius: 1px; background: currentColor; }
-.menu-icon { position: relative; }
+.menu-icon::after {
+	display: block;
+	width: 22px;
+	height: 2px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 1px;
+	background: currentColor;
+}
+
+.menu-icon {
+	position: relative;
+	transition: background-color .18s ease;
+}
+
 .menu-icon::before,
-.menu-icon::after { content: ''; position: absolute; left: 0; }
+.menu-icon::after {
+	position: absolute;
+	left: 0;
+	content: '';
+	transition: top .18s ease, transform .18s ease;
+}
+
 .menu-icon::before { top: -6px; }
 .menu-icon::after { top: 6px; }
+
 .menu-toggle[aria-expanded='true'] .menu-icon { background: transparent; }
 .menu-toggle[aria-expanded='true'] .menu-icon::before { top: 0; transform: rotate(45deg); }
 .menu-toggle[aria-expanded='true'] .menu-icon::after { top: 0; transform: rotate(-45deg); }
+
+@media (prefers-reduced-motion: reduce) {
+	.navbar-links > a,
+	.navbar-menu-dropdown > summary,
+	.navbar-links > a > span,
+	.navbar-menu-dropdown > summary > span,
+	.navbar-dropdown a,
+	.navbar-dropdown a > span,
+	.navbar-links > a > span::after,
+	.navbar-menu-dropdown > summary > span::after,
+	.navbar-dropdown a > span::after,
+	.navbar-menu-dropdown > summary::after,
+	.theme-toggle,
+	.search-toggle,
+	.menu-icon,
+	.menu-icon::before,
+	.menu-icon::after { transition: none; }
+}
 
 .site-footer {
 	width: 100%;

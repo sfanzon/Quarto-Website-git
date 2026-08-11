@@ -46,15 +46,29 @@ const dropdowns = [
 
 		<div class="navbar-links" id="navbar-links">
 			{primaryLinks.map((link) => (
-				<a href={link.href} data-nav-section={link.section} class:list={{ active: link.active }} aria-current={link.active ? 'page' : undefined}>
+				<a
+					href={link.href}
+					data-nav-section={link.section}
+					class:list={{ active: link.active }}
+					aria-current={link.active ? 'page' : undefined}
+				>
 					<span>{link.label}</span>
 				</a>
 			))}
 			{dropdowns.map((dropdown) => (
 				<details class="navbar-menu-dropdown" data-navbar-dropdown>
-					<summary class:list={{ active: dropdown.active }} aria-current={dropdown.active ? 'page' : undefined}><span>{dropdown.label}</span></summary>
+					<summary
+						class:list={{ active: dropdown.active }}
+						aria-current={dropdown.active ? 'page' : undefined}
+					>
+						<span>{dropdown.label}</span>
+					</summary>
 					<div class="navbar-dropdown">
-						{dropdown.links.map((link) => <a href={link.href}><span>{link.label}</span></a>)}
+						{dropdown.links.map((link) => (
+							<a href={link.href}>
+								<span>{link.label}</span>
+							</a>
+						))}
 					</div>
 				</details>
 			))}

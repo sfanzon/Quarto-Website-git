@@ -17,8 +17,12 @@ const breakpointFrames = [
 	['Above navbar breakpoint', 993, 800, .42],
 ];
 const routes = [
-	['Astro kitchen sink', '/dev/kitchen-sink/'], ['Quarto kitchen sink', '/dev/quarto-kitchen-sink.html'], ['Homepage', '/'], ['About', '/about/'],
-	['Projects', '/projects/'], ['Publications', '/publications/'],
+	['Astro kitchen sink', '/dev/kitchen-sink/'],
+	['Quarto kitchen sink', '/dev/quarto-kitchen-sink.html'],
+	['Homepage', '/'],
+	['About', '/about/'],
+	['Projects', '/projects/'],
+	['Publications', '/publications/'],
 	['F1 project', '/projects/f1-time-rank-duality/'],
 	['F1 technical', '/projects/f1-time-rank-duality/technical.html'],
 ];
@@ -33,20 +37,76 @@ const routes = [
 	<body class="standard-page" data-pagefind-ignore="all">
 		<Header />
 		<main class="content dev-content" data-display-mode="fit">
-			<header class="compact-page-hero dev-hero"><p class="eyebrow">Development QA</p><h1>Real-route viewport dashboard</h1><p>Independent same-origin frames rendered at their declared CSS-pixel dimensions.</p><nav class="dev-local-nav" aria-label="Development tools"><a href="/dev/kitchen-sink/">Astro kitchen sink</a><a href="/dev/quarto-kitchen-sink.html">Quarto kitchen sink</a><a href="/dev/viewports/" aria-current="page">Viewport dashboard</a></nav></header>
+			<header class="compact-page-hero dev-hero">
+				<p class="eyebrow">Development QA</p>
+				<h1>Real-route viewport dashboard</h1>
+				<p>Independent same-origin frames rendered at their declared CSS-pixel dimensions.</p>
+				<nav class="dev-local-nav" aria-label="Development tools">
+					<a href="/dev/kitchen-sink/">Astro kitchen sink</a>
+					<a href="/dev/quarto-kitchen-sink.html">Quarto kitchen sink</a>
+					<a href="/dev/viewports/" aria-current="page">Viewport dashboard</a>
+				</nav>
+			</header>
 
 			<div class="dev-toolbar" aria-label="Viewport QA controls">
-				<label>Route<select id="qa-route">{routes.map(([label, path]) => <option value={path}>{label}</option>)}</select></label>
-				<form class="dev-custom-route" id="qa-custom"><label>Custom local path<input id="qa-custom-path" type="text" inputmode="url" placeholder="/projects/" /></label><button type="submit">Load</button></form>
-				<label>Theme<select id="qa-theme"><option value="light">Light</option><option value="dark">Dark</option></select></label>
-				<div><span class="dev-sample-label">Viewport set</span><button type="button" data-qa-mode="core" aria-pressed="true">Core</button> <button type="button" data-qa-mode="breakpoint" aria-pressed="false">Navbar breakpoint</button></div>
-				<div><span class="dev-sample-label">Display</span><button type="button" data-qa-display="fit" aria-pressed="true">Fit</button> <button type="button" data-qa-display="overview" aria-pressed="false">Overview</button></div>
+				<label>
+					Route
+					<select id="qa-route">
+						{routes.map(([label, path]) => (
+							<option value={path}>{label}</option>
+						))}
+					</select>
+				</label>
+				<form class="dev-custom-route" id="qa-custom">
+					<label>
+						Custom local path
+						<input id="qa-custom-path" type="text" inputmode="url" placeholder="/projects/" />
+					</label>
+					<button type="submit">Load</button>
+				</form>
+				<label>
+					Theme
+					<select id="qa-theme">
+						<option value="light">Light</option>
+						<option value="dark">Dark</option>
+					</select>
+				</label>
+				<div>
+					<span class="dev-sample-label">Viewport set</span>
+					<button type="button" data-qa-mode="core" aria-pressed="true">Core</button>
+					<button type="button" data-qa-mode="breakpoint" aria-pressed="false">Navbar breakpoint</button>
+				</div>
+				<div>
+					<span class="dev-sample-label">Display</span>
+					<button type="button" data-qa-display="fit" aria-pressed="true">Fit</button>
+					<button type="button" data-qa-display="overview" aria-pressed="false">Overview</button>
+				</div>
 			</div>
 
 			{[['core', coreFrames], ['breakpoint', breakpointFrames]].map(([mode, frames]) => (
-				<section class="dev-frame-board" data-frame-set={mode} hidden={mode !== 'core'} aria-label={`${mode} viewport previews`}>
+				<section
+					class="dev-frame-board"
+					data-frame-set={mode}
+					hidden={mode !== 'core'}
+					aria-label={`${mode} viewport previews`}
+				>
 					{frames.map(([label, width, height, overviewScale]) => (
-						<article class="dev-frame-card"><header><strong>{label}</strong><span>{width} × {height}</span></header><div class="dev-frame-stage" style={`--frame-width:${width};--frame-height:${height};--frame-overview-scale:${overviewScale}`}><iframe src="/dev/kitchen-sink/" title={`${label}: ${width} by ${height} pixel preview`} loading="lazy"></iframe></div></article>
+						<article class="dev-frame-card">
+							<header>
+								<strong>{label}</strong>
+								<span>{width} × {height}</span>
+							</header>
+							<div
+								class="dev-frame-stage"
+								style={`--frame-width:${width};--frame-height:${height};--frame-overview-scale:${overviewScale}`}
+							>
+								<iframe
+									src="/dev/kitchen-sink/"
+									title={`${label}: ${width} by ${height} pixel preview`}
+									loading="lazy"
+								></iframe>
+							</div>
+						</article>
 					))}
 				</section>
 			))}
