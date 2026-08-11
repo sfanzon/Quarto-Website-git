@@ -12,6 +12,10 @@ const watchPaths = [
 	joinRepo('data/projects.yml'),
 	joinRepo('data/citations'),
 	joinRepo('filters/project-components.lua'),
+	joinRepo('scripts/build-content.py'),
+	joinRepo('styles/main.scss'),
+	joinRepo('styles/main'),
+	joinRepo('styles/components'),
 	joinRepo('styles/project.scss'),
 	joinRepo('styles/project'),
 	joinRepo('_quarto.yml'),
@@ -29,6 +33,7 @@ let buildQueued = false;
 let rebuildTimer;
 let preview;
 let sourceSnapshot;
+let stopping = false;
 
 function joinAstro(path) {
 	return resolve(astroRoot, path);
@@ -84,6 +89,12 @@ function startPreview() {
 		stdio: 'inherit',
 	});
 	preview.once('error', (error) => console.error(`Preview server failed: ${error.message}`));
+	preview.once('exit', (code, signal) => {
+		if (stopping) return;
+		console.error(`Preview server exited unexpectedly (${signal ?? `code ${code}`}). Stopping hybrid watcher.`);
+		stopping = true;
+		process.exit(1);
+	});
 }
 
 function collectSnapshot(path, entries = []) {
@@ -113,6 +124,7 @@ function startWatching() {
 }
 
 function stop() {
+	stopping = true;
 	clearTimeout(rebuildTimer);
 	preview?.kill('SIGTERM');
 	process.exit();
