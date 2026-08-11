@@ -71,6 +71,10 @@ const routes = [
 						<option value="dark">Dark</option>
 					</select>
 				</label>
+				<label>
+					Viewport
+					<select id="qa-viewport"></select>
+				</label>
 				<div>
 					<span class="dev-sample-label">Viewport set</span>
 					<button type="button" data-qa-mode="core" aria-pressed="true">Core</button>
@@ -90,8 +94,13 @@ const routes = [
 					hidden={mode !== 'core'}
 					aria-label={`${mode} viewport previews`}
 				>
-					{frames.map(([label, width, height, overviewScale]) => (
-						<article class="dev-frame-card">
+					{frames.map(([label, width, height, overviewScale], index) => (
+						<article
+							class="dev-frame-card"
+							data-frame-id={`${mode}-${index}`}
+							data-frame-label={label}
+							data-frame-size={`${width} \u00d7 ${height}`}
+						>
 							<header>
 								<strong>{label}</strong>
 								<span>{width} × {height}</span>
@@ -118,26 +127,61 @@ const routes = [
 			const frames = () => [...document.querySelectorAll<HTMLIFrameElement>('.dev-frame-stage iframe')];
 			const routeSelect = document.querySelector<HTMLSelectElement>('#qa-route');
 			const themeSelect = document.querySelector<HTMLSelectElement>('#qa-theme');
+			const viewportSelect = document.querySelector<HTMLSelectElement>('#qa-viewport');
 			const customForm = document.querySelector<HTMLFormElement>('#qa-custom');
 			const customPath = document.querySelector<HTMLInputElement>('#qa-custom-path');
 			const modeButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-qa-mode]')];
 			const displayButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-qa-display]')];
 			const dashboard = document.querySelector<HTMLElement>('.dev-content');
 			const frameStages = [...document.querySelectorAll<HTMLElement>('.dev-frame-stage')];
+			const frameBoards = [...document.querySelectorAll<HTMLElement>('[data-frame-set]')];
+			const frameCards = [...document.querySelectorAll<HTMLElement>('.dev-frame-card')];
+			let activeFrameSet = 'core';
+			let selectedViewport = 'core-0';
+
+			const activeFrameCards = () => frameCards.filter((card) => card.closest<HTMLElement>('[data-frame-set]')?.dataset.frameSet === activeFrameSet);
+			const updateViewportOptions = () => {
+				if (!viewportSelect) return;
+				const cards = activeFrameCards();
+				if (!cards.some((card) => card.dataset.frameId === selectedViewport)) selectedViewport = cards[0]?.dataset.frameId ?? '';
+				viewportSelect.replaceChildren(...cards.map((card) => {
+					const option = document.createElement('option');
+					option.value = card.dataset.frameId ?? '';
+					option.textContent = `${card.dataset.frameLabel} \u2014 ${card.dataset.frameSize}`;
+					return option;
+				}));
+				viewportSelect.value = selectedViewport;
+			};
+			const updateVisibleFrames = () => {
+				const isFit = dashboard?.dataset.displayMode === 'fit';
+				activeFrameCards().forEach((card) => {
+					card.hidden = isFit && card.dataset.frameId !== selectedViewport;
+				});
+			};
 
 			const updateFitScales = () => {
 				frameStages.forEach((stage) => {
 					const card = stage.closest<HTMLElement>('.dev-frame-card');
-					if (!card) return;
+					if (!card || card.hidden) return;
 					const cardStyle = getComputedStyle(card);
 					const availableWidth = card.clientWidth - parseFloat(cardStyle.paddingLeft) - parseFloat(cardStyle.paddingRight) - 16;
 					const frameWidth = Number(getComputedStyle(stage).getPropertyValue('--frame-width'));
-					if (availableWidth <= 0 || !frameWidth) return;
-					stage.style.setProperty('--frame-fit-scale', String(Math.min(1, availableWidth / frameWidth)));
+					const frameHeight = Number(getComputedStyle(stage).getPropertyValue('--frame-height'));
+					const navbarHeight = 56;
+					const cardChromeAllowance = 92;
+					const breathingRoom = 32;
+					const availableHeight = window.innerHeight - navbarHeight - cardChromeAllowance - breathingRoom;
+					if (availableWidth <= 0 || availableHeight <= 0 || !frameWidth || !frameHeight) return;
+					const fitScale = Math.min(1, availableWidth / frameWidth, availableHeight / frameHeight);
+					stage.style.setProperty('--frame-fit-scale', String(fitScale));
 				});
 			};
 			const fitObserver = new ResizeObserver(updateFitScales);
 			document.querySelectorAll<HTMLElement>('.dev-frame-card').forEach((card) => fitObserver.observe(card));
+			window.addEventListener('resize', updateFitScales);
+			window.visualViewport?.addEventListener('resize', updateFitScales);
+			updateViewportOptions();
+			updateVisibleFrames();
 			updateFitScales();
 
 			const loadRoute = (path: string) => {
@@ -154,17 +198,29 @@ const routes = [
 
 			routeSelect?.addEventListener('change', () => loadRoute(routeSelect.value));
 			themeSelect?.addEventListener('change', () => setTheme(themeSelect.value));
+			viewportSelect?.addEventListener('change', () => {
+				selectedViewport = viewportSelect.value;
+				updateVisibleFrames();
+				updateFitScales();
+			});
 			customForm?.addEventListener('submit', (event) => { event.preventDefault(); if (customPath?.value.trim()) loadRoute(customPath.value); });
 			modeButtons.forEach((button) => button.addEventListener('click', () => {
 				const mode = button.dataset.qaMode;
+				if (!mode) return;
+				activeFrameSet = mode;
 				modeButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-				document.querySelectorAll<HTMLElement>('[data-frame-set]').forEach((set) => { set.hidden = set.dataset.frameSet !== mode; });
+				frameBoards.forEach((set) => { set.hidden = set.dataset.frameSet !== mode; });
+				updateViewportOptions();
+				updateVisibleFrames();
 				updateFitScales();
 			}));
 			displayButtons.forEach((button) => button.addEventListener('click', () => {
 				const display = button.dataset.qaDisplay;
 				displayButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-				if (display) dashboard?.setAttribute('data-display-mode', display);
+				if (!display) return;
+				dashboard?.setAttribute('data-display-mode', display);
+				updateVisibleFrames();
+				updateFitScales();
 			}));
 			if (themeSelect) themeSelect.value = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
 		</script>

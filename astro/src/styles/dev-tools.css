@@ -27,12 +27,14 @@
 .dev-form-example button { min-height: 42px; padding: 0 1rem; border: 1px solid var(--global-divider-color); border-radius: 7px; background: var(--global-card-bg-color); color: var(--global-text-color); cursor: pointer; }
 .dev-route-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1px; border: 1px solid var(--global-divider-color); background: var(--global-divider-color); }
 .dev-route-list a { padding: 1rem; background: var(--global-card-bg-color); }
-.dev-toolbar { position: sticky; top: 56px; z-index: 20; display: flex; flex-wrap: wrap; gap: .75rem 1rem; align-items: end; margin-bottom: 1.5rem; padding: .8rem; border: 1px solid var(--global-divider-color); background: var(--global-card-bg-color); box-shadow: 0 6px 18px color-mix(in srgb, var(--global-text-color) 7%, transparent); }
+.dev-toolbar { display: flex; flex-wrap: wrap; gap: .55rem .75rem; align-items: end; margin-bottom: 1.5rem; padding: .65rem .75rem; border: 1px solid var(--global-divider-color); background: var(--global-card-bg-color); }
 .dev-toolbar label { display: grid; gap: .2rem; color: var(--global-text-color-light); font-size: .72rem; font-weight: 650; }
 .dev-toolbar :where(select, input, button) { min-height: 36px; padding: 0 .7rem; border: 1px solid var(--global-divider-color); border-radius: 6px; background: var(--global-bg-color); color: var(--global-text-color); font: inherit; }
+.dev-toolbar .dev-sample-label { display: block; margin: 0 0 .2rem; }
 .dev-toolbar button { cursor: pointer; }
 .dev-toolbar button[aria-pressed='true'] { border-color: var(--global-theme-color); color: var(--global-theme-color); }
 .dev-custom-route { display: flex; gap: .4rem; }
+.dev-custom-route input { width: min(14rem, 34vw); }
 .dev-frame-board { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; align-items: start; }
 .dev-frame-card { min-width: 0; overflow: hidden; padding: .8rem; border: 1px solid var(--global-divider-color); border-radius: 8px; background: var(--global-section-bg); }
 .dev-frame-card header { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: .55rem; font-size: .75rem; }
@@ -42,4 +44,4 @@
 .dev-frame-stage iframe { display: block; width: calc(var(--frame-width) * 1px); height: calc(var(--frame-height) * 1px); border: 0; background: var(--global-bg-color); transform: scale(var(--frame-display-scale)); transform-origin: top left; }
 .dev-content[data-display-mode='overview'] .dev-frame-board { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
 .dev-content[data-display-mode='overview'] .dev-frame-stage { --frame-display-scale: var(--frame-overview-scale); }
-@media (max-width: 720px) { .dev-type-grid { grid-template-columns: 1fr; } .dev-toolbar { position: static; } }
+@media (max-width: 720px) { .dev-type-grid { grid-template-columns: 1fr; } .dev-custom-route input { width: min(12rem, 58vw); } }
