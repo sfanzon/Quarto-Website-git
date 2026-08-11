@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process';
-import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 const astroRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const repoRoot = resolve(astroRoot, '..');
 const projectsRoot = join(repoRoot, 'projects');
+const quartoKitchenSink = join(repoRoot, 'dev', 'quarto-kitchen-sink.qmd');
 const distRoot = join(astroRoot, 'dist');
 const stageRoot = mkdtempSync(join(tmpdir(), 'astro-quarto-projects-'));
 const shellRoot = join(distRoot, 'site-shell');
@@ -88,7 +89,7 @@ function copyAsset(reference, sourceBase, destinationBase, copied) {
 	if (!isLocalAsset(clean)) return;
 	const source = resolve(sourceBase, clean);
 	const destination = resolve(destinationBase, clean);
-	if (!source.startsWith(stageRoot) || !existsSync(source) || copied.has(source)) return;
+	if (!source.startsWith(stageRoot) || !existsSync(source) || !statSync(source).isFile() || copied.has(source)) return;
 	copied.add(source);
 	mkdirSync(dirname(destination), { recursive: true });
 	cpSync(source, destination);
@@ -101,6 +102,10 @@ function copyAsset(reference, sourceBase, destinationBase, copied) {
 
 try {
 	const sources = findProjectSources(projectsRoot);
+	if (includeDevTools) {
+		if (!existsSync(quartoKitchenSink)) throw new Error('Missing Quarto kitchen sink source');
+		sources.push(quartoKitchenSink);
+	}
 	if (!sources.length) throw new Error('No Quarto project pages found');
 
 	execFileSync('npm', ['run', 'build:astro'], {

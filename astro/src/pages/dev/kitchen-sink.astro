@@ -2,6 +2,7 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import Header from '../../components/Header.astro';
+import TechnicalSpecimens from '../../components/dev/TechnicalSpecimens.mdx';
 import '../../styles/home.css';
 import '../../styles/projects.css';
 import '../../styles/dev-tools.css';
@@ -39,7 +40,7 @@ const tokens = [
 				<p class="eyebrow">Development QA</p>
 				<h1>Production pattern kitchen sink</h1>
 				<p>Current site tokens, typography and reusable Astro-owned patterns rendered through their canonical production styles.</p>
-				<nav class="dev-local-nav" aria-label="Development tools"><a href="/dev/kitchen-sink/" aria-current="page">Kitchen sink</a><a href="/dev/viewports/">Viewport dashboard</a></nav>
+				<nav class="dev-local-nav" aria-label="Development tools"><a href="/dev/kitchen-sink/" aria-current="page">Astro kitchen sink</a><a href="/dev/quarto-kitchen-sink.html">Quarto kitchen sink</a><a href="/dev/viewports/">Viewport dashboard</a></nav>
 			</header>
 
 			<section class="dev-section" aria-labelledby="qa-palette">
@@ -47,6 +48,11 @@ const tokens = [
 				<div class="dev-token-grid">
 					{tokens.map(([role, token]) => <article class="dev-token"><div class="dev-token-swatch" style={`--dev-swatch: var(${token})`}></div><strong>{role}</strong><code>{token}</code></article>)}
 				</div>
+			</section>
+
+			<section class="dev-section" aria-labelledby="qa-technical">
+				<header class="dev-section-header"><h2 id="qa-technical">Technical content</h2><p>Genuine Astro MDX rendered through the configured Markdown, Shiki and KaTeX pipeline.</p></header>
+				<TechnicalSpecimens />
 			</section>
 
 			<section class="dev-section" aria-labelledby="qa-type">

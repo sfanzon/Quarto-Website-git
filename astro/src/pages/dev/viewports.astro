@@ -17,7 +17,7 @@ const breakpointFrames = [
 	['Above navbar breakpoint', 993, 800, .42],
 ];
 const routes = [
-	['Kitchen sink', '/dev/kitchen-sink/'], ['Homepage', '/'], ['About', '/about/'],
+	['Astro kitchen sink', '/dev/kitchen-sink/'], ['Quarto kitchen sink', '/dev/quarto-kitchen-sink.html'], ['Homepage', '/'], ['About', '/about/'],
 	['Projects', '/projects/'], ['Publications', '/publications/'],
 	['F1 project', '/projects/f1-time-rank-duality/'],
 	['F1 technical', '/projects/f1-time-rank-duality/technical.html'],
@@ -33,7 +33,7 @@ const routes = [
 	<body class="standard-page" data-pagefind-ignore="all">
 		<Header />
 		<main class="content dev-content" data-display-mode="fit">
-			<header class="compact-page-hero dev-hero"><p class="eyebrow">Development QA</p><h1>Real-route viewport dashboard</h1><p>Independent same-origin frames rendered at their declared CSS-pixel dimensions.</p><nav class="dev-local-nav" aria-label="Development tools"><a href="/dev/kitchen-sink/">Kitchen sink</a><a href="/dev/viewports/" aria-current="page">Viewport dashboard</a></nav></header>
+			<header class="compact-page-hero dev-hero"><p class="eyebrow">Development QA</p><h1>Real-route viewport dashboard</h1><p>Independent same-origin frames rendered at their declared CSS-pixel dimensions.</p><nav class="dev-local-nav" aria-label="Development tools"><a href="/dev/kitchen-sink/">Astro kitchen sink</a><a href="/dev/quarto-kitchen-sink.html">Quarto kitchen sink</a><a href="/dev/viewports/" aria-current="page">Viewport dashboard</a></nav></header>
 
 			<div class="dev-toolbar" aria-label="Viewport QA controls">
 				<label>Route<select id="qa-route">{routes.map(([label, path]) => <option value={path}>{label}</option>)}</select></label>

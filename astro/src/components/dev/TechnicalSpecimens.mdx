@@ -1,0 +1,102 @@
+<p class="dev-sample-label">Inline technical prose</p>
+
+<p class="dev-sample-description">Mixed prose, links, inline code and mathematical notation in normal reading flow.</p>
+
+Mixed prose, [links](/projects/), **strong emphasis**, *editorial emphasis*, inline code such as `model.fit(data)`, and inline mathematics $W_2(\mu, \nu)$ use the actual Markdown pipeline.
+
+<blockquote>
+  Technical writing should make assumptions, computations and evidence inspectable.
+</blockquote>
+
+<p class="dev-sample-label">Code blocks</p>
+
+<p class="dev-sample-description">Syntax-highlighted technical content using Astro's production Markdown pipeline.</p>
+
+```python
+gradient = A.T @ (A @ x - b)
+x_next = x - step_size * gradient
+```
+
+```r
+fit <- lm(rank ~ constructor + driver, data = results)
+summary(fit)$coefficients
+```
+
+```ts
+const route = new URL('/projects/', window.location.origin);
+```
+
+```bash
+cd astro
+npm run build:site
+```
+
+```yaml
+model:
+  regularisation: l1
+  tolerance: 1e-8
+```
+
+```python
+def projected_gradient(A, b, x, step_size, iterations):
+    for _ in range(iterations):
+        residual = A @ x - b
+        x = x - step_size * (A.T @ residual)
+        x = x.clip(min=0)
+    return x
+
+very_long_diagnostic = "expected_rank_gap=" + ",".join(f"{gap:.6f}" for gap in teammate_gaps)
+```
+
+```
+status: converged
+iterations: 12
+```
+
+<p class="dev-sample-label">Display mathematics</p>
+
+<p class="dev-sample-description">Mathematical notation rendered through the site's Astro Markdown math pipeline.</p>
+
+$$
+\min_x \; \frac{1}{2}\lVert Ax-b\rVert_2^2 + \lambda R(x).
+$$
+
+$$
+\int_0^1 \sum_{k=1}^{n} \frac{x^k}{k!}\,dx
+= \sum_{k=1}^{n}\frac{1}{(k+1)!}.
+$$
+
+$$
+\mathbf{x}_{k+1}=
+\begin{bmatrix}1 & 0\\0 & 1\end{bmatrix}\mathbf{x}_k
+- \eta\begin{bmatrix}\partial_1 f(\mathbf{x}_k)\\\partial_2 f(\mathbf{x}_k)\end{bmatrix}.
+$$
+
+$$
+\begin{aligned}
+r_i &\sim \mathcal{N}(\mu_i, \sigma^2), \\
+\Pr(i \text{ wins}) &= \frac{\lambda_i}{\sum_{j=1}^{n}\lambda_j}.
+\end{aligned}
+$$
+
+$$
+\operatorname*{arg\,min}_{x \in \mathbb{R}^{m}} \left\{ \frac{1}{2}\sum_{i=1}^{n}\left(\sum_{j=1}^{m}A_{ij}x_j-b_i\right)^2 + \lambda\sum_{j=1}^{m}|x_j| \right\}.
+$$
+
+<p class="dev-sample-label">Technical structure</p>
+
+<p class="dev-sample-description">A compact table, list and horizontal rule rendered through ordinary Markdown.</p>
+
+| Stage | Evidence | Output |
+| --- | --- | --- |
+| Model | Assumptions | Estimator |
+| Validation | Diagnostics | Decision |
+
+1. Formulate the model.
+2. Validate the computation.
+3. Explain the result.
+
+- Keep data provenance explicit.
+- Record numerical tolerances.
+
+---

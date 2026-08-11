@@ -35,8 +35,10 @@ F1 overview URL; no Astro detail route exists.
 
 | File | Description |
 |---|---|
-| `astro/src/pages/dev/kitchen-sink.astro` | Development-only visual inventory of current production patterns |
-| `astro/src/pages/dev/viewports.astro` | Development-only real-route responsive viewport dashboard |
+| `astro/src/pages/dev/kitchen-sink.astro` | Development-only Astro production-pattern inventory |
+| `astro/src/components/dev/TechnicalSpecimens.mdx` | Dev-only genuine Astro Markdown, Shiki code and KaTeX math specimens |
+| `dev/quarto-kitchen-sink.qmd` | Dev-only genuine Quarto document-pattern inventory, merged through the shared shell during QA builds |
+| `astro/src/pages/dev/viewports.astro` | Development-only responsive dashboard for both kitchen sinks and real routes |
 | `astro/src/styles/dev-tools.css` | QA page chrome, token swatches, controls and viewport frames only |
 | `astro/scripts/build-site.mjs` + `npm run build:qa` | Retains `/dev/` locally while keeping it out of sitemap and Pagefind; production `build:site` removes it |
 

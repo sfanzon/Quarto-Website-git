@@ -134,9 +134,11 @@ npm run build:qa
 npm run preview
 ```
 
-Inspect `/dev/kitchen-sink/` for current production patterns and
-`/dev/viewports/` for real-route frames at 375, 430, 820, 1180 and 1440 CSS
-pixels. Use the navbar breakpoint mode to compare 991, 992 and 993 pixels.
+Inspect `/dev/kitchen-sink/` for Astro production patterns and genuine Astro
+Markdown technical specimens, `/dev/quarto-kitchen-sink.html` for the merged
+Quarto document specimens, and `/dev/viewports/` for real-route frames at 375,
+430, 820, 1180 and 1440 CSS pixels. Use the navbar breakpoint mode to compare
+991, 992 and 993 pixels.
 Normal `npm run build:site` removes these routes from `dist/`; neither build
 adds them to the sitemap or Pagefind.
 
