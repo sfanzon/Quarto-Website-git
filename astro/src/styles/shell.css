@@ -371,7 +371,7 @@
 }
 
 .site-search-dialog::backdrop { background: rgba(17, 14, 12, .56); }
-.site-search-panel { display: grid; max-height: inherit; padding: 20px 12px 20px 20px; grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; row-gap: 12px; overflow: auto; }
+.site-search-panel { display: grid; max-height: inherit; padding: 20px; grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; row-gap: 16px; overflow: auto; }
 .site-search-label { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .site-search-close { min-height: 42px; margin: 0; padding: 0 9px; border: 1px solid var(--global-divider-color); border-radius: 6px; background: transparent; color: var(--global-text-color-light); font: inherit; font-size: 12px; cursor: pointer; }
 .site-search-close:hover { color: var(--global-theme-color); }
