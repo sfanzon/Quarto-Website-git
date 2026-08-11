@@ -32,7 +32,7 @@ const routes = [
 	</head>
 	<body class="standard-page" data-pagefind-ignore="all">
 		<Header />
-		<main class="content dev-content">
+		<main class="content dev-content" data-display-mode="inspect">
 			<header class="compact-page-hero dev-hero"><p class="eyebrow">Development QA</p><h1>Real-route viewport dashboard</h1><p>Independent same-origin frames rendered at their declared CSS-pixel dimensions.</p><nav class="dev-local-nav" aria-label="Development tools"><a href="/dev/kitchen-sink/">Kitchen sink</a><a href="/dev/viewports/" aria-current="page">Viewport dashboard</a></nav></header>
 
 			<div class="dev-toolbar" aria-label="Viewport QA controls">
@@ -40,12 +40,13 @@ const routes = [
 				<form class="dev-custom-route" id="qa-custom"><label>Custom local path<input id="qa-custom-path" type="text" inputmode="url" placeholder="/projects/" /></label><button type="submit">Load</button></form>
 				<label>Theme<select id="qa-theme"><option value="light">Light</option><option value="dark">Dark</option></select></label>
 				<div><span class="dev-sample-label">Viewport set</span><button type="button" data-qa-mode="core" aria-pressed="true">Core</button> <button type="button" data-qa-mode="breakpoint" aria-pressed="false">Navbar breakpoint</button></div>
+				<div><span class="dev-sample-label">Display</span><button type="button" data-qa-display="inspect" aria-pressed="true">Inspect</button> <button type="button" data-qa-display="overview" aria-pressed="false">Overview</button></div>
 			</div>
 
 			{[['core', coreFrames], ['breakpoint', breakpointFrames]].map(([mode, frames]) => (
 				<section class="dev-frame-board" data-frame-set={mode} hidden={mode !== 'core'} aria-label={`${mode} viewport previews`}>
-					{frames.map(([label, width, height, scale]) => (
-						<article class="dev-frame-card"><header><strong>{label}</strong><span>{width} × {height}</span></header><div class="dev-frame-stage" style={`--frame-width:${width};--frame-height:${height};--frame-scale:${scale}`}><iframe src="/dev/kitchen-sink/" title={`${label}: ${width} by ${height} pixel preview`} loading="lazy"></iframe></div></article>
+					{frames.map(([label, width, height, overviewScale]) => (
+						<article class="dev-frame-card"><header><strong>{label}</strong><span>{width} × {height}</span></header><div class="dev-frame-stage" style={`--frame-width:${width};--frame-height:${height};--frame-overview-scale:${overviewScale}`}><iframe src="/dev/kitchen-sink/" title={`${label}: ${width} by ${height} pixel preview`} loading="lazy"></iframe></div></article>
 					))}
 				</section>
 			))}
@@ -60,6 +61,8 @@ const routes = [
 			const customForm = document.querySelector<HTMLFormElement>('#qa-custom');
 			const customPath = document.querySelector<HTMLInputElement>('#qa-custom-path');
 			const modeButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-qa-mode]')];
+			const displayButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-qa-display]')];
+			const dashboard = document.querySelector<HTMLElement>('.dev-content');
 
 			const loadRoute = (path: string) => {
 				const requestedPath = path.trim();
@@ -80,6 +83,11 @@ const routes = [
 				const mode = button.dataset.qaMode;
 				modeButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
 				document.querySelectorAll<HTMLElement>('[data-frame-set]').forEach((set) => { set.hidden = set.dataset.frameSet !== mode; });
+			}));
+			displayButtons.forEach((button) => button.addEventListener('click', () => {
+				const display = button.dataset.qaDisplay;
+				displayButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+				if (display) dashboard?.setAttribute('data-display-mode', display);
 			}));
 			if (themeSelect) themeSelect.value = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
 		</script>

@@ -141,7 +141,12 @@ const dropdowns = [
 				}
 			});
 			dropdown.addEventListener('toggle', () => {
-				if (dropdown.open) closeOtherDropdowns(dropdown);
+				if (dropdown.open) {
+					closeOtherDropdowns(dropdown);
+					return;
+				}
+				openedByHover = false;
+				clearCloseTimer();
 			});
 			dropdown.addEventListener('pointerleave', () => {
 				if (!desktopDropdown()) return;
