@@ -31,11 +31,11 @@ const moreLinks = [
 		<div class="navbar-links" id="navbar-links">
 			{primaryLinks.map((link) => (
 				<a href={link.href} data-nav-section={link.section} class:list={{ active: link.active }} aria-current={link.active ? 'page' : undefined}>
-					{link.label}
+					<span>{link.label}</span>
 				</a>
 			))}
 			<details class="navbar-more">
-				<summary>More</summary>
+				<summary><span>More</span></summary>
 				<div class="navbar-dropdown">
 					{moreLinks.map((link) => <a href={link.href}><span>{link.label}</span></a>)}
 				</div>

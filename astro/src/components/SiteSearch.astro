@@ -1,17 +1,11 @@
 <button class="search-toggle" type="button" aria-label="Search site" aria-haspopup="dialog" aria-controls="site-search-dialog">
 </button>
 
-<dialog class="site-search-dialog" id="site-search-dialog" aria-labelledby="site-search-title">
+<dialog class="site-search-dialog" id="site-search-dialog" aria-label="Search site-wide">
 	<div class="site-search-panel">
-		<div class="site-search-heading">
-			<div>
-				<p>Search</p>
-				<h2 id="site-search-title">Search the site</h2>
-			</div>
-			<button class="site-search-close" type="button" aria-label="Close search">Close</button>
-		</div>
-		<label class="site-search-input-label" for="site-search-input">Search pages and project documents</label>
-		<input id="site-search-input" class="site-search-input" type="search" autocomplete="off" placeholder="Search the site" />
+		<label class="site-search-label" for="site-search-input">Search site-wide</label>
+		<input id="site-search-input" class="site-search-input" type="search" autocomplete="off" placeholder="Search site-wide" />
+		<button class="site-search-close" type="button" aria-label="Close search">Close</button>
 		<div class="site-search-results" aria-live="polite"></div>
 	</div>
 </dialog>
@@ -40,10 +34,10 @@
 			const query = searchInput?.value.trim() ?? '';
 			const request = ++searchRequest;
 			if (!query) {
-				renderSearchMessage('Search the professional site and project documents.');
+				searchResults?.replaceChildren();
 				return;
 			}
-			renderSearchMessage('Searching…');
+			searchResults?.replaceChildren();
 			try {
 				const pagefind = await loadPagefind();
 				const matches = await pagefind.search(query);
@@ -51,7 +45,7 @@
 				if (request !== searchRequest || !searchResults) return;
 				searchResults.replaceChildren();
 				if (!results.length) {
-					renderSearchMessage('No matching pages found.');
+					renderSearchMessage('No results found.');
 					return;
 				}
 				const list = document.createElement('ol');
