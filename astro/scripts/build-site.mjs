@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 const astroRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const repoRoot = resolve(astroRoot, '..');
 const projectsRoot = join(repoRoot, 'projects');
+const sharedImagesRoot = join(repoRoot, 'assets', 'img');
 const quartoKitchenSink = join(repoRoot, 'dev', 'quarto-kitchen-sink.qmd');
 const distRoot = join(astroRoot, 'dist');
 const stageRoot = mkdtempSync(join(tmpdir(), 'astro-quarto-projects-'));
@@ -15,6 +16,15 @@ const devRoot = join(distRoot, 'dev');
 const stagedDevRoot = join(stageRoot, 'dev');
 const siteUrl = 'https://www.silviofanzon.com';
 const includeDevTools = process.argv.includes('--include-dev-tools');
+const donorOutput = [
+	join(distRoot, 'archive'),
+	join(distRoot, 'blog'),
+	join(distRoot, 'blog.png'),
+	join(distRoot, 'rss.xml'),
+	join(distRoot, 'tags'),
+	join(distRoot, 'team'),
+	join(distRoot, 'team.png'),
+];
 
 function findProjectSources(directory) {
 	return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -75,7 +85,10 @@ function applySharedShell(quartoHtml, header, footer) {
 	html = replaceOnce(html, /<body([^>]*)>/, (_match, attributes) => `<body${attributes}>${header}`, 'body opening tag');
 	html = replaceOnce(html, /<\/head>/, '<link rel="stylesheet" href="/site-shell/site.css"></head>', 'head closing tag');
 	html = replaceOnce(html, /<\/body>/, `${footer}</body>`, 'body closing tag');
-	return html.replace(/<div id="quarto-search-results"><\/div>\s*/, '');
+	return html
+		.replace(/<script src="[^"]*\/quarto-search\/[^"]+"><\/script>\s*/g, '')
+		.replace(/<script id="quarto-search-options"[^>]*>[\s\S]*?<\/script>\s*/, '')
+		.replace(/<div id="quarto-search-results"><\/div>\s*/, '');
 }
 
 function isLocalAsset(reference) {
@@ -139,6 +152,8 @@ try {
 		if (includeDevTools) cpSync(devRoot, stagedDevRoot, { recursive: true });
 		rmSync(devRoot, { recursive: true, force: true });
 	}
+	cpSync(sharedImagesRoot, join(distRoot, 'assets', 'img'), { recursive: true });
+	for (const output of donorOutput) rmSync(output, { recursive: true, force: true });
 	writeSitemap();
 	execFileSync('npm', ['run', 'postbuild'], { cwd: astroRoot, stdio: 'inherit' });
 	if (includeDevTools) cpSync(stagedDevRoot, devRoot, { recursive: true });

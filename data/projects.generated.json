@@ -139,7 +139,7 @@
     ],
     "summary": "Algorithms that reconstruct moving sources from incomplete and noisy measurements, supported by theory and numerical experiments.",
     "image": "assets/img/projects/optimal-transport.svg",
-    "href": "publications.html#2023-Bre-Car-Fan-Rom",
+    "href": "publications.html",
     "featured": false,
     "code": "https://github.com/sfanzon/DGCG_algorithm",
     "related": [
@@ -206,7 +206,7 @@
     ],
     "summary": "Mathematical models explaining how dislocations and elastic energy generate large-scale crystalline structures.",
     "image": "assets/img/projects/polycrystals.svg",
-    "href": "publications.html#2019-Fan-Pal-Pon",
+    "href": "publications.html",
     "related": [
       "f1-benchmarking",
       "sparse-gcg",

@@ -47,6 +47,8 @@ local function absolute_project_href(href)
     return href
   end
   if href:sub(1, 1) == "/" then return href end
+  if href == "projects.html" then return "/projects/" end
+  if href == "publications.html" then return "/publications/" end
   return "/" .. href
 end
 
@@ -199,7 +201,7 @@ local function render_end(project, view_id)
   if related ~= "" then table.insert(parts, related) end
 
   table.insert(parts, [[<div class="project-end-footer">
-  <a class="project-end-back-link" href="/projects.html">← Back to all projects</a>
+  <a class="project-end-back-link" href="/projects/">← Back to all projects</a>
 </div>]])
   return table.concat(parts, "\n")
 end
@@ -224,6 +226,10 @@ function Meta(meta)
     meta.title = pandoc.MetaString(current_project.article.title)
     meta.pagetitle = pandoc.MetaString(current_project.article.title)
   end
+
+  -- The custom project hero owns visible categorisation. Leaving Quarto's
+  -- hidden title categories in place makes quarto.js request listings.json.
+  meta.categories = nil
 
   return meta
 end

@@ -6,8 +6,8 @@ import { projects } from '../data/projects';
 import '../styles/projects.css';
 
 const siteUrl = 'https://www.silviofanzon.com';
-const hrefFor = (href: string) => href.startsWith('projects/') ? `/${href}` : href === 'index.html' ? '/' : href.startsWith('http') ? href : `${siteUrl}/${href}`;
-const imageFor = (image: string) => `${siteUrl}/${image}`;
+const hrefFor = (href: string) => href.startsWith('/') ? href : href.startsWith('projects/') ? `/${href}` : href === 'index.html' ? '/' : href === 'publications.html' ? '/publications/' : href.startsWith('http') ? href : `${siteUrl}/${href}`;
+const imageFor = (image: string) => image.startsWith('/') ? image : `/${image}`;
 ---
 
 <!doctype html>
