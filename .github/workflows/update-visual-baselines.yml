@@ -56,6 +56,8 @@ jobs:
 
       - name: Regenerate visual baselines
         run: npm run visual:baseline
+        env:
+          VISUAL_SITE_ROOT: ${{ github.workspace }}
 
       - name: Upload new baselines
         uses: actions/upload-artifact@v4

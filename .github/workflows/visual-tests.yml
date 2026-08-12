@@ -172,6 +172,8 @@ jobs:
 
       - name: Compare with reviewed baselines
         run: npm run test:visual
+        env:
+          VISUAL_SITE_ROOT: ${{ github.workspace }}
 
       - name: Upload diffs on failure
         if: failure()
