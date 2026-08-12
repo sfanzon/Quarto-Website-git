@@ -1,7 +1,10 @@
 const { defineConfig } = require("@playwright/test");
 const path = require("node:path");
 
-const visualSiteRoot = path.resolve(process.env.VISUAL_SITE_ROOT || ".");
+const visualSiteRoot = process.env.VISUAL_SITE_ROOT;
+const siteDirectory = visualSiteRoot
+  ? path.resolve(visualSiteRoot, "docs")
+  : path.resolve(__dirname, "astro", "dist");
 const visualBaselinesDirectory = process.env.VISUAL_BASELINES_DIR;
 const visualSnapshotPath = visualBaselinesDirectory
   ? path.resolve(visualBaselinesDirectory, "{arg}{ext}")
@@ -46,8 +49,8 @@ module.exports = defineConfig({
     }
   ],
   webServer: {
-    command: "python3 -m http.server 4321 --bind 127.0.0.1 --directory docs",
-    cwd: visualSiteRoot,
+    command: "python3 -m http.server 4321 --bind 127.0.0.1",
+    cwd: siteDirectory,
     url: "http://127.0.0.1:4321/index.html",
     reuseExistingServer: !process.env.CI,
     timeout: 30_000
