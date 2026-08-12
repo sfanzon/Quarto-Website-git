@@ -2,10 +2,10 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const repositoryRoot = path.resolve(__dirname, "../..");
-const docsRoot = path.join(repositoryRoot, "docs");
+const siteRoot = path.join(repositoryRoot, "astro", "dist");
 
 const htmlPages = fs
-  .globSync("**/*.html", { cwd: docsRoot })
+  .globSync("**/*.html", { cwd: siteRoot })
   .sort()
   .map((relativePath) => ({
     relativePath,
@@ -13,11 +13,10 @@ const htmlPages = fs
   }));
 
 const criticalPages = [
-  "/index.html",
-  "/publications.html",
-  "/teaching.html",
-  "/projects.html",
-  "/news.html",
+  "/",
+  "/about/",
+  "/projects/",
+  "/publications/",
   "/projects/f1-time-rank-duality/index.html"
 ];
 
@@ -51,8 +50,8 @@ function monitorPage(page, baseURL) {
 
 module.exports = {
   criticalPages,
-  docsRoot,
   htmlPages,
   monitorPage,
-  repositoryRoot
+  repositoryRoot,
+  siteRoot
 };

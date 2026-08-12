@@ -7,7 +7,7 @@ test.describe("WCAG accessibility", () => {
     for (const pageTarget of htmlPages) {
       test(`${pageTarget.relativePath} (${colorScheme})`, async ({ page }) => {
         await page.addInitScript((scheme) => {
-          window.localStorage.setItem("quarto-color-scheme", scheme);
+          window.localStorage.setItem("theme", scheme);
         }, colorScheme);
         await page.goto(pageTarget.urlPath, { waitUntil: "load" });
         await page.evaluate(() => document.fonts.ready);

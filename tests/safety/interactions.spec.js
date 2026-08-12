@@ -3,29 +3,29 @@ const { test, expect } = require("@playwright/test");
 test.describe("critical interactions", () => {
   test("desktop navbar dropdown opens", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 1000 });
-    await page.goto("/index.html");
+    await page.goto("/");
 
-    const toggle = page.locator("#nav-menu-more");
+    const dropdown = page.locator("[data-navbar-dropdown]").filter({
+      has: page.locator("summary", { hasText: "More" })
+    });
+    const toggle = dropdown.locator("summary");
     await toggle.click();
 
-    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    await expect(dropdown).toHaveAttribute("open", "");
     await expect(
-      page.getByLabel("More").getByRole("link", {
-        name: "Contact",
-        exact: true
-      })
+      dropdown.getByRole("link", { name: "Contact", exact: true })
     ).toBeVisible();
   });
 
   test("mobile navbar expands and exposes navigation", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/index.html");
+    await page.goto("/");
 
-    const toggle = page.locator(".navbar-toggler");
+    const toggle = page.locator(".menu-toggle");
     await toggle.click();
 
     await expect(toggle).toHaveAttribute("aria-expanded", "true");
-    await expect(page.locator("#navbarCollapse")).toHaveClass(/\bshow\b/);
+    await expect(page.locator("#navbar-links")).toHaveClass(/\bis-open\b/);
     await expect(page.getByRole("link", { name: "About", exact: true })).toBeVisible();
   });
 
@@ -37,8 +37,8 @@ test.describe("critical interactions", () => {
 
     const projectNavigation = page.locator(".project-chapter-rail");
     const projectToggle = page.locator(".project-chapter-toggle");
-    const navbarToggle = page.locator(".navbar-toggler");
-    const navbarMenu = page.locator("#navbarCollapse");
+    const navbarToggle = page.locator(".menu-toggle");
+    const navbarMenu = page.locator("#navbar-links");
 
     await expect(projectNavigation).toBeAttached();
     const topBefore = await projectNavigation.evaluate((element) =>
@@ -46,7 +46,7 @@ test.describe("critical interactions", () => {
     );
 
     await navbarToggle.click();
-    await expect(navbarMenu).toHaveClass(/\bshow\b/);
+    await expect(navbarMenu).toHaveClass(/\bis-open\b/);
     await expect
       .poll(() =>
         projectNavigation.evaluate((element) =>
@@ -61,96 +61,65 @@ test.describe("critical interactions", () => {
         rect.left + rect.width / 2,
         rect.top + rect.height / 2
       );
-      return Boolean(coveringElement?.closest("#quarto-header"));
+      return Boolean(coveringElement?.closest(".site-header"));
     });
     expect(navbarCoversProjectToggle).toBe(true);
   });
 
   test("theme toggle changes and persists the color scheme", async ({ page }) => {
-    await page.goto("/index.html");
+    await page.goto("/");
 
-    const before = await page.locator("body").getAttribute("class");
-    await page.locator(".quarto-color-scheme-toggle").first().click();
+    const before = await page.locator("html").getAttribute("data-theme");
+    await page.locator(".theme-toggle").click();
     await expect
-      .poll(() => page.locator("body").getAttribute("class"))
+      .poll(() => page.locator("html").getAttribute("data-theme"))
       .not.toBe(before);
 
     const stored = await page.evaluate(() =>
-      window.localStorage.getItem("quarto-color-scheme")
+      window.localStorage.getItem("theme")
     );
-    expect(stored).not.toBeNull();
+    expect(stored).toMatch(/^(light|dark)$/);
 
-    const changed = await page.locator("body").getAttribute("class");
+    const changed = await page.locator("html").getAttribute("data-theme");
     await page.reload();
-    await expect(page.locator("body")).toHaveAttribute("class", changed);
+    await expect(page.locator("html")).toHaveAttribute("data-theme", changed);
   });
 
-  test("site search returns a Teaching result", async ({ page }) => {
-    await page.goto("/index.html");
-    await page.locator("#quarto-search").click();
+  test("site search returns a Projects result", async ({ page }) => {
+    await page.goto("/");
+    await page.locator(".search-toggle").click();
 
-    const input = page.locator(".aa-DetachedContainer .aa-Input");
+    const input = page.locator("#site-search-input");
     await expect(input).toBeVisible();
-    await input.fill("teaching");
+    await input.fill("projects");
 
-    await expect(page.locator(".aa-DetachedContainer .aa-Item").first()).toBeVisible();
-    await expect(page.locator(".aa-DetachedContainer")).toContainText(/Teaching/i);
+    const results = page.locator(".site-search-result-list");
+    await expect(results).toContainText(/Projects/i);
   });
 
-  test("publication abstract and citation panels are mutually exclusive", async ({
+  test("publication BibTeX disclosures are mutually exclusive", async ({
     page
   }) => {
-    await page.goto("/publications.html");
+    await page.goto("/publications/");
 
-    const entry = page.locator(".publication-entry").filter({
-      has: page.locator(".abstract-toggle")
-    }).first();
-    const abstractToggle = entry.locator(".abstract-toggle");
-    const citationToggle = entry.locator(".bibtex-toggle");
+    const disclosures = page.locator('details[name="bibtex"]');
+    const first = disclosures.nth(0);
+    const second = disclosures.nth(1);
 
-    await abstractToggle.click();
-    await expect(abstractToggle).toHaveAttribute("aria-expanded", "true");
-    await expect(entry.locator(".abstract")).toHaveClass(/\bopen\b/);
+    await first.locator("summary").click();
+    await expect(first).toHaveAttribute("open", "");
 
-    await citationToggle.click();
-    await expect(citationToggle).toHaveAttribute("aria-expanded", "true");
-    await expect(entry.locator(".bibtex")).toHaveClass(/\bopen\b/);
-    await expect(entry.locator(".abstract")).not.toHaveClass(/\bopen\b/);
-  });
-
-  test("presentation and supervision abstracts open", async ({ page }) => {
-    for (const path of ["/presentations.html", "/supervision.html"]) {
-      await page.goto(path);
-
-      const entry = page.locator(".publication-entry").filter({
-        has: page.locator(".abstract-toggle")
-      }).first();
-      const abstractToggle = entry.locator(".abstract-toggle");
-
-      await abstractToggle.click();
-      await expect(abstractToggle).toHaveAttribute("aria-expanded", "true");
-      await expect(entry.locator(".abstract")).toHaveClass(/\bopen\b/);
-    }
-  });
-
-  test("news search filters entries and reports an empty result", async ({
-    page
-  }) => {
-    await page.goto("/news.html");
-
-    const input = page.locator("[data-news-search]");
-    const items = page.locator("[data-news-item]");
-    expect(await items.count()).toBeGreaterThan(0);
-
-    await input.fill("query-that-cannot-match-any-news-entry");
-    await expect(page.locator("[data-news-item]:visible")).toHaveCount(0);
-    await expect(page.locator(".news-search-empty")).toBeVisible();
+    await second.evaluate((details) => {
+      details.open = true;
+    });
+    await expect(second).toHaveAttribute("open", "");
+    await expect(first).not.toHaveAttribute("open", "");
   });
 
   test("news disclosure opens from its summary", async ({ page }) => {
-    await page.goto("/news.html");
+    await page.goto("/");
 
-    const item = page.locator("[data-news-item]").first();
+    const item = page.locator("details.news-item").first();
     await item.locator("summary").click();
     await expect(item).toHaveAttribute("open", "");
   });

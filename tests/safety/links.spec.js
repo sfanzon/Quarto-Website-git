@@ -1,7 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { test, expect } = require("@playwright/test");
-const { docsRoot, htmlPages, repositoryRoot } = require("./site");
+const { htmlPages, repositoryRoot, siteRoot } = require("./site");
 
 const ignoredSchemes = /^(?:data:|mailto:|tel:|javascript:|blob:)/i;
 const optionalLocalAssets = new Set(
@@ -39,7 +39,7 @@ function localTarget(reference, sourceRelativePath) {
 }
 
 function targetFile(relativePath) {
-  const target = path.join(docsRoot, relativePath);
+  const target = path.join(siteRoot, relativePath);
   if (fs.existsSync(target) && fs.statSync(target).isFile()) return target;
   const indexTarget = path.join(target, "index.html");
   return fs.existsSync(indexTarget) ? indexTarget : null;
@@ -63,7 +63,7 @@ test("all generated HTML and CSS references resolve locally", async () => {
 
   for (const pageTarget of htmlPages) {
     const html = fs.readFileSync(
-      path.join(docsRoot, pageTarget.relativePath),
+      path.join(siteRoot, pageTarget.relativePath),
       "utf8"
     );
     for (const match of html.matchAll(attributePattern)) {
@@ -80,8 +80,8 @@ test("all generated HTML and CSS references resolve locally", async () => {
     }
   }
 
-  for (const cssRelativePath of fs.globSync("**/*.css", { cwd: docsRoot })) {
-    const css = fs.readFileSync(path.join(docsRoot, cssRelativePath), "utf8");
+  for (const cssRelativePath of fs.globSync("**/*.css", { cwd: siteRoot })) {
+    const css = fs.readFileSync(path.join(siteRoot, cssRelativePath), "utf8");
     for (const match of css.matchAll(cssUrlPattern)) {
       const target = localTarget(match[1], cssRelativePath);
       if (target && !targetFile(target.relativePath)) {
@@ -106,25 +106,15 @@ test("retired component classes remain absent from the rendered site", async () 
   ];
   const renderedFiles = [
     ...htmlPages.map((page) => page.relativePath),
-    ...fs.globSync("**/*.css", { cwd: docsRoot })
+    ...fs.globSync("**/*.css", { cwd: siteRoot })
   ];
   const rendered = renderedFiles
-    .map((relativePath) => fs.readFileSync(path.join(docsRoot, relativePath), "utf8"))
+    .map((relativePath) => fs.readFileSync(path.join(siteRoot, relativePath), "utf8"))
     .join("\n");
 
   for (const className of retiredClasses) {
     expect(rendered, `retired class still rendered: ${className}`)
       .not.toContain(className);
-  }
-});
-
-test("archive entry markup does not render as code", async () => {
-  for (const relativePath of ["presentations.html", "supervision.html"]) {
-    const html = fs.readFileSync(path.join(docsRoot, relativePath), "utf8");
-    expect(
-      html,
-      `${relativePath} contains archive HTML rendered as a code block`
-    ).not.toMatch(/<pre><code>&lt;div class="(?:talk_title|title|periodical|links archive-actions)/);
   }
 });
 
@@ -135,6 +125,7 @@ test("source markup keeps presentation styles in reusable classes", async () => 
   ].filter(
     (relativePath) =>
       !relativePath.startsWith("docs/") &&
+      !relativePath.startsWith("astro/dist/") &&
       !relativePath.startsWith("node_modules/") &&
       !relativePath.startsWith("playwright-report/") &&
       !relativePath.startsWith("test-results/")
