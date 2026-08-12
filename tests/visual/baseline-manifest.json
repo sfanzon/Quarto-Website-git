@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "baseline": {
+    "status": "Legacy Quarto-only reviewed baseline metadata; a controlled hybrid baseline refresh is still required.",
     "commit": "d1923062b85f57d3d95b85b6527658f262884609",
     "quartoVersion": "1.9.38",
     "playwright": "1.62.0",
@@ -51,62 +52,36 @@
   },
   "themes": {
     "light": {
-      "storageKey": "quarto-color-scheme",
-      "storageValue": "default",
-      "bodyClass": "quarto-light"
+      "storageKey": "theme",
+      "storageValue": "light",
+      "rootTheme": "light"
     },
     "dark": {
-      "storageKey": "quarto-color-scheme",
-      "storageValue": "alternate",
-      "bodyClass": "quarto-dark"
+      "storageKey": "theme",
+      "storageValue": "dark",
+      "rootTheme": "dark"
     }
   },
   "pages": [
     {
       "name": "home",
-      "path": "index.html"
+      "path": "/"
+    },
+    {
+      "name": "about",
+      "path": "/about/"
     },
     {
       "name": "publications",
-      "path": "publications.html"
-    },
-    {
-      "name": "teaching",
-      "path": "teaching.html"
+      "path": "/publications/"
     },
     {
       "name": "projects",
-      "path": "projects.html"
+      "path": "/projects/"
     },
     {
       "name": "f1-project",
-      "path": "projects/f1-time-rank-duality/index.html"
-    }
-  ],
-  "prComparisonPages": [
-    {
-      "name": "about",
-      "path": "about.html"
-    },
-    {
-      "name": "expertise",
-      "path": "expertise.html"
-    },
-    {
-      "name": "research",
-      "path": "research.html"
-    },
-    {
-      "name": "news",
-      "path": "news.html"
-    },
-    {
-      "name": "notes",
-      "path": "notes.html"
-    },
-    {
-      "name": "note-detail",
-      "path": "notes/how-i-use-ai.html"
+      "path": "/projects/f1-time-rank-duality/index.html"
     }
   ]
 }

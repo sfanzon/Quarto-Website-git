@@ -2,9 +2,7 @@ const { test, expect } = require("@playwright/test");
 const manifest = require("./baseline-manifest.json");
 
 const combinations = [];
-const pageTargets = process.env.VISUAL_BASE_HEAD_COMPARISON === "1"
-  ? [...manifest.pages, ...(manifest.prComparisonPages || [])]
-  : manifest.pages;
+const pageTargets = manifest.pages;
 
 for (const pageTarget of pageTargets) {
   for (const [themeName, theme] of Object.entries(manifest.themes)) {
@@ -20,7 +18,7 @@ for (const pageTarget of pageTargets) {
   }
 }
 
-test.describe("SCSS visual baseline", () => {
+test.describe("hybrid visual baseline", () => {
   test.skip(
     ({ browserName }) => browserName !== "chromium",
     "Pixel baselines are intentionally Chromium-specific."
@@ -68,9 +66,7 @@ test.describe("SCSS visual baseline", () => {
       });
       await page.waitForTimeout(manifest.capture.settleMilliseconds);
 
-      await expect(page.locator("body")).toHaveClass(
-        new RegExp(`(?:^|\\s)${theme.bodyClass}(?:\\s|$)`)
-      );
+      await expect(page.locator("html")).toHaveAttribute("data-theme", theme.rootTheme);
       await expect(page).toHaveScreenshot(screenshotName, {
         fullPage: manifest.capture.fullPage
       });

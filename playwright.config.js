@@ -1,9 +1,9 @@
 const { defineConfig } = require("@playwright/test");
 const path = require("node:path");
 
-const visualSiteRoot = process.env.VISUAL_SITE_ROOT;
-const siteDirectory = visualSiteRoot
-  ? path.resolve(visualSiteRoot, "docs")
+const visualSiteDirectory = process.env.VISUAL_SITE_DIR;
+const siteDirectory = visualSiteDirectory
+  ? path.resolve(visualSiteDirectory)
   : path.resolve(__dirname, "astro", "dist");
 const visualBaselinesDirectory = process.env.VISUAL_BASELINES_DIR;
 const visualSnapshotPath = visualBaselinesDirectory

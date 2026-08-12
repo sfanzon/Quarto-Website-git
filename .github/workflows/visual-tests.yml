@@ -1,6 +1,6 @@
 name: Visual Regression Tests
 
-# Pull requests compare freshly rendered base and head revisions in the same
+# Pull requests compare freshly built hybrid base and head revisions in the same
 # controlled environment. Manual runs retain the reviewed, committed-baseline
 # check. Neither mode updates committed screenshots.
 
@@ -9,6 +9,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, labeled, unlabeled]
     paths:
+      - 'astro/**'
       - 'styles/**'
       - '_quarto.yml'
       - 'data/**'
@@ -60,10 +61,22 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
-          cache-dependency-path: head/package-lock.json
+          cache-dependency-path: |
+            base/package-lock.json
+            base/astro/package-lock.json
+            head/package-lock.json
+            head/astro/package-lock.json
 
       - name: Install head test dependencies
         working-directory: head
+        run: npm ci
+
+      - name: Install Astro build dependencies for base
+        working-directory: base/astro
+        run: npm ci
+
+      - name: Install Astro build dependencies for head
+        working-directory: head/astro
         run: npm ci
 
       - name: Install Playwright Chromium (with system deps)
@@ -80,20 +93,19 @@ jobs:
         with:
           version: '1.9.38'
 
-      - name: Render base site from source
-        working-directory: base
-        run: quarto render
+      - name: Build base hybrid site from source
+        working-directory: base/astro
+        run: npm run build:site
 
-      - name: Render head site from source
-        working-directory: head
-        run: quarto render
+      - name: Build head hybrid site from source
+        working-directory: head/astro
+        run: npm run build:site
 
       - name: Capture temporary base screenshots
         working-directory: head
         run: npm run visual:baseline
         env:
-          VISUAL_BASE_HEAD_COMPARISON: '1'
-          VISUAL_SITE_ROOT: ${{ github.workspace }}/base
+          VISUAL_SITE_DIR: ${{ github.workspace }}/base/astro/dist
           VISUAL_BASELINES_DIR: ${{ runner.temp }}/base-visual-baselines
 
       - name: Compare head with base
@@ -102,8 +114,7 @@ jobs:
         working-directory: head
         run: npm run test:visual
         env:
-          VISUAL_BASE_HEAD_COMPARISON: '1'
-          VISUAL_SITE_ROOT: ${{ github.workspace }}/head
+          VISUAL_SITE_DIR: ${{ github.workspace }}/head/astro/dist
           VISUAL_BASELINES_DIR: ${{ runner.temp }}/base-visual-baselines
 
       - name: Upload base screenshots and diffs on failure
@@ -150,8 +161,15 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            astro/package-lock.json
 
-      - name: Install dependencies
+      - name: Install root test dependencies
+        run: npm ci
+
+      - name: Install Astro build dependencies
+        working-directory: astro
         run: npm ci
 
       - name: Install Playwright Chromium (with system deps)
@@ -167,13 +185,12 @@ jobs:
         with:
           version: '1.9.38'
 
-      - name: Render site from source
-        run: quarto render
+      - name: Build hybrid site from source
+        working-directory: astro
+        run: npm run build:site
 
       - name: Compare with reviewed baselines
         run: npm run test:visual
-        env:
-          VISUAL_SITE_ROOT: ${{ github.workspace }}
 
       - name: Upload diffs on failure
         if: failure()

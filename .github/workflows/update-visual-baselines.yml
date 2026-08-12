@@ -34,8 +34,15 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            astro/package-lock.json
 
-      - name: Install dependencies
+      - name: Install root test dependencies
+        run: npm ci
+
+      - name: Install Astro build dependencies
+        working-directory: astro
         run: npm ci
 
       - name: Install Playwright Chromium (with system deps)
@@ -51,13 +58,12 @@ jobs:
         with:
           version: '1.9.38'
 
-      - name: Render site from source
-        run: quarto render
+      - name: Build hybrid site from source
+        working-directory: astro
+        run: npm run build:site
 
       - name: Regenerate visual baselines
         run: npm run visual:baseline
-        env:
-          VISUAL_SITE_ROOT: ${{ github.workspace }}
 
       - name: Upload new baselines
         uses: actions/upload-artifact@v4
