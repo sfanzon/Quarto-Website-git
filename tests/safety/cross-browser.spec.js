@@ -18,28 +18,33 @@ test.describe("cross-browser critical pages", () => {
 
   test("mobile navigation expands", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/index.html");
+    await page.goto("/");
 
-    const toggle = page.locator(".navbar-toggler");
+    const toggle = page.locator(".menu-toggle");
     await toggle.click();
     await expect(toggle).toHaveAttribute("aria-expanded", "true");
-    await expect(page.locator("#navbarCollapse")).toHaveClass(/\bshow\b/);
+    await expect(page.locator("#navbar-links")).toHaveClass(/\bis-open\b/);
   });
 
-  test("back navigation restores a deep publication position", async ({ page }) => {
+  test("back navigation restores a deep project position", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/publications.html");
+    await page.goto("/projects/f1-time-rank-duality/index.html");
+    await page.waitForFunction(
+      () => document.documentElement.scrollHeight > window.innerHeight + 500
+    );
 
-    const resource = page.locator('.publication-entry a[href*="/projects/"]').first();
-    await resource.scrollIntoViewIfNeeded();
-    await resource.evaluate((link) => link.removeAttribute("target"));
-    const before = await page.evaluate(() => window.scrollY);
+    const before = await page.evaluate(() => {
+      const maximum = document.documentElement.scrollHeight - window.innerHeight;
+      const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = "auto";
+      window.scrollTo({ top: Math.min(1400, maximum), behavior: "auto" });
+      const position = window.scrollY;
+      document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      return position;
+    });
     expect(before).toBeGreaterThan(500);
 
-    await Promise.all([
-      page.waitForURL(/\/projects\//),
-      resource.click()
-    ]);
+    await page.goto("/");
     await page.goBack({ waitUntil: "load" });
 
     await expect
@@ -49,7 +54,7 @@ test.describe("cross-browser critical pages", () => {
 
   test("history restoration survives a load-time scroll reset", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/publications.html");
+    await page.goto("/projects/f1-time-rank-duality/index.html");
     await page.waitForTimeout(120);
 
     const result = await page.evaluate(async () => {

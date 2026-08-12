@@ -13,7 +13,7 @@ function expectAligned(actual, expected, label) {
 test("navbar and footer share their responsive shell edges", async ({ page }) => {
   for (const viewport of responsiveViewports) {
     await page.setViewportSize(viewport);
-    await page.goto("/index.html");
+    await page.goto("/");
 
     const layout = await page.evaluate(() => {
       const bounds = (selector) => {
@@ -22,9 +22,9 @@ test("navbar and footer share their responsive shell edges", async ({ page }) =>
       };
 
       return {
-        navbar: bounds(".navbar-container"),
+        navbar: bounds(".site-navbar"),
         footer: bounds(".site-footer-inner"),
-        brand: bounds(".navbar-title")
+        brand: bounds(".site-brand")
       };
     });
 
@@ -46,23 +46,23 @@ test("navbar and footer share their responsive shell edges", async ({ page }) =>
   }
 });
 
-test("desktop search icon aligns with the navbar shell", async ({ page }) => {
+test("desktop navbar controls align with the navbar shell", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto("/index.html");
+  await page.goto("/");
 
   const layout = await page.evaluate(() => {
-    const navbar = document.querySelector(".navbar-container").getBoundingClientRect();
-    const icon = document.querySelector("#quarto-search svg").getBoundingClientRect();
-    return { navbarRight: navbar.right, iconRight: icon.right };
+    const navbar = document.querySelector(".site-navbar").getBoundingClientRect();
+    const controls = document.querySelector(".navbar-controls").getBoundingClientRect();
+    return { navbarRight: navbar.right, controlsRight: controls.right };
   });
 
-  expectAligned(layout.iconRight, layout.navbarRight, "desktop: search icon right edge");
+  expectAligned(layout.controlsRight, layout.navbarRight, "desktop: controls right edge");
 });
 
 test("project card grids retain their responsive column counts", async ({ page }) => {
   const targets = [
-    { path: "/index.html", selector: ".home-project-grid" },
-    { path: "/projects.html", selector: ".projects-card-grid" }
+    { path: "/", selector: ".home-project-grid" },
+    { path: "/projects/", selector: ".projects-card-grid" }
   ];
   const expectedColumns = { mobile: 1, iPad: 2, desktop: 3 };
 
