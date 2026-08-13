@@ -15,7 +15,7 @@ body.home-page { padding-top: 56px; }
 .home-bio-copy { max-width:43rem; margin-top:1.65rem; padding-top:1.4rem; border-top:1px solid var(--global-divider-color); }
 .home-bio-copy p { margin:0; font-size:clamp(1.02rem,1.25vw,1.12rem); line-height:1.65; }
 .home-bio-copy .home-summary { margin-top:1rem; }
-.home-profile-links { display:flex; flex-wrap:wrap; gap:.55rem 1.35rem; margin-top:1.15rem; font-size:.92rem; }
+.home-profile-links { display:flex; flex-wrap:wrap; gap:.55rem 1.35rem; margin-top:1.15rem; padding-top:1.15rem; border-top:1px solid var(--global-divider-color); font-size:.92rem; }
 .home-profile-links a { color:var(--global-text-color); font-weight:600; }
 .home-profile-links a:hover { color:var(--global-theme-color); }
 .home-scroll-cue { position:absolute; left:50%; bottom:2rem; display:inline-flex; flex-direction:column; align-items:center; gap:.12rem; color:var(--global-text-color-light); font-size:.72rem; font-weight:650; letter-spacing:.12em; line-height:1; text-transform:uppercase; transform:translateX(-50%); }
