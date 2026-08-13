@@ -102,7 +102,7 @@
   summary: Algorithms that reconstruct moving sources from incomplete and noisy measurements, supported by theory
     and numerical experiments.
   image: assets/img/projects/optimal-transport.svg
-  href: publications.html
+  href: /publications/
   featured: false
   code: https://github.com/sfanzon/DGCG_algorithm
   related:
@@ -148,7 +148,7 @@
   - Materials science
   summary: Mathematical models explaining how dislocations and elastic energy generate large-scale crystalline structures.
   image: assets/img/projects/polycrystals.svg
-  href: publications.html
+  href: /publications/
   related:
   - f1-benchmarking
   - sparse-gcg

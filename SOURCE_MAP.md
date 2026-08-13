@@ -30,6 +30,11 @@ individual project page. Do not infer a source move from a matching public URL.
 | `astro/src/pages/about.astro` | Production owner for `/about/`; preserves the accepted career narrative and hierarchy |
 | `astro/src/pages/expertise.astro` | Production owner for `/expertise/` and its five capability sections |
 | `astro/src/styles/expertise.css` | Production `/expertise/` page styling |
+| `astro/src/pages/research.astro` | Production owner for `/research/` and its three research themes |
+| `astro/src/styles/research.css` | Production `/research/` page styling |
+| `astro/src/pages/publications.astro` | Production owner for `/publications/` and its page hierarchy |
+| `astro/src/components/PublicationArchive.astro` | Consumes the generated publication archive and owns Astro abstract, BibTeX, copy and math behaviour |
+| `astro/src/styles/publications.css` | Production `/publications/` archive styling |
 | `astro/scripts/build-site.mjs` (`compatibilityAliases`) | Emits noindex copies of canonical Astro pages at the former `.html` URLs for static-host compatibility |
 
 Quarto's `projects/f1-time-rank-duality/index.qmd` is the sole owner of the
@@ -51,9 +56,7 @@ F1 overview URL; no Astro detail route exists.
 | File | Description |
 |---|---|
 | `index.qmd` | Homepage — professional positioning + selected evidence |
-| `research.qmd` | Academic research themes |
 | `projects.qmd` | Project listing page |
-| `publications.qmd` | Full publication archive |
 | `teaching.qmd` | Teaching activity |
 | `news.qmd` | News archive page |
 | `notes.qmd` | Notes archive page |
@@ -64,8 +67,9 @@ F1 overview URL; no Astro detail route exists.
 | `404.qmd` | Custom 404 page |
 
 Until an ordinary page is deliberately migrated, its root `.qmd` remains its
-canonical source. About and Expertise have moved to the Astro owners listed
-above, and their obsolete root `.qmd` implementations have been removed.
+canonical source. About, Expertise, Research and Publications have moved to
+the Astro owners listed above, and their obsolete root `.qmd` implementations
+have been removed.
 Remaining top-level `.qmd` files intentionally stay at repository root because
 Quarto mirrors source paths into output URLs. Moving them under `pages/` would
 change canonical public URLs. Do not reopen this decision.
@@ -118,7 +122,7 @@ detail route.
 | `includes/home-publications-list.html` | `data/publications.bib` (selected) | `publications.load_publications()` → `publication_rendering.render_selected_publications()` |
 | `includes/news-all.qmd` | `news/*.md` (all) | `news.load_news()` → `news.render_news_qmd()` |
 | `includes/projects-portfolio.html` | `data/projects.yml` (all) | `portfolio.load_projects()` → `portfolio.render_projects_portfolio()` |
-| `includes/publications-all.html` | `data/publications.bib` (all, grouped) | `publications.load_publications()` → `publication_rendering.render_publication_archive()` |
+| `includes/publications-all.html` | `data/publications.bib` (all, grouped; consumed by `PublicationArchive.astro`) | `publications.load_publications()` → `publication_rendering.render_publication_archive()` |
 | `includes/presentations.html` | `data/presentations_*.bib` | `presentations.load_presentations()` → `presentations.render_presentations_archive()` |
 | `includes/supervision.html` | `data/supervision_*.bib` | `supervision.load_supervision()` → `supervision.render_supervision_archive()` |
 | `includes/teaching-list.html` | `data/teaching.yml` | `teaching.load_teaching()` → `teaching_section()` |
@@ -221,7 +225,8 @@ already exists.
 | Production Expertise page | `astro/src/pages/expertise.astro` + `astro/src/styles/expertise.css` | Canonical |
 | Homepage background/approach previews in legacy Quarto rendering | `styles/components/_about.scss` | Canonical only for legacy Quarto rendering |
 | Production About page | `astro/src/pages/about.astro` + `astro/src/styles/global.css` (`/* About page */`) | Canonical |
-| Research page | `styles/components/_research.scss` (`.about-section-heading` remains shared from `_about.scss`) | Canonical |
+| Production Research page | `astro/src/pages/research.astro` + `astro/src/styles/research.css` | Canonical |
+| Legacy Quarto Research presentation | `styles/components/_research.scss` | Legacy only; no longer owns the production route |
 | Production footer | `astro/src/components/Footer.astro` + `astro/src/styles/shell.css` | Canonical |
 | Outer page shell | `styles/main/_12-page-shell.scss` | Canonical |
 | Homepage note selection | `styles/components/_notes.scss` | Canonical |
@@ -235,7 +240,8 @@ already exists.
 | Bootstrap-era archive rows | `styles/components/_archive-entries.scss` | Canonical |
 | Archive section jumps | `styles/components/_section-jump.scss` | Canonical |
 | Expandable abstracts and BibTeX panels | `styles/components/_disclosures.scss` | Canonical |
-| Homepage publication selections and Publications archive | `styles/components/_publications.scss` (shared archive/disclosure primitives live in their dedicated components) | Canonical |
+| Legacy Quarto homepage publication selection and archive presentation | `styles/components/_publications.scss` (shared archive/disclosure primitives live in their dedicated components) | Canonical only for legacy Quarto rendering |
+| Production Publications page | `astro/src/pages/publications.astro` + `astro/src/components/PublicationArchive.astro` + `astro/src/styles/publications.css` | Canonical; records and markup originate from `data/publications.bib` through `includes/publications-all.html` |
 | Teaching | `styles/components/_teaching.scss` | Canonical |
 | Contact | `styles/components/_contact.scss` | Canonical |
 | News | `styles/components/_news.scss` | Canonical |

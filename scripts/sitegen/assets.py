@@ -36,6 +36,16 @@ def local_reference_path(value, base=None, site_root=None):
         else (base or site_root) / path
     )
     candidates = [candidate]
+    if path.startswith('/'):
+        route = path.strip('/')
+        astro_pages = site_root / 'astro' / 'src' / 'pages'
+        if route:
+            candidates.extend([
+                astro_pages / f'{route}.astro',
+                astro_pages / route / 'index.astro',
+            ])
+        else:
+            candidates.append(astro_pages / 'index.astro')
     if candidate.is_dir():
         candidates.extend([candidate / 'index.html', candidate / 'index.qmd'])
     if candidate.suffix.lower() == '.html':

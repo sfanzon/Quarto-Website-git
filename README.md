@@ -13,9 +13,9 @@ It combines mathematical depth with inspectable modelling, algorithms, scientifi
 - `index.qmd` — homepage and professional positioning
 - `astro/src/pages/about.astro` — career narrative and professional transition
 - `astro/src/pages/expertise.astro` — transferable capabilities
-- `research.qmd` — academic research themes
+- `astro/src/pages/research.astro` — academic research themes
 - `projects.qmd` — inspectable modelling, software and communication work
-- `publications.qmd` — publication record
+- `astro/src/pages/publications.astro` — publication archive page
 - `teaching.qmd` — teaching activity
 - `news.qmd` / `news/` — news archive and dated entries
 - `data/publications.bib` — single publication source
@@ -75,7 +75,7 @@ For a complete static render:
 quarto render
 ```
 
-The Quarto pre-render hook runs `scripts/build-content.py`, which rebuilds portfolio, publication, presentation, supervision, teaching and news fragments from their structured sources.
+The Astro production build and Quarto pre-render hook run `scripts/build-content.py`, which rebuilds portfolio, publication, presentation, supervision, teaching and news fragments from their structured sources.
 
 ### Production static site
 

@@ -1,0 +1,111 @@
+---
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
+const source = [
+	resolve(process.cwd(), '../includes/publications-all.html'),
+	resolve(process.cwd(), 'includes/publications-all.html'),
+].find(existsSync);
+
+if (!source) throw new Error('Unable to locate generated includes/publications-all.html');
+const publicationArchive = readFileSync(source, 'utf8');
+---
+
+<div class="publication-archive" set:html={publicationArchive} />
+
+<script>
+	import renderMathInElement from 'katex/contrib/auto-render';
+
+	const initialisePublicationArchive = () => {
+		const archive = document.querySelector<HTMLElement>('.publication-archive');
+		if (!archive || archive.dataset.initialised === 'true') return;
+		archive.dataset.initialised = 'true';
+
+		const closePanels = (entry: HTMLElement) => {
+			entry.querySelectorAll<HTMLElement>('.abstract.open, .bibtex.open').forEach((panel) => {
+				panel.classList.remove('open');
+				panel.hidden = true;
+			});
+			entry.querySelectorAll<HTMLButtonElement>('.abstract-toggle, .bibtex-toggle').forEach((button) => {
+				button.setAttribute('aria-expanded', 'false');
+			});
+		};
+
+		const configureToggle = (button: HTMLButtonElement, selector: '.abstract' | '.bibtex') => {
+			const entry = button.closest<HTMLElement>('.publication-entry');
+			const panel = entry?.querySelector<HTMLElement>(selector);
+			if (!entry || !panel) return;
+			const suffix = selector.slice(1);
+			panel.id ||= `${entry.id}-${suffix}`;
+			panel.classList.remove('hidden');
+			panel.hidden = true;
+			button.setAttribute('aria-controls', panel.id);
+			button.setAttribute('aria-expanded', 'false');
+			button.addEventListener('click', () => {
+				const opening = !panel.classList.contains('open');
+				closePanels(entry);
+				if (!opening) return;
+				panel.hidden = false;
+				panel.classList.add('open');
+				button.setAttribute('aria-expanded', 'true');
+				if (selector === '.abstract' && panel.dataset.mathRendered !== 'true') {
+					renderMathInElement(panel, {
+						delimiters: [
+							{ left: '$$', right: '$$', display: true },
+							{ left: '$', right: '$', display: false },
+						],
+						throwOnError: false,
+					});
+					panel.dataset.mathRendered = 'true';
+				}
+			});
+		};
+
+		archive.querySelectorAll<HTMLButtonElement>('.abstract-toggle').forEach((button) => configureToggle(button, '.abstract'));
+		archive.querySelectorAll<HTMLButtonElement>('.bibtex-toggle').forEach((button) => configureToggle(button, '.bibtex'));
+
+		archive.querySelectorAll<HTMLElement>('.publication-entry .bibtex').forEach((panel) => {
+			const code = panel.querySelector<HTMLElement>('pre code');
+			if (!code?.textContent?.trim()) return;
+			const button = document.createElement('button');
+			button.type = 'button';
+			button.className = 'copy-citation';
+			button.textContent = 'Copy citation';
+			button.addEventListener('click', async () => {
+				const citation = code.textContent?.trim() ?? '';
+				let copied = false;
+				if (navigator.clipboard && window.isSecureContext) {
+					try {
+						await navigator.clipboard.writeText(citation);
+						copied = true;
+					} catch {
+						copied = false;
+					}
+				}
+				if (!copied) {
+					const area = document.createElement('textarea');
+					area.value = citation;
+					area.style.position = 'fixed';
+					area.style.opacity = '0';
+					document.body.append(area);
+					area.select();
+					copied = document.execCommand('copy');
+					area.remove();
+				}
+				button.textContent = copied ? 'Copied' : 'Copy failed';
+				button.classList.add('is-copied');
+				window.setTimeout(() => {
+					button.textContent = 'Copy citation';
+					button.classList.remove('is-copied');
+				}, 1600);
+			});
+			panel.prepend(button);
+		});
+	};
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initialisePublicationArchive, { once: true });
+	} else {
+		initialisePublicationArchive();
+	}
+</script>

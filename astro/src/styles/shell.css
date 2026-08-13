@@ -238,6 +238,7 @@
 .navbar-menu-dropdown > summary:hover > span::after,
 .navbar-links > a.active > span::after,
 .navbar-menu-dropdown > summary.active > span::after,
+.navbar-dropdown a.active > span::after,
 .navbar-dropdown a:hover > span::after { transform: scaleX(1); }
 
 .navbar-dropdown {
@@ -271,6 +272,10 @@
 
 .navbar-dropdown a:hover {
 	color: var(--global-navbar-hover-color);
+}
+
+.navbar-dropdown a.active {
+	color: var(--global-navbar-active-text-color);
 }
 
 .menu-toggle:hover,

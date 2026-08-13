@@ -15,6 +15,10 @@ class AssetTests(GeneratorTestCase):
         (fixture_root / "projects/demo/index.qmd").write_text(
             "# Demo", encoding="utf-8"
         )
+        (fixture_root / "astro/src/pages").mkdir(parents=True)
+        (fixture_root / "astro/src/pages/publications.astro").write_text(
+            "---\n---", encoding="utf-8"
+        )
 
         external = validate_local_assets(
             [
@@ -22,7 +26,12 @@ class AssetTests(GeneratorTestCase):
                     "id": "demo",
                     "image": "assets/img/project.svg",
                     "href": "projects/demo/index.html",
-                }
+                },
+                {
+                    "id": "archive",
+                    "image": "assets/img/project.svg",
+                    "href": "/publications/",
+                },
             ],
             [
                 {

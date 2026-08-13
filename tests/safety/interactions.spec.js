@@ -97,23 +97,30 @@ test.describe("critical interactions", () => {
     await expect(results).toContainText(/Projects/i);
   });
 
-  test("publication BibTeX disclosures are mutually exclusive", async ({
+  test("publication details and citation copy work", async ({
+    context,
     page
   }) => {
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
     await page.goto("/publications/");
 
-    const disclosures = page.locator('details[name="bibtex"]');
-    const first = disclosures.nth(0);
-    const second = disclosures.nth(1);
+    const first = page.locator(".publication-entry").first();
+    const abstractToggle = first.locator(".abstract-toggle");
+    const bibtexToggle = first.locator(".bibtex-toggle");
 
-    await first.locator("summary").click();
-    await expect(first).toHaveAttribute("open", "");
+    await abstractToggle.click();
+    await expect(abstractToggle).toHaveAttribute("aria-expanded", "true");
+    await expect(first.locator(".abstract")).toBeVisible();
 
-    await second.evaluate((details) => {
-      details.open = true;
-    });
-    await expect(second).toHaveAttribute("open", "");
-    await expect(first).not.toHaveAttribute("open", "");
+    await bibtexToggle.click();
+    await expect(abstractToggle).toHaveAttribute("aria-expanded", "false");
+    await expect(first.locator(".abstract")).toBeHidden();
+    await expect(first.locator(".bibtex")).toBeVisible();
+
+    const copy = first.locator(".copy-citation");
+    await copy.click();
+    await expect(copy).toHaveText("Copied");
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain("@article");
   });
 
   test("news disclosure opens from its summary", async ({ page }) => {

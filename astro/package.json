@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "astro dev",
     "dev:hybrid": "node scripts/dev-site.mjs",
-    "build": "astro build",
-    "build:astro": "astro build",
+    "generate:content": "python3 ../scripts/build-content.py",
+    "build": "npm run build:astro",
+    "build:astro": "npm run generate:content && astro build",
     "build:site": "node scripts/build-site.mjs",
     "build:qa": "node scripts/build-site.mjs --include-dev-tools",
     "build:hybrid": "npm run build:site",

@@ -8,6 +8,7 @@ const astroRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const repoRoot = resolve(astroRoot, '..');
 const projectsRoot = join(repoRoot, 'projects');
 const sharedImagesRoot = join(repoRoot, 'assets', 'img');
+const sharedPdfRoot = join(repoRoot, 'assets', 'pdf');
 const quartoKitchenSink = join(repoRoot, 'dev', 'quarto-kitchen-sink.qmd');
 const distRoot = join(astroRoot, 'dist');
 const stageRoot = mkdtempSync(join(tmpdir(), 'astro-quarto-projects-'));
@@ -28,6 +29,8 @@ const donorOutput = [
 const compatibilityAliases = new Map([
 	['about.html', 'about/index.html'],
 	['expertise.html', 'expertise/index.html'],
+	['publications.html', 'publications/index.html'],
+	['research.html', 'research/index.html'],
 ]);
 
 function findProjectSources(directory) {
@@ -169,6 +172,7 @@ try {
 		rmSync(devRoot, { recursive: true, force: true });
 	}
 	cpSync(sharedImagesRoot, join(distRoot, 'assets', 'img'), { recursive: true });
+	cpSync(sharedPdfRoot, join(distRoot, 'assets', 'pdf'), { recursive: true });
 	for (const output of donorOutput) rmSync(output, { recursive: true, force: true });
 	writeSitemap();
 	execFileSync('npm', ['run', 'postbuild'], { cwd: astroRoot, stdio: 'inherit' });
