@@ -3,6 +3,7 @@ import SiteSearch from './SiteSearch.astro';
 
 const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isAbout = currentPath === '/about';
+const isExpertise = currentPath === '/expertise';
 const isProjects = currentPath === '/projects' || currentPath.startsWith('/projects/');
 const isDev = currentPath === '/dev' || currentPath.startsWith('/dev/');
 const includeDevTools = import.meta.env.DEV || process.env.SF_INCLUDE_DEV_TOOLS === '1';
@@ -10,7 +11,7 @@ const includeDevTools = import.meta.env.DEV || process.env.SF_INCLUDE_DEV_TOOLS 
 const primaryLinks = [
 	{ label: 'About', href: '/about/', active: isAbout },
 	{ label: 'Projects', href: '/projects/', active: isProjects, section: 'projects' },
-	{ label: 'Expertise', href: 'https://www.silviofanzon.com/expertise.html' },
+	{ label: 'Expertise', href: '/expertise/', active: isExpertise },
 	{ label: 'CV', href: 'https://www.silviofanzon.com/Silvio_Fanzon_Academic_CV.pdf' },
 	{ label: 'Publications', href: '/publications/' },
 	{ label: 'Teaching', href: 'https://www.silviofanzon.com/teaching.html' },

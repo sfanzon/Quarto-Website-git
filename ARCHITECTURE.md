@@ -24,8 +24,10 @@ project navigation or project assets.
 `docs/` remains legacy Quarto-generated output and is never a source or merge
 target. It stays untouched until deployment is switched to `astro/dist/`.
 
-Until an ordinary page is migrated, its root `.qmd` remains canonical. Quarto
-is the sole owner of `/projects/f1-time-rank-duality/`, from `index.qmd`.
+Until an ordinary page is migrated, its root `.qmd` remains canonical. About
+and Expertise are now Astro-owned at `/about/` and `/expertise/`; their former
+root `.qmd` implementations have been removed. Quarto is the sole owner of
+`/projects/f1-time-rank-duality/`, from `index.qmd`.
 
 The migrated `/projects/` catalogue reads `data/projects.yml` directly. Its
 Astro page and styles are canonical for that route; `styles/components/_project-cards.scss`

@@ -23,11 +23,11 @@ website:
     tools-collapse: false
     right:
     - text: About
-      href: about.qmd
+      href: /about/
     - text: Projects
       href: projects.qmd
     - text: Expertise
-      href: expertise.qmd
+      href: /expertise/
     - text: CV
       href: Silvio_Fanzon_Academic_CV.pdf
     - text: Publications

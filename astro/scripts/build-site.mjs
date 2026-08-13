@@ -25,6 +25,10 @@ const donorOutput = [
 	join(distRoot, 'team'),
 	join(distRoot, 'team.png'),
 ];
+const compatibilityAliases = new Map([
+	['about.html', 'about/index.html'],
+	['expertise.html', 'expertise/index.html'],
+]);
 
 function findProjectSources(directory) {
 	return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -57,10 +61,21 @@ function sitemapUrl(path) {
 function writeSitemap() {
 	const urls = findHtmlFiles(distRoot)
 		.filter((path) => relative(distRoot, path) !== '404.html')
+		.filter((path) => !readFileSync(path, 'utf8').includes('<meta name="robots" content="noindex">'))
 		.map(sitemapUrl)
 		.sort();
 	const entries = urls.map((url) => `  <url><loc>${url}</loc></url>`).join('\n');
 	writeFileSync(join(distRoot, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}\n</urlset>\n`);
+}
+
+function writeCompatibilityAliases() {
+	for (const [alias, canonical] of compatibilityAliases) {
+		const canonicalPath = join(distRoot, canonical);
+		let html = readFileSync(canonicalPath, 'utf8');
+		html = replaceOnce(html, /<body([^>]*)>/, (_match, attributes) => `<body${attributes} data-pagefind-ignore="all">`, 'body opening tag');
+		html = replaceOnce(html, /<\/head>/, '<meta name="robots" content="noindex"></head>', 'head closing tag');
+		writeFileSync(join(distRoot, alias), html);
+	}
 }
 
 function requireShellArtifact(name) {
@@ -128,6 +143,7 @@ try {
 	});
 	const header = requireShellArtifact('header/index.html');
 	const footer = requireShellArtifact('footer/index.html');
+	writeCompatibilityAliases();
 	rmSync(join(shellRoot, 'header'), { recursive: true, force: true });
 	rmSync(join(shellRoot, 'footer'), { recursive: true, force: true });
 	execFileSync('quarto', ['render', ...sources, '--output-dir', stageRoot], { cwd: repoRoot, stdio: 'inherit' });

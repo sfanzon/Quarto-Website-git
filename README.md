@@ -11,8 +11,8 @@ It combines mathematical depth with inspectable modelling, algorithms, scientifi
 ## Main structure
 
 - `index.qmd` — homepage and professional positioning
-- `about.qmd` — career narrative and professional transition
-- `expertise.qmd` — transferable capabilities
+- `astro/src/pages/about.astro` — career narrative and professional transition
+- `astro/src/pages/expertise.astro` — transferable capabilities
 - `research.qmd` — academic research themes
 - `projects.qmd` — inspectable modelling, software and communication work
 - `publications.qmd` — publication record

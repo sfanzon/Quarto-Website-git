@@ -1,0 +1,144 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import '../styles/expertise.css';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="Expertise | Silvio Fanzon"
+			description="Capabilities in statistical modelling, optimisation, decision science, scientific computing, inverse problems, communication and leadership"
+		/>
+	</head>
+	<body class="standard-page expertise-page">
+		<Header />
+		<main class="content">
+			<header class="page-hero compact-page-hero expertise-hero expertise-hero-simple">
+				<p class="eyebrow">Expertise</p>
+				<h1>Capabilities for modelling, computation and decision-making</h1>
+				<p>This page describes what I can do. The separate <a href="https://www.silviofanzon.com/research.html">Research</a> page explains the academic questions and contributions behind that experience.</p>
+			</header>
+
+			<nav class="expertise-index-nav" aria-label="Expertise areas">
+				<a href="#statistical-modelling">Statistical modelling</a>
+				<a href="#optimisation">Optimisation</a>
+				<a href="#scientific-computing">Scientific computing</a>
+				<a href="#inverse-problems">Inverse problems</a>
+				<a href="#communication-leadership">Communication &amp; leadership</a>
+			</nav>
+
+			<section class="expertise-editorial expertise-editorial-compact" aria-label="Areas of expertise">
+				<article class="expertise-area" id="statistical-modelling">
+					<div class="expertise-area-heading">
+						<span>01</span>
+						<h2>Statistical modelling &amp; forecasting</h2>
+					</div>
+					<div class="expertise-area-copy">
+						<p>I develop interpretable statistical models for prediction, ranking and comparison under uncertainty. My work includes regression, probabilistic modelling, likelihood-based estimation, simulation and model evaluation, with applications to Formula 1 performance, curling strategy and quantitative teaching examples.</p>
+						<ul class="expertise-skill-list">
+							<li>Regression and statistical learning</li>
+							<li>Probabilistic models and uncertainty</li>
+							<li>Forecasting, ranking and benchmarking</li>
+							<li>Model interpretation and evaluation</li>
+						</ul>
+						<p class="expertise-evidence">
+							<a href="/projects/">Applied modelling projects →</a>
+							<a href="/publications/">Representative publication →</a>
+						</p>
+					</div>
+				</article>
+
+				<article class="expertise-area" id="optimisation">
+					<div class="expertise-area-heading">
+						<span>02</span>
+						<h2>Optimisation &amp; decision science</h2>
+					</div>
+					<div class="expertise-area-copy">
+						<p>I formulate problems in terms of objectives, constraints and trade-offs, then develop methods for finding useful solutions. My research covers convex optimisation, conditional-gradient methods, optimal transport and variational models; the transferable skill is choosing and validating an approach that respects the structure of the real problem.</p>
+						<ul class="expertise-skill-list">
+							<li>Convex and constrained optimisation</li>
+							<li>Conditional-gradient and sparse methods</li>
+							<li>Optimal transport and variational modelling</li>
+							<li>Scenario analysis and decision support</li>
+						</ul>
+						<p class="expertise-evidence">
+							<a href="/projects/">Optimisation projects →</a>
+							<a href="/publications/">Representative publication →</a>
+						</p>
+					</div>
+				</article>
+
+				<article class="expertise-area" id="scientific-computing">
+					<div class="expertise-area-heading">
+						<span>03</span>
+						<h2>Scientific computing &amp; reproducible workflows</h2>
+					</div>
+					<div class="expertise-area-copy">
+						<p>I translate mathematical and statistical ideas into computational experiments using Python, R and MATLAB. This includes numerical algorithms, simulation, data analysis, visualisation and structured publishing workflows. I value implementations that make assumptions visible and allow results to be reproduced and scrutinised.</p>
+						<ul class="expertise-skill-list">
+							<li>Python, R and MATLAB</li>
+							<li>Numerical simulation and algorithm implementation</li>
+							<li>Reproducible analysis and structured data</li>
+							<li>Quarto, LaTeX, Markdown, Git and web publishing</li>
+						</ul>
+						<p class="expertise-evidence">
+							<a href="https://github.com/sfanzon">GitHub →</a>
+							<a href="/projects/">Computational work →</a>
+						</p>
+					</div>
+				</article>
+
+				<article class="expertise-area" id="inverse-problems">
+					<div class="expertise-area-heading">
+						<span>04</span>
+						<h2>Inverse problems, imaging &amp; complex systems</h2>
+					</div>
+					<div class="expertise-area-copy">
+						<p>Inverse problems ask how to recover an unknown quantity from incomplete, indirect or noisy observations. My work combines physical structure, regularisation and optimisation to make that recovery stable, with particular experience in dynamic imaging and MRI. The same reasoning is relevant whenever the quantity of interest cannot be observed directly.</p>
+						<ul class="expertise-skill-list">
+							<li>Ill-posed problems and regularisation</li>
+							<li>Dynamic data and motion-aware models</li>
+							<li>Noise, undersampling and uncertainty</li>
+							<li>Mathematical imaging and signal reconstruction</li>
+						</ul>
+						<p class="expertise-evidence">
+							<a href="https://www.silviofanzon.com/research.html#inverse-problems-research">Research theme →</a>
+							<a href="https://github.com/sfanzon/DGCG_algorithm">DGCG implementation →</a>
+						</p>
+					</div>
+				</article>
+
+				<article class="expertise-area" id="communication-leadership">
+					<div class="expertise-area-heading">
+						<span>05</span>
+						<h2>Technical communication, leadership &amp; collaboration</h2>
+					</div>
+					<div class="expertise-area-copy">
+						<p>I have communicated advanced quantitative work through peer-reviewed papers, invited talks, lectures, project supervision and extensive technical documentation. As MSc Programme Director and a Fellow of the Higher Education Academy, I also gained experience coordinating delivery, mentoring others and aligning work across academic and administrative teams.</p>
+						<ul class="expertise-skill-list">
+							<li>Technical writing and documentation</li>
+							<li>Presentations and stakeholder communication</li>
+							<li>Programme and project coordination</li>
+							<li>Supervision, mentoring and interdisciplinary collaboration</li>
+						</ul>
+						<p class="expertise-evidence">
+							<a href="https://www.silviofanzon.com/teaching.html">Teaching and materials →</a>
+							<a href="/about/#career-title">Academic leadership →</a>
+						</p>
+					</div>
+				</article>
+			</section>
+
+			<section class="expertise-footer-cta">
+				<p class="eyebrow">How the pieces connect</p>
+				<h2>From a difficult question to a defensible result</h2>
+				<p>My strongest work combines several of these capabilities: frame the problem, select a model, implement it, evaluate the evidence and communicate the outcome. The Projects page shows that process in concrete examples.</p>
+				<p><a href="/projects/">View selected projects →</a></p>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

@@ -27,6 +27,10 @@ individual project page. Do not infer a source move from a matching public URL.
 | `astro/src/pages/projects.astro` | Production owner for the `/projects/` catalogue |
 | `astro/src/data/projects.ts` | Astro loader for canonical `data/projects.yml` |
 | `astro/src/styles/projects.css` | Production `/projects/` catalogue styling |
+| `astro/src/pages/about.astro` | Production owner for `/about/`; preserves the accepted career narrative and hierarchy |
+| `astro/src/pages/expertise.astro` | Production owner for `/expertise/` and its five capability sections |
+| `astro/src/styles/expertise.css` | Production `/expertise/` page styling |
+| `astro/scripts/build-site.mjs` (`compatibilityAliases`) | Emits noindex copies of canonical Astro pages at the former `.html` URLs for static-host compatibility |
 
 Quarto's `projects/f1-time-rank-duality/index.qmd` is the sole owner of the
 F1 overview URL; no Astro detail route exists.
@@ -47,8 +51,6 @@ F1 overview URL; no Astro detail route exists.
 | File | Description |
 |---|---|
 | `index.qmd` | Homepage — professional positioning + selected evidence |
-| `about.qmd` | Career narrative and professional transition |
-| `expertise.qmd` | Transferable capabilities |
 | `research.qmd` | Academic research themes |
 | `projects.qmd` | Project listing page |
 | `publications.qmd` | Full publication archive |
@@ -62,9 +64,11 @@ F1 overview URL; no Astro detail route exists.
 | `404.qmd` | Custom 404 page |
 
 Until an ordinary page is deliberately migrated, its root `.qmd` remains its
-canonical source. Top-level `.qmd` files intentionally remain at repository
-root because Quarto mirrors source paths into output URLs. Moving them under
-`pages/` would change canonical public URLs. Do not reopen this decision.
+canonical source. About and Expertise have moved to the Astro owners listed
+above, and their obsolete root `.qmd` implementations have been removed.
+Remaining top-level `.qmd` files intentionally stay at repository root because
+Quarto mirrors source paths into output URLs. Moving them under `pages/` would
+change canonical public URLs. Do not reopen this decision.
 
 ## Project pages (Quarto production owner)
 
@@ -213,8 +217,10 @@ already exists.
 | Production site-search behaviour | `astro/src/components/SiteSearch.astro` | Canonical |
 | Production site-search presentation | `astro/src/styles/shell.css` (`.site-search-*`) | Canonical |
 | Legacy Quarto search popup | `styles/components/_search-popup.scss` | Canonical only for unmigrated Quarto pages |
-| Homepage Expertise preview and Expertise page | `styles/components/_expertise.scss` | Canonical |
-| Homepage background/approach previews and About page | `styles/components/_about.scss` | Canonical |
+| Homepage Expertise preview in legacy Quarto rendering | `styles/components/_expertise.scss` | Canonical only for legacy Quarto rendering |
+| Production Expertise page | `astro/src/pages/expertise.astro` + `astro/src/styles/expertise.css` | Canonical |
+| Homepage background/approach previews in legacy Quarto rendering | `styles/components/_about.scss` | Canonical only for legacy Quarto rendering |
+| Production About page | `astro/src/pages/about.astro` + `astro/src/styles/global.css` (`/* About page */`) | Canonical |
 | Research page | `styles/components/_research.scss` (`.about-section-heading` remains shared from `_about.scss`) | Canonical |
 | Production footer | `astro/src/components/Footer.astro` + `astro/src/styles/shell.css` | Canonical |
 | Outer page shell | `styles/main/_12-page-shell.scss` | Canonical |
