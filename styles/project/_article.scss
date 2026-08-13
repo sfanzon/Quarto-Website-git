@@ -17,6 +17,7 @@ body.project-detail-page {
   --project-ink-muted: #625b54;
   --project-line: #dfd4c7;
   --project-soft-accent: #efe0d6;
+  --project-accent-contrast: #fff;
   background: var(--project-canvas);
 }
 
@@ -27,6 +28,7 @@ body.quarto-dark.project-detail-page {
   --project-ink-muted: #d8d0c8;
   --project-line: #51483f;
   --project-soft-accent: #3b2e28;
+  --project-accent-contrast: #211e1a;
 }
 
 /* Shared foundations for every project-detail page. */
@@ -522,7 +524,7 @@ body.project-detail-page main.content > .f1-snapshot-note {
 .f1-source-actions .primary {
   border-color: var(--global-theme-color);
   background: var(--global-theme-color);
-  color: #fff !important;
+  color: var(--project-accent-contrast) !important;
 }
 
 .f1-snapshot-note {
