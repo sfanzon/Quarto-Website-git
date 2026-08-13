@@ -1,30 +1,14 @@
 {
   "schemaVersion": 1,
   "baseline": {
-    "status": "Legacy Quarto-only reviewed baseline metadata; a controlled hybrid baseline refresh is still required.",
-    "commit": "d1923062b85f57d3d95b85b6527658f262884609",
+    "status": "Human-reviewed Astro + Quarto hybrid baselines.",
+    "commit": "ebd2e30db6d2f52363471c96fe00ff4a74b30855",
     "quartoVersion": "1.9.38",
     "playwright": "1.62.0",
     "browser": "chromium",
-    "environment": "GitHub Actions ubuntu-22.04 with fonts-roboto",
+    "environment": "Local macOS 26.5.2 capture; human-reviewed",
     "workflowRun": null,
-    "workflowRunStatus": "Pending next controlled CI visual capture",
-    "scss": {
-      "path": "styles/main.scss",
-      "lines": 28,
-      "bytes": 1059,
-      "sha256": "1d5dcadd01e5deacce031e1722b4344db990db1088caf4b4f3b3643ca36febdd"
-    },
-    "compiledCss": {
-      "light": {
-        "path": "docs/site_libs/bootstrap/bootstrap-37206e91b54f028524c3c82c5e4a55ed.min.css",
-        "sha256": "de0fc578411f2442d0237c11e5efda699051ce9f19094805f2a545c54ac62de7"
-      },
-      "dark": {
-        "path": "docs/site_libs/bootstrap/bootstrap-dark-264d4da634d41d9ed8843045e742d713.min.css",
-        "sha256": "c4474eaf747e15ae519e9e97d94d97c688af97958f28e98868203fc426d9e29e"
-      }
-    }
+    "workflowRunStatus": "Human-reviewed and accepted"
   },
   "capture": {
     "baseUrl": "http://127.0.0.1:4321/",
