@@ -1,0 +1,29 @@
+<button class="back-to-top" type="button" aria-label="Back to top" aria-hidden="true" tabindex="-1">
+	<span aria-hidden="true">↑</span>
+</button>
+
+<script>
+	const initialiseBackToTop = () => {
+		const button = document.querySelector<HTMLButtonElement>('.back-to-top');
+		if (!button || button.dataset.initialised === 'true') return;
+		button.dataset.initialised = 'true';
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+		const updateVisibility = () => {
+			const visible = window.scrollY >= 600;
+			button.classList.toggle('is-visible', visible);
+			button.setAttribute('aria-hidden', String(!visible));
+			button.tabIndex = visible ? 0 : -1;
+		};
+		button.addEventListener('click', () => {
+			window.scrollTo({ top: 0, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+		});
+		window.addEventListener('scroll', updateVisibility, { passive: true });
+		updateVisibility();
+	};
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initialiseBackToTop, { once: true });
+	} else {
+		initialiseBackToTop();
+	}
+</script>

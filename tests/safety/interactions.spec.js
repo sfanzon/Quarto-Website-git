@@ -121,6 +121,44 @@ test.describe("critical interactions", () => {
     await copy.click();
     await expect(copy).toHaveText("Copied");
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain("@article");
+
+    await expect(first.locator(".publication-primary-action"))
+      .toHaveAttribute("target", "_blank");
+    await expect(first.getByRole("link", { name: "arXiv" }))
+      .toHaveAttribute("target", "_blank");
+
+    const mathEntry = page.locator('[id="2024-Bre-Car-Fan-Wal"]');
+    await mathEntry.locator(".abstract-toggle").click();
+    await expect(mathEntry.locator(".abstract .katex").first()).toBeVisible();
+
+    const internalExplainer = page.locator('[id="2024-Fry-Bri-Fan"]')
+      .getByRole("link", { name: "Explainer" });
+    await expect(internalExplainer).not.toHaveAttribute("target", "_blank");
+  });
+
+  test("publication journal fragments retain canonical and legacy targets", async ({ page }) => {
+    for (const fragment of ["journal", "journal-publications"]) {
+      await page.goto(`/publications/#${fragment}`);
+      await expect(page.locator('#journal-publications > h2')).toBeInViewport();
+    }
+  });
+
+  test("back to top works on Astro and injected Quarto pages", async ({ page }) => {
+    for (const path of ["/", "/projects/f1-time-rank-duality/technical.html"]) {
+      await page.goto(path);
+      const button = page.getByRole("button", {
+        name: "Back to top",
+        includeHidden: true
+      });
+      await expect(button).toHaveAttribute("aria-hidden", "true");
+
+      await page.evaluate(() => window.scrollTo(0, 800));
+      await expect(button).toHaveClass(/is-visible/);
+      await expect(button).toHaveAttribute("tabindex", "0");
+      await button.focus();
+      await page.keyboard.press('Enter');
+      await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(10);
+    }
   });
 
   test("news disclosure opens from its summary", async ({ page }) => {

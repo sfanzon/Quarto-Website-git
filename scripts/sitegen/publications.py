@@ -117,6 +117,12 @@ def load_publications(path):
                 f'Publication {record["id"]} preprint must be exactly true or false'
             )
         record['preprint'] = preprint_value == 'true'
+        contribution_value = record.get('contribution', 'false').strip().lower()
+        if contribution_value not in {'true', 'false'}:
+            raise ValueError(
+                f'Publication {record["id"]} contribution must be exactly true or false'
+            )
+        record['contribution'] = contribution_value == 'true'
         publication_venue(record)
         record['authors'] = publication_authors(record)
         record['periodical'] = publication_periodical(record)

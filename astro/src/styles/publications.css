@@ -12,6 +12,17 @@
 	border-bottom: 1px solid var(--global-divider-color);
 }
 
+.publication-contribution-note {
+	margin: 0 0 .65rem;
+	color: var(--global-text-color-light);
+	font-size: .82rem;
+}
+
+.publication-contribution-marker {
+	color: var(--global-theme-color);
+	font-weight: 650;
+}
+
 .section-jump a {
 	color: var(--global-text-color);
 	font-size: .88rem;
@@ -34,8 +45,14 @@
 }
 
 .publication-category {
+	position: relative;
 	margin-bottom: clamp(1.8rem, 3vw, 2.5rem);
 	scroll-margin-top: 5rem;
+}
+
+.publication-fragment-alias {
+	position: absolute;
+	top: 0;
 }
 
 .publication-category > h2 {
@@ -187,10 +204,12 @@
 .publication-entry .bibtex.open {
 	display: block;
 	width: 100%;
+	max-width: var(--site-prose-width);
 	margin-top: .85rem;
-	padding: .9rem 1rem;
-	border-radius: 5px;
-	background: color-mix(in srgb, var(--global-theme-color) 7%, transparent);
+	padding: .85rem 1rem;
+	border-top: 1px solid var(--global-divider-color);
+	border-bottom: 1px solid var(--global-divider-color);
+	background: color-mix(in srgb, var(--global-section-bg) 38%, transparent);
 	color: var(--global-text-color-light);
 	font-size: .9rem;
 	line-height: 1.65;
@@ -207,15 +226,16 @@
 
 .publication-entry .bibtex.open {
 	position: relative;
-	padding-top: 3rem;
+	padding-top: 2.85rem;
 }
 
 .publication-entry .bibtex pre {
 	max-width: 100%;
 	margin: 0;
-	padding: 0;
+	padding: .75rem;
+	border: 1px solid var(--global-divider-color);
+	background: var(--global-bg-color);
 	overflow-x: auto;
-	background: transparent;
 	font-size: .78rem;
 }
 
@@ -228,11 +248,11 @@
 	position: absolute;
 	top: .65rem;
 	right: .7rem;
-	padding: .3rem .55rem;
-	border: 0;
-	border-radius: 999px;
-	background: color-mix(in srgb, var(--global-theme-color) 9%, transparent);
-	color: var(--global-theme-color);
+	padding: .22rem .4rem;
+	border: 1px solid var(--global-divider-color);
+	border-radius: 3px;
+	background: var(--global-bg-color);
+	color: var(--global-text-color-light);
 	font: inherit;
 	font-size: .78rem;
 	font-weight: 650;
@@ -242,7 +262,8 @@
 .copy-citation:hover,
 .copy-citation:focus-visible,
 .copy-citation.is-copied {
-	background: color-mix(in srgb, var(--global-theme-color) 15%, transparent);
+	border-color: var(--global-theme-color);
+	background: var(--global-section-bg);
 	color: var(--global-hover-color);
 }
 

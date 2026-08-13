@@ -1,6 +1,7 @@
 """HTML rendering for normalized publication records."""
 
 import html
+from urllib.parse import urlsplit
 
 from .publications import publication_abstract_html
 
@@ -87,6 +88,15 @@ def publication_theme_pills(publication):
     return f'<div class="publication-themes" aria-label="Research themes">{pills}</div>'
 
 
+def publication_action_attributes(href, document=False):
+    """Open documents and external resources separately from site navigation."""
+    path = urlsplit(href).path.lower()
+    external = href.startswith(('http://', 'https://', '//'))
+    if document or path.endswith('.pdf') or external:
+        return ' target="_blank" rel="noopener noreferrer"'
+    return ''
+
+
 def pub_actions(publication, toggles=True):
     """Render a compact publication action hierarchy.
 
@@ -96,30 +106,35 @@ def pub_actions(publication, toggles=True):
     actions = []
     paper_href = publication_paper_href(publication)
     if paper_href:
+        attributes = publication_action_attributes(paper_href, document=True)
         actions.append(
-            f'<a class="paper-action publication-primary-action" href="{html.escape(paper_href, quote=True)}"><i class="fa-solid fa-file-pdf"></i> PDF</a>'
+            f'<a class="paper-action publication-primary-action" href="{html.escape(paper_href, quote=True)}"{attributes}><i class="fa-solid fa-file-pdf"></i> PDF</a>'
         )
     external_label, external_href = publication_external_link(publication)
     if external_href:
+        attributes = publication_action_attributes(external_href)
         actions.append(
-            f'<a class="paper-action" href="{html.escape(external_href, quote=True)}"><i class="fa-solid {action_icon(external_label)}"></i> {external_label}</a>'
+            f'<a class="paper-action" href="{html.escape(external_href, quote=True)}"{attributes}><i class="fa-solid {action_icon(external_label)}"></i> {external_label}</a>'
         )
     if toggles and publication.get('abstract'):
         actions.append('<button class="paper-action abstract-toggle" type="button"><i class="fa-regular fa-file-lines"></i> Abstract</button>')
     if toggles:
         actions.append('<button class="paper-action bibtex-toggle" type="button"><i class="fa-solid fa-quote-right"></i> Cite</button>')
     if publication.get('explainer'):
+        attributes = publication_action_attributes(publication['explainer'])
         actions.append(
-            f'<a class="paper-action" href="{html.escape(publication["explainer"], quote=True)}"><i class="fa-solid fa-lightbulb"></i> Explainer</a>'
+            f'<a class="paper-action" href="{html.escape(publication["explainer"], quote=True)}"{attributes}><i class="fa-solid fa-lightbulb"></i> Explainer</a>'
         )
     if publication.get('code'):
+        attributes = publication_action_attributes(publication['code'])
         actions.append(
-            f'<a class="paper-action" href="{html.escape(publication["code"], quote=True)}"><i class="fa-solid {action_icon("Code")}"></i> Code</a>'
+            f'<a class="paper-action" href="{html.escape(publication["code"], quote=True)}"{attributes}><i class="fa-solid {action_icon("Code")}"></i> Code</a>'
         )
     for field, label in (('slides', 'Slides'), ('poster', 'Poster'), ('video', 'Video')):
         if publication.get(field):
+            attributes = publication_action_attributes(publication[field])
             actions.append(
-                f'<a class="paper-action" href="{html.escape(publication[field], quote=True)}"><i class="fa-solid {action_icon(label)}"></i> {label}</a>'
+                f'<a class="paper-action" href="{html.escape(publication[field], quote=True)}"{attributes}><i class="fa-solid {action_icon(label)}"></i> {label}</a>'
             )
     return ''.join(actions)
 
@@ -152,7 +167,8 @@ def render_publication_entry(
 ):
     authors = linked_authors(publication['authors'], coauthor_urls)
     side_meta = publication_side_meta(publication)
-    return f'''<article class="{row_classes} publication-entry" id="{html.escape(row_id, quote=True)}"><div class="home-publication-main pub-main"><h3>{publication['title']}</h3><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{publication['periodical']}</span></div><div class="paper-actions">{actions}</div><div class="abstract hidden">{publication_abstract_html(publication)}</div><div class="bibtex hidden"><pre><code>{html.escape(publication['bibtex'])}</code></pre></div></div>{side_meta}</article>'''
+    marker = '<span class="publication-contribution-marker" aria-hidden="true">#</span> ' if publication.get('contribution') else ''
+    return f'''<article class="{row_classes} publication-entry" id="{html.escape(row_id, quote=True)}"><div class="home-publication-main pub-main"><h3>{marker}{publication['title']}</h3><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{publication['periodical']}</span></div><div class="paper-actions">{actions}</div><div class="abstract hidden">{publication_abstract_html(publication)}</div><div class="bibtex hidden"><pre><code>{html.escape(publication['bibtex'])}</code></pre></div></div>{side_meta}</article>'''
 
 
 def render_selected_publications(publications, coauthor_urls):
@@ -193,7 +209,8 @@ def render_publication_archive(publications, coauthor_urls):
         ]
         if rows:
             group_id = group.lower().replace(' ', '-')
+            legacy_alias = '<span id="journal" class="publication-fragment-alias" aria-hidden="true"></span>' if group_id == 'journal-publications' else ''
             sections.append(
-                f'''<section class="publication-category" id="{group_id}"><h2>{group}</h2><div class="publication-category-list">{''.join(rows)}</div></section>'''
+                f'''<section class="publication-category" id="{group_id}">{legacy_alias}<h2>{group}</h2><div class="publication-category-list">{''.join(rows)}</div></section>'''
             )
     return '\n'.join(sections)

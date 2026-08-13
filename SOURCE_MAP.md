@@ -17,7 +17,8 @@ individual project page. Do not infer a source move from a matching public URL.
 | `astro/src/components/Header.astro` | Canonical shared navbar structure, active navigation state, theme control, data-driven dropdown menus and mobile navigation behaviour |
 | `astro/src/components/SiteSearch.astro` | Canonical shared search button, dialog and Pagefind lazy-loading/search behaviour |
 | `astro/src/components/Footer.astro` | Canonical shared footer |
-| `astro/src/styles/shell.css` | Canonical shared shell tokens, navbar, footer, responsive shell and shared-search presentation |
+| `astro/src/components/BackToTop.astro` | Canonical shared back-to-top markup and behaviour; included once through `Footer.astro` on Astro and injected Quarto pages |
+| `astro/src/styles/shell.css` | Canonical shared shell tokens, navbar, footer, back-to-top, responsive shell and shared-search presentation |
 | `astro/src/styles/global.css` | Ordinary Astro page styling; imports `shell.css` for Astro-page use |
 | `astro/src/pages/site-shell/header.astro` | Build-only navbar fragment for Quarto documents; removed from the final site after merge |
 | `astro/src/pages/site-shell/footer.astro` | Build-only footer fragment for Quarto documents; removed from the final site after merge |

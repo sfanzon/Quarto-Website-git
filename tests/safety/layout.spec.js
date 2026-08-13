@@ -93,3 +93,30 @@ test("project card grids retain their responsive column counts", async ({ page }
     }
   }
 });
+
+test("homepage alternating sections use viewport-wide tinted backgrounds", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+
+  const sections = page.locator([
+    ".home-expertise-preview",
+    ".home-approach-section",
+    ".selected-publications-section",
+    ".home-background-section"
+  ].join(", "));
+  const fullBleed = await sections.evaluateAll((sections) =>
+    sections.map((section) => {
+      const background = getComputedStyle(section, "::before");
+      return {
+        width: Math.round(Number.parseFloat(background.width)),
+        color: background.backgroundColor
+      };
+    })
+  );
+
+  expect(fullBleed).toHaveLength(4);
+  for (const background of fullBleed) {
+    expect(background.width).toBe(1440);
+    expect(background.color).not.toBe("rgba(0, 0, 0, 0)");
+  }
+});
