@@ -16,8 +16,8 @@ def news_inline_html(text):
             rendered,
         )
     rendered = re.sub(
-        r'href=(["\'])/presentations\.html',
-        r'href=\1https://www.silviofanzon.com/presentations.html',
+        r'href=(["\'])/presentations(?:\.html|/)?(?=#|\1)',
+        r'href=\1/presentations/',
         rendered,
     )
     return rendered
@@ -124,9 +124,3 @@ def render_news_component(items, empty_message, searchable=True):
     {empty_markup}
   </div>
 </div>"""
-
-
-def render_news_qmd(items, empty_message, searchable=True):
-    """Wrap the News component in a Quarto raw-HTML fragment."""
-    markup = render_news_component(items, empty_message, searchable=searchable)
-    return f"```{{=html}}\n{markup}\n```\n"

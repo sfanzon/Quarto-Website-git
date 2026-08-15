@@ -24,23 +24,23 @@ project navigation or project assets.
 `docs/` remains legacy Quarto-generated output and is never a source or merge
 target. It stays untouched until deployment is switched to `astro/dist/`.
 
-Until an ordinary page is migrated, its root `.qmd` remains canonical. About,
-Expertise, Research and Publications are now Astro-owned at `/about/`,
-`/expertise/`, `/research/` and `/publications/`; their former root `.qmd`
-implementations have been removed. Quarto is the sole owner of
-`/projects/f1-time-rank-duality/`, from `index.qmd`.
+Astro now owns the homepage, Projects catalogue, About, Expertise, Research,
+Publications, Teaching, News, Contact, Presentations, Supervision, CV and 404.
+Their obsolete root `.qmd` implementations have been removed. Quarto remains
+the sole owner of every `projects/**` document and of the Notes index/articles;
+`/projects/f1-time-rank-duality/` therefore still comes from its `index.qmd`.
 
 The migrated `/projects/` catalogue reads `data/projects.yml` directly. Its
-Astro page and styles are canonical for that route; `styles/components/_project-cards.scss`
-remains canonical only for legacy Quarto rendering. Likewise, Astro's Header,
+Astro page and styles are canonical for that route. Likewise, Astro's Header,
 Footer and `shell.css` are the production global-shell owners. `global.css`
 imports that shell stylesheet for Astro pages and owns only ordinary Astro page
-styling. Quarto global
-shell styles remain only to support unmigrated Quarto pages during transition;
+styling. Quarto fallback navbar/footer styles remain for standalone Notes
+rendering;
 `styles/project/**` remains canonical for Quarto project-document presentation.
 
 The Astro production build runs `scripts/build-content.py` before Astro so
-migrated pages can consume canonical generated fragments. Quarto also retains
+Publications, Teaching, News, Presentations and Supervision can consume their
+remaining canonical generated HTML fragments. Quarto also retains
 the same pre-render hook. Structured content is kept
 in:
 
@@ -104,10 +104,9 @@ It generates structured content, builds Astro, renders only `projects/**/*.qmd`
 to a temporary staging directory, replaces Quarto's global shell with Astro's explicit shell
 artifacts, copies each rendered project page and referenced assets into
 `astro/dist/`, writes the sitemap from the completed public HTML tree, then
-indexes the completed result. The Astro Publications page consumes the
-generated `includes/publications-all.html`; publication records continue to be
-parsed and rendered only by the existing Python generator from
-`data/publications.bib`. `npm run build:hybrid` remains a compatibility
+indexes the completed result. The generated pipelines are now limited to those
+five ordinary data-backed areas plus the project metadata JSON used by the
+Quarto filter. `npm run build:hybrid` remains a compatibility
 alias while the POC branch is active.
 
 For local hybrid development, `npm run dev:hybrid` performs the same QA merge

@@ -1,0 +1,6 @@
+.presentations-intro { max-width: var(--site-reading-width); margin-bottom: 2rem; color: var(--global-text-color-light); }
+.presentations-intro p { margin: .65rem 0 0; }
+.presentations-intro ul { display: flex; flex-wrap: wrap; gap: .45rem 1.4rem; margin: 1rem 0; padding: 1rem 0; border-block: 1px solid var(--global-divider-color); list-style: none; }
+.presentations-intro a { color: var(--global-text-color); font-size: .88rem; font-weight: 600; }
+.presentations-intro a:hover { color: var(--global-theme-color); }
+.invited-marker { color: var(--global-theme-color); font-size: .84em; }

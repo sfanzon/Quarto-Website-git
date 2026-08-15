@@ -48,7 +48,7 @@ def teaching_actions(course):
     actions = []
     if course.get('abstract'):
         actions.append(
-            '<button class="teaching-action abstract-toggle" type="button">'
+            '<button class="paper-action abstract-toggle" type="button">'
             '<i class="fa-regular fa-file-lines"></i> About</button>'
         )
     links = [

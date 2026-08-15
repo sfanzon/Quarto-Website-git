@@ -22,15 +22,10 @@ import { resolve } from "path";
 
 const GENERATED_PATHS = new Set([
   "data/projects.generated.json",
-  "includes/home-news.qmd",
-  "includes/home-notes.html",
-  "includes/home-projects.html",
+  "includes/home-news.html",
   "includes/presentations.html",
   "includes/supervision.html",
-  "includes/home-publications-list.html",
-  "includes/news-all.qmd",
   "includes/news-all.html",
-  "includes/projects-portfolio.html",
   "includes/publications-all.html",
   "includes/teaching-list.html",
 ]);

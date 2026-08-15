@@ -25,6 +25,8 @@ individual project page. Do not infer a source move from a matching public URL.
 | `astro/src/pages/site-shell/site.css.ts` | Explicit emitted stylesheet artifact for Quarto documents |
 | `astro/scripts/build-site.mjs` | Builds Astro, renders Quarto projects in isolation, merges them into `astro/dist/`, then writes the final sitemap and Pagefind index |
 | `astro/scripts/dev-site.mjs` | Local hybrid development watcher: invokes the QA merge, serves `astro/dist/`, and watches canonical Astro/Quarto project inputs for rebuilds |
+| `astro/src/pages/index.astro` | Direct production owner for the homepage; consumes `includes/home-news.html` |
+| `astro/src/styles/home.css` | Production homepage composition and static hero gradient styling |
 | `astro/src/pages/projects.astro` | Production owner for the `/projects/` catalogue |
 | `astro/src/data/projects.ts` | Astro loader for canonical `data/projects.yml` |
 | `astro/src/styles/projects.css` | Production `/projects/` catalogue styling |
@@ -35,14 +37,24 @@ individual project page. Do not infer a source move from a matching public URL.
 | `astro/src/styles/research.css` | Production `/research/` page styling |
 | `astro/src/pages/publications.astro` | Production owner for `/publications/` and its page hierarchy |
 | `astro/src/components/PublicationArchive.astro` | Consumes the generated publication archive and owns Astro abstract, BibTeX, copy and math behaviour |
+| `astro/src/components/DisclosureArchive.astro` | Shared accessible Abstract disclosure behaviour for Teaching, Presentations and Supervision |
+| `astro/src/styles/archive-actions.css` | Canonical shared action styling for Publications Abstract and Teaching/Presentations/Supervision disclosures |
 | `astro/src/styles/publications.css` | Production `/publications/` archive styling |
 | `astro/src/styles/section-jump.css` | Shared Astro in-page section navigation used by Publications and Teaching |
-| `astro/src/pages/teaching.astro` | Production owner for `/teaching/`; consumes `includes/teaching-list.html` and owns its About disclosure behaviour |
+| `astro/src/pages/teaching.astro` | Production owner for `/teaching/`; consumes `includes/teaching-list.html` |
 | `astro/src/styles/teaching.css` | Production `/teaching/` page styling |
 | `astro/src/pages/news.astro` | Production owner for `/news/`; consumes `includes/news-all.html` and owns archive search behaviour |
-| `astro/src/styles/news.css` | Production `/news/` archive styling |
+| `astro/src/styles/news-component.css` | Canonical News row/disclosure styling shared by Homepage and `/news/` |
+| `astro/src/styles/news.css` | Production `/news/` archive/search-only styling |
 | `astro/src/pages/contact.astro` | Production owner and direct content source for `/contact/` |
 | `astro/src/styles/contact.css` | Production `/contact/` page styling |
+| `astro/src/pages/presentations.astro` | Production owner for `/presentations/`; consumes `includes/presentations.html` |
+| `astro/src/pages/supervision.astro` | Production owner for `/supervision/`; consumes `includes/supervision.html` |
+| `astro/src/styles/record-archive.css` | Shared generated-record layout for Presentations and Supervision |
+| `astro/src/styles/presentations.css` | Presentation-page introduction and invited marker |
+| `astro/src/styles/supervision.css` | Supervision-page introduction |
+| `astro/src/pages/cv.astro` | Direct production owner for `/cv/` |
+| `astro/src/pages/404.astro` | Direct production owner for the static `404.html` artifact |
 | `astro/scripts/build-site.mjs` (`compatibilityAliases`) | Emits noindex copies of canonical Astro pages at the former `.html` URLs for static-host compatibility |
 
 Quarto's `projects/f1-time-rank-duality/index.qmd` is the sole owner of the
@@ -59,25 +71,15 @@ F1 overview URL; no Astro detail route exists.
 | `astro/src/styles/dev-tools.css` | QA page chrome, token swatches, controls and viewport frames only |
 | `astro/scripts/build-site.mjs` + `npm run build:qa` | Retains `/dev/` locally while keeping it out of sitemap and Pagefind; production `build:site` removes it |
 
-## Top-level pages
+## Remaining top-level Quarto page
 
 | File | Description |
 |---|---|
-| `index.qmd` | Homepage — professional positioning + selected evidence |
-| `projects.qmd` | Project listing page |
 | `notes.qmd` | Notes archive page |
-| `cv.qmd` | Curriculum vitae |
-| `presentations.qmd` | Presentations |
-| `supervision.qmd` | Student supervision |
-| `404.qmd` | Custom 404 page |
 
-Until an ordinary page is deliberately migrated, its root `.qmd` remains its
-canonical source. About, Expertise, Research, Publications, Teaching, News and
-Contact have moved to the Astro owners listed above, and their obsolete root
-`.qmd` implementations have been removed.
-Remaining top-level `.qmd` files intentionally stay at repository root because
-Quarto mirrors source paths into output URLs. Moving them under `pages/` would
-change canonical public URLs. Do not reopen this decision.
+`notes.qmd` and `notes/*.qmd` remain Quarto-owned pending the dedicated Notes
+renderer-integration task. Every ordinary page listed above is Astro-owned;
+its obsolete root `.qmd` implementation has been removed.
 
 ## Project pages (Quarto production owner)
 
@@ -114,20 +116,15 @@ detail route.
 
 | File | Description |
 |---|---|
-| `scripts/build-content.py` | Pre-render hook — reads structured data sources and writes generated HTML/QMD fragments |
+| `scripts/build-content.py` | Pre-render hook — writes the remaining generated HTML fragments and project JSON |
 
 ### Includes generated by `scripts/build-content.py`
 
 | Generated file | Canonical source | Generator path |
 |---|---|---|
 | `data/projects.generated.json` | `data/projects.yml` | `portfolio.load_projects()` → JSON snapshot for `filters/project-components.lua` |
-| `includes/home-news.qmd` | `news/*.md` (latest 8) | `news.load_news()` → `news.render_news_qmd()` |
-| `includes/home-notes.html` | `notes/*.qmd` (latest 4) | `portfolio.load_featured_notes()` → `portfolio.render_featured_note()` |
-| `includes/home-projects.html` | `data/projects.yml` (featured) | `portfolio.load_projects()` → `portfolio.render_featured_projects()` |
-| `includes/home-publications-list.html` | `data/publications.bib` (selected) | `publications.load_publications()` → `publication_rendering.render_selected_publications()` |
-| `includes/news-all.qmd` | `news/*.md` (all) | `news.load_news()` → `news.render_news_qmd()` |
+| `includes/home-news.html` | `news/*.md` (latest 8; consumed by `index.astro`) | `news.load_news()` → `news.render_news_component(searchable=False)` |
 | `includes/news-all.html` | `news/*.md` (all; consumed by `news.astro`) | `news.load_news()` → `news.render_news_component()` |
-| `includes/projects-portfolio.html` | `data/projects.yml` (all) | `portfolio.load_projects()` → `portfolio.render_projects_portfolio()` |
 | `includes/publications-all.html` | `data/publications.bib` (all, grouped; consumed by `PublicationArchive.astro`) | `publications.load_publications()` → `publication_rendering.render_publication_archive()` |
 | `includes/presentations.html` | `data/presentations_*.bib` | `presentations.load_presentations()` → `presentations.render_presentations_archive()` |
 | `includes/supervision.html` | `data/supervision_*.bib` | `supervision.load_supervision()` → `supervision.render_supervision_archive()` |
@@ -151,64 +148,34 @@ renderers add co-author homepage links. It does not produce its own include.
 | Source | Runtime target | Purpose |
 |---|---|---|
 | `includes/scroll-restoration-head.html` + `includes/after-body.html` | browser back/forward navigation and `sessionStorage` | Prevent a visible flash at the top of a restored page and restore its saved scroll position after Quarto's Safari scroll workaround. |
-| `includes/after-body.html` | `.abstract-toggle`, `.bibtex-toggle`, `.publication-entry` | Open one publication, presentation or supervision detail panel at a time; typeset mathematics when an abstract opens. |
-| `includes/after-body.html` | `.publication-entry .bibtex pre code` | Adds the Copy citation control to generated publication BibTeX panels. |
-| `includes/after-body.html` | `[data-news-component]` | Filters generated News archive entries client-side. |
 | `includes/after-body.html` | `.callout-header[data-bs-toggle="collapse"]` | Adds keyboard activation to Quarto/Bootstrap collapsible callout headers. |
-| `includes/after-body.html` | Quarto search popup `.aa-DetachedContainer .aa-Input` | Applies the accessible site-search label when Quarto inserts the detached search dialog. |
 | `includes/after-body.html` | overflowing `pre` elements | Makes horizontally or vertically scrollable code regions keyboard-focusable. |
 | `includes/project-navigation.html` | `.project-detail-page` headings and Quarto navbar | Builds the responsive project chapter rail/drawer and synchronizes its geometry and active section. |
 | `includes/mermaid-svg-ids.html` | Mermaid SVGs under `.cell-output-display` | Namespaces diagram IDs after Quarto/Mermaid render so multiple diagrams cannot collide. |
 
 Astro owns the production navbar, footer and theme control, including on merged
 Quarto project documents. Quarto still supplies document-specific Bootstrap,
-search and Mermaid behaviour; these legacy includes add only the site-specific
+math/code and Mermaid behaviour; these legacy includes add only the site-specific
 behaviour listed above.
 
 ## Styles
 
 | File | Description |
 |---|---|
-| `styles/main.scss` | SCSS entry point — imports all files below |
-| `styles/main/_00-tokens.scss` | Legacy Quarto global tokens required while ordinary Quarto pages remain in transition |
+| `styles/main.scss` | Lean Quarto document foundation entry point |
+| `styles/main/_00-tokens.scss` | Quarto document tokens used by projects and remaining Notes |
 | `styles/main/_01-foundation.scss` | Base element styles, typography, layout primitives |
-| `styles/main/_02-shared-editorial.scss` | Shared standard-page and compact-hero editorial primitives |
-| `styles/main/_10-navbar.scss` + `styles/main/navbar/` | Legacy Quarto navbar required while ordinary Quarto pages remain in transition |
-| `styles/main/_11-footer.scss` | Legacy Quarto footer required while ordinary Quarto pages remain in transition |
-| `styles/main/_12-page-shell.scss` | Page shell and layout container styles |
-| `styles/components/_archive.scss` | Shared archive headings, actions and compact inline icons |
-| `styles/components/_archive-entries.scss` | Shared archive rows, metadata, badges and actions |
-| `styles/components/_section-jump.scss` | Shared publication and teaching in-page navigation |
-| `styles/components/_home.scss` | Homepage layout, profile, editorial, and responsive refinements; later sections intentionally refine earlier rules |
-| `styles/components/_disclosures.scss` | Shared abstract/BibTeX visibility, panels and inline controls |
-| `styles/components/_notes.scss` | Homepage note rows, Notes archive and long-form note pages |
-| `styles/components/_project-cards.scss` | Shared homepage and Projects archive cards, including labels and archived state |
-| `styles/components/_news.scss` | Legacy Quarto homepage/News presentation retained during transition; not the production News route owner |
-| `styles/components/_search-popup.scss` | Legacy Quarto search overlay for unmigrated Quarto pages; not the production hybrid site-search owner |
-| `styles/components/_expertise.scss` | Homepage Expertise preview and full Expertise page; later sections intentionally refine shared preview rules |
-| `styles/components/_about.scss` | Homepage background/approach previews and full About page |
-| `styles/components/_research.scss` | Research page hierarchy, themes, evidence and related links |
-| `styles/components/_publications.scss` | Homepage publication selections and Publications archive; later sections intentionally refine shared entry styles |
+| `styles/main/_02-shared-editorial.scss` | Compact Quarto editorial primitives retained for Notes |
+| `styles/main/_10-navbar.scss` + `styles/main/navbar/` | Quarto fallback navbar for standalone Notes rendering; replaced during merged-project builds |
+| `styles/main/_11-footer.scss` | Quarto fallback footer for standalone Notes rendering; replaced during merged-project builds |
+| `styles/main/_12-page-shell.scss` | Quarto document shell and content container styles |
+| `styles/components/_notes.scss` | Notes archive and long-form note presentation |
 
 `styles/project.scss` is the project-only SCSS entry point. It compiles the
 partials under `styles/project/` separately from the global `styles/main.scss`
 chain. Its `_article.scss` and `_article-controls.scss` files are currently
 temporary manifests for the corresponding subdirectories; `_navigation.scss`
 is already the canonical project-navigation owner.
-
-### SCSS consolidation guardrails
-
-The global and project stylesheets are independent entry chains. Preserve the
-import order within a component when consolidating it: later partials often
-intentionally refine earlier rules. Do not merge the two entry chains, move
-Quarto/Bootstrap defaults out of `styles/main.scss`, or edit generated CSS in
-`docs/`.
-
-Consolidate one visible component at a time into its manifest file, then remove
-only that component's leaf partials. Keep the navbar modules and shared archive
-and disclosure components separate unless an exact ownership overlap is proven.
-Every consolidation requires a render plus responsive light/dark validation;
-the CI visual comparison is authoritative for accepting a visual change.
 
 ### Style control index
 
@@ -224,31 +191,25 @@ already exists.
 | Production navbar, footer and responsive shell presentation | `astro/src/styles/shell.css` | Canonical |
 | Production site-search behaviour | `astro/src/components/SiteSearch.astro` | Canonical |
 | Production site-search presentation | `astro/src/styles/shell.css` (`.site-search-*`) | Canonical |
-| Legacy Quarto search popup | `styles/components/_search-popup.scss` | Canonical only for unmigrated Quarto pages |
-| Homepage Expertise preview in legacy Quarto rendering | `styles/components/_expertise.scss` | Canonical only for legacy Quarto rendering |
 | Production Expertise page | `astro/src/pages/expertise.astro` + `astro/src/styles/expertise.css` | Canonical |
-| Homepage background/approach previews in legacy Quarto rendering | `styles/components/_about.scss` | Canonical only for legacy Quarto rendering |
 | Production About page | `astro/src/pages/about.astro` + `astro/src/styles/global.css` (`/* About page */`) | Canonical |
 | Production Research page | `astro/src/pages/research.astro` + `astro/src/styles/research.css` | Canonical |
-| Legacy Quarto Research presentation | `styles/components/_research.scss` | Legacy only; no longer owns the production route |
 | Production footer | `astro/src/components/Footer.astro` + `astro/src/styles/shell.css` | Canonical |
-| Outer page shell | `styles/main/_12-page-shell.scss` | Canonical |
-| Homepage note selection | `styles/components/_notes.scss` | Canonical |
+| Quarto document shell | `styles/main/_12-page-shell.scss` | Canonical for Quarto documents |
 | Notes archive | `styles/components/_notes.scss` | Canonical |
 | Long-form note pages | `styles/components/_notes.scss` | Canonical |
-| Legacy Quarto project cards | `styles/components/_project-cards.scss` | Canonical for legacy Quarto rendering; `astro/src/styles/projects.css` owns the migrated Astro catalogue |
 | Project article foundation and presentation | `styles/project/_article.scss` | Canonical, project-only |
 | Project article context controls | `styles/project/_article-controls.scss` | Canonical, project-only |
 | Project chapter navigation | `styles/project/_navigation.scss` | Canonical, project-only |
-| Homepage composition | `styles/components/_home.scss` | Canonical |
-| Bootstrap-era archive rows | `styles/components/_archive-entries.scss` | Canonical |
-| Archive section jumps | `styles/components/_section-jump.scss` | Canonical |
-| Expandable abstracts and BibTeX panels | `styles/components/_disclosures.scss` | Canonical |
-| Legacy Quarto homepage publication selection and archive presentation | `styles/components/_publications.scss` (shared archive/disclosure primitives live in their dedicated components) | Canonical only for legacy Quarto rendering |
+| Homepage composition | `astro/src/pages/index.astro` + `astro/src/styles/home.css` | Canonical |
 | Production Publications page | `astro/src/pages/publications.astro` + `astro/src/components/PublicationArchive.astro` + `astro/src/styles/publications.css` | Canonical; records and markup originate from `data/publications.bib` through `includes/publications-all.html` |
-| Production Teaching page | `astro/src/pages/teaching.astro` + `astro/src/styles/teaching.css` | Canonical; records and markup temporarily originate from `data/teaching.yml` through `includes/teaching-list.html` pending a future data-architecture review |
+| Shared archive disclosure action | `astro/src/styles/archive-actions.css` + `astro/src/components/DisclosureArchive.astro` | Canonical for Teaching, Presentations and Supervision; Publications shares the action presentation |
+| Production Teaching page | `astro/src/pages/teaching.astro` + `astro/src/styles/teaching.css` | Canonical; records temporarily originate from `data/teaching.yml` through `includes/teaching-list.html` |
 | Production Contact page | `astro/src/pages/contact.astro` + `astro/src/styles/contact.css` | Canonical |
-| Production News archive | `astro/src/pages/news.astro` + `astro/src/styles/news.css` | Canonical; records and markup temporarily originate from `news/*.md` through `includes/news-all.html` pending a future data-architecture review |
+| Homepage + archive News rows | `scripts/sitegen/news.py` + `astro/src/styles/news-component.css` | Canonical shared markup and presentation |
+| Production News search | `astro/src/pages/news.astro` + `astro/src/styles/news.css` | Canonical archive-only behaviour and presentation |
+| Production Presentations | `astro/src/pages/presentations.astro` + `astro/src/styles/presentations.css` + `astro/src/styles/record-archive.css` | Canonical page; records remain `data/presentations_*.bib` via `includes/presentations.html` |
+| Production Supervision | `astro/src/pages/supervision.astro` + `astro/src/styles/supervision.css` + `astro/src/styles/record-archive.css` | Canonical page; records remain `data/supervision_*.bib` via `includes/supervision.html` |
 
 ## Lua filters
 

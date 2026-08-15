@@ -156,11 +156,23 @@ test.describe("critical interactions", () => {
       await expect(button).toHaveClass(/is-visible/);
       await expect(button).toHaveAttribute("tabindex", "0");
 
+      const normalBottom = await button.evaluate((element) =>
+        window.innerHeight - element.getBoundingClientRect().bottom
+      );
+
       await page.locator(".site-footer").scrollIntoViewIfNeeded();
-      await expect(button).toHaveAttribute("aria-hidden", "true");
-      await expect(button).toHaveAttribute("tabindex", "-1");
+      await expect(button).toHaveClass(/is-visible/);
+      await expect(button).toHaveAttribute("tabindex", "0");
+      await expect.poll(() => page.evaluate(() => {
+        const button = document.querySelector(".back-to-top").getBoundingClientRect();
+        const footer = document.querySelector(".site-footer").getBoundingClientRect();
+        return button.bottom <= footer.top;
+      })).toBe(true);
       await page.evaluate(() => window.scrollTo(0, 800));
       await expect(button).toHaveClass(/is-visible/);
+      await expect.poll(() => button.evaluate((element) =>
+        window.innerHeight - element.getBoundingClientRect().bottom
+      )).toBeCloseTo(normalBottom, 0);
       await button.focus();
       await page.keyboard.press('Enter');
       await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(10);
@@ -170,9 +182,14 @@ test.describe("critical interactions", () => {
   test("news disclosure opens from its summary", async ({ page }) => {
     await page.goto("/");
 
+    const homepageRows = await page.locator("[data-news-item]").evaluateAll((items) => items.map((item) => item.outerHTML));
     const item = page.locator("details.news-item").first();
     await item.locator("summary").click();
     await expect(item).toHaveAttribute("open", "");
+
+    await page.goto("/news/");
+    const archiveRows = await page.locator("[data-news-item]").evaluateAll((items) => items.slice(0, 8).map((item) => item.outerHTML));
+    expect(homepageRows).toEqual(archiveRows);
   });
 
   test("Teaching About disclosures and News archive search work", async ({ page }) => {
@@ -180,9 +197,20 @@ test.describe("critical interactions", () => {
     await expect(page.locator("#lecturer > h2")).toBeInViewport();
     await expect(page.locator("#tutor > h2")).toHaveText("Teaching assistant");
     const about = page.locator(".teaching-course .abstract-toggle").first();
+    const teachingStyle = await about.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return [style.color, style.fontSize, style.fontWeight, style.backgroundColor, style.borderWidth, style.padding];
+    });
     await about.click();
     await expect(about).toHaveAttribute("aria-expanded", "true");
     await expect(page.locator(".teaching-course .abstract").first()).toBeVisible();
+    await page.goto("/publications/");
+    const publicationAbstract = page.locator(".publication-entry .abstract-toggle").first();
+    const publicationStyle = await publicationAbstract.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return [style.color, style.fontSize, style.fontWeight, style.backgroundColor, style.borderWidth, style.padding];
+    });
+    expect(teachingStyle).toEqual(publicationStyle);
 
     await page.goto("/news/");
     const items = page.locator("[data-news-item]");
@@ -194,5 +222,22 @@ test.describe("critical interactions", () => {
     expect(await visible.count()).toBeLessThan(total);
     await visible.first().locator("summary").click();
     await expect(visible.first()).toHaveAttribute("open", "");
+  });
+
+  test("migrated record archives preserve sections and disclosures", async ({ page }) => {
+    await page.goto("/presentations/#talk");
+    await expect(page.locator("#talk + .archive-year")).toBeAttached();
+    await expect(page.locator("#poster")).toBeAttached();
+    await expect(page.locator("#institutional")).toBeAttached();
+    const presentationAbstract = page.locator(".record-archive .abstract-toggle").first();
+    await presentationAbstract.click();
+    await expect(presentationAbstract).toHaveAttribute("aria-expanded", "true");
+
+    await page.goto("/supervision/#master");
+    await expect(page.locator("#undergraduate")).toBeAttached();
+    await expect(page.getByRole("link", { name: "Email me" })).toHaveAttribute("href", "mailto:silvio.fanzon.work@gmail.com");
+    const supervisionAbstract = page.locator(".record-archive .abstract-toggle").first();
+    await supervisionAbstract.click();
+    await expect(supervisionAbstract).toHaveAttribute("aria-expanded", "true");
   });
 });

@@ -121,10 +121,10 @@ test("homepage alternating sections use viewport-wide tinted backgrounds", async
   }
 });
 
-test("migrated Teaching, News and Contact pages fit representative viewports", async ({ page }) => {
+test("migrated ordinary pages fit representative viewports", async ({ page }) => {
   for (const viewport of responsiveViewports) {
     await page.setViewportSize(viewport);
-    for (const path of ["/teaching/", "/news/", "/contact/"]) {
+    for (const path of ["/teaching/", "/news/", "/contact/", "/presentations/", "/supervision/", "/cv/"]) {
       await page.goto(path);
       const dimensions = await page.evaluate(() => ({
         documentWidth: document.documentElement.scrollWidth,

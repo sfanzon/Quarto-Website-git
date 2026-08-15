@@ -39,7 +39,7 @@ def _presentation_link(record, field, label, icon, asset=False):
         return ''
     href = value if value.startswith(('http://', 'https://', '/')) else f'/assets/pdf/{value}' if asset else value
     return (
-        f'<a class="btn btn-sm z-depth-0" href="{html.escape(href, quote=True)}" '
+        f'<a class="paper-action" href="{html.escape(href, quote=True)}" '
         f'role="button"><i class="fa-solid {icon}"></i> {label}</a>'
     )
 
@@ -53,9 +53,9 @@ def render_presentations_archive(records):
         for year in sorted({record['year'] for record in typed}, reverse=True):
             entries = []
             for record in [item for item in typed if item['year'] == year]:
-                invitation = '<i class="far fa-envelope inline-icon--compact"></i>&nbsp;' if record.get('invited') == 'true' else ''
+                invitation = '<span class="invited-marker" aria-label="Invited contribution">✉</span> ' if record.get('invited') == 'true' else ''
                 actions = ''.join([
-                    '<a class="btn btn-sm z-depth-0 abstract-toggle" role="button">Abs</a>' if record.get('abstract') else '',
+                    '<button class="paper-action abstract-toggle" type="button">Abstract</button>' if record.get('abstract') else '',
                     _presentation_link(record, 'event_link', 'Event', 'fa-calendar-days'),
                     _presentation_link(record, 'venue_link', 'Venue', 'fa-location-dot'),
                     _presentation_link(record, 'slides', 'Slides', 'fa-display', asset=True),

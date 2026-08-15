@@ -10,6 +10,9 @@ const isResearch = currentPath === '/research';
 const isTeaching = currentPath === '/teaching';
 const isNews = currentPath === '/news';
 const isContact = currentPath === '/contact';
+const isPresentations = currentPath === '/presentations';
+const isSupervision = currentPath === '/supervision';
+const isCv = currentPath === '/cv';
 const isDev = currentPath === '/dev' || currentPath.startsWith('/dev/');
 const includeDevTools = import.meta.env.DEV || process.env.SF_INCLUDE_DEV_TOOLS === '1';
 
@@ -17,7 +20,7 @@ const primaryLinks = [
 	{ label: 'About', href: '/about/', active: isAbout },
 	{ label: 'Projects', href: '/projects/', active: isProjects, section: 'projects' },
 	{ label: 'Expertise', href: '/expertise/', active: isExpertise },
-	{ label: 'CV', href: 'https://www.silviofanzon.com/Silvio_Fanzon_Academic_CV.pdf' },
+	{ label: 'CV', href: '/cv/', active: isCv },
 	{ label: 'Publications', href: '/publications/', active: isPublications },
 	{ label: 'Teaching', href: '/teaching/', active: isTeaching },
 	{ label: 'News', href: '/news/', active: isNews },
@@ -26,12 +29,12 @@ const primaryLinks = [
 const dropdowns = [
 	{
 		label: 'More',
-		active: isResearch || isContact,
+		active: isResearch || isPresentations || isSupervision || isContact,
 		links: [
 			{ label: 'Notes', href: 'https://www.silviofanzon.com/notes.html' },
 			{ label: 'Research', href: '/research/', active: isResearch },
-			{ label: 'Presentations', href: 'https://www.silviofanzon.com/presentations.html' },
-			{ label: 'Supervision', href: 'https://www.silviofanzon.com/supervision.html' },
+			{ label: 'Presentations', href: '/presentations/', active: isPresentations },
+			{ label: 'Supervision', href: '/supervision/', active: isSupervision },
 			{ label: 'Contact', href: '/contact/', active: isContact },
 		],
 	},

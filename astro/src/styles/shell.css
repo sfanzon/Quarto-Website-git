@@ -490,7 +490,7 @@
 .back-to-top {
 	position: fixed;
 	right: max(18px, env(safe-area-inset-right));
-	bottom: max(18px, env(safe-area-inset-bottom));
+	bottom: calc(max(18px, env(safe-area-inset-bottom)) + var(--back-to-top-footer-offset, 0px));
 	z-index: 1050;
 	display: grid;
 	width: 42px;

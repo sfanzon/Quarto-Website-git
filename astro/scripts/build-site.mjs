@@ -35,6 +35,9 @@ const compatibilityAliases = new Map([
 	['teaching.html', 'teaching/index.html'],
 	['news.html', 'news/index.html'],
 	['contact.html', 'contact/index.html'],
+	['presentations.html', 'presentations/index.html'],
+	['supervision.html', 'supervision/index.html'],
+	['cv.html', 'cv/index.html'],
 ]);
 
 function findProjectSources(directory) {

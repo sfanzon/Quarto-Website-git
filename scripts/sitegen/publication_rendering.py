@@ -170,24 +170,6 @@ def render_publication_entry(
     return f'''<article class="{row_classes} publication-entry" id="{html.escape(row_id, quote=True)}"><div class="home-publication-main pub-main"><h3>{publication['title']}</h3><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{publication['periodical']}</span></div><div class="paper-actions">{actions}</div><div class="abstract hidden">{publication_abstract_html(publication)}</div><div class="bibtex hidden"><pre><code>{html.escape(publication['bibtex'])}</code></pre></div></div>{side_meta}</article>'''
 
 
-def render_selected_publications(publications, coauthor_urls):
-    selected = [
-        publication
-        for publication in publications
-        if publication.get('selected') is True
-    ]
-    return '\n'.join(
-        render_publication_entry(
-            publication,
-            f"home-list-{publication['id']}",
-            'home-publication-row',
-            pub_actions(publication),
-            coauthor_urls,
-        )
-        for publication in selected
-    )
-
-
 def render_publication_archive(publications, coauthor_urls):
     categories = list(dict.fromkeys(
         publication['category']

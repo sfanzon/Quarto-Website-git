@@ -13,7 +13,7 @@ class NewsTests(GeneratorTestCase):
             news_inline_html('<a href="/teaching.html#course">Read</a>'),
         )
         self.assertIn(
-            "https://www.silviofanzon.com/presentations.html#talk",
+            "/presentations/#talk",
             news_inline_html('<a href="/presentations.html#talk">Read</a>'),
         )
         self.assertTrue(news_summary("A short sentence.").endswith("."))

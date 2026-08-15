@@ -47,95 +47,6 @@
     }, 80);
   });
 
-  function toggleDetails(button, selector) {
-    const entry = button.closest('.publication-entry');
-    const panel = entry?.querySelector(selector);
-    if (!panel) return;
-    const opening = !panel.classList.contains('open');
-    entry.querySelectorAll('.abstract.open, .bibtex.open').forEach(el => el.classList.remove('open'));
-    entry.querySelectorAll('.abstract-toggle, .bibtex-toggle').forEach(el => el.setAttribute('aria-expanded', 'false'));
-    if (opening) {
-      panel.classList.add('open');
-      button.setAttribute('aria-expanded', 'true');
-      if (selector === '.abstract') {
-        requestAnimationFrame(function () {
-          if (typeof typesetMath === 'function') typesetMath(panel);
-          else if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise([panel]);
-        });
-      }
-    }
-  }
-
-  document.querySelectorAll('.abstract-toggle').forEach(button => {
-    button.setAttribute('aria-expanded', 'false');
-    button.addEventListener('click', () => toggleDetails(button, '.abstract'));
-  });
-  document.querySelectorAll('.bibtex-toggle').forEach(button => {
-    button.setAttribute('aria-expanded', 'false');
-    button.addEventListener('click', () => toggleDetails(button, '.bibtex'));
-  });
-
-  function copyText(text) {
-    if (navigator.clipboard && window.isSecureContext) {
-      return navigator.clipboard.writeText(text);
-    }
-    return new Promise(function(resolve, reject) {
-      const area = document.createElement('textarea');
-      area.value = text;
-      area.setAttribute('readonly', '');
-      area.style.position = 'fixed';
-      area.style.opacity = '0';
-      document.body.appendChild(area);
-      area.select();
-      try {
-        document.execCommand('copy') ? resolve() : reject(new Error('Copy failed'));
-      } catch (error) { reject(error); }
-      area.remove();
-    });
-  }
-
-  document.querySelectorAll('[data-news-component]').forEach(function(component) {
-    const input = component.querySelector('[data-news-search]');
-    const items = [...component.querySelectorAll('[data-news-item]')];
-    const empty = component.querySelector('.news-search-empty');
-    if (!input) return;
-
-    function filterNews() {
-      const query = input.value.trim().toLowerCase();
-      let matches = 0;
-      items.forEach(function(item) {
-        const visible = !query || item.textContent.toLowerCase().includes(query);
-        item.hidden = !visible;
-        if (visible) matches += 1;
-      });
-      if (empty) empty.hidden = matches !== 0;
-    }
-
-    input.addEventListener('input', filterNews);
-    filterNews();
-  });
-
-  document.querySelectorAll('.publication-entry .bibtex').forEach(function(panel) {
-    const code = panel.querySelector('pre code');
-    if (!code || !code.textContent.trim() || panel.querySelector('.copy-citation')) return;
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'copy-citation';
-    button.innerHTML = '<i class="fa-regular fa-copy" aria-hidden="true"></i><span>Copy citation</span>';
-    button.addEventListener('click', function() {
-      copyText(code.textContent.trim()).then(function() {
-        const label = button.querySelector('span');
-        label.textContent = 'Copied';
-        button.classList.add('is-copied');
-        window.setTimeout(function() {
-          label.textContent = 'Copy citation';
-          button.classList.remove('is-copied');
-        }, 1600);
-      });
-    });
-    panel.insertBefore(button, panel.firstChild);
-  });
-
   document.querySelectorAll('.callout-header[data-bs-toggle="collapse"]').forEach(function(header) {
     header.setAttribute('role', 'button');
     header.setAttribute('tabindex', '0');
@@ -153,21 +64,5 @@
     }
   });
 
-})();
-</script>
-<script>
-(function () {
-  const placeholder = 'Search site-wide';
-  function labelPopupSearch(root) {
-    (root || document).querySelectorAll('.aa-DetachedContainer .aa-Input').forEach(function (input) {
-      input.setAttribute('placeholder', placeholder);
-      input.setAttribute('aria-label', placeholder);
-    });
-  }
-  document.addEventListener('DOMContentLoaded', function () {
-    labelPopupSearch(document);
-    new MutationObserver(function () { labelPopupSearch(document); })
-      .observe(document.body, { childList: true, subtree: true });
-  });
 })();
 </script>

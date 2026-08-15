@@ -1,0 +1,29 @@
+---
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import BaseHead from '../components/BaseHead.astro';
+import DisclosureArchive from '../components/DisclosureArchive.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import '../styles/archive-actions.css';
+import '../styles/record-archive.css';
+import '../styles/supervision.css';
+
+const source = [resolve(process.cwd(), '../includes/supervision.html'), resolve(process.cwd(), 'includes/supervision.html')].find(existsSync);
+if (!source) throw new Error('Unable to locate generated includes/supervision.html');
+const supervision = readFileSync(source, 'utf8');
+---
+<!doctype html>
+<html lang="en">
+	<head><BaseHead title="Supervision | Silvio Fanzon" description="Master’s and undergraduate supervision" /></head>
+	<body class="standard-page supervision-page">
+		<Header />
+		<main class="content">
+			<header class="page-hero compact-page-hero"><h1>Supervision</h1><p>Master’s and undergraduate projects I have supervised.</p></header>
+			<section class="supervision-intro"><p>Browse supervision by degree level:</p><ul><li><a href="#master">Master Students</a></li><li><a href="#undergraduate">Undergraduate Students</a></li></ul><p>Interested in dissertation projects? <a href="mailto:silvio.fanzon.work@gmail.com">Email me</a>!</p></section>
+			<section class="record-archive" data-disclosure-archive set:html={supervision} />
+		</main>
+		<Footer />
+		<DisclosureArchive />
+	</body>
+</html>

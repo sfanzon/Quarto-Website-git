@@ -14,14 +14,13 @@ test("rejects docs-only changes", () => {
 });
 
 test("rejects generated include-only changes", () => {
-  assert.equal(checkGuard(["includes/home-news.qmd"]).passed, false);
-  assert.equal(checkGuard(["includes/home-notes.html"]).passed, false);
+  assert.equal(checkGuard(["includes/home-news.html"]).passed, false);
   assert.equal(checkGuard(["includes/presentations.html"]).passed, false);
 });
 
 test("accepts generated output accompanied by canonical source", () => {
   assert.equal(
-    checkGuard(["docs/index.html", "index.qmd"]).passed,
+    checkGuard(["docs/index.html", "astro/src/pages/index.astro"]).passed,
     true
   );
 });
@@ -43,7 +42,7 @@ test("the CLI runs when invoked with a relative path", () => {
 
 test("the CLI runs when invoked with an absolute path", () => {
   const result = spawnSync(process.execPath, [guardPath], {
-    env: { ...process.env, GUARD_TEST_PATHS: "includes/news-all.qmd" },
+    env: { ...process.env, GUARD_TEST_PATHS: "includes/news-all.html" },
     encoding: "utf-8",
   });
 

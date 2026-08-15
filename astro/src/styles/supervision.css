@@ -1,0 +1,4 @@
+.supervision-intro { max-width: var(--site-reading-width); margin-bottom: 2rem; color: var(--global-text-color-light); }
+.supervision-intro ul { display: flex; flex-wrap: wrap; gap: .45rem 1.4rem; margin: 1rem 0; padding: 1rem 0; border-block: 1px solid var(--global-divider-color); list-style: none; }
+.supervision-intro a { color: var(--global-text-color); font-size: .88rem; font-weight: 600; }
+.supervision-intro a:hover { color: var(--global-theme-color); }

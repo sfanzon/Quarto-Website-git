@@ -25,11 +25,11 @@ website:
     - text: About
       href: /about/
     - text: Projects
-      href: projects.qmd
+      href: /projects/
     - text: Expertise
       href: /expertise/
     - text: CV
-      href: Silvio_Fanzon_Academic_CV.pdf
+      href: /cv/
     - text: Publications
       href: /publications/
     - text: Teaching
@@ -43,9 +43,9 @@ website:
       - text: Research
         href: /research/
       - text: Presentations
-        href: presentations.qmd
+        href: /presentations/
       - text: Supervision
-        href: supervision.qmd
+        href: /supervision/
       - text: Contact
         href: /contact/
 format:

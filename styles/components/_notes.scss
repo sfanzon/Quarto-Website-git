@@ -4,68 +4,6 @@
    long-form note pages. Keep responsive rules with the component they alter.
    ========================================================================== */
 
-/* Homepage: compact editorial selection. */
-.home-notes-list {
-  border-top: 1px solid var(--global-divider-color);
-}
-.home-note-row {
-  display: grid;
-  grid-template-columns: clamp(145px, 16vw, 190px) minmax(0, 1fr);
-  gap: clamp(1.25rem, 2.6vw, 2rem);
-  align-items: center;
-  padding: clamp(1.1rem, 2.4vw, 1.55rem) 0;
-  border-bottom: 1px solid var(--global-divider-color);
-}
-.home-note-row-visual {
-  display: grid;
-  min-height: 108px;
-  place-items: center;
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--global-theme-color) 18%, var(--global-divider-color));
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--global-section-bg) 56%, var(--global-bg-color));
-}
-.home-note-row-visual img {
-  width: 100%;
-  height: 108px;
-  padding: .35rem;
-  object-fit: contain;
-}
-.home-note-row-copy { max-width: 760px; }
-.home-note-row-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .25rem .85rem;
-  align-items: baseline;
-  margin-bottom: .35rem;
-  color: var(--global-text-color-light);
-  font-size: .7rem;
-  letter-spacing: .035em;
-  text-transform: uppercase;
-}
-.home-note-row-meta span {
-  color: var(--homepage-orange-accent, var(--global-theme-color));
-  font-weight: 700;
-}
-.home-note-row h3 {
-  margin: 0 0 .35rem;
-  font-size: clamp(1.08rem, 1.6vw, 1.32rem);
-  letter-spacing: -.025em;
-  line-height: 1.2;
-}
-.home-note-row h3 a { color: var(--global-text-color); }
-.home-note-row-copy > p {
-  margin: 0 0 .45rem;
-  color: var(--global-text-color-light);
-  font-size: .88rem;
-  line-height: 1.5;
-}
-.home-note-row-link {
-  color: var(--homepage-orange-accent, var(--global-theme-color));
-  font-size: .79rem;
-  font-weight: 680;
-}
-
 /* Notes archive. */
 .notes-index-intro {
   max-width: var(--site-reading-width);
@@ -170,19 +108,6 @@ body.notes-detail-page .footnotes a {
 }
 
 @media (max-width: 767.98px) {
-  .home-note-row {
-    grid-template-columns: 104px minmax(0, 1fr);
-    gap: .9rem;
-    align-items: start;
-    padding: 1rem 0;
-  }
-  .home-note-row-visual { min-height: 84px; }
-  .home-note-row-visual img { height: 84px; padding: .25rem; }
-  .home-note-row-meta { display: block; margin-bottom: .3rem; font-size: .62rem; }
-  .home-note-row-meta span { display: block; margin-top: .1rem; }
-  .home-note-row h3 { font-size: 1rem; }
-  .home-note-row-copy > p { font-size: .8rem; line-height: 1.42; }
-  .home-note-row-link { font-size: .74rem; }
   body.notes-index-page .quarto-post .thumbnail { width: 105px; }
   body.notes-detail-page main.content table {
     display: block;

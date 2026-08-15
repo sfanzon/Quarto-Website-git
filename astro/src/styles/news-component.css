@@ -1,0 +1,34 @@
+.news-list { border-top: 1px solid var(--global-divider-color); }
+.news-item { margin: 0; border-bottom: 1px solid var(--global-divider-color); }
+.news-item[hidden] { display: none; }
+.news-item > summary { display: grid; grid-template-columns: 104px 142px minmax(0, 1fr) 24px; column-gap: clamp(.8rem, 2vw, 1.35rem); align-items: center; height: 78px; padding: 0 .15rem; color: var(--global-text-color); cursor: pointer; list-style: none; }
+.news-item > summary::-webkit-details-marker { display: none; }
+.news-item > summary::marker { content: ''; }
+.news-date { color: var(--global-text-color-light); font-size: .82rem; font-weight: 560; white-space: nowrap; }
+.news-category { color: var(--global-theme-color); font-size: .84rem; font-weight: 780; letter-spacing: .09em; text-transform: uppercase; white-space: nowrap; }
+.news-title { display: -webkit-box; overflow: hidden; font-size: 1rem; font-weight: 620; line-height: 1.35; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.news-item > summary:hover .news-title,
+.news-item > summary:focus-visible .news-title { color: var(--global-theme-color); }
+.news-disclosure { position: relative; width: 20px; height: 20px; justify-self: end; }
+.news-disclosure::before,
+.news-disclosure::after { position: absolute; top: 9px; left: 4px; width: 12px; height: 1px; background: currentColor; content: ''; transition: transform .18s ease; }
+.news-disclosure::after { transform: rotate(90deg); }
+.news-item[open] .news-disclosure::after { transform: rotate(0); }
+.news-body { max-width: 900px; padding: 0 3rem 1.4rem calc(104px + 142px + clamp(1.6rem, 4vw, 2.7rem)); color: var(--global-text-color-light); line-height: 1.7; }
+.news-body p:first-child { margin-top: 0; }
+.news-body p:last-child { margin-bottom: 0; }
+.news-empty { color: var(--global-text-color-light); }
+
+@media (max-width: 680px) {
+	.news-item > summary { grid-template-columns: max-content max-content minmax(0, 1fr) 24px; grid-template-rows: auto auto; gap: .34rem .55rem; height: 92px; padding: .85rem 0; }
+	.news-category { grid-column: 1; grid-row: 1; font-size: .82rem; }
+	.news-date { grid-column: 2; grid-row: 1; font-size: .73rem; }
+	.news-title { grid-column: 1 / span 3; grid-row: 2; align-self: start; font-size: .98rem; }
+	.news-disclosure { grid-column: 4; grid-row: 1 / span 2; align-self: center; }
+	.news-body { max-width: none; padding: 0 2.25rem 1.25rem 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.news-disclosure::before,
+	.news-disclosure::after { transition: none; }
+}

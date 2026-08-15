@@ -49,7 +49,7 @@ def render_supervision_archive(records):
                 )
                 actions = (
                     '<div class="links archive-actions">'
-                    '<a class="btn btn-sm z-depth-0 abstract-toggle" role="button">Abs</a>'
+                    '<button class="paper-action abstract-toggle" type="button">Abstract</button>'
                     '</div>' if abstract else ''
                 )
                 entries.append(f'''<div class="row publication-entry" id="{html.escape(record['id'], quote=True)}">

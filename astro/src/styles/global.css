@@ -130,6 +130,14 @@ html[data-theme='dark'] pre.astro-code span {
 	font-size: 1.15rem;
 }
 
+.cv-credentials {
+	margin: 0 0 .55rem;
+	color: var(--global-text-color);
+	font-size: .9rem;
+	font-weight: 600;
+	letter-spacing: .025em;
+}
+
 /* About page */
 .about-hero {
 	max-width: 920px;

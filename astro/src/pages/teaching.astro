@@ -4,6 +4,8 @@ import { resolve } from 'node:path';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
+import DisclosureArchive from '../components/DisclosureArchive.astro';
+import '../styles/archive-actions.css';
 import '../styles/teaching.css';
 import '../styles/section-jump.css';
 
@@ -35,34 +37,9 @@ const teachingList = readFileSync(source, 'utf8');
 				<a href="#lecturer">Lecturer</a>
 				<a href="#tutor">Teaching assistant</a>
 			</nav>
-			<div class="teaching-list" set:html={teachingList} />
+			<div class="teaching-list" data-disclosure-archive set:html={teachingList} />
 		</main>
 		<Footer />
-		<script>
-			const initialiseTeaching = () => {
-				document.querySelectorAll<HTMLButtonElement>('.teaching-list .abstract-toggle').forEach((button) => {
-					const course = button.closest<HTMLElement>('.teaching-course');
-					const panel = course?.querySelector<HTMLElement>('.abstract');
-					if (!course || !panel) return;
-					panel.id ||= `${course.id}-about`;
-					panel.classList.remove('hidden');
-					panel.hidden = true;
-					button.setAttribute('aria-controls', panel.id);
-					button.setAttribute('aria-expanded', 'false');
-					button.addEventListener('click', () => {
-						const opening = panel.hidden;
-						panel.hidden = !opening;
-						panel.classList.toggle('open', opening);
-						button.setAttribute('aria-expanded', String(opening));
-					});
-				});
-			};
-
-			if (document.readyState === 'loading') {
-				document.addEventListener('DOMContentLoaded', initialiseTeaching, { once: true });
-			} else {
-				initialiseTeaching();
-			}
-		</script>
+		<DisclosureArchive />
 	</body>
 </html>

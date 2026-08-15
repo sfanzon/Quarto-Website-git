@@ -122,13 +122,8 @@ Note body.
 
         expected_outputs = {
             "data/projects.generated.json",
-            "includes/home-news.qmd",
-            "includes/home-notes.html",
-            "includes/home-projects.html",
-            "includes/home-publications-list.html",
-            "includes/news-all.qmd",
+            "includes/home-news.html",
             "includes/news-all.html",
-            "includes/projects-portfolio.html",
             "includes/publications-all.html",
             "includes/presentations.html",
             "includes/supervision.html",
@@ -164,12 +159,10 @@ Note body.
         }
         self.assertEqual(second_run, after_failed_run)
 
-        self.assertIn(b"Example project", first_run["includes/home-projects.html"])
-        self.assertIn(b"Generated note", first_run["includes/home-notes.html"])
+        self.assertIn(b"Generated update", first_run["includes/home-news.html"])
         self.assertIn(
             b"A deterministic publication",
             first_run["includes/publications-all.html"],
         )
         self.assertIn(b"2025/26", first_run["includes/teaching-list.html"])
-        self.assertIn(b"Generated update", first_run["includes/news-all.qmd"])
         self.assertIn(b"Generated update", first_run["includes/news-all.html"])

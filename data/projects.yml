@@ -170,7 +170,7 @@
   summary: A responsive portfolio that turns publications, projects, teaching and structured data into a coherent
     story for different audiences.
   image: assets/img/projects/website.svg
-  href: index.html
+  href: /
   code: https://github.com/sfanzon/sfanzon.github.io
   related:
   - f1-benchmarking

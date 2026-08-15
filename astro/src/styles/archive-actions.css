@@ -1,0 +1,21 @@
+.paper-action {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var(--global-theme-color);
+	font: inherit;
+	font-size: .77rem;
+	font-weight: 600;
+	letter-spacing: .025em;
+	cursor: pointer;
+}
+
+.paper-action:hover,
+.paper-action:focus-visible {
+	color: var(--global-hover-color);
+}
+
+.paper-action i {
+	display: none;
+}

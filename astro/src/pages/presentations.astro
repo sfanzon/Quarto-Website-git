@@ -1,0 +1,29 @@
+---
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import BaseHead from '../components/BaseHead.astro';
+import DisclosureArchive from '../components/DisclosureArchive.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import '../styles/archive-actions.css';
+import '../styles/presentations.css';
+import '../styles/record-archive.css';
+
+const source = [resolve(process.cwd(), '../includes/presentations.html'), resolve(process.cwd(), 'includes/presentations.html')].find(existsSync);
+if (!source) throw new Error('Unable to locate generated includes/presentations.html');
+const presentations = readFileSync(source, 'utf8');
+---
+<!doctype html>
+<html lang="en">
+	<head><BaseHead title="Presentations | Silvio Fanzon" description="Academic talks, posters, and institutional presentations" /></head>
+	<body class="standard-page presentations-page">
+		<Header />
+		<main class="content">
+			<header class="page-hero compact-page-hero"><h1>Presentations</h1><p>Academic talks, posters and institutional presentations, with materials where available.</p></header>
+			<section class="presentations-intro"><p>Browse these activities by type:</p><ul><li><a href="#talk">Academic Talks</a></li><li><a href="#poster">Poster Presentations</a></li><li><a href="#institutional">Institutional Presentations</a></li></ul><p>Each entry includes abstract, and slides or posters where available.</p><p><span class="invited-marker" aria-hidden="true">✉</span> indicates an invited contribution.</p></section>
+			<section class="record-archive" data-disclosure-archive set:html={presentations} />
+		</main>
+		<Footer />
+		<DisclosureArchive />
+	</body>
+</html>
