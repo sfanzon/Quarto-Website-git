@@ -490,17 +490,16 @@
 .back-to-top {
 	position: fixed;
 	right: max(18px, env(safe-area-inset-right));
-	bottom: calc(max(18px, env(safe-area-inset-bottom)) + var(--back-to-top-footer-offset, 0px));
+	bottom: max(18px, env(safe-area-inset-bottom));
 	z-index: 1050;
 	display: grid;
-	width: 42px;
-	height: 42px;
+	width: 40px;
+	height: 40px;
 	padding: 0;
 	place-items: center;
 	border: 1px solid var(--global-divider-color);
-	border-radius: 7px;
+	border-radius: 50%;
 	background: var(--global-bg-color);
-	box-shadow: 0 3px 12px color-mix(in srgb, var(--global-text-color) 12%, transparent);
 	color: var(--global-text-color);
 	font: inherit;
 	font-size: 20px;
@@ -509,6 +508,11 @@
 	visibility: hidden;
 	pointer-events: none;
 	transition: opacity 180ms ease, visibility 180ms ease, color 180ms ease;
+}
+
+.back-to-top.is-docked {
+	position: absolute;
+	bottom: auto;
 }
 
 .back-to-top.is-visible {

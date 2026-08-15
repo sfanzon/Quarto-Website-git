@@ -9,19 +9,38 @@
 		button.dataset.initialised = 'true';
 		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 		const footer = document.querySelector<HTMLElement>('.site-footer');
-		const updatePosition = () => {
-			const overlap = footer ? Math.max(0, window.innerHeight - footer.getBoundingClientRect().top) : 0;
-			button.style.setProperty('--back-to-top-footer-offset', `${overlap}px`);
+		let docked = false;
+		let fixedInset = 18;
+		const positionAtFooter = () => {
+			if (!footer) return;
+			const footerTop = footer.getBoundingClientRect().top + window.scrollY;
+			button.style.top = `${footerTop - button.offsetHeight - fixedInset}px`;
+		};
+		const setDocked = (shouldDock: boolean) => {
+			if (!footer || shouldDock === docked) return;
+			docked = shouldDock;
+			button.classList.toggle('is-docked', docked);
+			if (docked) {
+				positionAtFooter();
+			} else {
+				button.style.removeProperty('top');
+			}
+		};
+		const updatePosition = (repositionDocked = false) => {
 			const visible = window.scrollY >= 600;
 			button.classList.toggle('is-visible', visible);
 			button.setAttribute('aria-hidden', String(!visible));
 			button.tabIndex = visible ? 0 : -1;
+			if (!footer) return;
+			if (!docked) fixedInset = Number.parseFloat(getComputedStyle(button).bottom) || fixedInset;
+			setDocked(footer.getBoundingClientRect().top <= window.innerHeight);
+			if (repositionDocked && docked) positionAtFooter();
 		};
 		button.addEventListener('click', () => {
 			window.scrollTo({ top: 0, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
 		});
-		window.addEventListener('scroll', updatePosition, { passive: true });
-		window.addEventListener('resize', updatePosition);
+		window.addEventListener('scroll', () => updatePosition(), { passive: true });
+		window.addEventListener('resize', () => updatePosition(true));
 		updatePosition();
 	};
 

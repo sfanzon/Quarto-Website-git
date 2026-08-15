@@ -155,24 +155,32 @@ test.describe("critical interactions", () => {
       await page.evaluate(() => window.scrollTo(0, 800));
       await expect(button).toHaveClass(/is-visible/);
       await expect(button).toHaveAttribute("tabindex", "0");
+      await expect(button).not.toHaveClass(/is-docked/);
+      await expect(button).toHaveCSS("position", "fixed");
 
-      const normalBottom = await button.evaluate((element) =>
-        window.innerHeight - element.getBoundingClientRect().bottom
-      );
-
-      await page.locator(".site-footer").scrollIntoViewIfNeeded();
+      await page.evaluate(() => {
+        const footer = document.querySelector(".site-footer");
+        window.scrollTo(0, footer.getBoundingClientRect().top + window.scrollY - window.innerHeight + 1);
+      });
       await expect(button).toHaveClass(/is-visible/);
       await expect(button).toHaveAttribute("tabindex", "0");
+      await expect(button).toHaveClass(/is-docked/);
+      await expect(button).toHaveCSS("position", "absolute");
       await expect.poll(() => page.evaluate(() => {
         const button = document.querySelector(".back-to-top").getBoundingClientRect();
         const footer = document.querySelector(".site-footer").getBoundingClientRect();
         return button.bottom <= footer.top;
       })).toBe(true);
+      const dockedTop = await button.evaluate((element) => element.style.top);
+      await page.evaluate(() => window.scrollBy(0, 40));
+      expect(await button.evaluate((element) => element.style.top)).toBe(dockedTop);
+      await expect(button).toHaveCSS("width", "40px");
+      await expect(button).toHaveCSS("height", "40px");
+      await expect(button).toHaveCSS("border-radius", "50%");
       await page.evaluate(() => window.scrollTo(0, 800));
       await expect(button).toHaveClass(/is-visible/);
-      await expect.poll(() => button.evaluate((element) =>
-        window.innerHeight - element.getBoundingClientRect().bottom
-      )).toBeCloseTo(normalBottom, 0);
+      await expect(button).not.toHaveClass(/is-docked/);
+      await expect(button).toHaveCSS("position", "fixed");
       await button.focus();
       await page.keyboard.press('Enter');
       await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(10);
