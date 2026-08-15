@@ -33,9 +33,9 @@ website:
     - text: Publications
       href: /publications/
     - text: Teaching
-      href: teaching.qmd
+      href: /teaching/
     - text: News
-      href: news.qmd
+      href: /news/
     - text: More
       menu:
       - text: Notes
@@ -47,7 +47,7 @@ website:
       - text: Supervision
         href: supervision.qmd
       - text: Contact
-        href: contact.qmd
+        href: /contact/
 format:
   html:
     theme:

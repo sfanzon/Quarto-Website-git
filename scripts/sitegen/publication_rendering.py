@@ -167,8 +167,7 @@ def render_publication_entry(
 ):
     authors = linked_authors(publication['authors'], coauthor_urls)
     side_meta = publication_side_meta(publication)
-    marker = '<span class="publication-contribution-marker" aria-hidden="true">#</span> ' if publication.get('contribution') else ''
-    return f'''<article class="{row_classes} publication-entry" id="{html.escape(row_id, quote=True)}"><div class="home-publication-main pub-main"><h3>{marker}{publication['title']}</h3><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{publication['periodical']}</span></div><div class="paper-actions">{actions}</div><div class="abstract hidden">{publication_abstract_html(publication)}</div><div class="bibtex hidden"><pre><code>{html.escape(publication['bibtex'])}</code></pre></div></div>{side_meta}</article>'''
+    return f'''<article class="{row_classes} publication-entry" id="{html.escape(row_id, quote=True)}"><div class="home-publication-main pub-main"><h3>{publication['title']}</h3><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{publication['periodical']}</span></div><div class="paper-actions">{actions}</div><div class="abstract hidden">{publication_abstract_html(publication)}</div><div class="bibtex hidden"><pre><code>{html.escape(publication['bibtex'])}</code></pre></div></div>{side_meta}</article>'''
 
 
 def render_selected_publications(publications, coauthor_urls):

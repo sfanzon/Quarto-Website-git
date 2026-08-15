@@ -41,24 +41,8 @@ class PublicationTests(GeneratorTestCase):
         with self.assertRaisesRegex(ValueError, "duplicate publication id"):
             load_publications(self.write_fixture(source, "publications.bib"))
 
-    def test_contribution_metadata_and_publication_links(self):
+    def test_publication_links_and_legacy_fragment(self):
         publications = load_publications(REPOSITORY_ROOT / "data/publications.bib")
-        marked = {
-            publication["id"]
-            for publication in publications
-            if publication["contribution"]
-        }
-        self.assertEqual(marked, {
-            "2026-Fry-Fan-Aus-Bri",
-            "2025-Fry-Aus-Fan",
-            "2024-Fry-Bri-Fan",
-            "2021-ISMRM",
-        })
-        self.assertTrue(all(
-            "contribution" not in publication["bibtex"]
-            for publication in publications
-        ))
-
         f1 = next(
             publication
             for publication in publications
@@ -86,4 +70,3 @@ class PublicationTests(GeneratorTestCase):
         archive = render_publication_archive(publications, {})
         self.assertIn('id="journal-publications"', archive)
         self.assertIn('id="journal"', archive)
-        self.assertIn('class="publication-contribution-marker"', archive)

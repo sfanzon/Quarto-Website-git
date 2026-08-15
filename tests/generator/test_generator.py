@@ -127,6 +127,7 @@ Note body.
             "includes/home-projects.html",
             "includes/home-publications-list.html",
             "includes/news-all.qmd",
+            "includes/news-all.html",
             "includes/projects-portfolio.html",
             "includes/publications-all.html",
             "includes/presentations.html",
@@ -171,3 +172,4 @@ Note body.
         )
         self.assertIn(b"2025/26", first_run["includes/teaching-list.html"])
         self.assertIn(b"Generated update", first_run["includes/news-all.qmd"])
+        self.assertIn(b"Generated update", first_run["includes/news-all.html"])

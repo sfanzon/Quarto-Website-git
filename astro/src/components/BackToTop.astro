@@ -8,12 +8,20 @@
 		if (!button || button.dataset.initialised === 'true') return;
 		button.dataset.initialised = 'true';
 		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+		const footer = document.querySelector('.site-footer');
+		let footerVisible = false;
 		const updateVisibility = () => {
-			const visible = window.scrollY >= 600;
+			const visible = window.scrollY >= 600 && !footerVisible;
 			button.classList.toggle('is-visible', visible);
 			button.setAttribute('aria-hidden', String(!visible));
 			button.tabIndex = visible ? 0 : -1;
 		};
+		if (footer) {
+			new IntersectionObserver(([entry]) => {
+				footerVisible = entry.isIntersecting;
+				updateVisibility();
+			}).observe(footer);
+		}
 		button.addEventListener('click', () => {
 			window.scrollTo({ top: 0, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
 		});

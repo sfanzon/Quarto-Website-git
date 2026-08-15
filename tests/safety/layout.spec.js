@@ -120,3 +120,18 @@ test("homepage alternating sections use viewport-wide tinted backgrounds", async
     expect(background.color).not.toBe("rgba(0, 0, 0, 0)");
   }
 });
+
+test("migrated Teaching, News and Contact pages fit representative viewports", async ({ page }) => {
+  for (const viewport of responsiveViewports) {
+    await page.setViewportSize(viewport);
+    for (const path of ["/teaching/", "/news/", "/contact/"]) {
+      await page.goto(path);
+      const dimensions = await page.evaluate(() => ({
+        documentWidth: document.documentElement.scrollWidth,
+        viewportWidth: window.innerWidth
+      }));
+      expect(dimensions.documentWidth, `${viewport.name}: ${path} overflow`)
+        .toBeLessThanOrEqual(dimensions.viewportWidth);
+    }
+  }
+});

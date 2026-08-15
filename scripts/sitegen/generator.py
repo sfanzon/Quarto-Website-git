@@ -6,7 +6,7 @@ import yaml
 
 from .assets import validate_local_assets
 from .core import DEFAULT_ROOT
-from .news import load_news, render_news_qmd
+from .news import load_news, render_news_component, render_news_qmd
 from .portfolio import (
     load_featured_notes,
     load_projects,
@@ -107,6 +107,10 @@ def generate_site(site_root=None):
             searchable=False,
         ),
         'includes/news-all.qmd': render_news_qmd(
+            news,
+            'No announcements yet.',
+        ),
+        'includes/news-all.html': render_news_component(
             news,
             'No announcements yet.',
         ),

@@ -17,6 +17,9 @@ const criticalPages = [
   "/about/",
   "/projects/",
   "/publications/",
+  "/teaching/",
+  "/news/",
+  "/contact/",
   "/projects/f1-time-rank-duality/index.html"
 ];
 

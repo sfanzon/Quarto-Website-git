@@ -9,7 +9,7 @@ from .bibtex import read_bibtex_entries
 PUBLICATION_WEBSITE_FIELDS = {
     'category', 'abbr', 'selected', 'preprint', 'arxiv', 'abstract', 'pdf', 'code', 'slides',
     'poster', 'video', 'explainer', 'bibtex_show', 'author+an', 'altmetric',
-    'dimensions', 'contribution', 'google_scholar_id', 'scopus', 'sjr', 'themes',
+    'dimensions', 'google_scholar_id', 'scopus', 'sjr', 'themes',
     'authors', 'periodical', 'links', 'bdsk-url-1',
 }
 
@@ -117,12 +117,6 @@ def load_publications(path):
                 f'Publication {record["id"]} preprint must be exactly true or false'
             )
         record['preprint'] = preprint_value == 'true'
-        contribution_value = record.get('contribution', 'false').strip().lower()
-        if contribution_value not in {'true', 'false'}:
-            raise ValueError(
-                f'Publication {record["id"]} contribution must be exactly true or false'
-            )
-        record['contribution'] = contribution_value == 'true'
         publication_venue(record)
         record['authors'] = publication_authors(record)
         record['periodical'] = publication_periodical(record)

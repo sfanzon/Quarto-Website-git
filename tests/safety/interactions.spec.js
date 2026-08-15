@@ -155,6 +155,12 @@ test.describe("critical interactions", () => {
       await page.evaluate(() => window.scrollTo(0, 800));
       await expect(button).toHaveClass(/is-visible/);
       await expect(button).toHaveAttribute("tabindex", "0");
+
+      await page.locator(".site-footer").scrollIntoViewIfNeeded();
+      await expect(button).toHaveAttribute("aria-hidden", "true");
+      await expect(button).toHaveAttribute("tabindex", "-1");
+      await page.evaluate(() => window.scrollTo(0, 800));
+      await expect(button).toHaveClass(/is-visible/);
       await button.focus();
       await page.keyboard.press('Enter');
       await expect.poll(() => page.evaluate(() => window.scrollY)).toBeLessThan(10);
@@ -167,5 +173,26 @@ test.describe("critical interactions", () => {
     const item = page.locator("details.news-item").first();
     await item.locator("summary").click();
     await expect(item).toHaveAttribute("open", "");
+  });
+
+  test("Teaching About disclosures and News archive search work", async ({ page }) => {
+    await page.goto("/teaching/#lecturer");
+    await expect(page.locator("#lecturer > h2")).toBeInViewport();
+    await expect(page.locator("#tutor > h2")).toHaveText("Teaching assistant");
+    const about = page.locator(".teaching-course .abstract-toggle").first();
+    await about.click();
+    await expect(about).toHaveAttribute("aria-expanded", "true");
+    await expect(page.locator(".teaching-course .abstract").first()).toBeVisible();
+
+    await page.goto("/news/");
+    const items = page.locator("[data-news-item]");
+    const total = await items.count();
+    expect(total).toBeGreaterThan(1);
+    await page.locator("[data-news-search]").fill("curling");
+    const visible = items.filter({ visible: true });
+    await expect(visible.first()).toBeVisible();
+    expect(await visible.count()).toBeLessThan(total);
+    await visible.first().locator("summary").click();
+    await expect(visible.first()).toHaveAttribute("open", "");
   });
 });

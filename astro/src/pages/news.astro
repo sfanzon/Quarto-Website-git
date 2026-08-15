@@ -1,0 +1,62 @@
+---
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import '../styles/news.css';
+
+const source = [
+	resolve(process.cwd(), '../includes/news-all.html'),
+	resolve(process.cwd(), 'includes/news-all.html'),
+].find(existsSync);
+
+if (!source) throw new Error('Unable to locate generated includes/news-all.html');
+const newsArchive = readFileSync(source, 'utf8');
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title="News | Silvio Fanzon" description="News and past announcements" />
+	</head>
+	<body class="standard-page news-page">
+		<Header />
+		<main class="content">
+			<header class="page-hero compact-page-hero">
+				<h1>News</h1>
+				<p>The complete archive, with the newest announcements first.</p>
+			</header>
+			<section class="news-archive" aria-label="News archive" set:html={newsArchive} />
+		</main>
+		<Footer />
+		<script>
+			const initialiseNewsSearch = () => {
+				document.querySelectorAll<HTMLElement>('[data-news-component]').forEach((component) => {
+					const input = component.querySelector<HTMLInputElement>('[data-news-search]');
+					const items = [...component.querySelectorAll<HTMLElement>('[data-news-item]')];
+					const empty = component.querySelector<HTMLElement>('.news-search-empty');
+					if (!input) return;
+					const filterNews = () => {
+						const query = input.value.trim().toLowerCase();
+						let matches = 0;
+						items.forEach((item) => {
+							const visible = !query || (item.textContent?.toLowerCase().includes(query) ?? false);
+							item.hidden = !visible;
+							if (visible) matches += 1;
+						});
+						if (empty) empty.hidden = matches !== 0;
+					};
+					input.addEventListener('input', filterNews);
+					filterNews();
+				});
+			};
+
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', initialiseNewsSearch, { once: true });
+			} else {
+				initialiseNewsSearch();
+			}
+		</script>
+	</body>
+</html>

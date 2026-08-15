@@ -7,6 +7,9 @@ const isExpertise = currentPath === '/expertise';
 const isProjects = currentPath === '/projects' || currentPath.startsWith('/projects/');
 const isPublications = currentPath === '/publications';
 const isResearch = currentPath === '/research';
+const isTeaching = currentPath === '/teaching';
+const isNews = currentPath === '/news';
+const isContact = currentPath === '/contact';
 const isDev = currentPath === '/dev' || currentPath.startsWith('/dev/');
 const includeDevTools = import.meta.env.DEV || process.env.SF_INCLUDE_DEV_TOOLS === '1';
 
@@ -16,20 +19,20 @@ const primaryLinks = [
 	{ label: 'Expertise', href: '/expertise/', active: isExpertise },
 	{ label: 'CV', href: 'https://www.silviofanzon.com/Silvio_Fanzon_Academic_CV.pdf' },
 	{ label: 'Publications', href: '/publications/', active: isPublications },
-	{ label: 'Teaching', href: 'https://www.silviofanzon.com/teaching.html' },
-	{ label: 'News', href: 'https://www.silviofanzon.com/news.html' },
+	{ label: 'Teaching', href: '/teaching/', active: isTeaching },
+	{ label: 'News', href: '/news/', active: isNews },
 ];
 
 const dropdowns = [
 	{
 		label: 'More',
-		active: isResearch,
+		active: isResearch || isContact,
 		links: [
 			{ label: 'Notes', href: 'https://www.silviofanzon.com/notes.html' },
 			{ label: 'Research', href: '/research/', active: isResearch },
 			{ label: 'Presentations', href: 'https://www.silviofanzon.com/presentations.html' },
 			{ label: 'Supervision', href: 'https://www.silviofanzon.com/supervision.html' },
-			{ label: 'Contact', href: 'https://www.silviofanzon.com/contact.html' },
+			{ label: 'Contact', href: '/contact/', active: isContact },
 		],
 	},
 	...(includeDevTools ? [{

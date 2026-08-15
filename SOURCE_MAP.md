@@ -36,6 +36,13 @@ individual project page. Do not infer a source move from a matching public URL.
 | `astro/src/pages/publications.astro` | Production owner for `/publications/` and its page hierarchy |
 | `astro/src/components/PublicationArchive.astro` | Consumes the generated publication archive and owns Astro abstract, BibTeX, copy and math behaviour |
 | `astro/src/styles/publications.css` | Production `/publications/` archive styling |
+| `astro/src/styles/section-jump.css` | Shared Astro in-page section navigation used by Publications and Teaching |
+| `astro/src/pages/teaching.astro` | Production owner for `/teaching/`; consumes `includes/teaching-list.html` and owns its About disclosure behaviour |
+| `astro/src/styles/teaching.css` | Production `/teaching/` page styling |
+| `astro/src/pages/news.astro` | Production owner for `/news/`; consumes `includes/news-all.html` and owns archive search behaviour |
+| `astro/src/styles/news.css` | Production `/news/` archive styling |
+| `astro/src/pages/contact.astro` | Production owner and direct content source for `/contact/` |
+| `astro/src/styles/contact.css` | Production `/contact/` page styling |
 | `astro/scripts/build-site.mjs` (`compatibilityAliases`) | Emits noindex copies of canonical Astro pages at the former `.html` URLs for static-host compatibility |
 
 Quarto's `projects/f1-time-rank-duality/index.qmd` is the sole owner of the
@@ -58,19 +65,16 @@ F1 overview URL; no Astro detail route exists.
 |---|---|
 | `index.qmd` | Homepage — professional positioning + selected evidence |
 | `projects.qmd` | Project listing page |
-| `teaching.qmd` | Teaching activity |
-| `news.qmd` | News archive page |
 | `notes.qmd` | Notes archive page |
-| `contact.qmd` | Contact information |
 | `cv.qmd` | Curriculum vitae |
 | `presentations.qmd` | Presentations |
 | `supervision.qmd` | Student supervision |
 | `404.qmd` | Custom 404 page |
 
 Until an ordinary page is deliberately migrated, its root `.qmd` remains its
-canonical source. About, Expertise, Research and Publications have moved to
-the Astro owners listed above, and their obsolete root `.qmd` implementations
-have been removed.
+canonical source. About, Expertise, Research, Publications, Teaching, News and
+Contact have moved to the Astro owners listed above, and their obsolete root
+`.qmd` implementations have been removed.
 Remaining top-level `.qmd` files intentionally stay at repository root because
 Quarto mirrors source paths into output URLs. Moving them under `pages/` would
 change canonical public URLs. Do not reopen this decision.
@@ -122,6 +126,7 @@ detail route.
 | `includes/home-projects.html` | `data/projects.yml` (featured) | `portfolio.load_projects()` → `portfolio.render_featured_projects()` |
 | `includes/home-publications-list.html` | `data/publications.bib` (selected) | `publications.load_publications()` → `publication_rendering.render_selected_publications()` |
 | `includes/news-all.qmd` | `news/*.md` (all) | `news.load_news()` → `news.render_news_qmd()` |
+| `includes/news-all.html` | `news/*.md` (all; consumed by `news.astro`) | `news.load_news()` → `news.render_news_component()` |
 | `includes/projects-portfolio.html` | `data/projects.yml` (all) | `portfolio.load_projects()` → `portfolio.render_projects_portfolio()` |
 | `includes/publications-all.html` | `data/publications.bib` (all, grouped; consumed by `PublicationArchive.astro`) | `publications.load_publications()` → `publication_rendering.render_publication_archive()` |
 | `includes/presentations.html` | `data/presentations_*.bib` | `presentations.load_presentations()` → `presentations.render_presentations_archive()` |
@@ -178,9 +183,7 @@ behaviour listed above.
 | `styles/components/_disclosures.scss` | Shared abstract/BibTeX visibility, panels and inline controls |
 | `styles/components/_notes.scss` | Homepage note rows, Notes archive and long-form note pages |
 | `styles/components/_project-cards.scss` | Shared homepage and Projects archive cards, including labels and archived state |
-| `styles/components/_teaching.scss` | Teaching introduction, role/year hierarchy, course lists and material actions |
-| `styles/components/_contact.scss` | Contact details, email and professional-profile directory |
-| `styles/components/_news.scss` | Homepage News preview, News archive, search and responsive disclosure rows |
+| `styles/components/_news.scss` | Legacy Quarto homepage/News presentation retained during transition; not the production News route owner |
 | `styles/components/_search-popup.scss` | Legacy Quarto search overlay for unmigrated Quarto pages; not the production hybrid site-search owner |
 | `styles/components/_expertise.scss` | Homepage Expertise preview and full Expertise page; later sections intentionally refine shared preview rules |
 | `styles/components/_about.scss` | Homepage background/approach previews and full About page |
@@ -243,9 +246,9 @@ already exists.
 | Expandable abstracts and BibTeX panels | `styles/components/_disclosures.scss` | Canonical |
 | Legacy Quarto homepage publication selection and archive presentation | `styles/components/_publications.scss` (shared archive/disclosure primitives live in their dedicated components) | Canonical only for legacy Quarto rendering |
 | Production Publications page | `astro/src/pages/publications.astro` + `astro/src/components/PublicationArchive.astro` + `astro/src/styles/publications.css` | Canonical; records and markup originate from `data/publications.bib` through `includes/publications-all.html` |
-| Teaching | `styles/components/_teaching.scss` | Canonical |
-| Contact | `styles/components/_contact.scss` | Canonical |
-| News | `styles/components/_news.scss` | Canonical |
+| Production Teaching page | `astro/src/pages/teaching.astro` + `astro/src/styles/teaching.css` | Canonical; records and markup temporarily originate from `data/teaching.yml` through `includes/teaching-list.html` pending a future data-architecture review |
+| Production Contact page | `astro/src/pages/contact.astro` + `astro/src/styles/contact.css` | Canonical |
+| Production News archive | `astro/src/pages/news.astro` + `astro/src/styles/news.css` | Canonical; records and markup temporarily originate from `news/*.md` through `includes/news-all.html` pending a future data-architecture review |
 
 ## Lua filters
 

@@ -5,8 +5,16 @@ from sitegen.news import load_news, news_inline_html, news_summary
 class NewsTests(GeneratorTestCase):
     def test_helpers_validate_dates_and_convert_links(self):
         self.assertIn(
-            "/publications.html#item",
+            "/publications/#item",
             news_inline_html('<a href="/publications/#item">Read</a>'),
+        )
+        self.assertIn(
+            "/teaching/#course",
+            news_inline_html('<a href="/teaching.html#course">Read</a>'),
+        )
+        self.assertIn(
+            "https://www.silviofanzon.com/presentations.html#talk",
+            news_inline_html('<a href="/presentations.html#talk">Read</a>'),
         )
         self.assertTrue(news_summary("A short sentence.").endswith("."))
 

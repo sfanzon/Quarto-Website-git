@@ -9,6 +9,7 @@ const repoRoot = resolve(astroRoot, '..');
 const projectsRoot = join(repoRoot, 'projects');
 const sharedImagesRoot = join(repoRoot, 'assets', 'img');
 const sharedPdfRoot = join(repoRoot, 'assets', 'pdf');
+const academicCv = join(repoRoot, 'Silvio_Fanzon_Academic_CV.pdf');
 const quartoKitchenSink = join(repoRoot, 'dev', 'quarto-kitchen-sink.qmd');
 const distRoot = join(astroRoot, 'dist');
 const stageRoot = mkdtempSync(join(tmpdir(), 'astro-quarto-projects-'));
@@ -31,6 +32,9 @@ const compatibilityAliases = new Map([
 	['expertise.html', 'expertise/index.html'],
 	['publications.html', 'publications/index.html'],
 	['research.html', 'research/index.html'],
+	['teaching.html', 'teaching/index.html'],
+	['news.html', 'news/index.html'],
+	['contact.html', 'contact/index.html'],
 ]);
 
 function findProjectSources(directory) {
@@ -173,6 +177,7 @@ try {
 	}
 	cpSync(sharedImagesRoot, join(distRoot, 'assets', 'img'), { recursive: true });
 	cpSync(sharedPdfRoot, join(distRoot, 'assets', 'pdf'), { recursive: true });
+	cpSync(academicCv, join(distRoot, 'Silvio_Fanzon_Academic_CV.pdf'));
 	for (const output of donorOutput) rmSync(output, { recursive: true, force: true });
 	writeSitemap();
 	execFileSync('npm', ['run', 'postbuild'], { cwd: astroRoot, stdio: 'inherit' });

@@ -9,17 +9,17 @@ from .core import DEFAULT_ROOT, read_front_matter
 
 def news_inline_html(text):
     rendered = re.sub(r'(?<!\*)\*([^*\n]+)\*(?!\*)', r'<em>\1</em>', text)
-    routes = {
-        'publications': 'publications.html',
-        'teaching': 'teaching.html',
-        'presentations': 'presentations.html',
-    }
-    for old, new in routes.items():
+    for route in ('publications', 'teaching', 'research', 'about', 'expertise', 'projects'):
         rendered = re.sub(
-            rf'href=(["\'])/{old}/?#',
-            rf'href=\1/{new}#',
+            rf'href=(["\'])/{route}(?:\.html|/)?(?=#|\1)',
+            rf'href=\1/{route}/',
             rendered,
         )
+    rendered = re.sub(
+        r'href=(["\'])/presentations\.html',
+        r'href=\1https://www.silviofanzon.com/presentations.html',
+        rendered,
+    )
     return rendered
 
 
