@@ -288,6 +288,13 @@ test.describe("critical interactions", () => {
       await expect(page.locator("pre").first()).toBeVisible();
       await expect(page.getByRole("button", { name: "Back to top", includeHidden: true })).toBeAttached();
     }
+    await page.goto("/notes/how-i-use-ai.html");
+    const notesLink = page.locator('[data-nav-section="notes"]');
+    await expect(notesLink).toHaveClass(/active/);
+    await expect(notesLink).toHaveAttribute("aria-current", "page");
+    const more = notesLink.locator("xpath=ancestor::details[1]").locator("summary");
+    await expect(more).toHaveClass(/active/);
+    await expect(more).toHaveAttribute("aria-current", "page");
   });
 
   test("migrated record archives preserve sections and disclosures", async ({ page }) => {

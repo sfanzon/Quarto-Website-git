@@ -32,7 +32,7 @@ const dropdowns = [
 		label: 'More',
 		active: isNotes || isResearch || isPresentations || isSupervision || isContact,
 		links: [
-			{ label: 'Notes', href: '/notes/', active: isNotes },
+			{ label: 'Notes', href: '/notes/', active: isNotes, section: 'notes' },
 			{ label: 'Research', href: '/research/', active: isResearch },
 			{ label: 'Presentations', href: '/presentations/', active: isPresentations },
 			{ label: 'Supervision', href: '/supervision/', active: isSupervision },
@@ -78,6 +78,7 @@ const dropdowns = [
 						{dropdown.links.map((link) => (
 							<a
 								href={link.href}
+								data-nav-section={link.section}
 								class:list={{ active: link.active }}
 								aria-current={link.active ? 'page' : undefined}
 							>
@@ -107,6 +108,8 @@ const dropdowns = [
 		const menuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
 		const navLinks = document.querySelector<HTMLElement>('#navbar-links');
 		const projectsLink = navLinks?.querySelector<HTMLAnchorElement>('[data-nav-section="projects"]');
+		const notesLink = navLinks?.querySelector<HTMLAnchorElement>('[data-nav-section="notes"]');
+		const moreSummary = notesLink?.closest<HTMLDetailsElement>('[data-navbar-dropdown]')?.querySelector<HTMLElement>('summary');
 		const quartoToggle = () => (window as Window & { quartoToggleColorScheme?: () => void }).quartoToggleColorScheme;
 
 		const setThemeLabel = () => {
@@ -205,9 +208,18 @@ const dropdowns = [
 		const toggle = quartoToggle();
 		const path = window.location.pathname.replace(/\/+$/, '') || '/';
 		const projectsActive = path === '/projects' || path.startsWith('/projects/');
+		const notesActive = path === '/notes' || path.startsWith('/notes/');
 		projectsLink?.classList.toggle('active', projectsActive);
 		if (projectsActive) projectsLink?.setAttribute('aria-current', 'page');
 		else projectsLink?.removeAttribute('aria-current');
+		notesLink?.classList.toggle('active', notesActive);
+		if (notesActive) {
+			notesLink?.setAttribute('aria-current', 'page');
+			moreSummary?.classList.add('active');
+			moreSummary?.setAttribute('aria-current', 'page');
+		} else {
+			notesLink?.removeAttribute('aria-current');
+		}
 		if (toggle) {
 			const requested = localStorage.getItem('theme');
 			const currentDark = document.body.classList.contains('quarto-dark');
