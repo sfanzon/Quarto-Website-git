@@ -9,6 +9,7 @@ const watchPaths = [
 	joinAstro('src'),
 	joinAstro('public'),
 	joinRepo('projects'),
+	joinRepo('notes'),
 	joinRepo('dev'),
 	joinRepo('data/projects.yml'),
 	joinRepo('data/citations'),

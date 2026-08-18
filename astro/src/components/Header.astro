@@ -12,6 +12,7 @@ const isNews = currentPath === '/news';
 const isContact = currentPath === '/contact';
 const isPresentations = currentPath === '/presentations';
 const isSupervision = currentPath === '/supervision';
+const isNotes = currentPath === '/notes' || currentPath.startsWith('/notes/');
 const isCv = currentPath === '/cv';
 const isDev = currentPath === '/dev' || currentPath.startsWith('/dev/');
 const includeDevTools = import.meta.env.DEV || process.env.SF_INCLUDE_DEV_TOOLS === '1';
@@ -29,9 +30,9 @@ const primaryLinks = [
 const dropdowns = [
 	{
 		label: 'More',
-		active: isResearch || isPresentations || isSupervision || isContact,
+		active: isNotes || isResearch || isPresentations || isSupervision || isContact,
 		links: [
-			{ label: 'Notes', href: 'https://www.silviofanzon.com/notes.html' },
+			{ label: 'Notes', href: '/notes/', active: isNotes },
 			{ label: 'Research', href: '/research/', active: isResearch },
 			{ label: 'Presentations', href: '/presentations/', active: isPresentations },
 			{ label: 'Supervision', href: '/supervision/', active: isSupervision },

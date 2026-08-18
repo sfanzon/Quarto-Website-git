@@ -4,17 +4,18 @@
 
 The production site has two rendering owners and one final static output:
 
-- Astro owns ordinary professional pages, `/projects/`, and the shared site
-  shell.
+- Astro owns ordinary professional pages, `/projects/`, `/notes/`, and the
+  shared site shell.
 - Quarto owns every document below `projects/**`, including every project
   overview, technical walkthrough and code companion.
-- `npm run build:site` from `astro/` builds Astro, renders Quarto projects to
-  an isolated temporary directory, then deterministically merges them into
-  `astro/dist/`. Neither renderer writes into the other's output directory.
+- `npm run build:site` from `astro/` builds Astro, renders Quarto project and
+  note documents to an isolated temporary directory, then deterministically
+  merges them into `astro/dist/`. Neither renderer writes into the other's
+  output directory.
 
 Astro emits explicit build-only header/footer fragments plus `/site-shell/site.css`.
 The merge reads the fragments, removes them from the final output, and injects
-their content into rendered Quarto project documents. The stylesheet remains a
+their content into rendered Quarto documents. The stylesheet remains a
 served asset because those documents require it. This keeps helper fragments
 out of public routes, the sitemap and Pagefind while avoiding extraction from a
 rendered Astro page. The merge structurally removes the Quarto global
@@ -24,18 +25,18 @@ project navigation or project assets.
 `docs/` remains legacy Quarto-generated output and is never a source or merge
 target. It stays untouched until deployment is switched to `astro/dist/`.
 
-Astro now owns the homepage, Projects catalogue, About, Expertise, Research,
-Publications, Teaching, News, Contact, Presentations, Supervision, CV and 404.
-Their obsolete root `.qmd` implementations have been removed. Quarto remains
-the sole owner of every `projects/**` document and of the Notes index/articles;
-`/projects/f1-time-rank-duality/` therefore still comes from its `index.qmd`.
+Astro now owns the homepage, Projects catalogue, Notes index, About, Expertise,
+Research, Publications, Teaching, News, Contact, Presentations, Supervision,
+CV and 404. Their obsolete root `.qmd` implementations have been removed.
+Quarto remains the sole owner of every `projects/**` document and every
+`notes/*.qmd` article; `/projects/f1-time-rank-duality/` therefore still comes
+from its `index.qmd`, while note article URLs retain their `.html` suffix.
 
 The migrated `/projects/` catalogue reads `data/projects.yml` directly. Its
 Astro page and styles are canonical for that route. Likewise, Astro's Header,
 Footer and `shell.css` are the production global-shell owners. `global.css`
 imports that shell stylesheet for Astro pages and owns only ordinary Astro page
-styling. Quarto fallback navbar/footer styles remain for standalone Notes
-rendering;
+styling. Obsolete Quarto fallback navbar/footer styles have been removed;
 `styles/project/**` remains canonical for Quarto project-document presentation.
 
 The Astro production build runs `scripts/build-content.py` before Astro so
@@ -50,7 +51,7 @@ in:
 - `data/projects.yml` for project cards, metadata and navigation;
 - `data/teaching.yml` for teaching, with one record per course and a role;
 - `news/*.md` for dated news entries.
-- `notes/*.qmd` for long-form technical notes.
+- `notes/*.qmd` for long-form technical notes rendered and merged by Quarto.
 - `data/citations/numeric.csl` for shared project citation formatting.
 
 News URL policy: the dated Markdown files are source data for the homepage and
@@ -100,18 +101,18 @@ cd astro
 npm run build:site
 ```
 
-It generates structured content, builds Astro, renders only `projects/**/*.qmd`
-to a temporary staging directory, replaces Quarto's global shell with Astro's explicit shell
-artifacts, copies each rendered project page and referenced assets into
-`astro/dist/`, writes the sitemap from the completed public HTML tree, then
-indexes the completed result. The generated pipelines are now limited to those
+It generates structured content, builds Astro, renders `projects/**/*.qmd` and
+`notes/*.qmd` to a temporary staging directory, replaces Quarto's global shell
+with Astro's explicit shell artifacts, copies each rendered document and its
+referenced assets into `astro/dist/`, writes the sitemap from the completed
+public HTML tree, then indexes the completed result. The generated pipelines are now limited to those
 five ordinary data-backed areas plus the project metadata JSON used by the
 Quarto filter. `npm run build:hybrid` remains a compatibility
 alias while the POC branch is active.
 
 For local hybrid development, `npm run dev:hybrid` performs the same QA merge
 once, serves `astro/dist/`, and watches the Astro sources plus the canonical
-Quarto-project inputs. It rebuilds after a change without an explicit build
+Quarto project and note inputs. It rebuilds after a change without an explicit build
 command; reload the browser after the terminal reports the completed rebuild.
 `npm run dev` remains the faster Astro-only server for ordinary Astro routes.
 

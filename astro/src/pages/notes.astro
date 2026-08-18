@@ -1,0 +1,104 @@
+---
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { basename, resolve } from 'node:path';
+import yaml from 'js-yaml';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import '../styles/notes.css';
+
+type NoteFrontmatter = {
+	title?: unknown;
+	date?: unknown;
+	description?: unknown;
+	subtitle?: unknown;
+	image?: unknown;
+	'image-alt'?: unknown;
+	categories?: unknown;
+};
+
+const notesRoot = [resolve(process.cwd(), '../notes'), resolve(process.cwd(), 'notes')].find(existsSync);
+if (!notesRoot) throw new Error('Unable to locate canonical notes directory');
+
+const notes = readdirSync(notesRoot)
+	.filter((name) => name.endsWith('.qmd'))
+	.map((name) => {
+		const source = readFileSync(resolve(notesRoot, name), 'utf8');
+		const frontmatter = source.match(/^---\s*\n([\s\S]*?)\n---\s*(?:\n|$)/);
+		if (!frontmatter) throw new Error(`Missing YAML front matter in notes/${name}`);
+		const data = yaml.load(frontmatter[1]) as NoteFrontmatter;
+		if (typeof data.title !== 'string' || !(data.date instanceof Date || typeof data.date === 'string')) {
+			throw new Error(`notes/${name} requires title and date`);
+		}
+		const date = data.date instanceof Date ? data.date : new Date(`${data.date}T00:00:00Z`);
+		if (Number.isNaN(date.valueOf())) throw new Error(`Invalid date in notes/${name}`);
+		const categories = Array.isArray(data.categories)
+			? data.categories.filter((category): category is string => typeof category === 'string')
+			: [];
+		const image = typeof data.image === 'string' ? data.image.replace(/^\.\.\/assets\//, '/assets/') : undefined;
+		return {
+			title: data.title,
+			date,
+			description: typeof data.description === 'string'
+				? data.description
+				: typeof data.subtitle === 'string' ? data.subtitle : undefined,
+			image,
+			imageAlt: typeof data['image-alt'] === 'string' ? data['image-alt'] : '',
+			categories,
+			href: `/notes/${basename(name, '.qmd')}.html`,
+		};
+	})
+	.sort((left, right) => right.date.valueOf() - left.date.valueOf());
+
+const formatDate = (date: Date) => new Intl.DateTimeFormat('en-GB', {
+	day: 'numeric',
+	month: 'long',
+	year: 'numeric',
+	timeZone: 'UTC',
+}).format(date);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="Notes | Silvio Fanzon"
+			description="Practical notes on mathematical modelling, scientific computing, AI-assisted work and technical communication"
+		/>
+	</head>
+	<body class="standard-page notes-index-page">
+		<Header />
+		<main class="content">
+			<header class="page-hero compact-page-hero notes-hero">
+				<p class="eyebrow">Notes</p>
+				<h1>Working notes on models, software and technical practice</h1>
+				<p>Longer, practical writing about the tools and methods I use to formulate problems, build reliable computational work and communicate technical ideas.</p>
+			</header>
+			<div class="notes-index-intro">
+				<p>These are maintained field notes rather than news updates. Each article separates durable methods from tool-specific details that may change over time.</p>
+			</div>
+			<section class="notes-list" aria-label="Notes">
+				{notes.map((note) => (
+					<article class:list={{ 'note-row': true, 'note-row--text-only': !note.image }}>
+						{note.image && (
+							<a class="note-image" href={note.href} aria-label={`Read ${note.title}`}>
+								<img src={note.image} alt={note.imageAlt} loading="lazy" />
+							</a>
+						)}
+						<div class="note-copy">
+							<time datetime={note.date.toISOString().slice(0, 10)}>{formatDate(note.date)}</time>
+							<h2><a href={note.href}>{note.title}</a></h2>
+							{note.description && <p>{note.description}</p>}
+							{note.categories.length > 0 && (
+								<ul class="note-categories" aria-label="Categories">
+									{note.categories.map((category) => <li>{category}</li>)}
+								</ul>
+							)}
+						</div>
+					</article>
+				))}
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

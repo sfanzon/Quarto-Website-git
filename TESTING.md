@@ -150,7 +150,7 @@ npm run dev:hybrid
 ```
 
 It serves the QA merge from `astro/dist/`, including `/dev/`, and watches the
-Astro sources and canonical Quarto project inputs. Reload after its completed
+Astro sources and canonical Quarto project/note inputs. Reload after its completed
 rebuild message; use `npm run dev` when only Astro routes are needed.
 
 ## Test infrastructure files
@@ -177,15 +177,14 @@ same checkout produce identical generated includes and
 `data/projects.generated.json`.
 
 Quarto rendering is byte-stable when repeated in the same checkout. Two fresh
-checkouts of the same revision differ in only two generated outputs:
+legacy `docs/` renders of the same revision differ in this generated output:
 
 | Output | Source of difference | Owner |
 |---|---|---|
 | `docs/sitemap.xml` | Quarto writes render-time `lastmod` values for every page | Quarto website sitemap |
-| `docs/notes.html` | Quarto's native document listing embeds source filesystem modification times in hidden sort metadata | `notes.qmd` native listing |
 
-These differences do not change reader-visible content, routes, assets or
-behaviour. They are known Quarto-generated deployment churn, not source drift.
+This difference does not change reader-visible content, routes, assets or
+behaviour. It is known Quarto-generated deployment churn, not source drift.
 Do not hand-edit either output. Any future change to remove this churn must be
 a separately reviewed architectural decision, because it would replace or
 post-process Quarto-native sitemap or listing behaviour.

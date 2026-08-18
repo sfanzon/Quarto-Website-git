@@ -56,7 +56,8 @@ Do not create a large plan for a small, local change.
 | Supervision | `data/supervision_*.bib` |
 | Teaching | `data/teaching.yml` |
 | News | `news/*.md` |
-| Notes | `notes.qmd`, `notes/*.qmd` |
+| Notes index | `astro/src/pages/notes.astro` |
+| Note articles | `notes/*.qmd` |
 | Project renderer | `filters/project-components.lua` |
 | Global styles | `styles/main.scss`, `styles/main/` |
 | Project styles | `styles/project.scss`, `styles/project/` (standalone, outside the `styles/main.scss` SCSS import chain) |

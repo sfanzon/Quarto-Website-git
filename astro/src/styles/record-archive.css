@@ -15,11 +15,6 @@
 .record-archive .conference_venue,
 .record-archive .periodical { color: var(--global-text-color-light); font-size: .88rem; line-height: 1.48; }
 .record-archive .archive-actions { display: flex; flex-wrap: wrap; gap: .35rem .85rem; margin-top: .65rem; }
-.record-archive .abstract[hidden] { display: none; }
-.record-archive .abstract.open { max-width: var(--site-prose-width); margin-top: .85rem; padding: .85rem 0 0; border-top: 1px dashed var(--global-divider-color); color: var(--global-text-color-light); font-size: .86rem; line-height: 1.62; }
-.record-archive .abstract.open > :first-child { margin-top: 0; }
-.record-archive .abstract.open > :last-child { margin-bottom: 0; }
-
 @media (max-width: 575.98px) {
 	.record-archive .publication-entry { grid-template-columns: 1fr; gap: .45rem; }
 	.record-archive .archive-year { margin-top: 1.6rem; }

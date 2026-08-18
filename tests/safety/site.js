@@ -23,6 +23,8 @@ const criticalPages = [
   "/presentations/",
   "/supervision/",
   "/cv/",
+  "/notes/",
+  "/notes/how-i-use-ai.html",
   "/projects/f1-time-rank-duality/index.html"
 ];
 

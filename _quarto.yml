@@ -39,7 +39,7 @@ website:
     - text: More
       menu:
       - text: Notes
-        href: notes.qmd
+        href: /notes/
       - text: Research
         href: /research/
       - text: Presentations

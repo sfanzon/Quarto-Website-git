@@ -5,23 +5,39 @@
 		document.querySelectorAll<HTMLElement>('[data-disclosure-archive]').forEach((archive) => {
 			if (archive.dataset.initialised === 'true') return;
 			archive.dataset.initialised = 'true';
-			archive.querySelectorAll<HTMLButtonElement>('.abstract-toggle').forEach((button) => {
+
+			const closePanels = (entry: HTMLElement) => {
+				entry.querySelectorAll<HTMLElement>('.abstract, .bibtex').forEach((panel) => {
+					panel.classList.remove('open');
+					panel.hidden = true;
+				});
+				entry.querySelectorAll<HTMLButtonElement>('.abstract-toggle, .bibtex-toggle').forEach((button) => {
+					button.setAttribute('aria-expanded', 'false');
+				});
+			};
+
+			archive.querySelectorAll<HTMLButtonElement>('.abstract-toggle, .bibtex-toggle').forEach((button) => {
 				const entry = button.closest<HTMLElement>('.publication-entry');
-				const panel = entry?.querySelector<HTMLElement>('.abstract');
+				const selector = button.classList.contains('bibtex-toggle') ? '.bibtex' : '.abstract';
+				const panel = entry?.querySelector<HTMLElement>(selector);
 				if (!entry || !panel) return;
-				panel.id ||= `${entry.id}-abstract`;
+				panel.id ||= `${entry.id}-${selector.slice(1)}`;
 				panel.classList.remove('hidden');
 				panel.hidden = true;
 				button.setAttribute('aria-controls', panel.id);
 				button.setAttribute('aria-expanded', 'false');
 				button.addEventListener('click', () => {
-					const opening = panel.hidden;
-					panel.hidden = !opening;
-					panel.classList.toggle('open', opening);
-					button.setAttribute('aria-expanded', String(opening));
-					if (opening && panel.dataset.mathRendered !== 'true') {
+					const opening = !panel.classList.contains('open');
+					closePanels(entry);
+					if (!opening) return;
+					panel.hidden = false;
+					panel.classList.add('open');
+					button.setAttribute('aria-expanded', 'true');
+					if (selector === '.abstract' && panel.dataset.mathRendered !== 'true') {
 						renderMathInElement(panel, {
 							delimiters: [
+								{ left: '$$', right: '$$', display: true },
+								{ left: '$', right: '$', display: false },
 								{ left: '\\(', right: '\\)', display: false },
 								{ left: '\\[', right: '\\]', display: true },
 							],

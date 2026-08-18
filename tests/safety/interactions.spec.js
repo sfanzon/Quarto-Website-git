@@ -95,6 +95,9 @@ test.describe("critical interactions", () => {
 
     const results = page.locator(".site-search-result-list");
     await expect(results).toContainText(/Projects/i);
+
+		await input.fill("Portable Rule System");
+		await expect(results).toContainText("A Portable Rule System for Working with AI");
   });
 
   test("publication details and citation copy work", async ({
@@ -115,7 +118,18 @@ test.describe("critical interactions", () => {
     await bibtexToggle.click();
     await expect(abstractToggle).toHaveAttribute("aria-expanded", "false");
     await expect(first.locator(".abstract")).toBeHidden();
+    await expect(bibtexToggle).toHaveAttribute("aria-expanded", "true");
     await expect(first.locator(".bibtex")).toBeVisible();
+
+    await bibtexToggle.click();
+    await expect(bibtexToggle).toHaveAttribute("aria-expanded", "false");
+    await expect(first.locator(".bibtex")).toBeHidden();
+
+    await abstractToggle.click();
+    await expect(abstractToggle).toHaveAttribute("aria-expanded", "true");
+    await expect(first.locator(".abstract")).toBeVisible();
+
+    await bibtexToggle.click();
 
     const copy = first.locator(".copy-citation");
     await copy.click();
@@ -211,7 +225,16 @@ test.describe("critical interactions", () => {
     });
     await about.click();
     await expect(about).toHaveAttribute("aria-expanded", "true");
-    await expect(page.locator(".teaching-course .abstract").first()).toBeVisible();
+    await expect(about).toHaveAttribute("aria-controls", /.+-abstract$/);
+    const teachingPanel = page.locator(".teaching-course .abstract").first();
+    await expect(teachingPanel).toBeVisible();
+    const teachingPanelStyle = await teachingPanel.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return [style.marginTop, style.padding, style.borderTopWidth, style.borderBottomWidth, style.backgroundColor, style.color, style.fontSize, style.lineHeight];
+    });
+    await about.click();
+    await expect(about).toHaveAttribute("aria-expanded", "false");
+    await expect(teachingPanel).toBeHidden();
     await page.goto("/publications/");
     const publicationAbstract = page.locator(".publication-entry .abstract-toggle").first();
     const publicationStyle = await publicationAbstract.evaluate((element) => {
@@ -219,6 +242,13 @@ test.describe("critical interactions", () => {
       return [style.color, style.fontSize, style.fontWeight, style.backgroundColor, style.borderWidth, style.padding];
     });
     expect(teachingStyle).toEqual(publicationStyle);
+    await publicationAbstract.click();
+    const publicationPanel = page.locator(".publication-entry .abstract").first();
+    const publicationPanelStyle = await publicationPanel.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return [style.marginTop, style.padding, style.borderTopWidth, style.borderBottomWidth, style.backgroundColor, style.color, style.fontSize, style.lineHeight];
+    });
+    expect(teachingPanelStyle).toEqual(publicationPanelStyle);
 
     await page.goto("/news/");
     const items = page.locator("[data-news-item]");
@@ -230,6 +260,34 @@ test.describe("critical interactions", () => {
     expect(await visible.count()).toBeLessThan(total);
     await visible.first().locator("summary").click();
     await expect(visible.first()).toHaveAttribute("open", "");
+  });
+
+  test("Notes index and merged Quarto articles preserve their contracts", async ({ page }) => {
+    await page.goto("/notes/");
+    await expect(page.locator(".notes-list .note-row")).toHaveCount(4);
+    await expect(page.locator(".note-row h2").first()).toHaveText("A Portable Rule System for Working with AI");
+    await expect(page.locator(".note-row").first().locator(".note-categories")).toHaveCount(0);
+    await expect(page.locator(".note-row").first()).toContainText("How I moved from long, messy chats to concise, version-controlled instructions");
+    const hrefs = await page.locator(".note-row h2 a").evaluateAll((links) => links.map((link) => link.getAttribute("href")));
+    expect(hrefs).toEqual(expect.arrayContaining([
+      "/notes/ai-agents-practical-stack-2026-qwen9-128k-copilot-opencode-no-gemini-free.html",
+      "/notes/ai-real-project-lessons.html",
+      "/notes/how-i-use-ai.html",
+      "/notes/portable-ai-rules-workflow.html"
+    ]));
+    expect(hrefs.every((href) => href?.endsWith(".html"))).toBe(true);
+    await expect(page.locator(".note-row img")).toHaveCount(4);
+    await expect(page.locator(".note-row time")).toHaveCount(4);
+
+    for (const path of ["/notes/how-i-use-ai.html", "/notes/portable-ai-rules-workflow.html"]) {
+      await page.goto(path);
+      await expect(page.locator(".site-header")).toHaveCount(1);
+      await expect(page.locator(".site-footer")).toHaveCount(1);
+      await expect(page.locator("#quarto-header")).toHaveCount(0);
+      await expect(page.locator("main h1")).toBeVisible();
+      await expect(page.locator("pre").first()).toBeVisible();
+      await expect(page.getByRole("button", { name: "Back to top", includeHidden: true })).toBeAttached();
+    }
   });
 
   test("migrated record archives preserve sections and disclosures", async ({ page }) => {

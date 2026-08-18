@@ -7,12 +7,13 @@ import { fileURLToPath } from 'node:url';
 const astroRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const repoRoot = resolve(astroRoot, '..');
 const projectsRoot = join(repoRoot, 'projects');
+const notesRoot = join(repoRoot, 'notes');
 const sharedImagesRoot = join(repoRoot, 'assets', 'img');
 const sharedPdfRoot = join(repoRoot, 'assets', 'pdf');
 const academicCv = join(repoRoot, 'Silvio_Fanzon_Academic_CV.pdf');
 const quartoKitchenSink = join(repoRoot, 'dev', 'quarto-kitchen-sink.qmd');
 const distRoot = join(astroRoot, 'dist');
-const stageRoot = mkdtempSync(join(tmpdir(), 'astro-quarto-projects-'));
+const stageRoot = mkdtempSync(join(tmpdir(), 'astro-quarto-documents-'));
 const shellRoot = join(distRoot, 'site-shell');
 const devRoot = join(distRoot, 'dev');
 const stagedDevRoot = join(stageRoot, 'dev');
@@ -38,12 +39,13 @@ const compatibilityAliases = new Map([
 	['presentations.html', 'presentations/index.html'],
 	['supervision.html', 'supervision/index.html'],
 	['cv.html', 'cv/index.html'],
+	['notes.html', 'notes/index.html'],
 ]);
 
-function findProjectSources(directory) {
+function findQuartoSources(directory) {
 	return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
 		const path = join(directory, entry.name);
-		if (entry.isDirectory()) return findProjectSources(path);
+		if (entry.isDirectory()) return findQuartoSources(path);
 		return entry.isFile() && entry.name.endsWith('.qmd') ? [path] : [];
 	});
 }
@@ -139,12 +141,12 @@ function copyAsset(reference, sourceBase, destinationBase, copied) {
 }
 
 try {
-	const sources = findProjectSources(projectsRoot);
+	const sources = [...findQuartoSources(projectsRoot), ...findQuartoSources(notesRoot)];
 	if (includeDevTools) {
 		if (!existsSync(quartoKitchenSink)) throw new Error('Missing Quarto kitchen sink source');
 		sources.push(quartoKitchenSink);
 	}
-	if (!sources.length) throw new Error('No Quarto project pages found');
+	if (!sources.length) throw new Error('No Quarto document pages found');
 
 	execFileSync('npm', ['run', 'build:astro'], {
 		cwd: astroRoot,
@@ -173,6 +175,9 @@ try {
 			copyAsset(match[1], dirname(renderedSource), dirname(renderedDestination), copied);
 		}
 	}
+	const listingsManifest = join(stageRoot, 'listings.json');
+	if (existsSync(listingsManifest)) cpSync(listingsManifest, join(distRoot, 'listings.json'));
+	else writeFileSync(join(distRoot, 'listings.json'), '[]\n');
 
 	if (existsSync(devRoot)) {
 		if (includeDevTools) cpSync(devRoot, stagedDevRoot, { recursive: true });
@@ -185,7 +190,7 @@ try {
 	writeSitemap();
 	execFileSync('npm', ['run', 'postbuild'], { cwd: astroRoot, stdio: 'inherit' });
 	if (includeDevTools) cpSync(stagedDevRoot, devRoot, { recursive: true });
-	console.log(`${includeDevTools ? 'QA' : 'Production'} site build complete: ${sources.length} Quarto project pages merged into dist/`);
+	console.log(`${includeDevTools ? 'QA' : 'Production'} site build complete: ${sources.length} Quarto document pages merged into dist/`);
 } finally {
 	rmSync(stageRoot, { recursive: true, force: true });
 }

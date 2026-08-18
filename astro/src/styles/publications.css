@@ -133,14 +133,6 @@
 	margin-top: .48rem;
 }
 
-.abstract.hidden,
-.bibtex.hidden,
-.abstract[hidden],
-.bibtex[hidden] {
-	display: none;
-}
-
-.publication-entry .abstract.open,
 .publication-entry .bibtex.open {
 	display: block;
 	width: 100%;
@@ -154,12 +146,6 @@
 	font-size: .9rem;
 	line-height: 1.65;
 }
-
-.publication-entry .abstract.open > :first-child {
-	margin-top: 0;
-}
-
-.publication-entry .abstract.open > :last-child,
 .publication-entry .bibtex.open > :last-child {
 	margin-bottom: 0;
 }

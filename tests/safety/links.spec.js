@@ -93,6 +93,27 @@ test("all generated HTML and CSS references resolve locally", async () => {
   expect([...missing].sort(), "missing local HTML/CSS targets").toEqual([]);
 });
 
+test("Notes canonical routes and compatibility alias are published correctly", async () => {
+  const sitemap = fs.readFileSync(path.join(siteRoot, "sitemap.xml"), "utf8");
+  for (const route of [
+    "/notes/",
+    "/notes/ai-agents-practical-stack-2026-qwen9-128k-copilot-opencode-no-gemini-free.html",
+    "/notes/ai-real-project-lessons.html",
+    "/notes/how-i-use-ai.html",
+    "/notes/portable-ai-rules-workflow.html"
+  ]) {
+    expect(sitemap).toContain(`https://www.silviofanzon.com${route}`);
+  }
+  expect(sitemap).not.toContain("https://www.silviofanzon.com/notes.html");
+
+  const alias = fs.readFileSync(path.join(siteRoot, "notes.html"), "utf8");
+  expect(alias).toContain('<meta name="robots" content="noindex">');
+  expect(alias).toMatch(/<body[^>]*data-pagefind-ignore="all"/);
+
+  const listings = JSON.parse(fs.readFileSync(path.join(siteRoot, "listings.json"), "utf8"));
+  expect(listings).toEqual([]);
+});
+
 test("retired component classes remain absent from the rendered site", async () => {
   const retiredClasses = [
     "publication-side-meta",

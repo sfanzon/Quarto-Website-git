@@ -105,20 +105,6 @@
 	text-underline-offset: .18em;
 }
 
-.teaching-course .abstract.hidden,
-.teaching-course .abstract[hidden] {
-	display: none;
-}
-
-.teaching-course .abstract.open {
-	margin-top: .9rem;
-	padding: .9rem 0 0;
-	border-top: 1px dashed var(--global-divider-color);
-	color: var(--global-text-color-light);
-	font-size: .84rem;
-	line-height: 1.55;
-}
-
 @media (max-width: 767.98px) {
 	.teaching-course { padding: 1rem 0 1.4rem; }
 	.teaching-course + .teaching-course { margin-top: .3rem; }

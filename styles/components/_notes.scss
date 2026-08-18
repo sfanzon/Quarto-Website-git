@@ -1,48 +1,4 @@
-/* ===========================================================================
-   NOTES
-   Canonical owner for the homepage note selection, Notes archive and
-   long-form note pages. Keep responsive rules with the component they alter.
-   ========================================================================== */
-
-/* Notes archive. */
-.notes-index-intro {
-  max-width: var(--site-reading-width);
-  margin: 0 0 clamp(2rem, 4vw, 3.5rem);
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--global-divider-color);
-}
-.notes-index-intro p {
-  max-width: var(--site-prose-width);
-  margin: 0;
-  color: var(--global-text-color-light);
-  font-size: 1rem;
-  line-height: 1.7;
-}
-body.notes-index-page .quarto-listing-container-default {
-  max-width: var(--site-reading-width);
-}
-body.notes-index-page .quarto-post {
-  padding: 1.35rem 0;
-  border-bottom-color: var(--global-divider-color);
-}
-body.notes-index-page .quarto-post .thumbnail img {
-  border: 1px solid color-mix(in srgb, var(--global-theme-color) 16%, var(--global-divider-color));
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--global-section-bg) 56%, var(--global-bg-color));
-  object-fit: contain;
-}
-body.notes-index-page .listing-title {
-  color: var(--global-text-color);
-  font-size: 1.25rem;
-  font-weight: 680;
-  letter-spacing: -.015em;
-}
-body.notes-index-page .listing-description {
-  color: var(--global-text-color-light);
-  line-height: 1.58;
-}
-
-/* Long-form note pages. */
+/* Long-form Quarto note pages. */
 body.notes-detail-page main.content {
   max-width: calc(var(--site-reading-width) + 2 * var(--site-content-gutter)) !important;
   padding-top: clamp(1.2rem, 3vw, 2.5rem) !important;
@@ -82,6 +38,24 @@ body.notes-detail-page main.content p,
 body.notes-detail-page main.content li {
   line-height: 1.72;
 }
+body.notes-detail-page main.content p a {
+  text-decoration: underline;
+  text-decoration-thickness: .08em;
+  text-underline-offset: .16em;
+}
+body.notes-detail-page nav#TOC a.active {
+  color: var(--global-theme-color) !important;
+}
+body.notes-detail-page.quarto-dark nav#TOC a.active {
+  color: var(--global-text-color) !important;
+}
+body.notes-detail-page.quarto-dark nav#TOC a:not(.active) {
+  color: var(--global-text-color-light) !important;
+}
+body.notes-detail-page.quarto-dark .mermaid-js .edgeLabel p {
+  background: var(--global-bg-color) !important;
+  color: var(--global-text-color) !important;
+}
 body.notes-detail-page main.content table {
   width: 100%;
   margin: 1.5rem auto;
@@ -108,7 +82,6 @@ body.notes-detail-page .footnotes a {
 }
 
 @media (max-width: 767.98px) {
-  body.notes-index-page .quarto-post .thumbnail { width: 105px; }
   body.notes-detail-page main.content table {
     display: block;
     overflow-x: auto;

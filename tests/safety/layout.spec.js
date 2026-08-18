@@ -121,10 +121,37 @@ test("homepage alternating sections use viewport-wide tinted backgrounds", async
   }
 });
 
+test("homepage hero keeps one static linear gradient", async ({ page }) => {
+  await page.goto("/");
+  const hero = await page.locator(".home-hero").evaluate((element) => {
+    const style = getComputedStyle(element, "::before");
+    return {
+      backgroundImage: style.backgroundImage,
+      animationName: style.animationName
+    };
+  });
+
+  expect(hero.backgroundImage.match(/linear-gradient/g)).toHaveLength(1);
+  expect(hero.backgroundImage).not.toContain("radial-gradient");
+  expect(hero.backgroundImage).not.toContain("conic-gradient");
+  expect(hero.animationName).toBe("none");
+});
+
+test("merged Notes articles fit mobile and retain their document TOC", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/notes/how-i-use-ai.html");
+  await expect(page.locator("#TOC")).toBeAttached();
+  const dimensions = await page.evaluate(() => ({
+    documentWidth: document.documentElement.scrollWidth,
+    viewportWidth: window.innerWidth
+  }));
+  expect(dimensions.documentWidth).toBeLessThanOrEqual(dimensions.viewportWidth);
+});
+
 test("migrated ordinary pages fit representative viewports", async ({ page }) => {
   for (const viewport of responsiveViewports) {
     await page.setViewportSize(viewport);
-    for (const path of ["/teaching/", "/news/", "/contact/", "/presentations/", "/supervision/", "/cv/"]) {
+    for (const path of ["/teaching/", "/news/", "/contact/", "/presentations/", "/supervision/", "/cv/", "/notes/"]) {
       await page.goto(path);
       const dimensions = await page.evaluate(() => ({
         documentWidth: document.documentElement.scrollWidth,

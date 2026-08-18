@@ -15,11 +15,11 @@ project authoring or public project URLs.
 
 | Area | Production owner |
 |---|---|
-| Main professional pages and `/projects/` catalogue | Astro |
+| Main professional pages, `/projects/` catalogue and `/notes/` index | Astro |
 | Navbar, footer, theme control and global design tokens | Astro |
 | All `projects/**` pages, including F1 overview, technical and code views | Quarto |
 | Project metadata, filters, includes and project-only styles | Existing Quarto sources |
-| Other scientific or document-oriented content | Quarto where appropriate |
+| Note articles and other scientific or document-oriented content | Quarto where appropriate |
 
 The experimental Astro F1 overview is not a production route owner. During
 the production merge, Quarto's `projects/f1-time-rank-duality/index.qmd`
@@ -31,9 +31,9 @@ deliberately replaces that experimental output.
 `astro/dist`:
 
 1. Astro builds its pages and explicit shell artifacts.
-2. Quarto renders only `projects/**/*.qmd` to an isolated temporary directory.
+2. Quarto renders `projects/**/*.qmd` and `notes/*.qmd` to an isolated temporary directory.
 3. The build applies Astro's emitted header, footer and stylesheet to each
-   rendered project document, then copies each document and its referenced
+   rendered document, then copies each document and its referenced
    assets into `astro/dist`.
 4. Pagefind runs only after the merged tree is complete.
 
