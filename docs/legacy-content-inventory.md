@@ -2,14 +2,14 @@
 
 ## Scope
 
-This first pass covers only files directly under the old `sfanzon.github.io` repository's `_pages/` directory. Collections, data, downloads and assets are intentionally out of scope.
+This first pass covers only files directly under the old `sfanzon.github.io` repository's `_pages/` and `_projects/` directories. Other collections, data, downloads and assets are intentionally out of scope.
 
 ## Summary
 
 | Status | Count |
 |---|---:|
 | MIGRATED | 10 |
-| DELIBERATELY REMOVE | 7 |
+| DELIBERATELY REMOVE | 16 |
 | NEEDS REVIEW | 2 |
 
 ## Old pages
@@ -36,6 +36,20 @@ This first pass covers only files directly under the old `sfanzon.github.io` rep
 | `_pages/supervision.md` | `/supervision/` | `astro/src/pages/supervision.astro` | MIGRATED | Current Supervision page owns the route. |
 | `_pages/teaching.md` | `/teaching/` | `astro/src/pages/teaching.astro` | MIGRATED | Current Teaching page owns the route. |
 
+## Old project collection
+
+| Old source | Old project/title | Current equivalent | Status | Notes |
+|---|---|---|---|---|
+| `_projects/1_project.md` | `project 1` | None | DELIBERATELY REMOVE | Generic al-folio image-grid demonstration. |
+| `_projects/2_project.md` | `project 2` | None | DELIBERATELY REMOVE | Generic al-folio image-grid and Giscus demonstration. |
+| `_projects/3_project.md` | `project 3 with very long name` | None | DELIBERATELY REMOVE | Generic al-folio redirect demonstration. |
+| `_projects/4_project.md` | `project 4` | None | DELIBERATELY REMOVE | Generic al-folio image-grid demonstration. |
+| `_projects/5_project.md` | `project 5` | None | DELIBERATELY REMOVE | Generic al-folio image-grid demonstration. |
+| `_projects/6_project.md` | `project 6` | None | DELIBERATELY REMOVE | Generic al-folio image-grid demonstration. |
+| `_projects/7_project.md` | `project 7` | None | DELIBERATELY REMOVE | Generic al-folio image-grid demonstration. |
+| `_projects/8_project.md` | `project 8` | None | DELIBERATELY REMOVE | Generic al-folio image-grid and Giscus demonstration. |
+| `_projects/9_project.md` | `project 9` | None | DELIBERATELY REMOVE | Generic al-folio image-grid demonstration. |
+
 ## Needs review
 
 - `_pages/blog.md`: old posts are a later audit slice; there is no confirmed current production `/blog/` route because donor Astro blog output is explicitly removed.
@@ -43,4 +57,4 @@ This first pass covers only files directly under the old `sfanzon.github.io` rep
 
 ## Next audit slice
 
-Collections and assets remain unreviewed: projects; posts/news; teaching, presentation and supervision source records if separate; PDFs/downloads; and images/assets.
+Collections and assets remain unreviewed: old posts; old news; teaching, presentation and supervision source data if separate; bibliography/publication source; PDFs/downloads; and images/assets.
