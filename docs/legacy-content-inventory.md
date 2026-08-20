@@ -54,35 +54,35 @@ This first pass covers only files directly under the old `sfanzon.github.io` rep
 
 | Old source | Title / year | Old public route | Current equivalent | Status | Notes |
 |---|---|---|---|---|---|
-| `_posts/2019-09-22-Advanced-Functional-Analysis.md` | Advanced Functional Analysis / 2019/20 | `/blog/2019/Advanced-Functional-Analysis/` | `data/teaching.yml` → `/teaching/#2019-Functional-Analysis` | NEEDS REVIEW | Course summary remains; the hybrid build does not produce the detailed historical course page. |
-| `_posts/2021-02-01-Calculus-of-Variations.md` | Calculus of Variations / 2020/21 | `/blog/2021/Calculus-of-Variations/` | `data/teaching.yml` → `/teaching/#2021-Calculus-Variations` | NEEDS REVIEW | Course summary remains; the hybrid build does not produce the detailed historical course page. |
-| `_posts/2022-09-18-Analysis-3.md` | Analysis 3 / 2022/23 | `/blog/2022/Analysis-3/` | `data/teaching.yml` → `/teaching/#2022-Analysis` | NEEDS REVIEW | Course summary remains; the hybrid build does not produce the detailed historical course page. |
-| `_posts/2022-09-26-Inverse-Problems.md` | Inverse Problems / 2022/23 | `/blog/2022/Inverse-Problems/` | `data/teaching.yml` → `/teaching/#2022-Inverse-Problems` | NEEDS REVIEW | Course summary remains; the hybrid build does not produce the detailed historical course page. |
-| `_posts/2023-06-01-NSS.md` | Numbers, Sequences and Series / 2023/24 | `/blog/2023/NSS/` | `data/teaching.yml` → `/teaching/#2023-NSS` | NEEDS REVIEW | Course summary remains; the hybrid build does not produce the detailed historical course page. |
-| `_posts/2023-06-02-Differential-Geometry.md` | Differential Geometry / 2023/24 | `/blog/2023/Differential-Geometry/` | `data/teaching.yml` → `/teaching/#2023-Differential-Geometry` | NEEDS REVIEW | Course summary remains; the hybrid build does not produce the detailed historical course page. |
-| `_posts/2024-09-15-Differential-Geometry.md` | Differential Geometry / 2024/25 | `/blog/2024/Differential-Geometry/` | `data/teaching.yml` → `/teaching/#2024-Differential-Geometry` | NEEDS REVIEW | Course summary remains; the hybrid build does not produce the detailed historical course page. |
-| `_posts/2024-09-15-NSS.md` | Numbers, Sequences and Series / 2024/25 | `/blog/2024/NSS/` | `data/teaching.yml` → `/teaching/#2024-NSS` | NEEDS REVIEW | Course summary remains; the hybrid build does not produce the detailed historical course page. |
-| `_posts/2024-1-4-Statistical-Models.md` | Statistical Models / 2023/24 | `/blog/2024/Statistical-Models/` | `data/teaching.yml` → `/teaching/#2024-Statistical-Models` | NEEDS REVIEW | Course summary remains; the hybrid build does not produce the detailed historical course page. |
-| `_posts/2025-1-9-Statistical-Models.md` | Statistical Models / 2024/25 | `/blog/2025/Statistical-Models/` | `data/teaching.yml` → `/teaching/#2025-Statistical-Models` | NEEDS REVIEW | Course summary remains; the hybrid build does not produce the detailed historical course page. |
-| `_posts/2026-1-1-Graduate-Skills.md` | Graduate Skills / 2025/26 | `/blog/2026/Graduate-Skills/` | `data/teaching.yml` → `/teaching/#2026-Graduate-Skills` | NEEDS REVIEW | Course summary remains; the hybrid build does not produce the detailed current course page. |
-| `_posts/2026-1-1-Statistical-Models.md` | Statistical Models / 2025/26 | `/blog/2026/Statistical-Models/` | `data/teaching.yml` → `/teaching/#2026-Statistical-Models` | NEEDS REVIEW | Course summary remains; the hybrid build does not produce the detailed current course page. |
+| `_posts/2019-09-22-Advanced-Functional-Analysis.md` | Advanced Functional Analysis / 2019/20 | `/blog/2019/Advanced-Functional-Analysis/` | `data/teaching.yml` → `/teaching/#2019-Functional-Analysis` | NEEDS REVIEW | Course summary remains, but Teaching still links to this now-unproduced legacy course page; decide whether to migrate/archive it or remove/replace the link. |
+| `_posts/2021-02-01-Calculus-of-Variations.md` | Calculus of Variations / 2020/21 | `/blog/2021/Calculus-of-Variations/` | `data/teaching.yml` → `/teaching/#2021-Calculus-Variations` | NEEDS REVIEW | Course summary remains, but Teaching still links to this now-unproduced legacy course page; decide whether to migrate/archive it or remove/replace the link. |
+| `_posts/2022-09-18-Analysis-3.md` | Analysis 3 / 2022/23 | `/blog/2022/Analysis-3/` | `data/teaching.yml` → `/teaching/#2022-Analysis` | NEEDS REVIEW | Course summary remains, but Teaching still links to this now-unproduced legacy course page; decide whether to migrate/archive it or remove/replace the link. |
+| `_posts/2022-09-26-Inverse-Problems.md` | Inverse Problems / 2022/23 | `/blog/2022/Inverse-Problems/` | `data/teaching.yml` → `/teaching/#2022-Inverse-Problems` | NEEDS REVIEW | Course summary remains, but Teaching still links to this now-unproduced legacy course page; decide whether to migrate/archive it or remove/replace the link. |
+| `_posts/2023-06-01-NSS.md` | Numbers, Sequences and Series / 2023/24 | `/blog/2023/NSS/` | `data/teaching.yml` → `/teaching/#2023-NSS` | NEEDS REVIEW | Course summary remains, but Teaching still links to this now-unproduced legacy course page; decide whether to migrate/archive it or remove/replace the link. |
+| `_posts/2023-06-02-Differential-Geometry.md` | Differential Geometry / 2023/24 | `/blog/2023/Differential-Geometry/` | `data/teaching.yml` → `/teaching/#2023-Differential-Geometry` | NEEDS REVIEW | Course summary remains, but Teaching still links to this now-unproduced legacy course page; decide whether to migrate/archive it or remove/replace the link. |
+| `_posts/2024-09-15-Differential-Geometry.md` | Differential Geometry / 2024/25 | `/blog/2024/Differential-Geometry/` | `data/teaching.yml` → `/teaching/#2024-Differential-Geometry` | NEEDS REVIEW | Course summary remains, but Teaching still links to this now-unproduced legacy course page; decide whether to migrate/archive it or remove/replace the link. |
+| `_posts/2024-09-15-NSS.md` | Numbers, Sequences and Series / 2024/25 | `/blog/2024/NSS/` | `data/teaching.yml` → `/teaching/#2024-NSS` | NEEDS REVIEW | Course summary remains, but Teaching still links to this now-unproduced legacy course page; decide whether to migrate/archive it or remove/replace the link. |
+| `_posts/2024-1-4-Statistical-Models.md` | Statistical Models / 2023/24 | `/blog/2024/Statistical-Models/` | `data/teaching.yml` → `/teaching/#2024-Statistical-Models` | NEEDS REVIEW | Course summary remains, but Teaching still links to this now-unproduced legacy course page; decide whether to migrate/archive it or remove/replace the link. |
+| `_posts/2025-1-9-Statistical-Models.md` | Statistical Models / 2024/25 | `/blog/2025/Statistical-Models/` | `data/teaching.yml` → `/teaching/#2025-Statistical-Models` | NEEDS REVIEW | Course summary remains, but Teaching still links to this now-unproduced legacy course page; decide whether to migrate/archive it or remove/replace the link. |
+| `_posts/2026-1-1-Graduate-Skills.md` | Graduate Skills / 2025/26 | `/blog/2026/Graduate-Skills/` | `data/teaching.yml` → `/teaching/#2026-Graduate-Skills` | NEEDS REVIEW | Course summary remains, but Teaching still links to this now-unproduced legacy course page; decide whether to migrate/archive it or remove/replace the link. |
+| `_posts/2026-1-1-Statistical-Models.md` | Statistical Models / 2025/26 | `/blog/2026/Statistical-Models/` | `data/teaching.yml` → `/teaching/#2026-Statistical-Models` | NEEDS REVIEW | Course summary remains, but Teaching still links to this now-unproduced legacy course page; decide whether to migrate/archive it or remove/replace the link. |
 
 ## Needs review
 
 - `_pages/blog.md`: the posts audit is complete; there is no current production `/blog/` route because donor Astro blog output is explicitly removed.
 - `_pages/cv_old.md`: decide whether the historic `/Silvio_Fanzon_CV.pdf` route should remain available or be retired in favour of the academic CV download.
-- `_posts/2019-09-22-Advanced-Functional-Analysis.md`: decide whether to preserve, migrate or archive the detailed 2019/20 course page.
-- `_posts/2021-02-01-Calculus-of-Variations.md`: decide whether to preserve, migrate or archive the detailed 2020/21 course page.
-- `_posts/2022-09-18-Analysis-3.md`: decide whether to preserve, migrate or archive the detailed 2022/23 course page.
-- `_posts/2022-09-26-Inverse-Problems.md`: decide whether to preserve, migrate or archive the detailed 2022/23 course page.
-- `_posts/2023-06-01-NSS.md`: decide whether to preserve, migrate or archive the detailed 2023/24 course page.
-- `_posts/2023-06-02-Differential-Geometry.md`: decide whether to preserve, migrate or archive the detailed 2023/24 course page.
-- `_posts/2024-09-15-Differential-Geometry.md`: decide whether to preserve, migrate or archive the detailed 2024/25 course page.
-- `_posts/2024-09-15-NSS.md`: decide whether to preserve, migrate or archive the detailed 2024/25 course page.
-- `_posts/2024-1-4-Statistical-Models.md`: decide whether to preserve, migrate or archive the detailed 2023/24 course page.
-- `_posts/2025-1-9-Statistical-Models.md`: decide whether to preserve, migrate or archive the detailed 2024/25 course page.
-- `_posts/2026-1-1-Graduate-Skills.md`: decide whether to preserve, migrate or archive the detailed 2025/26 course page.
-- `_posts/2026-1-1-Statistical-Models.md`: decide whether to preserve, migrate or archive the detailed 2025/26 course page.
+- `_posts/2019-09-22-Advanced-Functional-Analysis.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
+- `_posts/2021-02-01-Calculus-of-Variations.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
+- `_posts/2022-09-18-Analysis-3.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
+- `_posts/2022-09-26-Inverse-Problems.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
+- `_posts/2023-06-01-NSS.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
+- `_posts/2023-06-02-Differential-Geometry.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
+- `_posts/2024-09-15-Differential-Geometry.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
+- `_posts/2024-09-15-NSS.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
+- `_posts/2024-1-4-Statistical-Models.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
+- `_posts/2025-1-9-Statistical-Models.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
+- `_posts/2026-1-1-Graduate-Skills.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
+- `_posts/2026-1-1-Statistical-Models.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
 
 ## Next audit slice
 
