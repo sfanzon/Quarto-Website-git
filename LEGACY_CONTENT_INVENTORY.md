@@ -94,6 +94,37 @@ This first pass covers only files directly under the old `sfanzon.github.io` rep
 | `_news/2026-02-10.md` | 2026-02-10 | Presenting at the University of Hull Research Sandpit | `news/2026-02-10.md` | MIGRATED | Same announcement; title and category added. |
 | `_news/2026-03-17.md` | 2026-03-17 | Formula 1 benchmarking preprint released | `news/2026-03-17.md` | MIGRATED | Same announcement; title/category added and publication link now uses a compatibility `.html` route. |
 
+## Publications and associated resources
+
+This slice audits 17 publication records and 7 associated publication/resource records against the current hybrid publication archive.
+
+| Publication/resource | Old source | Current destination | Status | Notes |
+|---|---|---|---|---|
+| Benchmarking Formula 1 results using a normal model | `_bibliography/publications_journal.bib#2026-Fry-Fan-Aus-Bri` | `data/publications.bib#2026-Fry-Fan-Aus-Bri` → `/publications/#2026-Fry-Fan-Aus-Bri` | MIGRATED | Authors, arXiv record and PDF are preserved; the current arXiv identifier corrects the legacy BibTeX value. |
+| Elementary econometric and strategic analysis of curling matches | `_bibliography/publications_journal.bib#2025-Fry-Aus-Fan` | `data/publications.bib#2025-Fry-Aus-Fan` → `/publications/#2025-Fry-Aus-Fan` | MIGRATED | Authors, journal/DOI, arXiv link and final PDF are preserved. |
+| Asymptotic linear convergence of Fully–Corrective Generalized Conditional Gradient methods | `_bibliography/publications_journal.bib#2024-Bre-Car-Fan-Wal` | `data/publications.bib#2024-Bre-Car-Fan-Wal` → `/publications/#2024-Bre-Car-Fan-Wal` | MIGRATED | Authors, journal/DOI, PDF, short slides, code and the local sparse-GCG explainer are preserved. |
+| Faster identification of faster Formula 1 drivers via time-rank duality | `_bibliography/publications_journal.bib#2024-Fry-Bri-Fan` | `data/publications.bib#2024-Fry-Bri-Fan` → `/publications/#2024-Fry-Bri-Fan` | MIGRATED | Authors, journal/DOI, PDF and code repository are preserved; the code destination now uses the GitHub repository. |
+| A Generalized Conditional Gradient Method for Dynamic Inverse Problems with Optimal Transport Regularization | `_bibliography/publications_journal.bib#2023-Bre-Car-Fan-Rom` | `data/publications.bib#2023-Bre-Car-Fan-Rom` → `/publications/#2023-Bre-Car-Fan-Rom` | MIGRATED | Authors, journal/DOI, arXiv, PDF, code, poster and video are preserved. |
+| A superposition principle for the inhomogeneous continuity equation with Hellinger–Kantorovich-regular coefficients | `_bibliography/publications_journal.bib#2022-Bre-Car-Fan` | `data/publications.bib#2022-Bre-Car-Fan` → `/publications/#2022-Bre-Car-Fan` | MIGRATED | Authors, journal/DOI, arXiv and PDF are preserved. |
+| On the extremal points of the ball of the Benamou–Brenier energy | `_bibliography/publications_journal.bib#2021-Bre-Car-Fan-Rom` | `data/publications.bib#2021-Bre-Car-Fan-Rom` → `/publications/#2021-Bre-Car-Fan-Rom` | MIGRATED | Authors, journal/DOI, arXiv, PDF and slides are preserved. |
+| An optimal transport approach for solving dynamic inverse problems in spaces of measures | `_bibliography/publications_journal.bib#2020-Bre-Fan` | `data/publications.bib#2020-Bre-Fan` → `/publications/#2020-Bre-Fan` | MIGRATED | Authors, journal/DOI, arXiv, PDF and slides are preserved. |
+| Uniform distribution of dislocations in Peierls–Nabarro models for semi-coherent interfaces | `_bibliography/publications_journal.bib#2020-Fan-Pon-Sca` | `data/publications.bib#2020-Fan-Pon-Sca` → `/publications/#2020-Fan-Pon-Sca` | MIGRATED | Authors, journal/DOI, arXiv, PDF and slides are preserved. |
+| Derivation of Linearized Polycrystals from a Two-Dimensional System of Edge Dislocations | `_bibliography/publications_journal.bib#2019-Fan-Pal-Pon` | `data/publications.bib#2019-Fan-Pal-Pon` → `/publications/#2019-Fan-Pal-Pon` | MIGRATED | Authors, journal/DOI, arXiv, PDF and slides are preserved. |
+| Optimal lower exponent for the higher gradient integrability of solutions to two-phase elliptic equations in two dimensions | `_bibliography/publications_journal.bib#2017-Fan-Pal` | `data/publications.bib#2017-Fan-Pal` → `/publications/#2017-Fan-Pal` | MIGRATED | Authors, journal/DOI, arXiv, PDF and slides are preserved. |
+| A Variational Model for Dislocations at Semi-coherent Interfaces | `_bibliography/publications_journal.bib#2017-Fan-Pal-Pon` | `data/publications.bib#2017-Fan-Pal-Pon` → `/publications/#2017-Fan-Pal-Pon` | MIGRATED | Authors, journal/DOI, arXiv, PDF, slides and poster are preserved. |
+| Geometric patterns and microstructures in the study of material defects and composites | `_bibliography/publications_theses.bib#2018-Fan-PhD` | `data/publications.bib#2018-Fan-PhD` → `/publications/#2018-Fan-PhD` | MIGRATED | Thesis authorship, PDF and viva slides are preserved; the external repository link is audited separately below. |
+| A variational approach to topological singularities in two-dimensions (in Italian) | `_bibliography/publications_theses.bib#2014-Fan-MSc` | `data/publications.bib#2014-Fan-MSc` → `/publications/#2014-Fan-MSc` | MIGRATED | Author, thesis PDF and citation are preserved. |
+| The isoperimetric problem (in Italian) | `_bibliography/publications_theses.bib#2011-Fan-BSc` | `data/publications.bib#2011-Fan-BSc` → `/publications/#2011-Fan-BSc` | MIGRATED | Author, thesis PDF and citation are preserved. |
+| Optimal Transport Based Convex Hybrid Image and Motion-Field Reconstruction | `_bibliography/publications_miscellaneous.bib#2021-ISMRM` | `data/publications.bib#2021-ISMRM` → `/publications/#2021-ISMRM` | MIGRATED | Authors, conference, abstract and citation are preserved; the external archive resource is audited separately below. |
+| Lecture Notes on Ordinary Differential Equations (in Italian) | `_bibliography/publications_miscellaneous.bib#2013-ODE-Book` | `data/publications.bib#2013-ODE-Book` → `/publications/#2013-ODE-Book` | MIGRATED | Authors, publisher, book link, PDF and citation are preserved. |
+| Legacy 2024 curling preprint record and PDF | `_bibliography/publications_preprint.bib#2024-Fry-Aus-Fan` | `data/publications.bib#2025-Fry-Aus-Fan` | MERGED | The preprint is represented by the current journal record and arXiv link; the standalone legacy preprint PDF is not retained separately. |
+| Journal publication PDFs | `pdf` fields in `_bibliography/publications_journal.bib` | `assets/pdf/journal/` and publication archive PDF actions | PRESERVED | All 12 legacy journal PDF paths have corresponding current assets. |
+| Journal slides and posters | `slides`/`poster` fields in `_bibliography/publications_journal.bib` | `assets/pdf/journal/slides/` and `assets/pdf/journal/poster/` | PRESERVED | All BibTeX-referenced journal slides/posters are present and linked where the current record exposes them. |
+| Code, project and video resources | `code`/`video` fields in `_bibliography/publications_journal.bib` | Current publication actions, GitHub repositories and `/projects/sparse-gcg/` | MIGRATED | F1 and DGCG code, the sparse-GCG explainer/project, and the DGCG video remain available; F1 code uses its GitHub destination. |
+| Thesis, book PDF and viva-slide resources | `pdf`/`slides` fields in `_bibliography/publications_theses.bib` and `_bibliography/publications_miscellaneous.bib` | `assets/pdf/thesis/`, `assets/pdf/teaching/2013/` and `assets/pdf/seminars/slides/2018/` | PRESERVED | All referenced thesis, book and PhD viva PDF resources are present. |
+| ISMRM archive page | `html`/`url` in `_bibliography/publications_miscellaneous.bib#2021-ISMRM` | No current external archive link in `data/publications.bib` or the rendered record | NEEDS REVIEW | The publication record and abstract migrated, but the legacy ISMRM archive destination is not currently exposed. |
+| Sussex PhD repository page | `url` in `_bibliography/publications_theses.bib#2018-Fan-PhD` | Current thesis record retains the legacy repository URL | NEEDS REVIEW | The thesis PDF and viva slides are present, but `srodev.sussex.ac.uk` may be an outdated repository destination and needs verification. |
+
 ## Needs review
 
 - `_pages/blog.md`: the posts audit is complete; there is no current production `/blog/` route because donor Astro blog output is explicitly removed.
@@ -110,6 +141,8 @@ This first pass covers only files directly under the old `sfanzon.github.io` rep
 - `_posts/2025-1-9-Statistical-Models.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
 - `_posts/2026-1-1-Graduate-Skills.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
 - `_posts/2026-1-1-Statistical-Models.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
+- `2021-ISMRM`: decide whether to restore the legacy archive link for the migrated conference record.
+- `2018-Fan-PhD`: verify or replace the legacy Sussex repository destination.
 
 ## Next audit slice
 
