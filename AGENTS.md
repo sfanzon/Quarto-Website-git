@@ -215,15 +215,23 @@ Do not leave parallel implementations behind.
 
 ## Build
 
-Preview:
+Canonical local development uses the hybrid watcher from `astro/`:
+
+```bash
+cd astro
+npm run dev:hybrid
+```
+
+Use its edit → save → live preview workflow for normal site editing. Do not
+introduce workflows that require manually running `quarto render` for ordinary
+editing. Preserve the established Astro/Quarto ownership boundaries, keep
+code lean, and inspect the existing architecture before changing build or
+deployment behaviour.
+
+For isolated Quarto diagnostics, the underlying commands remain available:
 
 ```bash
 quarto preview
-```
-
-Render:
-
-```bash
 quarto render
 ```
 
