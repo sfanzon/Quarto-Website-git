@@ -2,13 +2,13 @@
 
 ## Scope
 
-This first pass covers only files directly under the old `sfanzon.github.io` repository's `_pages/`, `_projects/` and `_posts/` directories. Other collections, data, downloads and assets are intentionally out of scope.
+This first pass covers only files directly under the old `sfanzon.github.io` repository's `_pages/`, `_projects/`, `_posts/` and `_news/` directories. Other collections, data, downloads and assets are intentionally out of scope.
 
 ## Summary
 
 | Status | Count |
 |---|---:|
-| MIGRATED | 10 |
+| MIGRATED | 32 |
 | DELIBERATELY REMOVE | 16 |
 | NEEDS REVIEW | 14 |
 
@@ -67,6 +67,33 @@ This first pass covers only files directly under the old `sfanzon.github.io` rep
 | `_posts/2026-1-1-Graduate-Skills.md` | Graduate Skills / 2025/26 | `/blog/2026/Graduate-Skills/` | `data/teaching.yml` → `/teaching/#2026-Graduate-Skills` | NEEDS REVIEW | Course summary remains, but Teaching still links to this now-unproduced legacy course page; decide whether to migrate/archive it or remove/replace the link. |
 | `_posts/2026-1-1-Statistical-Models.md` | Statistical Models / 2025/26 | `/blog/2026/Statistical-Models/` | `data/teaching.yml` → `/teaching/#2026-Statistical-Models` | NEEDS REVIEW | Course summary remains, but Teaching still links to this now-unproduced legacy course page; decide whether to migrate/archive it or remove/replace the link. |
 
+## Old news
+
+| Old source | Date | Old content | Current equivalent | Status | Notes |
+|---|---|---|---|---|---|
+| `_news/2023-04-03.md` | 2023-04-03 | Joining the University of Hull | `news/2023-04-03.md` | MIGRATED | Same announcement; title and category added. |
+| `_news/2023-04-12.md` | 2023-04-12 | Launching silviofanzon.com | `news/2023-04-12.md` | MIGRATED | Same announcement; title and category added. |
+| `_news/2023-04-17.md` | 2023-04-17 | Joining the Inverse Problems International Association | `news/2023-04-17.md` | MIGRATED | Same announcement; title and category added. |
+| `_news/2023-05-12.md` | 2023-05-12 | Joining the PRIMO Research Group | `news/2023-05-12.md` | MIGRATED | Same announcement; title and category added. |
+| `_news/2023-06-01.md` | 2023-06-01 | Beginning the PCAP programme | `news/2023-06-01.md` | MIGRATED | Same announcement; title and category added. |
+| `_news/2023-07-13.md` | 2023-07-13 | Conditional-gradient paper published in Mathematical Programming | `news/2023-07-13.md` | MIGRATED | Same announcement; title/category added and publication link normalised. |
+| `_news/2023-09-04.md` | 2023-09-04 | Presenting dynamic imaging research at AIP 2023 | `news/2023-09-04.md` | MIGRATED | Same announcement; title and category added. |
+| `_news/2023-09-20.md` | 2023-09-20 | Teaching in Autumn 2023 | `news/2023-09-20.md` | MIGRATED | Same announcement; title/category added and Teaching links normalised. |
+| `_news/2023-12-22.md` | 2023-12-22 | Formula 1 time-rank preprint and reproducible code released | `news/2023-12-22.md` | MIGRATED | Same announcement; title/category added and publication/code links normalised. |
+| `_news/2024-01-01.md` | 2024-01-01 | Teaching Statistical Models in 2023/24 | `news/2024-01-01.md` | MIGRATED | Same announcement; title/category added and Teaching/course-page links normalised. |
+| `_news/2024-03-25.md` | 2024-03-25 | Formula 1 paper published in Economics Letters | `news/2024-03-25.md` | MIGRATED | Same announcement; title/category added and publication/code links normalised. |
+| `_news/2024-05-14.md` | 2024-05-14 | Reflective teaching case studies completed | `news/2024-05-14.md` | MIGRATED | Same announcement; title/category added and publication link normalised. |
+| `_news/2024-06-18.md` | 2024-06-18 | Curling strategy preprint released | `news/2024-06-18.md` | MIGRATED | Same announcement; title/category added and publication link normalised. |
+| `_news/2024-08-01.md` | 2024-08-01 | Statistical Models curriculum review completed | `news/2024-08-01.md` | MIGRATED | Same announcement; title/category added and internal links normalised. |
+| `_news/2024-09-15.md` | 2024-09-15 | Teaching in Autumn 2024 | `news/2024-09-15.md` | MIGRATED | Same announcement; title/category added and Teaching links normalised. |
+| `_news/2025-01-10.md` | 2025-01-10 | Teaching Statistical Models in 2024/25 | `news/2025-01-10.md` | MIGRATED | Same announcement; title/category added and Teaching/course-page links normalised. |
+| `_news/2025-02-18.md` | 2025-02-18 | Curling strategy paper published in Managerial Finance | `news/2025-02-18.md` | MIGRATED | Same announcement; title/category added and publication link normalised. |
+| `_news/2025-03-20.md` | 2025-03-20 | Teaching philosophy statement published | `news/2025-03-20.md` | MIGRATED | Same announcement; title and category added. |
+| `_news/2025-08-01.md` | 2025-08-01 | Awarded Fellowship of the Higher Education Academy | `news/2025-08-01.md` | MIGRATED | Same announcement; title and category added. |
+| `_news/2025-12-16.md` | 2025-12-16 | Speaking at the Young Analysts in Rome workshop | `news/2025-12-16.md` | MIGRATED | Same announcement; title and category added. |
+| `_news/2026-02-10.md` | 2026-02-10 | Presenting at the University of Hull Research Sandpit | `news/2026-02-10.md` | MIGRATED | Same announcement; title and category added. |
+| `_news/2026-03-17.md` | 2026-03-17 | Formula 1 benchmarking preprint released | `news/2026-03-17.md` | MIGRATED | Same announcement; title/category added and publication link normalised. |
+
 ## Needs review
 
 - `_pages/blog.md`: the posts audit is complete; there is no current production `/blog/` route because donor Astro blog output is explicitly removed.
@@ -86,4 +113,4 @@ This first pass covers only files directly under the old `sfanzon.github.io` rep
 
 ## Next audit slice
 
-Collections and assets remain unreviewed: old news; teaching, presentation and supervision source data if separate; bibliography/publication source; PDFs/downloads; images/assets; and other old-site data or resource collections not yet accounted for.
+Collections and assets remain unreviewed: teaching, presentation and supervision source data if separate; bibliography/publication source; PDFs/downloads; images/assets; and other old-site data or resource collections not yet accounted for.
