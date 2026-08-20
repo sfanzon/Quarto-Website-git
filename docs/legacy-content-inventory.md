@@ -19,7 +19,7 @@ This first pass covers only files directly under the old `sfanzon.github.io` rep
 | `_pages/404.md` | `/404.html` | `astro/src/pages/404.astro` | MIGRATED | Current static 404 route. |
 | `_pages/about.md` | `/` | `astro/src/pages/index.astro` | MIGRATED | Former homepage; current homepage replaces its presentation. |
 | `_pages/about_einstein.md` | No front matter; not a rendered page | None | DELIBERATELY REMOVE | al-folio biography placeholder. |
-| `_pages/blog.md` | `/blog/` | Current Astro `/blog/` route exists, but is not a confirmed migration | NEEDS REVIEW | Old post collection is out of scope; current route still contains starter-era content. |
+| `_pages/blog.md` | `/blog/` | None in production; donor Astro blog output is explicitly removed | NEEDS REVIEW | Old posts are a later audit slice; no current production blog route is confirmed. |
 | `_pages/books.md` | `/books/` | None | DELIBERATELY REMOVE | al-folio bookshelf template and Carl Sagan sample copy. |
 | `_pages/contact.md` | `/contact/` | `astro/src/pages/contact.astro` | MIGRATED | Current Contact page owns the route. |
 | `_pages/cv.md` | `/cv/` | `astro/src/pages/cv.astro` | MIGRATED | Current CV page owns the route. |
@@ -38,7 +38,7 @@ This first pass covers only files directly under the old `sfanzon.github.io` rep
 
 ## Needs review
 
-- `_pages/blog.md`: old posts are a later audit slice; the current `/blog/` route exists but is not confirmed as migrated Silvio-specific content.
+- `_pages/blog.md`: old posts are a later audit slice; there is no confirmed current production `/blog/` route because donor Astro blog output is explicitly removed.
 - `_pages/cv_old.md`: decide whether the historic `/Silvio_Fanzon_CV.pdf` route should remain available or be retired in favour of the academic CV download.
 
 ## Next audit slice
