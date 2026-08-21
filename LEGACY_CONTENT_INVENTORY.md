@@ -127,7 +127,7 @@ This slice audits 17 publication records and 7 associated publication/resource r
 
 ## Teaching resources
 
-The old Teaching page and its 21 lecturer/tutor records are represented by `astro/src/pages/teaching.astro` and `data/teaching.yml`. The 12 detailed course posts remain separately listed as `NEEDS REVIEW` above because their pages and attached teaching material are not part of the current production output.
+The old Teaching page and its 21 lecturer/tutor records are represented by `astro/src/pages/teaching.astro` and `data/teaching.yml`; there is no separate current Quarto Teaching page. The 12 detailed course posts remain separately listed as `NEEDS REVIEW` above because their pages and attached teaching material are not part of the current production output.
 
 | Teaching item | Old source | Current destination | Status | Notes |
 |---|---|---|---|---|
