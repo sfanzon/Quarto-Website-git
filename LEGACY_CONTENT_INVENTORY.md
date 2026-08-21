@@ -186,6 +186,20 @@ This slice checks the old structured data and standalone asset folders not cover
 | Profile photographs | `assets/img/silvioimg.jpeg`, `prof_pic.jpg`, `prof_pic_color.png` | `assets/img/profile/silvioimg.png` and homepage/About usage | MIGRATED | The current profile image is the deliberate production asset; the old variants are not separately referenced. |
 | Generic demo media and data | `assets/audio/`, `assets/video/`, `assets/jupyter/`, `assets/html/`, `assets/json/`, `assets/plotly/`, demo screenshots/GIFs and book-cover images under `assets/img/` | None | DELIBERATELY REMOVE | These are al-folio starter demonstrations or template media, not meaningful Silvio-specific public resources. |
 
+## Final reconciliation decisions
+
+These seven items remain `NEEDS REVIEW` in their source rows because the evidence does not establish Silvio’s intended retention choice. Each now has an explicit handoff decision rather than an implicit migration assumption.
+
+| Item | Decision | Rationale | Later implementation |
+|---|---|---|---|
+| Missing Industry CV | **NEEDS USER DECISION** | The old CV page links to an Industry CV, but no corresponding file exists in the audited old repository or current site. | If retained, recover or recreate the document and link; otherwise retire the old link. |
+| Historic `/Silvio_Fanzon_CV.pdf` route | **NEEDS USER DECISION** | It was a historically public route, but its current purpose and whether it should resolve to the academic CV are not established. | Add a compatibility route/document or deliberately retire it; no redirect is created now. |
+| Microscopy Hull PDF | **NEEDS USER DECISION** | Two legacy copies exist without a surviving page/news reference, so their public significance cannot be inferred safely. | Recover one copy, archive it, or deliberately remove both after confirmation. |
+| Missing seminar slide PDFs | **NEEDS USER DECISION** | Ten slides are absent locally while their presentation records remain; usefulness varies by event and age. | Recover selected files or mark them intentional archive/removal; no assets are moved now. |
+| Curriculum Design slides/video links | **NEEDS USER DECISION** | External destinations are preserved in source, but continued availability and preferred long-term hosting are not verified. | Verify links and optionally replace with stable local/external destinations. |
+| Missing 2025 PhD supervision record | **NEEDS USER DECISION** | The old record is genuine but absent from current supervision data; restoration, archival treatment or omission all affect public biography. | Restore the record or document an intentional omission in the supervision source. |
+| Scopus/arXiv profile metadata | **NEEDS USER DECISION** | Old metadata contains Scopus and arXiv identifiers not surfaced as standalone current profile links, while arXiv publication links remain available. | Add profile links if desired, or record intentional omission; no profile redesign is undertaken. |
+
 ## Needs review
 
 - `_pages/blog.md`: the posts audit is complete; there is no current production `/blog/` route because donor Astro blog output is explicitly removed.
@@ -213,4 +227,4 @@ This slice checks the old structured data and standalone asset folders not cover
 
 ## Next audit slice
 
-The substantive legacy collections and downloads have now been inventoried. Final reconciliation remains for the `NEEDS REVIEW` decisions above, including missing resources, compatibility routes, external links and optional profile metadata.
+The substantive legacy collections and downloads have now been inventoried. Final migration/design work should wait for the seven user decisions above and the other historical-resource decisions retained in `NEEDS REVIEW`.
