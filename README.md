@@ -53,10 +53,11 @@ The target topology is documented in `PUBLISHING_ARCHITECTURE.md`:
 - `assets.silviofanzon.com` — a future static academic asset library;
 - no `slides.` namespace at present.
 
-The current hybrid build described below remains the transition implementation.
-The final main website is native Astro; independent Quarto resources deploy
-separately. This renderer decision does not change the URL/subdomain topology
-defined in `PUBLISHING_ARCHITECTURE.md`.
+The current hybrid build described below is a supported production
+implementation. Native Astro project explainers are being evaluated, not
+selected: a full-fidelity F1 proof of concept is the gate before any decision
+to remove hybrid support. Independent Quarto resources deploy separately under
+the unchanged URL/subdomain topology in `PUBLISHING_ARCHITECTURE.md`.
 
 ## Build locally
 
@@ -98,7 +99,7 @@ quarto render
 
 The Astro production build and Quarto pre-render hook run `scripts/build-content.py`, which rebuilds portfolio, publication, presentation, supervision, teaching and news fragments from their structured sources.
 
-### Production static site (current transition)
+### Production static site (current implementation)
 
 The current production foundation builds Astro and all Quarto project/note documents
 into one static tree without sharing an output directory during rendering:

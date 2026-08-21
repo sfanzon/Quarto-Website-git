@@ -22,119 +22,84 @@ Public site: <https://silviofanzon.com/>
 
 Astro is the curated professional communication layer. It owns the
 professional identity, homepage, Research, Projects catalogue, Publications,
-Teaching catalogue, Presentations catalogue, CV, News/writing, polished
-portfolio explainers and navigation to deeper resources. It must not become
-responsible for building every independent Quarto resource.
+Teaching catalogue, Presentations catalogue, CV, News/writing and navigation
+to deeper resources. The renderer for polished portfolio explainers is gated
+below. The main site must not become responsible for building every independent
+Quarto resource.
 
-## Main-site renderer endpoint
+## Project renderer decision — gated by F1 proof of concept
 
 The publishing topology in this document remains canonical and unchanged. The
-main-site renderer endpoint is now **native Astro**.
+renderer endpoint for polished project explainers is not yet decided.
 
-### Main website — native Astro
+The current hybrid Astro + Quarto implementation remains a supported
+production architecture. Native Astro is the preferred candidate for polished
+portfolio/showcase explainers because it may provide stronger integration with
+the main component system, easier bespoke editorial layouts, richer purposeful
+interaction and clearer ownership inside the professional website.
 
-The homepage, About, Expertise, Research and other index/catalogue pages,
-Projects catalogue, Publications, Teaching catalogue, Presentations catalogue,
-CV, News/writing and other normal professional-site pages belong natively in
-Astro. This also includes polished portfolio/showcase explainers: F1,
-Sparse-FCGCG, Statistical Models and future equivalent project pages.
+Quarto also has substantial authoring advantages: familiar Markdown/QMD,
+LaTeX mathematics, BibTeX with numeric CSL formatting, linked and hoverable
+citations, automatic References, figure syntax and metadata, code folding,
+included source snippets, callouts and scientific-document semantics. No
+renderer migration is accepted until the F1 proof of concept is complete.
 
-The main site must not permanently render Quarto project or note documents and
-merge them into `astro/dist`.
+### F1 architecture gate
 
-### Independent Quarto
+`projects/f1-time-rank-duality/index.qmd` is the benchmark. A native-Astro
+proof of concept must port the actual F1 explainer, not a simplified demo,
+while retaining the Quarto implementation for comparison.
 
-Quarto remains the appropriate home for the actual Statistical Models course,
-long mathematical or scientific notes, deep technical/reproducibility
-resources, citation-heavy documents, computational/reproducible scientific
-documents and other material that benefits from Quarto document semantics.
-Those resources remain independently deployed under the notes and technical
-topology defined below.
+It must preserve all accepted prose, equations/LaTeX, figures, captions, alt
+text, bibliography, numeric CSL citation style, simple `[@key]`-style or
+comparable citation authoring, linked citations and any current citation
+hover/tooltips, automatic References, collapsible R code, included R snippets
+without unnecessary duplication, callouts, the headline/result box, four-stage
+analysis pipeline, responsible interpretation, project navigation, technical/
+code links, responsive behaviour, light/dark themes and accessibility.
 
-### Current and target implementation
+The proof has two independent acceptance tests:
 
-The current transitional implementation is:
+1. **Rendered/product quality:** at least Quarto-equivalent readability,
+   typography, technical correctness, citations, equations, code presentation,
+   responsive behaviour, accessibility, main-site integration and component
+   maintainability.
+2. **Authoring ergonomics:** pleasant direct editing for Silvio. Familiarity
+   and authoring ergonomics are architectural requirements, not incidental
+   preferences. Prefer Markdown-first/MDX-first source close to ordinary
+   scientific prose; components should serve bespoke presentation, not every
+   paragraph, citation, figure or code block.
 
-```text
-main repository
-├── Astro
-└── Quarto project/note sources
-        ↓
-render Quarto
-        ↓
-temporary staging
-        ↓
-merge into Astro output
-        ↓
-astro/dist
-```
+Renderer migration is not a redesign or content rewrite. Any F1 port must
+reuse accepted prose, hierarchy, equations, citations, figures, R snippets,
+analysis pipeline, responsible-interpretation material, assets and accepted
+design decisions wherever possible.
 
-The target main-site implementation is:
+### Possible outcomes
 
-```text
-Astro
-    ↓
-Astro build
-    ↓
-silviofanzon.com
-```
+- **Native Astro wins:** only if full fidelity and simple authoring are proven
+  and maintenance is clearly better. Only then consider other showcase-project
+  migrations and reconsider hybrid infrastructure.
+- **Quarto/hybrid wins:** retain Quarto project authoring and the hybrid
+  architecture if Astro requires excessive custom machinery or worsens
+  authoring. This is an acceptable final architecture.
+- **Simplified hybrid:** retain Quarto authoring while simplifying only a
+  boundary/build element proven unnecessarily complex. Do not force a binary
+  conclusion.
 
-Independently, a Quarto resource repository follows:
+### URL and resource boundary
 
-```text
-Quarto resource repository
-    ↓
-GitHub Actions
-    ↓
-GitHub Pages
-    ↓
-notes.silviofanzon.com/<repo>/
-or technical.silviofanzon.com/<repo>/
-```
+The proof decides the renderer of the polished explainer, not the public URL
+architecture. <https://silviofanzon.com/projects/f1-time-rank-duality/> remains
+the polished public F1 page whether its renderer is Astro or Quarto;
+<https://technical.silviofanzon.com/F1-TimeRank-Duality/> remains the future
+independently deployed deep technical/reproducibility resource.
 
-The hybrid Quarto → temporary render → merge pipeline is transitional, not
-part of the final target architecture. Remove that machinery after the
-relevant content migrations are complete rather than preserving it as
-permanent infrastructure.
-
-Astro and Quarto have different roles, not a quality hierarchy. Astro serves
-portfolio/showcase pages that benefit from the main component system, bespoke
-editorial layouts, purposeful interaction and direct integration with the
-professional site. Quarto serves equations, citations, long scientific
-documents, course structure, reproducibility, computational material and
-technical notes.
-
-### Project migration and preservation
-
-Use this target rule for current and future work:
-
-- polished portfolio/showcase explainer → native Astro;
-- deep technical/reproducibility resource → standalone Quarto under `technical.`;
-- maintained course or lecture notes → standalone Quarto under `notes.`.
-
-Renderer migration does not imply a redesign or content rewrite. When moving a
-Quarto project explainer to Astro, preserve accepted prose, equations,
-figures, citations, code examples, hierarchy, design decisions and existing
-assets unless a user explicitly directs otherwise.
-
-For F1, <https://silviofanzon.com/projects/f1-time-rank-duality/> is the
-native Astro polished explainer and
-<https://technical.silviofanzon.com/F1-TimeRank-Duality/> is the independent
-Quarto technical/reproducibility resource. Migrate the existing project
-content rather than restarting it: preserve its narrative, responsible
-interpretation material, analysis pipeline, R snippets and accepted visual
-decisions.
-
-For Sparse-FCGCG, <https://silviofanzon.com/projects/sparse-fcgcg/> is the
-native Astro polished explainer and
-<https://technical.silviofanzon.com/Sparse-FCGCG/> is the independent Quarto
-technical/reproducibility resource. Migrate accepted content without an
-unnecessary rewrite.
-
-For Statistical Models, <https://silviofanzon.com/projects/statistical-models/>
-is the native Astro polished project/showcase page and
-<https://notes.silviofanzon.com/Statistical-Models/> is the full standalone
-Quarto course. Do not move the course itself into Astro.
+Likewise, preserve <https://silviofanzon.com/projects/sparse-fcgcg/> and
+<https://technical.silviofanzon.com/Sparse-FCGCG/> for Sparse-FCGCG, and
+<https://silviofanzon.com/projects/statistical-models/> plus
+<https://notes.silviofanzon.com/Statistical-Models/> for Statistical Models.
+The full Statistical Models course remains a standalone Quarto course.
 
 ## Notes namespace
 
@@ -188,7 +153,8 @@ data and analysis where appropriate, reproducibility material, its Quarto
 technical minisite, build and GitHub Pages deployment. The main site links to
 these resources but does not render them.
 
-For F1, `/projects/f1-time-rank-duality/` is the polished Astro explainer,
+For F1, `/projects/f1-time-rank-duality/` is the polished public explainer
+(with its renderer decided by the F1 gate),
 `https://technical.silviofanzon.com/F1-TimeRank-Duality/` is the detailed
 technical/reproducibility resource, and the GitHub repository remains the
 source for code and version history. Sparse-FCGCG follows the same principle.

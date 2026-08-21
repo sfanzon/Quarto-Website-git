@@ -32,8 +32,9 @@ the same visible shell after the hybrid merge.
 
 ## 2. Migration principles
 
-- Keep Astro as the professional-site and global-shell owner; keep Quarto for
-  scientific, mathematical and document-oriented project/note content.
+- Keep Astro as the professional-site and global-shell owner. Retain the
+  supported hybrid project/note implementation until the F1 renderer gate
+  decides whether polished project explainers should move to Astro.
 - Preserve public URLs and the completed decisions in
   `LEGACY_CONTENT_INVENTORY.md`; do not recover or remove disputed historical
   material by assumption.
@@ -54,13 +55,17 @@ the same visible shell after the hybrid merge.
 
 ### Priority 1 — essential before launch
 
-1. Make the final production build and deployment path authoritative and
-   reproducible from `astro/dist`.
-2. Resolve broken current links that point at unproduced legacy `/blog/...`
+1. **F1 native-Astro proof of concept:** before dismantling the hybrid or
+   migrating project explainers generally, port the full F1 explainer while
+   retaining Quarto, compare rendered fidelity and authoring ergonomics, then
+   make an explicit renderer decision.
+2. Keep the current production build and deployment path authoritative and
+   reproducible from `astro/dist` while the renderer decision is pending.
+3. Resolve broken current links that point at unproduced legacy `/blog/...`
    course pages, while preserving the teaching summaries and audit decisions.
-3. Complete route/resource checks for the merged Quarto project and note pages,
+4. Complete route/resource checks for the merged Quarto project and note pages,
    including sitemap, search, shell, assets and legacy URL compatibility.
-4. Decide the six deferred inventory items with Silvio before changing or
+5. Decide the six deferred inventory items with Silvio before changing or
    deleting any disputed resource: Industry CV, historic CV route, Microscopy
    PDF, missing seminar slides, Curriculum Design links, and Scopus/arXiv
    profile metadata.
@@ -90,7 +95,7 @@ the same visible shell after the hybrid merge.
 |---|---|---|---|---|
 | Homepage | Astro-owned, visually accepted, consumes generated News and selected publication/project evidence. | Stable professional landing page with no donor/demo content and reliable links. | Keep content stable; verify asset and link coverage during launch checks. | Final route/link validation. |
 | Research | Astro-owned `/research/` with three research themes and links into evidence pages/projects. | Editorial research overview that remains concise and points to canonical evidence. | Validate links and remove only demonstrably stale destinations. | Publications/projects ownership; no redesign. |
-| Projects | Astro `/projects/` catalogue reads `data/projects.yml`; every detail page remains Quarto. | Complete catalogue-to-document experience with preserved project URLs and shell. | Validate every catalogue card, merged project route, asset set and technical/code navigation. | Hybrid build and Quarto rendering. |
+| Projects | Astro `/projects/` catalogue reads `data/projects.yml`; every detail page remains Quarto in the supported hybrid. | Preserve the catalogue-to-document experience while deciding the final renderer for polished explainers through F1. | Build the full-fidelity F1 Astro POC beside Quarto; compare rendering and authoring before any broader migration. | F1 renderer gate; current hybrid build and Quarto rendering. |
 | Publications | Astro `/publications/` consumes generated publication HTML from `data/publications.bib`; resources are audited. | Complete, restrained publication archive with trustworthy PDF/external-resource actions. | Resolve only selected external-resource decisions; add link checks. | Publication audit; generated-content pipeline. |
 | Teaching | Astro `/teaching/` consumes generated `data/teaching.yml` output; summaries and selected materials survive. | Accurate teaching catalogue without dead legacy course-page actions. | Decide how to handle legacy `/blog/...` links and recover/archive selected course resources. | Teaching inventory decisions; no page rewrite required. |
 | Presentations | Astro `/presentations/` renders 23 BibTeX records; 11 slide/poster files remain local and 10 are absent. | Records remain complete, with deliberately chosen resources and honest links. | Decide which missing slides to recover/archive and verify Curriculum Design links. | Presentation inventory decisions. |
@@ -106,8 +111,9 @@ the same visible shell after the hybrid merge.
   deliberate removal.
 - Do not recover disputed PDFs, slide decks, CVs or profile links until the
   decisions in the inventory handoff are made.
-- Do not convert individual `projects/**` pages or Quarto note articles into
-  duplicate Astro implementations.
+- Do not convert individual `projects/**` pages or Quarto note articles until
+  the F1 renderer gate supports that decision; do not create duplicate
+  implementations beyond the bounded F1 proof of concept.
 - Do not replace BibTeX/YAML canonical data with a new content architecture as
   part of ordinary page migration.
 - Do not redesign the global shell, project-document presentation or accepted
@@ -117,18 +123,23 @@ the same visible shell after the hybrid merge.
 
 ## 6. Implementation sequence
 
-1. Confirm the production branch/build/deployment contract and freeze the
+1. Build one full-fidelity F1 native-Astro POC beside the existing Quarto
+   implementation; compare them and obtain an explicit renderer decision.
+2. Preserve the hybrid if the gate does not support migration, or only then
+   plan a broader showcase-project transition. Do not assume either outcome.
+3. Confirm the production branch/build/deployment contract and freeze the
    accepted shell and URL policy.
-2. Resolve the six future inventory decisions with Silvio; record any changed
+4. Resolve the six future inventory decisions with Silvio; record any changed
    decisions in the inventory before implementation.
-3. Fix only confirmed broken Teaching links and run focused route/resource
+5. Fix only confirmed broken Teaching links and run focused route/resource
    checks across the existing Astro pages.
-4. Recover or archive only the selected historical documents/slides, placing
+6. Recover or archive only the selected historical documents/slides, placing
    them under the existing asset ownership and updating their canonical data
    links.
-5. Validate the hybrid merge end-to-end: Astro pages, Quarto project/note
+7. Validate the supported hybrid merge end-to-end: Astro pages, Quarto project/note
    pages, shared shell, maths/citations/code, sitemap, Pagefind and downloads.
-6. Run accessibility, link, functional and visual checks at representative
+8. Run accessibility, link, functional and visual checks at representative
    desktop/mobile states; update baselines only for accepted visual changes.
-7. Remove obsolete transitional implementations only after the preceding
-   checks pass, then perform a final inventory-to-route reconciliation.
+9. Simplify or remove hybrid infrastructure only after an explicit renderer
+   decision and the necessary migration work, then perform a final
+   inventory-to-route reconciliation.

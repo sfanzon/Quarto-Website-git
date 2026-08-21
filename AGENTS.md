@@ -80,17 +80,25 @@ explicitly changes that architecture. Do not introduce proxy routing,
 cross-repository build coupling, new resource subdomains or repository
 reorganizations that conflict with it without an explicit user decision.
 
-For architecture or migration tasks, do not treat the current hybrid merge
-pipeline as permanent. Polished portfolio/project explainers should move toward
-native Astro; keep Quarto where scientific/document-publishing semantics are
-genuinely useful. Independent Quarto resources should move toward the
-standalone deployment model defined in `PUBLISHING_ARCHITECTURE.md`. Do not add
-new coupling merely to preserve the hybrid system, change the agreed
-domains/subdomains/repository topology without explicit user direction, or
-perform migrations automatically unless the task asks for them.
+For project-renderer or hybrid-architecture work, preserve the current hybrid
+architecture unless the user explicitly requests implementation work. Do not
+remove Quarto project support or the merge pipeline, migrate other project
+pages to Astro, add broad infrastructure intended to force an Astro outcome,
+or describe native Astro as already selected. The next renderer decision is
+evidence-driven: before proposing hybrid removal or broad project migration,
+inspect the actual F1 Quarto implementation and its Astro POC (when it
+exists), compare rendered parity, authoring ergonomics and maintenance
+complexity, then obtain an explicit user decision.
+
+Familiarity and authoring ergonomics are architectural requirements, not
+incidental preferences. Do not replace Quarto conveniences with many custom
+components or plugins unless the resulting authoring workflow is demonstrably
+simple. Independent Quarto resources still follow the standalone deployment
+model in `PUBLISHING_ARCHITECTURE.md`; do not change the agreed
+domains/subdomains/repository topology or perform migrations automatically.
 
 `PUBLISHING_ARCHITECTURE.md` governs both the preserved external publishing
-topology and the target renderer endpoint.
+topology and the F1-gated target renderer decision process.
 
 Always modify the canonical source responsible for the requested behaviour.
 

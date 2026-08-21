@@ -13,9 +13,9 @@ individual project page. Do not infer a source move from a matching public URL.
 Target external publishing topology and resource ownership are recorded in
 `PUBLISHING_ARCHITECTURE.md`; consult it for subdomains, standalone Quarto
 repositories, GitHub Pages ownership, future asset hosting and the target
-native-Astro main-site endpoint. The project/note ownership recorded below is
-the current hybrid implementation; do not rewrite it until migration tasks
-move the canonical sources.
+renderer-decision process. The project/note ownership recorded below is the
+current supported hybrid implementation; it may change only after the F1
+renderer gate is resolved and a migration task moves the canonical sources.
 
 ## Astro production foundation
 
