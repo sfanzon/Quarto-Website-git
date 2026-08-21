@@ -2,7 +2,7 @@
 
 ## Scope
 
-This inventory covers files directly under the old `sfanzon.github.io` repository's `_pages/`, `_projects/`, `_posts/` and `_news/` directories, plus the Teaching, presentation and supervision records and resources needed to verify content coverage. Other collections, data, downloads and assets remain out of scope unless listed in an audit slice.
+This inventory covers files directly under the old `sfanzon.github.io` repository's `_pages/`, `_projects/`, `_posts/` and `_news/` directories, plus the Teaching, presentation, supervision and CV/document records and resources needed to verify content coverage. Other collections, data, downloads and assets remain out of scope unless listed in an audit slice.
 
 ## Summary
 
@@ -158,6 +158,19 @@ The old supervision bibliographies contain 9 records: 1 PhD, 3 master’s and 5 
 | 2025 PhD supervision record | `_bibliography/supervision_phd.bib#2025-Austin` | None in current `data/` or `/supervision/` | NEEDS REVIEW | The old record, “Statistical Models for Sports” (PhD Mathematics, University of Hull, start 2025), is not represented in the current Astro page; decide whether it should be restored, archived or deliberately omitted. |
 | Supervision-associated files and public links | Supervision bibliography records and old `/pages/supervision.md` | None identified in current supervision data/page | NEEDS REVIEW | No linked dissertation PDFs, reports, repositories or other public project resources were found in either supervision source set; verify whether any standalone student material exists elsewhere before closing this audit. |
 
+## CV and downloadable documents
+
+The old CV page offered academic and industry downloads, while a separate legacy route exposed a generated CV document. The current Astro CV page exposes the academic PDF only.
+
+| Document or route | Old source | Current destination | Status | Notes |
+|---|---|---|---|---|
+| CV page | `_pages/cv.md` (`/cv/`) | `astro/src/pages/cv.astro` → `/cv/` | MIGRATED | The page and its Projects/Publications cross-links are preserved; the current page intentionally lists only the academic CV. |
+| Academic CV PDF | `Silvio_Fanzon_Academic_CV.pdf` linked by `_pages/cv.md` | `Silvio_Fanzon_Academic_CV.pdf` → `/Silvio_Fanzon_Academic_CV.pdf` | PRESERVED | The same named PDF exists at the repository root and is copied into the hybrid output. |
+| Industry CV download | `/Silvio_Fanzon_Industry_CV.pdf` link in `_pages/cv.md` | None found in the old repository or current site | NEEDS REVIEW | The old page linked an Industry CV, but no corresponding file is present in the audited old checkout; decide whether this was ever a meaningful public document or should be retired. |
+| Historic `/Silvio_Fanzon_CV.pdf` route | `_pages/cv_old.md` | None in current production | NEEDS REVIEW | The legacy route remains unresolved and has no current compatibility target; decide whether to restore a redirect/document or deliberately retire it. |
+| Teaching statement and PCAP case studies | `assets/pdf/news/2025/Fanzon_Teaching_Philosophy.pdf`, `assets/pdf/news/2024/Fanzon_Case_Study_{1,2}.pdf` | Matching files under `assets/pdf/news/` and current News links | PRESERVED | These meaningful professional documents remain available; they are cross-referenced by the completed News/Teaching audits. |
+| Microscopy Hull event PDF | `assets/pdf/events/2023/Microscopy_Hull.pdf` and duplicate `assets/pdf/news/2023/Microscopy_Hull.pdf` | None found in current assets or content | NEEDS REVIEW | The old checkout contains two copies of this public PDF but no surviving current reference; verify its purpose before recovering one copy or deliberately removing it. |
+
 ## Needs review
 
 - `_pages/blog.md`: the posts audit is complete; there is no current production `/blog/` route because donor Astro blog output is explicitly removed.
@@ -180,7 +193,8 @@ The old supervision bibliographies contain 9 records: 1 PhD, 3 master’s and 5 
 - Teaching links: decide whether to migrate/archive the detailed `/blog/...` course pages or remove/replace the current Teaching links, and verify the remaining external notes/revision/course destinations.
 - Presentations: decide whether to recover or archive the ten missing seminar slide PDFs and verify the external Curriculum Design slide/video links.
 - Supervision: decide the fate of the missing 2025 PhD record and verify whether any standalone student resources should be public.
+- CV/documents: decide the fate of the missing Industry CV, historic `/Silvio_Fanzon_CV.pdf` route, and old Microscopy Hull PDF.
 
 ## Next audit slice
 
-Collections and assets remain unreviewed: PDFs/downloads outside the audited publication, teaching, presentation and supervision resources; images/assets; and other old-site data or resource collections not yet accounted for. Publication, teaching, presentation and supervision decisions are recorded above.
+Collections and assets remain unreviewed: PDFs/downloads outside the audited publication, teaching, presentation, supervision and CV/document resources; images/assets; and other old-site data or resource collections not yet accounted for. Publication, teaching, presentation, supervision and CV/document decisions are recorded above.
