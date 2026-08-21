@@ -2,7 +2,7 @@
 
 ## Scope
 
-This inventory covers files directly under the old `sfanzon.github.io` repository's `_pages/`, `_projects/`, `_posts/` and `_news/` directories, plus the Teaching and presentation records and resources needed to verify content coverage. Other collections, data, downloads and assets remain out of scope unless listed in an audit slice.
+This inventory covers files directly under the old `sfanzon.github.io` repository's `_pages/`, `_projects/`, `_posts/` and `_news/` directories, plus the Teaching, presentation and supervision records and resources needed to verify content coverage. Other collections, data, downloads and assets remain out of scope unless listed in an audit slice.
 
 ## Summary
 
@@ -148,6 +148,16 @@ The old seminar bibliographies contain 23 presentation records: 15 talks, 4 post
 | Missing seminar slides | `assets/pdf/seminars/slides/2018/2018-Graz-Slides.pdf`, `2018-Lisbon-Slides.pdf`; 2019 Berlin/Paris/Vienna; 2021 Parma; 2022 Edinburgh/Graz/Sussex; 2023 Sussex | No current local asset | NEEDS REVIEW | Ten old slide PDFs are absent while their presentation records remain; decide which are still useful to recover or intentionally archive. |
 | Curriculum Design slides and video | `slides` and `video` fields for `2024-Curriculum-Design` | External slide URL and YouTube video in the current record | NEEDS REVIEW | The links are preserved in source, but their continued availability and suitability as the long-term destination need verification. |
 
+## Supervision
+
+The old supervision bibliographies contain 9 records: 1 PhD, 3 master’s and 5 undergraduate projects. The current Astro archive renders the 8 master’s/undergraduate records, while the old PhD record is absent from the current source and page.
+
+| Supervision item/resource | Old source | Current destination | Status | Notes |
+|---|---|---|---|---|
+| Master’s and undergraduate supervision records | `_bibliography/supervision_master.bib`, `_bibliography/supervision_undergraduate.bib` | `data/supervision_master.bib`, `data/supervision_undergraduate.bib` → `/supervision/` | MIGRATED | All 8 records preserve the student identifiers, project titles, degree category, institution, year and abstract. |
+| 2025 PhD supervision record | `_bibliography/supervision_phd.bib#2025-Austin` | None in current `data/` or `/supervision/` | NEEDS REVIEW | The old record, “Statistical Models for Sports” (PhD Mathematics, University of Hull, start 2025), is not represented in the current Astro page; decide whether it should be restored, archived or deliberately omitted. |
+| Supervision-associated files and public links | Supervision bibliography records and old `/pages/supervision.md` | None identified in current supervision data/page | NEEDS REVIEW | No linked dissertation PDFs, reports, repositories or other public project resources were found in either supervision source set; verify whether any standalone student material exists elsewhere before closing this audit. |
+
 ## Needs review
 
 - `_pages/blog.md`: the posts audit is complete; there is no current production `/blog/` route because donor Astro blog output is explicitly removed.
@@ -169,7 +179,8 @@ The old seminar bibliographies contain 23 presentation records: 15 talks, 4 post
 - Teaching resources: decide which of the 166 missing detailed course files should be recovered or archived.
 - Teaching links: decide whether to migrate/archive the detailed `/blog/...` course pages or remove/replace the current Teaching links, and verify the remaining external notes/revision/course destinations.
 - Presentations: decide whether to recover or archive the ten missing seminar slide PDFs and verify the external Curriculum Design slide/video links.
+- Supervision: decide the fate of the missing 2025 PhD record and verify whether any standalone student resources should be public.
 
 ## Next audit slice
 
-Collections and assets remain unreviewed: supervision source data if separate; PDFs/downloads outside the audited publication, teaching and presentation resources; images/assets; and other old-site data or resource collections not yet accounted for. Publication, teaching and presentation decisions are recorded above.
+Collections and assets remain unreviewed: PDFs/downloads outside the audited publication, teaching, presentation and supervision resources; images/assets; and other old-site data or resource collections not yet accounted for. Publication, teaching, presentation and supervision decisions are recorded above.
