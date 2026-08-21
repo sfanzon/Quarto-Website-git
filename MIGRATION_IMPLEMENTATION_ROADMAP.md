@@ -40,6 +40,8 @@ the same visible shell after the hybrid merge.
 - Treat the homepage as the distinctive positioning surface. Keep Research,
   Publications and the other evidence pages editorial, restrained and easy to
   audit.
+- Use interaction purposefully: interactive behaviour should clarify content
+  or navigation rather than act as decoration.
 - Prefer source-owner fixes and small explicit components over renderer
   duplication, compatibility layers or broad rewrites.
 - Preserve existing Quarto functionality (maths, citations, code, figures,
@@ -94,7 +96,8 @@ the same visible shell after the hybrid merge.
 | Presentations | Astro `/presentations/` renders 23 BibTeX records; 11 slide/poster files remain local and 10 are absent. | Records remain complete, with deliberately chosen resources and honest links. | Decide which missing slides to recover/archive and verify Curriculum Design links. | Presentation inventory decisions. |
 | Supervision | Astro `/supervision/` renders 8 master’s/undergraduate records; the 2025 PhD record is deliberately omitted. | Public supervision page reflects the accepted scope and has no unintended student-resource exposure. | Keep the omission; verify whether any standalone student resources need a separate decision. | Supervision audit; privacy/content review. |
 | CV | Astro `/cv/` exposes the academic CV PDF; historic and Industry CV items remain deferred. | Clear academic CV route with intentional compatibility policy. | Decide the Industry CV and historic `/Silvio_Fanzon_CV.pdf` policy before implementing links/redirects. | Silvio’s future decisions; deployment URL policy. |
-| Contact/About | Astro-owned `/about/` and `/contact/`; shell/profile links are current, with some optional metadata deferred. | Consistent professional identity and intentional profile/download links. | Decide whether Scopus/arXiv profile links belong in the public contact surface; otherwise document omission. | Profile metadata decision; no redesign. |
+| About | Astro-owned `/about/` with the accepted career narrative and shared shell. | Stable personal/professional context page with intentional profile links. | Keep the accepted content; verify profile and download links during launch checks. | Profile metadata decision; shared shell. |
+| Contact | Astro-owned `/contact/` with current contact/profile actions. | Clear contact path with only intentional public profile links. | Decide whether Scopus/arXiv profile links belong on the public contact surface; otherwise retain the documented omission. | Profile metadata decision; no redesign. |
 
 ## 5. Explicit non-goals
 
@@ -129,4 +132,3 @@ the same visible shell after the hybrid merge.
    desktop/mobile states; update baselines only for accepted visual changes.
 7. Remove obsolete transitional implementations only after the preceding
    checks pass, then perform a final inventory-to-route reconciliation.
-
