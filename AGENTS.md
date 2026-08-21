@@ -441,12 +441,18 @@ Once these conditions are met, stop.
 When instructions conflict:
 
 1. explicit user/task instruction;
-2. `AGENTS.md` for operational agent behaviour;
-3. `DESIGN.md` for visual identity and editorial rules;
-4. `ARCHITECTURE.md` for current/internal implementation mechanics;
-5. `PUBLISHING_ARCHITECTURE.md` for target publishing topology and external
-   resource ownership;
-6. established implementation.
+2. `AGENTS.md` for operational behaviour.
+
+The remaining references are domain-specific canonical sources:
+
+- `DESIGN.md` = visual/editorial domain;
+- `ARCHITECTURE.md` = current/internal implementation mechanics;
+- `PUBLISHING_ARCHITECTURE.md` = target publishing topology and external
+  resource ownership.
+
+Use the reference for the domain it governs rather than treating one of these
+documents as a global rank over the others. Established implementation follows
+those domain references unless the user directs otherwise.
 
 These documentation roles are complementary. Where current implementation
 mechanics differ from the target publishing topology, treat the difference as

@@ -313,6 +313,7 @@ Before substantial work, coding agents should read:
 ```text
 AGENTS.md
 ARCHITECTURE.md
+PUBLISHING_ARCHITECTURE.md
 DESIGN.md
 ```
 
@@ -334,6 +335,7 @@ Agents may modify any source required by the task, but should:
 - `README.md` — repository orientation, build and testing
 - `ARCHITECTURE.md` — source ownership and implementation mechanics
 - `DESIGN.md` — visual identity, positioning and component design rules
+- `PUBLISHING_ARCHITECTURE.md` — canonical target publishing topology, external resource ownership, subdomains and migration rules
 - `AGENTS.md` — operational rules for coding agents
 - `TESTING.md` — test architecture and visual regression environment
 

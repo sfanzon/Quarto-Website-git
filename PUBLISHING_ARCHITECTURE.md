@@ -64,7 +64,7 @@ editions.
 
 ## Technical namespace
 
-Target namespace: <https://technical.silviofanzon/><br>
+Target namespace: <https://technical.silviofanzon.com/><br>
 GitHub organization: `sfanzon-technical`<br>
 Organization Pages repository: `sfanzon-technical/sfanzon-technical.github.io`
 
@@ -110,7 +110,11 @@ repository. Suggested public folders are `papers/`, `presentations/`,
 `posters/`, `figures/`, `images/`, `downloads/` and `media/`. This is for
 ordinary public PDFs, papers, presentation PDFs, posters, figures, images and
 downloads—not unlimited storage for large datasets, video archives or binary
-backups.
+backups. `Website-Assets` is expected to be a single repository initially, so
+it does not require another GitHub organization. Its GitHub Pages site may
+directly own `assets.silviofanzon.com`. Create an assets organization only if
+multiple independent asset repositories later genuinely need to share that
+namespace.
 
 ## Presentations and slides
 
