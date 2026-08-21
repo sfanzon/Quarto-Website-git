@@ -1,6 +1,6 @@
 # Silvio Fanzon — professional website
 
-This repository contains the source and pre-rendered output for **[silviofanzon.com](https://www.silviofanzon.com)**. Astro owns the main professional site and shared shell; Quarto continues to render all individual project pages and other scientific documents where appropriate.
+This repository contains the source and pre-rendered output for **[silviofanzon.com](https://www.silviofanzon.com)**. Astro owns the main professional site and shared shell; Quarto continues to render all individual project pages and other scientific documents where appropriate. The long-term publishing architecture deliberately separates this main Astro site from independent notes, technical resources and a future static-assets library.
 
 The site is built around a simple positioning principle:
 
@@ -33,6 +33,7 @@ It combines mathematical depth with inspectable modelling, algorithms, scientifi
 - `CLEANUP_PLAN.md` — active cleanup sequence and model allocation
 - `DESIGN.md` — visual and editorial design rules
 - `AGENTS.md` — operating rules for coding agents
+- `PUBLISHING_ARCHITECTURE.md` — canonical target publishing topology, subdomains, GitHub organization ownership, standalone resource boundaries and migration rules
 
 The site deliberately separates:
 
@@ -41,6 +42,20 @@ The site deliberately separates:
 - **Research** — mathematical and academic depth
 - **Projects** — applied evidence and inspectable work
 - **Publications** — complete research output
+
+### Publishing architecture
+
+The target topology is documented in `PUBLISHING_ARCHITECTURE.md`:
+
+- `silviofanzon.com` — the main Astro professional site;
+- `notes.silviofanzon.com` — independent teaching and lecture-note resources;
+- `technical.silviofanzon.com` — independent technical and reproducibility resources;
+- `assets.silviofanzon.com` — a future static academic asset library;
+- no `slides.` namespace at present.
+
+The current hybrid build described below remains the transition implementation;
+the target architecture does not require the main site to render every
+independent Quarto resource.
 
 ## Build locally
 

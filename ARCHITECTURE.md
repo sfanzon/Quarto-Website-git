@@ -1,5 +1,11 @@
 # Website architecture
 
+This file describes the current/internal website implementation architecture.
+The canonical target external publishing and resource topology is documented
+in `PUBLISHING_ARCHITECTURE.md`. Where the current hybrid implementation
+differs from that target, the difference is transitional rather than a new
+architectural decision.
+
 ## Source and build
 
 The production site has two rendering owners and one final static output:

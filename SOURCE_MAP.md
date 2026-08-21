@@ -10,6 +10,10 @@ The production platform boundary is recorded in `PLATFORM_DECISION.md`.
 Astro owns the main professional site and shared shell; Quarto owns every
 individual project page. Do not infer a source move from a matching public URL.
 
+Target external publishing topology and resource ownership are recorded in
+`PUBLISHING_ARCHITECTURE.md`; consult it for subdomains, standalone Quarto
+repositories, GitHub Pages ownership and future asset hosting.
+
 ## Astro production foundation
 
 | File | Description |
