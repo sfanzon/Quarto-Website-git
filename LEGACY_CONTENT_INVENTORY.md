@@ -146,4 +146,4 @@ This slice audits 17 publication records and 7 associated publication/resource r
 
 ## Next audit slice
 
-Collections and assets remain unreviewed: teaching, presentation and supervision source data if separate; bibliography/publication source; PDFs/downloads; images/assets; and other old-site data or resource collections not yet accounted for.
+Collections and assets remain unreviewed: teaching, presentation and supervision source data if separate; PDFs/downloads; images/assets; and other old-site data or resource collections not yet accounted for. Publication link decisions are recorded above.
