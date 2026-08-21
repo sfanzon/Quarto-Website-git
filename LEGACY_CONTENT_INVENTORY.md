@@ -2,7 +2,7 @@
 
 ## Scope
 
-This inventory covers files directly under the old `sfanzon.github.io` repository's `_pages/`, `_projects/`, `_posts/` and `_news/` directories, plus the Teaching records and resources needed to verify content coverage. Other collections, data, downloads and assets remain out of scope unless listed in an audit slice.
+This inventory covers files directly under the old `sfanzon.github.io` repository's `_pages/`, `_projects/`, `_posts/` and `_news/` directories, plus the Teaching and presentation records and resources needed to verify content coverage. Other collections, data, downloads and assets remain out of scope unless listed in an audit slice.
 
 ## Summary
 
@@ -137,6 +137,17 @@ The old Teaching page and its 21 lecturer/tutor records are represented by `astr
 | Detailed course PDFs, exercises, exams, coding archives and teaching scripts | Resource files linked by the 2019, 2021 and 2022 course posts and the 2024–2026 Statistical Models posts | None in current production | NEEDS REVIEW | The old repository contains 166 resource files not present in the current teaching asset tree; decide which lecture notes, exercise sheets, exams, coding archives and scripts merit recovery or archival. |
 | External course pages, lecture notes, revision pages and Canvas links | URLs in old teaching records/posts | External URLs retained in `data/teaching.yml` | NEEDS REVIEW | Canvas and selected notes/revision links remain represented, but the 12 legacy `/blog/...` course-page links target unproduced routes and the availability of other external course pages should be checked. |
 
+## Presentations and talks
+
+The old seminar bibliographies contain 23 presentation records: 15 talks, 4 posters and 4 institutional presentations. The current Astro Presentations page renders the same 23 records from the three current BibTeX sources.
+
+| Presentation/resource | Old source | Current destination | Status | Notes |
+|---|---|---|---|---|
+| Presentation, talk and poster records | `_bibliography/seminars_talks.bib`, `_bibliography/seminars_posters.bib`, `_bibliography/seminars_institutional.bib` | `data/presentations_talks.bib`, `data/presentations_posters.bib`, `data/presentations_institutional.bib` → `/presentations/` | MIGRATED | All 23 substantive records, titles, dates, venues and abstracts are represented in the current Astro archive. |
+| Preserved seminar slides and posters | `assets/pdf/seminars/` | `assets/pdf/seminars/` and current presentation actions | PRESERVED | 11 legacy slide/poster files remain present, including the 2016 CMU, 2017 Levico, 2021 TraDE, 2023 Göttingen, 2024 taster, 2025 Sapienza and 2026 Hull materials. |
+| Missing seminar slides | `assets/pdf/seminars/slides/2018/2018-Graz-Slides.pdf`, `2018-Lisbon-Slides.pdf`; 2019 Berlin/Paris/Vienna; 2021 Parma; 2022 Edinburgh/Graz/Sussex; 2023 Sussex | No current local asset | NEEDS REVIEW | Ten old slide PDFs are absent while their presentation records remain; decide which are still useful to recover or intentionally archive. |
+| Curriculum Design slides and video | `slides` and `video` fields for `2024-Curriculum-Design` | External slide URL and YouTube video in the current record | NEEDS REVIEW | The links are preserved in source, but their continued availability and suitability as the long-term destination need verification. |
+
 ## Needs review
 
 - `_pages/blog.md`: the posts audit is complete; there is no current production `/blog/` route because donor Astro blog output is explicitly removed.
@@ -157,7 +168,8 @@ The old Teaching page and its 21 lecturer/tutor records are represented by `astr
 - `2018-Fan-PhD`: verify or replace the legacy Sussex repository destination.
 - Teaching resources: decide which of the 166 missing detailed course files should be recovered or archived.
 - Teaching links: decide whether to migrate/archive the detailed `/blog/...` course pages or remove/replace the current Teaching links, and verify the remaining external notes/revision/course destinations.
+- Presentations: decide whether to recover or archive the ten missing seminar slide PDFs and verify the external Curriculum Design slide/video links.
 
 ## Next audit slice
 
-Collections and assets remain unreviewed: presentation and supervision source data if separate; PDFs/downloads outside the audited publication and teaching resources; images/assets; and other old-site data or resource collections not yet accounted for. Publication and teaching decisions are recorded above.
+Collections and assets remain unreviewed: supervision source data if separate; PDFs/downloads outside the audited publication, teaching and presentation resources; images/assets; and other old-site data or resource collections not yet accounted for. Publication, teaching and presentation decisions are recorded above.
