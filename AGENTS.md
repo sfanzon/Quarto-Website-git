@@ -80,6 +80,18 @@ explicitly changes that architecture. Do not introduce proxy routing,
 cross-repository build coupling, new resource subdomains or repository
 reorganizations that conflict with it without an explicit user decision.
 
+For architecture or migration tasks, do not treat the current hybrid merge
+pipeline as permanent. Polished portfolio/project explainers should move toward
+native Astro; keep Quarto where scientific/document-publishing semantics are
+genuinely useful. Independent Quarto resources should move toward the
+standalone deployment model defined in `PUBLISHING_ARCHITECTURE.md`. Do not add
+new coupling merely to preserve the hybrid system, change the agreed
+domains/subdomains/repository topology without explicit user direction, or
+perform migrations automatically unless the task asks for them.
+
+`PUBLISHING_ARCHITECTURE.md` governs both the preserved external publishing
+topology and the target renderer endpoint.
+
 Always modify the canonical source responsible for the requested behaviour.
 
 Before making a website change:

@@ -1,10 +1,14 @@
 # Website architecture
 
 This file describes the current/internal website implementation architecture.
-The canonical target external publishing and resource topology is documented
-in `PUBLISHING_ARCHITECTURE.md`. Where the current hybrid implementation
-differs from that target, the difference is transitional rather than a new
-architectural decision.
+The canonical target publishing topology and renderer endpoint are documented
+in `PUBLISHING_ARCHITECTURE.md`. The current hybrid Astro + Quarto merge is
+transitional: the final main-site endpoint is native Astro, with polished
+project/showcase explainers expected to migrate there. Genuine Quarto resources
+are expected to move to independent repositories under the already-defined
+notes/technical topology. Where the current implementation differs from that
+target, the difference is transitional rather than a new architectural
+decision.
 
 ## Source and build
 

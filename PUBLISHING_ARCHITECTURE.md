@@ -26,6 +26,116 @@ Teaching catalogue, Presentations catalogue, CV, News/writing, polished
 portfolio explainers and navigation to deeper resources. It must not become
 responsible for building every independent Quarto resource.
 
+## Main-site renderer endpoint
+
+The publishing topology in this document remains canonical and unchanged. The
+main-site renderer endpoint is now **native Astro**.
+
+### Main website — native Astro
+
+The homepage, About, Expertise, Research and other index/catalogue pages,
+Projects catalogue, Publications, Teaching catalogue, Presentations catalogue,
+CV, News/writing and other normal professional-site pages belong natively in
+Astro. This also includes polished portfolio/showcase explainers: F1,
+Sparse-FCGCG, Statistical Models and future equivalent project pages.
+
+The main site must not permanently render Quarto project or note documents and
+merge them into `astro/dist`.
+
+### Independent Quarto
+
+Quarto remains the appropriate home for the actual Statistical Models course,
+long mathematical or scientific notes, deep technical/reproducibility
+resources, citation-heavy documents, computational/reproducible scientific
+documents and other material that benefits from Quarto document semantics.
+Those resources remain independently deployed under the notes and technical
+topology defined below.
+
+### Current and target implementation
+
+The current transitional implementation is:
+
+```text
+main repository
+├── Astro
+└── Quarto project/note sources
+        ↓
+render Quarto
+        ↓
+temporary staging
+        ↓
+merge into Astro output
+        ↓
+astro/dist
+```
+
+The target main-site implementation is:
+
+```text
+Astro
+    ↓
+Astro build
+    ↓
+silviofanzon.com
+```
+
+Independently, a Quarto resource repository follows:
+
+```text
+Quarto resource repository
+    ↓
+GitHub Actions
+    ↓
+GitHub Pages
+    ↓
+notes.silviofanzon.com/<repo>/
+or technical.silviofanzon.com/<repo>/
+```
+
+The hybrid Quarto → temporary render → merge pipeline is transitional, not
+part of the final target architecture. Remove that machinery after the
+relevant content migrations are complete rather than preserving it as
+permanent infrastructure.
+
+Astro and Quarto have different roles, not a quality hierarchy. Astro serves
+portfolio/showcase pages that benefit from the main component system, bespoke
+editorial layouts, purposeful interaction and direct integration with the
+professional site. Quarto serves equations, citations, long scientific
+documents, course structure, reproducibility, computational material and
+technical notes.
+
+### Project migration and preservation
+
+Use this target rule for current and future work:
+
+- polished portfolio/showcase explainer → native Astro;
+- deep technical/reproducibility resource → standalone Quarto under `technical.`;
+- maintained course or lecture notes → standalone Quarto under `notes.`.
+
+Renderer migration does not imply a redesign or content rewrite. When moving a
+Quarto project explainer to Astro, preserve accepted prose, equations,
+figures, citations, code examples, hierarchy, design decisions and existing
+assets unless a user explicitly directs otherwise.
+
+For F1, <https://silviofanzon.com/projects/f1-time-rank-duality/> is the
+native Astro polished explainer and
+<https://technical.silviofanzon.com/F1-TimeRank-Duality/> is the independent
+Quarto technical/reproducibility resource. Migrate the existing project
+content rather than restarting it: preserve its narrative, responsible
+interpretation material, analysis pipeline, R snippets and accepted visual
+decisions.
+
+For Sparse-FCGCG, <https://silviofanzon.com/projects/sparse-fcgcg/> is the
+native Astro polished explainer and
+<https://technical.silviofanzon.com/Sparse-FCGCG/> is the independent Quarto
+technical/reproducibility resource. Migrate accepted content without an
+unnecessary rewrite.
+
+For Statistical Models, <https://silviofanzon.com/projects/statistical-models/>
+is the native Astro polished project/showcase page and
+<https://notes.silviofanzon.com/Statistical-Models/> is the full standalone
+Quarto course. Do not move the course itself into Astro.
+
 ## Notes namespace
 
 Target namespace: <https://notes.silviofanzon.com/><br>
