@@ -171,6 +171,21 @@ The old CV page offered academic and industry downloads, while a separate legacy
 | Teaching statement and PCAP case studies | `assets/pdf/news/2025/Fanzon_Teaching_Philosophy.pdf`, `assets/pdf/news/2024/Fanzon_Case_Study_{1,2}.pdf` | Matching files under `assets/pdf/news/` and current News links | PRESERVED | These meaningful professional documents remain available; they are cross-referenced by the completed News/Teaching audits. |
 | Microscopy Hull event PDF | `assets/pdf/events/2023/Microscopy_Hull.pdf` and duplicate `assets/pdf/news/2023/Microscopy_Hull.pdf` | None found in current assets or content | NEEDS REVIEW | The old checkout contains two copies of this public PDF but no surviving current reference; verify its purpose before recovering one copy or deliberately removing it. |
 
+## Remaining collections and assets
+
+This slice checks the old structured data and standalone asset folders not covered by the preceding content audits, excluding build output, caches and theme implementation files.
+
+| Collection/resource | Old source | Current destination | Status | Notes |
+|---|---|---|---|---|
+| Coauthor profile links | `_data/coauthors.yml` | `data/coauthors.yml` and rendered publication author links | MERGED | The meaningful coauthor names and profile URLs are retained through current publication data and generated records. |
+| Social/profile metadata | `_data/socials.yml` | Astro Contact/profile links | NEEDS REVIEW | LinkedIn, GitHub, Scholar, ResearchGate, ORCID and email are represented; the old Scopus and arXiv profile identifiers are not surfaced as standalone current links. |
+| Venue metadata | `_data/venues.yml` | Publication/presentation source records and generated links | MERGED | Journal, thesis, seminar and publisher destinations are consumed by the audited records; no separate public venue collection remains. |
+| Repository listing data | `_data/repositories.yml` | None | DELIBERATELY REMOVE | The file contains only al-folio starter repositories and placeholder GitHub users, not Silvio-specific public content. |
+| Scholar cache | `_data/scholar_cache.yml` | None | DELIBERATELY REMOVE | Cached template data (`N/A`) is implementation state, not meaningful public content. |
+| Bookshelf entry | `_books/the_godfather.md` | None | DELIBERATELY REMOVE | Generic al-folio/Carl Sagan template residue, unrelated to Silvio’s published content. |
+| Profile photographs | `assets/img/silvioimg.jpeg`, `prof_pic.jpg`, `prof_pic_color.png` | `assets/img/profile/silvioimg.png` and homepage/About usage | MIGRATED | The current profile image is the deliberate production asset; the old variants are not separately referenced. |
+| Generic demo media and data | `assets/audio/`, `assets/video/`, `assets/jupyter/`, `assets/html/`, `assets/json/`, `assets/plotly/`, demo screenshots/GIFs and book-cover images under `assets/img/` | None | DELIBERATELY REMOVE | These are al-folio starter demonstrations or template media, not meaningful Silvio-specific public resources. |
+
 ## Needs review
 
 - `_pages/blog.md`: the posts audit is complete; there is no current production `/blog/` route because donor Astro blog output is explicitly removed.
@@ -194,7 +209,8 @@ The old CV page offered academic and industry downloads, while a separate legacy
 - Presentations: decide whether to recover or archive the ten missing seminar slide PDFs and verify the external Curriculum Design slide/video links.
 - Supervision: decide the fate of the missing 2025 PhD record and verify whether any standalone student resources should be public.
 - CV/documents: decide the fate of the missing Industry CV, historic `/Silvio_Fanzon_CV.pdf` route, and old Microscopy Hull PDF.
+- Remaining collections/assets: decide whether to expose Scopus/arXiv profile links and resolve any legacy resource decisions recorded above.
 
 ## Next audit slice
 
-Collections and assets remain unreviewed: PDFs/downloads outside the audited publication, teaching, presentation, supervision and CV/document resources; images/assets; and other old-site data or resource collections not yet accounted for. Publication, teaching, presentation, supervision and CV/document decisions are recorded above.
+The substantive legacy collections and downloads have now been inventoried. Final reconciliation remains for the `NEEDS REVIEW` decisions above, including missing resources, compatibility routes, external links and optional profile metadata.
