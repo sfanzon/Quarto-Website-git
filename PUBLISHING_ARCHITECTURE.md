@@ -33,7 +33,7 @@ The publishing topology in this document remains canonical and unchanged. The
 renderer endpoint for polished project explainers is not yet decided.
 
 The current hybrid Astro + Quarto implementation remains a supported
-production architecture. Native Astro is the preferred candidate for polished
+production architecture. Native Astro is a candidate for polished
 portfolio/showcase explainers because it may provide stronger integration with
 the main component system, easier bespoke editorial layouts, richer purposeful
 interaction and clearer ownership inside the professional website.

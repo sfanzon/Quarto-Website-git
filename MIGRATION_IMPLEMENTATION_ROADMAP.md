@@ -55,20 +55,26 @@ the same visible shell after the hybrid merge.
 
 ### Priority 1 — essential before launch
 
-1. **F1 native-Astro proof of concept:** before dismantling the hybrid or
-   migrating project explainers generally, port the full F1 explainer while
-   retaining Quarto, compare rendered fidelity and authoring ergonomics, then
-   make an explicit renderer decision.
-2. Keep the current production build and deployment path authoritative and
+1. Keep the current production build and deployment path authoritative and
    reproducible from `astro/dist` while the renderer decision is pending.
-3. Resolve broken current links that point at unproduced legacy `/blog/...`
+2. Resolve broken current links that point at unproduced legacy `/blog/...`
    course pages, while preserving the teaching summaries and audit decisions.
-4. Complete route/resource checks for the merged Quarto project and note pages,
+3. Complete route/resource checks for the merged Quarto project and note pages,
    including sitemap, search, shell, assets and legacy URL compatibility.
-5. Decide the six deferred inventory items with Silvio before changing or
+4. Decide the six deferred inventory items with Silvio before changing or
    deleting any disputed resource: Industry CV, historic CV route, Microscopy
    PDF, missing seminar slides, Curriculum Design links, and Scopus/arXiv
    profile metadata.
+
+### Project-renderer architecture gate
+
+Before choosing native Astro as the general project renderer, migrating other
+project explainers, or simplifying/removing the hybrid because of that renderer
+decision, build a full-fidelity F1 Astro POC beside the existing Quarto page.
+Compare rendered fidelity, authoring ergonomics and maintenance complexity, then
+make an explicit renderer decision. This is not inherently a launch blocker:
+the site may launch with the current supported hybrid architecture when it is
+production-ready.
 
 ### Priority 2 — important improvements
 
@@ -123,23 +129,22 @@ the same visible shell after the hybrid merge.
 
 ## 6. Implementation sequence
 
-1. Build one full-fidelity F1 native-Astro POC beside the existing Quarto
-   implementation; compare them and obtain an explicit renderer decision.
-2. Preserve the hybrid if the gate does not support migration, or only then
-   plan a broader showcase-project transition. Do not assume either outcome.
-3. Confirm the production branch/build/deployment contract and freeze the
+1. Confirm the production branch/build/deployment contract and freeze the
    accepted shell and URL policy.
-4. Resolve the six future inventory decisions with Silvio; record any changed
+2. Resolve the six future inventory decisions with Silvio; record any changed
    decisions in the inventory before implementation.
-5. Fix only confirmed broken Teaching links and run focused route/resource
+3. Fix only confirmed broken Teaching links and run focused route/resource
    checks across the existing Astro pages.
-6. Recover or archive only the selected historical documents/slides, placing
+4. Recover or archive only the selected historical documents/slides, placing
    them under the existing asset ownership and updating their canonical data
    links.
-7. Validate the supported hybrid merge end-to-end: Astro pages, Quarto project/note
+5. Validate the supported hybrid merge end-to-end: Astro pages, Quarto project/note
    pages, shared shell, maths/citations/code, sitemap, Pagefind and downloads.
-8. Run accessibility, link, functional and visual checks at representative
+6. Run accessibility, link, functional and visual checks at representative
    desktop/mobile states; update baselines only for accepted visual changes.
-9. Simplify or remove hybrid infrastructure only after an explicit renderer
+7. If a project-renderer decision is needed, run the F1 architecture gate;
+   retain the hybrid if it does not support migration, or only then plan a
+   broader showcase-project transition. Do not assume either outcome.
+8. Simplify or remove hybrid infrastructure only after that explicit renderer
    decision and the necessary migration work, then perform a final
    inventory-to-route reconciliation.
