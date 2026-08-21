@@ -2,7 +2,7 @@
 
 ## Scope
 
-This first pass covers only files directly under the old `sfanzon.github.io` repository's `_pages/`, `_projects/`, `_posts/` and `_news/` directories. Other collections, data, downloads and assets are intentionally out of scope.
+This inventory covers files directly under the old `sfanzon.github.io` repository's `_pages/`, `_projects/`, `_posts/` and `_news/` directories, plus the Teaching records and resources needed to verify content coverage. Other collections, data, downloads and assets remain out of scope unless listed in an audit slice.
 
 ## Summary
 
@@ -125,6 +125,18 @@ This slice audits 17 publication records and 7 associated publication/resource r
 | ISMRM archive page | `html`/`url` in `_bibliography/publications_miscellaneous.bib#2021-ISMRM` | No current external archive link in `data/publications.bib` or the rendered record | NEEDS REVIEW | The publication record and abstract migrated, but the legacy ISMRM archive destination is not currently exposed. |
 | Sussex PhD repository page | `url` in `_bibliography/publications_theses.bib#2018-Fan-PhD` | Current thesis record retains the legacy repository URL | NEEDS REVIEW | The thesis PDF and viva slides are present, but `srodev.sussex.ac.uk` may be an outdated repository destination and needs verification. |
 
+## Teaching resources
+
+The old Teaching page and its 21 lecturer/tutor records are represented by `astro/src/pages/teaching.astro` and `data/teaching.yml`. The 12 detailed course posts remain separately listed as `NEEDS REVIEW` above because their pages and attached teaching material are not part of the current production output.
+
+| Teaching item | Old source | Current destination | Status | Notes |
+|---|---|---|---|---|
+| Teaching catalogue and role/year structure | `_pages/teaching.md`, `_bibliography/teaching_lecturer.bib`, `_bibliography/teaching_tutor.bib` | `astro/src/pages/teaching.astro`, `data/teaching.yml` → `/teaching/` | MIGRATED | All 21 old teaching records have current catalogue entries, including lecturer, tutor, venue, year and course metadata. |
+| 2013 Ordinary Differential Equations notes | `_bibliography/teaching_tutor.bib#2013-ODE`, `assets/pdf/teaching/2013/Appunti_EDO.pdf` | `data/teaching.yml`, `assets/pdf/teaching/2013/Appunti_EDO.pdf` | PRESERVED | The Italian lecture notes PDF and Google Books link remain available. |
+| Course taster slides | `assets/pdf/teaching/2023-Differential-Geometry/`, `2024-Differential-Geometry/`, `2024-Statistical-Models/`, `2025-Statistical-Models/`, `2026-Statistical-Models/` | Matching files under `assets/pdf/teaching/` and current Teaching entries | PRESERVED | Five legacy taster PDFs remain present and linked from the current catalogue. |
+| Detailed course PDFs, exercises, exams, coding archives and teaching scripts | Resource files linked by the 2019, 2021 and 2022 course posts and the 2024–2026 Statistical Models posts | None in current production | NEEDS REVIEW | The old repository contains 166 resource files not present in the current teaching asset tree; decide which lecture notes, exercise sheets, exams, coding archives and scripts merit recovery or archival. |
+| External course pages, lecture notes, revision pages and Canvas links | URLs in old teaching records/posts | External URLs retained in `data/teaching.yml` | NEEDS REVIEW | Canvas and selected notes/revision links remain represented, but the 12 legacy `/blog/...` course-page links target unproduced routes and the availability of other external course pages should be checked. |
+
 ## Needs review
 
 - `_pages/blog.md`: the posts audit is complete; there is no current production `/blog/` route because donor Astro blog output is explicitly removed.
@@ -143,7 +155,9 @@ This slice audits 17 publication records and 7 associated publication/resource r
 - `_posts/2026-1-1-Statistical-Models.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
 - `2021-ISMRM`: decide whether to restore the legacy archive link for the migrated conference record.
 - `2018-Fan-PhD`: verify or replace the legacy Sussex repository destination.
+- Teaching resources: decide which of the 166 missing detailed course files should be recovered or archived.
+- Teaching links: decide whether to migrate/archive the detailed `/blog/...` course pages or remove/replace the current Teaching links, and verify the remaining external notes/revision/course destinations.
 
 ## Next audit slice
 
-Collections and assets remain unreviewed: teaching, presentation and supervision source data if separate; PDFs/downloads; images/assets; and other old-site data or resource collections not yet accounted for. Publication link decisions are recorded above.
+Collections and assets remain unreviewed: presentation and supervision source data if separate; PDFs/downloads outside the audited publication and teaching resources; images/assets; and other old-site data or resource collections not yet accounted for. Publication and teaching decisions are recorded above.
