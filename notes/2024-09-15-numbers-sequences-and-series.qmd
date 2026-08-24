@@ -1,0 +1,220 @@
+---
+title: Numbers, Sequences and Series
+description: Webpage of the module 400297 T1 2024/25
+date: 2024-09-15
+academic-year: "2024/25"
+slug: numbers-sequences-and-series-2024-25
+author:
+  - name: Silvio Fanzon
+    url: "https://www.silviofanzon.com/"
+    affiliations:
+      name: University of Hull
+      department: Department of Mathematics
+      state: United Kingdom
+categories:
+  - Teaching
+  - Course Archive
+bibliography: ../data/citations/teaching.bib
+body-classes: standard-page note-page notes-detail-page
+page-layout: article
+toc: true
+toc-depth: 3
+execute:
+  enabled: false
+---
+## General Information
+
+Welcome to the module **Numbers, Sequences and Series 400297** for the BSc in Mathematics at the University of Hull, academic year 2024/25.
+This is an introductory module in Mathematical Analysis. We will investigate the properties of real numbers and explore the concepts of limit and series.
+
+- **Module leader**: Dr Silvio Fanzon
+- **Email**: [S.Fanzon@hull.ac.uk](mailto:S.Fanzon@hull.ac.uk)
+- **Office**: Room 104a, Larkin Building
+- **Office hours**: Friday 11:00-12:00
+- **Canvas Page**: Click [here](https://canvas.hull.ac.uk/courses/73579)
+
+
+
+## Questions
+
+If you have any questions please feel free to either
+
+- Email me
+- Ask in class
+- Attend office hours
+
+
+
+## Key Links
+
+
+All the module information will be posted on this page, as well as on **[Canvas](https://canvas.hull.ac.uk/courses/73579)**. The links to the reference material are:
+
+- **[Lecture Notes](https://www.silviofanzon.com/2024-NSS-Notes/)**
+- **[Lectures Diary](#lectures-diary)**
+- **[Tutorials](#tutorials)**
+- **[Homework](#homework)**
+
+
+
+
+## Lectures
+
+Each week we have:
+
+- 2 Lectures of 2h each
+- 1 Tutorial of 1h
+- for a total of 5h of contact
+
+Times and venues are as follows:
+
+- **Lecture 1**: Thursday 9:00-11:00 in Robert Blackburn Building - Lecture Theatre D
+
+- **Lecture 2**: Thursday 12:00-14:00 with venues as follows
+    * Week 1-4: Robert Blackburn Building - Lecture Theatre D
+    * Week 5-12: Robert Blackburn Building - Lecture Theatre B
+
+- **Tutorial**: Friday 13:00-14:00 in Larkin Building - Lecture Theatre F
+
+Please check on MyTimetable every week to see if there are any changes to the following session times and rooms.
+
+
+
+
+## Assessment
+
+This module will be assessed as follows:
+
+- **Final exam**: 80% of final grade (date TBA in January 2025)
+- **Homework**: 20% of final grade (details [here](#homework))
+
+
+
+
+## Topics
+
+- **Numbers**: Number sets, algebraic operations and fields. Axiomatic construction of the real numbers. Completeness of $$\mathbb{R}$$. Countability of $$\mathbb{Q}$$. Complex numbers: definition and main properties, complex plane, solving polynomial equations.
+
+- **Sequences**: Definition of convergence. Algebra of limits. Limit tests. Complex sequences.
+
+- **Series**: Known series. Convergence of series. Nonnegative series. Testing convergence of general series. Rearrangements. 
+
+
+
+
+## References
+
+- **Lecture Notes**: Available **[here](https://www.silviofanzon.com/2024-NSS-Notes/)**
+
+- **Main Book**: Bartle and Sherbert [@bartle]. This is available from the 
+[University Library](https://hull.summon.serialssolutions.com/#!/search/document?ho=t&include.ft.matches=f&l=en-UK&q=bartle%20Sherbert&id=FETCHMERGED-hull_catalog_b230345432)
+
+- **Other resources**: Abbott [@abbott] and Rudin [@rudin_introduction]
+
+
+
+
+
+## Lectures Diary
+
+The module Lecture Notes are available **[here](https://www.silviofanzon.com/2024-NSS-Notes/)**. Topics covered in each lecture are as follows:
+
+
+
+|**Class #**|**Date**  |  **Time**     |   **Topics**                                                                                                                                                                    |
+|: -------  |: ------- |:---------     |:---------  	                                                                                                                                                                 |
+|  1        | 26/09/24 | 09:00 - 11:00 | Canvas, Lecture Notes, Assessment etc. Introduction: Numbers $\mathbb{N}, \mathbb{Z}, \mathbb{Q}$ and $\mathbb{R}$. Proof: $\sqrt{2} \notin \mathbb{Q}$.                        |
+|  2        | 26/09/24 | 12:00 - 14:00 | Preliminaries: Sets, Basic Logic, Operations on Sets, infinite unions and intersections. Examples. Exercises in Tutorial 1.                                                     |
+|  3        | 27/09/24 | 13:00 - 14:00 | Finished exercises in Tutorial 1. Complement, Power set. Examples.                                                                                                              |
+|  4        | 03/10/24 | 09:00 - 11:00 | Product of sets. Binary relations. Equivalence, Partial Order, Total order relations. Intervals. Functions.                                                                     |
+|  5        | 03/10/24 | 12:00 - 14:00 | Exercises in Tutorial 2. Absolute value. Geometric meaning. Basic lemma on absolute value. Triangle inequality (with proof). Corollaries of Triangle inequality.                |
+|  6        | 04/10/24 | 13:00 - 14:00 | Proofs in Mathematics. Induction. Recurrence sequence. Examples. Hints for Homework 1.                                                                                          |
+|  7        | 10/10/24 | 09:00 - 11:00 | Binary operations. Commutativity, associativity, neutral element, inverse. Fields. Examples. Ordered Fields. $\mathbb{Q}$ is ordered field.                                     |
+|  8        | 10/10/24 | 12:00 - 14:00 | Partition of a set, Cut of a set, Cut Property. Proof that $\mathbb{Q}$ does not have the Cut Property. Upper bound, bounded above, sup. Uniqueness of sup. Maximum.            |
+|  9        | 11/10/24 | 13:00 - 14:00 | Exercises in Tutorial 3. Correction of Homework 1.                                                                                                                              |
+| 10        | 17/10/24 | 09:00 - 11:00 | Lower bound, inf, min. $\mathbb{Q}$ is not complete (partial proof). Axiom of Completeness. Definition of $\mathbb{R}$. Theorem: $\mathbb{R}$ exists unique (no proof).         |
+| 11        | 17/10/24 | 12:00 - 14:00 | $\mathbb{N}$ as inductive subset of $\mathbb{R}$. Properties. Principle of Induction. Exercises in Tutorial 4.                                                                  |
+| 12        | 18/10/24 | 13:00 - 14:00 | Definition of $\mathbb{Z}$, $\mathbb{Q}$ and properties. Archimedean property 1 (proof) and 2 (no proof). Nested Interval Property (proof). Counterexample with open intervals. |
+| 13        | 24/10/24 | 09:00 - 11:00 | Examples: Calculation of sup and inf. Existence of $k$-th roots (no proof). $\mathbb{Q}$ and irrationals dense in $\mathbb{R}$. Injectivity, Surjectivity, Bijectivity.         |
+| 14        | 24/10/24 | 12:00 - 14:00 | Exercises in Tutorial 5. Correction of Homework 2. Cardinality. Subsets of countable sets. Examples. $\mathbb{N}$, $\mathbb{Z}$ are countable.                                  |
+| 15        | 25/10/24 | 13:00 - 14:00 | Countable unions. $\mathbb{Q}$ countable. $\mathbb{R}$ and Irrationals uncountable. Complex numbers: Addition, multiplication, Inverses. $\mathbb{C}$ is a field (not ordered). |
+| 16        | 31/10/24 | 09:00 - 11:00 | Complex conjugate. Cartesian representation. Modulus. Triangle inequality. Trigonometric and exponential forms.                                                                 |
+| 17        | 31/10/24 | 12:00 - 14:00 | Fundamental Theorem of algebra. Polynomial division algorithm and examples. Exercises in Tutorial 6.                                                                            |
+| 18        | 01/11/24 | 13:00 - 14:00 | Solving polynomial equations in $\mathbb{C}$: order 2, and higher order.                                                    					                 |
+| 19        | 07/11/24 | 09:00 - 11:00 | Roots of Unity. Roots in $\mathbb{C}$. Sequences: Definition and examples. Convergent sequences. Examples. Divergent sequences. Examples. Uniqueness of limit.                  |
+| 20        | 07/11/24 | 12:00 - 14:00 | Homework 3 Correction. Bounded sequences. Convergent sequences are bounded. Converse is false: counterexample. Algebra of Limits Theorem. Examples.                             |
+| 21        | 08/11/24 | 13:00 - 14:00 | Exercises in Tutorial 7.                                              								                                                 |
+| 22        | 14/11/24 | 09:00 - 11:00 | Fractional powers. Limit of square root of sequence. Examples. Squeeze Theorem and examples. Geometric Sequence Test. Examples. Ratio Test. Examples.                           |
+| 23        | 14/11/24 | 12:00 - 14:00 | Monotone sequences. Monotone Convergence Theorem. Euler's Number. Special Limits. Exercises in Tutorial 8.                                                                      |
+| 24        | 15/11/24 | 13:00 - 14:00 | Sequences in $\mathbb{C}$. Boundedness. Algebra of Limits in $\mathbb{C}$. Examples. Convergence to zero. GST and Ratio Test in $\mathbb{C}$.                                   |
+| 25        | 21/11/24 | 09:00 - 11:00 | Convergence of Real and Imaginary part. Convergent Series. Necessary Condition. Telescopic series. Geometric series and examples. Algebra of Limits for series. Examples.       |
+| 26        | 21/11/24 | 12:00 - 14:00 | Correction of Homework 4. Exercises in Tutorial 9. Non-negative series: Harmonic series diverges and p-series with $p=2$ converges.                                             |
+| 27        | 22/11/24 | 13:00 - 14:00 | Cauchy Condensation Test, $p$-series, series involving logarithm. Comparison Test (CT). Examples.                              			                         |
+| 28        | 28/11/24 | 09:00 - 11:00 | Limit CT. Ratio Test. General series. Absolute Convergence Test. Ratio Test for general series. Complex exponential. Conditional convergence. Riemann rearrangement Theorem.    |
+| 29        | 28/11/24 | 12:00 - 14:00 | Dirichlet Test. Alternating Series Test. Abel Test. Examples. Exercises in Tutorial 10.                                                                                         |
+| 30        | 29/12/24 | 13:00 - 14:00 | Finished Exercises in Tutorial 10. Solution of Q1 in Exam paper 2019/2020.	                                                                                                 | 
+| 31        | 05/12/24 | 09:00 - 11:00 | Finished solving Exam paper 2019/20. Revision Guide: How to prepare for the Exam.                                                                                               |
+| 32        | 05/12/24 | 12:00 - 14:00 | Solution of Exam papers 2020/21, 2023/24.                                                                                                                                       |
+| 33        | 06/12/24 | 13:00 - 14:00 | Correction of Homework 5. Exam Paper 2022/23.                                                                                                                                   |
+| 34        | 12/12/24 | 09:00 - 11:00 | Revision and Exam Preparation.                                                                                                                                                  |
+| 35        | 12/12/24 | 12:00 - 14:00 | Revision and Exam Preparation.                           													   	         |
+| 36        | 13/12/24 | 13:00 - 14:00 | Revision and Exam Preparation.                           														         |
+
+
+
+
+## Tutorials
+
+Each week we have 1h of Tutorial in which we will solve exercises on the topics listed below. You should attempt solving the exercises **before** the tutorial. 
+
+
+|  **Date**  |  **Tutorial #**       |  **Topics**                                                                               |
+|: --------  |:-------------         |:---------                                                                                 |
+| 26/09/24   |  1                    |  Irrational numbers.                                                                      |
+| 03/10/24   |  2                    |  Irrational numbers. Basic set theory.                                                    |
+| 10/10/24   |  3                    |  Equivalence relation. Absolute value. Triangle inequality. Induction.                    |
+| 17/10/24   |  4                    |  Induction. Operations. Fields.                                                           |
+| 24/10/24   |  5                    |  Sup and inf. Inductive sets.                                                             |
+| 31/10/24   |  6                    |  Injectivity and surjectivity. Cardinality. Complex numbers.                              |
+| 07/11/24   |  7                    |  Equations in $\mathbb{C}$. Convergent sequences. Divergent sequences.                    |
+| 14/11/24   |  8                    |  Algebra of Limits. Limit Theorems.                                                       |
+| 21/11/24   |  9                    |  Complex sequences. Geometric Series. Cauchy Condensation Test.                           |
+| 28/12/24   |  10                   |  Comparison, Limit Comparison, Ratio Tests. Absolute and conditional convergence.         |
+
+
+
+
+## Homework
+
+
+There will be 5 Homework papers in total:
+
+- Each Homework paper is worth 100 points. 
+- The final Homework grade will be computed by averaging the best 4.
+
+Each homework paper:
+
+- Will be made available on **[Canvas](https://canvas.hull.ac.uk/courses/73579)** on Tuesday 14:00 two weeks before corresponding Due Date.
+- Must be submitted on **Canvas by 14:00 on the Due Date**. 
+
+
+|**Due date**|  **Homework #**                       |  **Topics**                                                                      |
+|: --------  |:-------------                         |:---------                                                                        |
+| 08/10/24   | 1                                     |  Irrational numbers. Basic set theory.                                           |
+| 22/10/24   | 2                                     |  Order relation, Induction, Proofs.                                              |
+| 05/11/24   | 3                                     |  Fields, Supremum and infimum.                                                   |
+| 19/11/24   | 4                                     |  Complex Numbers, Convergent sequences.                                          |
+| 03/12/24   | 5                                     |  Convergence/Divergence of sequences and series.                                 |
+
+
+Homework papers submitted **outside of Canvas** or **more than 24 hours after the Due Date** will **NOT BE MARKED**
+
+
+Please submit **PDFs only**. Either:
+
+- Write on tablet and submit PDF Output
+- Write on paper and **Scan in Black and White** using a **Scanner** or **Scanner App** (Tiny Scanner, Scanner Pro, etc)
+
+
+
+

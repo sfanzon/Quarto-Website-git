@@ -3,6 +3,7 @@ import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, 
 import { tmpdir } from 'node:os';
 import { dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import yaml from 'js-yaml';
 
 const astroRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const repoRoot = resolve(astroRoot, '..');
@@ -41,6 +42,20 @@ const compatibilityAliases = new Map([
 	['cv.html', 'cv/index.html'],
 	['notes.html', 'notes/index.html'],
 ]);
+const compatibilityRedirects = new Map([
+	['blog/2019/Advanced-Functional-Analysis/index.html', '/notes/advanced-functional-analysis-2019-20.html'],
+	['blog/2021/Calculus-of-Variations/index.html', '/notes/calculus-of-variations-2020-21.html'],
+	['blog/2022/Analysis-3/index.html', '/notes/analysis-3-2022-23.html'],
+	['blog/2022/Inverse-Problems/index.html', '/notes/inverse-problems-2022-23.html'],
+	['blog/2023/NSS/index.html', '/notes/numbers-sequences-and-series-2023-24.html'],
+	['blog/2023/Differential-Geometry/index.html', '/notes/differential-geometry-2023-24.html'],
+	['blog/2024/Differential-Geometry/index.html', '/notes/differential-geometry-2024-25.html'],
+	['blog/2024/NSS/index.html', '/notes/numbers-sequences-and-series-2024-25.html'],
+	['blog/2024/Statistical-Models/index.html', '/notes/statistical-models-2023-24.html'],
+	['blog/2025/Statistical-Models/index.html', '/notes/statistical-models-2024-25.html'],
+	['blog/2026/Graduate-Skills/index.html', '/notes/graduate-skills-2025-26.html'],
+	['blog/2026/Statistical-Models/index.html', '/notes/statistical-models-2025-26.html'],
+]);
 
 function findQuartoSources(directory) {
 	return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -51,6 +66,16 @@ function findQuartoSources(directory) {
 }
 
 function outputPath(source) {
+	const sourceRelative = relative(repoRoot, source);
+	const frontmatter = readFileSync(source, 'utf8').match(/^---\s*\n([\s\S]*?)\n---\s*(?:\n|$)/);
+	const metadata = frontmatter ? yaml.load(frontmatter[1]) : null;
+	const outputFile = metadata && typeof metadata === 'object' && typeof metadata.slug === 'string'
+		? `${metadata.slug}.html`
+		: sourceRelative.replace(/\.qmd$/, '.html').split('/').at(-1);
+	return join(dirname(sourceRelative), outputFile);
+}
+
+function renderedPath(source) {
 	return relative(repoRoot, source).replace(/\.qmd$/, '.html');
 }
 
@@ -87,6 +112,16 @@ function writeCompatibilityAliases() {
 		html = replaceOnce(html, /<body([^>]*)>/, (_match, attributes) => `<body${attributes} data-pagefind-ignore="all">`, 'body opening tag');
 		html = replaceOnce(html, /<\/head>/, '<meta name="robots" content="noindex"></head>', 'head closing tag');
 		writeFileSync(join(distRoot, alias), html);
+	}
+}
+
+function writeCompatibilityRedirects() {
+	for (const [redirect, target] of compatibilityRedirects) {
+		const destination = join(distRoot, redirect);
+		mkdirSync(dirname(destination), { recursive: true });
+		writeFileSync(destination, `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=${target}"><link rel="canonical" href="${siteUrl}${target}"><meta name="robots" content="noindex"><title>Redirecting…</title></head><body data-pagefind-ignore="all"><p>This course page has moved to <a href="${target}">${target}</a>.</p></body></html>
+`);
 	}
 }
 
@@ -162,9 +197,10 @@ try {
 
 	const copied = new Set();
 	for (const source of sources) {
-		const renderedRelative = outputPath(source);
+		const renderedRelative = renderedPath(source);
+		const outputRelative = outputPath(source);
 		const renderedSource = join(stageRoot, renderedRelative);
-		const renderedDestination = join(distRoot, renderedRelative);
+		const renderedDestination = join(distRoot, outputRelative);
 		if (!existsSync(renderedSource)) throw new Error(`Quarto did not render ${renderedRelative}`);
 
 		const html = applySharedShell(readFileSync(renderedSource, 'utf8'), header, footer);
@@ -187,6 +223,7 @@ try {
 	cpSync(sharedPdfRoot, join(distRoot, 'assets', 'pdf'), { recursive: true });
 	cpSync(academicCv, join(distRoot, 'Silvio_Fanzon_Academic_CV.pdf'));
 	for (const output of donorOutput) rmSync(output, { recursive: true, force: true });
+	writeCompatibilityRedirects();
 	writeSitemap();
 	execFileSync('npm', ['run', 'postbuild'], { cwd: astroRoot, stdio: 'inherit' });
 	if (includeDevTools) cpSync(stagedDevRoot, devRoot, { recursive: true });

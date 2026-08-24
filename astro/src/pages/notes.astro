@@ -10,6 +10,7 @@ import '../styles/notes.css';
 type NoteFrontmatter = {
 	title?: unknown;
 	date?: unknown;
+	slug?: unknown;
 	description?: unknown;
 	subtitle?: unknown;
 	image?: unknown;
@@ -45,7 +46,7 @@ const notes = readdirSync(notesRoot)
 			image,
 			imageAlt: typeof data['image-alt'] === 'string' ? data['image-alt'] : '',
 			categories,
-			href: `/notes/${basename(name, '.qmd')}.html`,
+			href: `/notes/${typeof data.slug === 'string' ? data.slug : basename(name, '.qmd')}.html`,
 		};
 	})
 	.sort((left, right) => right.date.valueOf() - left.date.valueOf());

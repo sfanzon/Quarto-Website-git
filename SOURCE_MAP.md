@@ -64,7 +64,7 @@ renderer gate is resolved and a migration task moves the canonical sources.
 | `astro/src/styles/supervision.css` | Supervision-page introduction |
 | `astro/src/pages/cv.astro` | Direct production owner for `/cv/` |
 | `astro/src/pages/404.astro` | Direct production owner for the static `404.html` artifact |
-| `astro/scripts/build-site.mjs` (`compatibilityAliases`) | Emits noindex copies of canonical Astro pages at the former `.html` URLs for static-host compatibility |
+| `astro/scripts/build-site.mjs` (`compatibilityAliases`, `compatibilityRedirects`) | Emits noindex copies of canonical Astro pages at former `.html` URLs and redirect documents for migrated legacy URLs |
 
 Quarto's `projects/f1-time-rank-duality/index.qmd` is the sole owner of the
 F1 overview URL; no Astro detail route exists.
@@ -110,9 +110,10 @@ detail route.
 | `data/teaching.yml` | Single teaching record, with `role: lecturer` or `role: tutor` |
 | `data/coauthors.yml` | Co-author homepage URL map |
 | `data/citations/numeric.csl` | Shared citation style for project pages |
+| `data/citations/teaching.bib` | Shared bibliography for migrated historical teaching Notes |
 | `data/optional-local-assets.txt` | All intentionally absent local assets, with their future repository paths |
 | `news/*.md` | Dated news entries (filenames: `YYYY-MM-DD.md`) |
-| `notes/*.qmd` | Long-form technical notes |
+| `notes/*.qmd` | Quarto Note articles and historical course archives; optional `slug` metadata owns a public filename that differs from the dated source filename |
 | `notes/_metadata.yml` | Shared note-page defaults |
 
 ## Generated content

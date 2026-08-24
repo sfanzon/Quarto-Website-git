@@ -1,0 +1,214 @@
+---
+title: Graduate Skills
+description: Webpage of the module 772213 T2 2025/26
+date: 2026-01-01
+academic-year: "2025/26"
+slug: graduate-skills-2025-26
+author:
+  - name: Silvio Fanzon
+    url: "https://www.silviofanzon.com/"
+    affiliations:
+      name: University of Hull, UK
+      department: Department of Mathematics
+      state: United Kingdom
+categories:
+  - Teaching
+  - Course Archive
+bibliography: ../data/citations/teaching.bib
+body-classes: standard-page note-page notes-detail-page
+page-layout: article
+toc: true
+toc-depth: 3
+execute:
+  enabled: false
+---
+## General Information
+
+Welcome to the module **Graduate Skills 772213** for the MSc in Mathematics at the University of Hull, academic year 2025/26. In this course you will be assigned your MSc project and develop skills to help with it in T3.
+
+You will
+
+- Give short (5-10 min) Journal club presentations on at least two of the papers read.
+- Write a report on a mathematical, statistical or numerical technique.
+- Reflect on the presentations of others
+
+This course is taught by a combination on-campus sessions and learning material and activities organised within Canvas. 
+
+
+- **Lecturer**: Dr Silvio Fanzon
+- **Email**: [S.Fanzon@hull.ac.uk](mailto:S.Fanzon@hull.ac.uk)
+- **Office**: Room 311C, Robert Blackburn Building
+- **Office hours**: Monday 12:00-13:00
+- **Canvas Page**: Click [here](https://canvas.hull.ac.uk/courses/77826)
+
+
+
+
+## Questions
+
+
+If you have any questions please feel free to `email me` and please do not hesitate to attend `office hours`.
+
+
+
+
+## Key Links
+
+
+All the module information will be posted on this page. Teaching materials are posted on [Canvas](https://canvas.hull.ac.uk/courses/77826). 
+
+
+
+## Lectures Calendar
+
+
+We have two `Lectures` and one `Tutorial` per week:
+
+
+- **Lecture 1**: Monday 10:00-12:00 in Wilberforce Building - Lecture Room 11
+- **Lecture 2**: Tuesday 10:00-12:00 in Wilberforce Building - Lecture Room 11
+- **Tutorial**: Friday 10:00-11:00 in Wilberforce Building - Lecture Room 11
+
+
+
+## Assessment
+
+This module will be assessed as follows:
+
+|**Type of Assessment**            | **Percentage of final grade** |
+|: -----                           |: -----                        |
+|  Oral Presentations              | 70%                           |
+|  Written Report                  | 25%                           |
+|  Reflections on Presentations    | 5%                            |
+
+
+
+1. **Oral Presentations** prepared and held by students:
+    - I will help with the preparation of the presentations in the early stages of the module
+    - The seminar atmosphere allows conceptual issues to be discussed and explored in depth in a supportive group setting
+    - The order of presentations will be assigned randomly, with later presentations occurring in reverse order
+    - All students will be offered an opportunity to give short practice presentations with feedback before marked presentations
+    - Accommodation will be made for any student with special needs
+ 
+
+2. **Written Report**:
+    - The written report will require to further investigate a mathematical, statistical, or numerical technique
+    - A report has to be produced on the details of the method, investigating how and why the method works
+    - The report length is 2 pages (excluding references) and has to be written using latex
+    - I recommend choosing a topic related to your MSc Project, but this is not necessary
+
+
+3. **Reflection** on peer presentations:
+    - This will be marked with a binary grading system
+    - This outlines that the principle aim of the reflective process is to improve one's own skills
+
+
+Deadlines and submission are on [Canvas](https://canvas.hull.ac.uk/courses/77826)
+
+
+
+
+
+## Lectures Diary
+
+There are **24 lectures** in this module. Links to the slides and lecture titles are below
+
+
+
+|**Week of**| **Slides**                                                                                                   | **Title**  			            |
+|: -----    |:---------      									                           | :---------                                     |
+| 27 Jan    | [Lecture 1](https://www.silviofanzon.com/2025-Statistical-Models-Slides/slides/lecture_1.html#/title-slide)  | An introduction to Statistics                  |  
+| 3 Feb     | [Lecture 2](https://www.silviofanzon.com/2025-Statistical-Models-Slides/slides/lecture_2.html#/title-slide)  | Random samples                                 |
+| 10 Feb    | [Lecture 3](https://www.silviofanzon.com/2025-Statistical-Models-Slides/slides/lecture_3.html#/title-slide)  | The t-test & Introduction to R                 |
+| 17 Feb    | [Lecture 4](https://www.silviofanzon.com/2025-Statistical-Models-Slides/slides/lecture_4.html#/title-slide)  | The variance ratio & Two-samples t-test        |
+| 24 Feb    | [Lecture 5](https://www.silviofanzon.com/2025-Statistical-Models-Slides/slides/lecture_5.html#/title-slide)  | The two-sample F-test & Goodness-of-fit test   |
+| 3 Mar     | [Lecture 6](https://www.silviofanzon.com/2025-Statistical-Models-Slides/slides/lecture_6.html#/title-slide)  | Contingency tables & Simulation                |
+| 10 Mar    | [Lecture 7](https://www.silviofanzon.com/2025-Statistical-Models-Slides/slides/lecture_7.html#/title-slide)  | Bootstrap & Least Squares                      |
+| 17 Mar    | [Lecture 8](https://www.silviofanzon.com/2025-Statistical-Models-Slides/slides/lecture_8.html#/title-slide)  | The maths of Regression                        |
+| 24 Mar    | [Lecture 9](https://www.silviofanzon.com/2025-Statistical-Models-Slides/slides/lecture_9.html#/title-slide)  | Practical regression                           |
+| 31 Mar    | [Lecture 10](https://www.silviofanzon.com/2025-Statistical-Models-Slides/slides/lecture_10.html#/title-slide)| Model Selection & Regression Assumptions       |
+| 7  Apr    | [Lecture 11](https://www.silviofanzon.com/2025-Statistical-Models-Slides/slides/lecture_11.html#/title-slide)| Stepwise Regression & ANOVA                    |
+| 28 Apr    | Revision Week                                                                                                | Coursework submission deadline                 |
+| Extra     | [Appendix A](https://www.silviofanzon.com/2025-Statistical-Models-Slides/slides/appendix_A.html#/title-slide)| Probability revision                           |
+| Extra     | [Appendix B](https://www.silviofanzon.com/2025-Statistical-Models-Slides/slides/appendix_B.html#/title-slide)| More on R                                      |
+
+
+## Statistical tables
+
+- Available [here](/assets/pdf/teaching/2025-Statistical-Models/Statistics_Tables.pdf)
+
+
+
+
+## R codes
+
+| **Lecture** | **Material**                                                                                                                                                                              | 
+|:------      |:------                                                                                                                                                                                    |
+| Lecture 3   | [One-Sample t-test](/assets/pdf/teaching/2025-Statistical-Models/one_sample_t_test.R) 													  |
+| Lecture 4   | [Variance ratio test](/assets/pdf/teaching/2025-Statistical-Models/variance_ratio_test.R) <br> [Two-Sample t-test](/assets/pdf/teaching/2025-Statistical-Models/two_sample_t_test.R)      |
+| Lecture 5   | [F-test](/assets/pdf/teaching/2025-Statistical-Models/F_test.R)  <br>   [F-test First Principles](/assets/pdf/teaching/2025-Statistical-Models/F_test_first_principles.R) <br> [Goodness-of-fit](/assets/pdf/teaching/2025-Statistical-Models/good_fit.R) <br> [Goodness-of-fit First Principles](/assets/pdf/teaching/2025-Statistical-Models/good_fit_first_principles.R)  |
+| Lecture 6   | [Goodness-of-fit Contingency](/assets/pdf/teaching/2025-Statistical-Models/good_fit_contingency.R) <br> [Independence Test](/assets/pdf/teaching/2025-Statistical-Models/independence_test.R) <br> [Monte Carlo pi](/assets/pdf/teaching/2025-Statistical-Models/monte_carlo_pi.R) |
+| Lecture 7   | [Bootstrap CI](/assets/pdf/teaching/2025-Statistical-Models/bootstrap_CI.R) <br> [Bootstrap t-test](/assets/pdf/teaching/2025-Statistical-Models/bootstrap_t_test.R) <br> [Bootstrap F-test](/assets/pdf/teaching/2025-Statistical-Models/bootstrap_F_test.R) <br> [2008 Crisis](/assets/pdf/teaching/2025-Statistical-Models/2008_crisis_code.R) <br>[Least-squares Solution 1](/assets/pdf/teaching/2025-Statistical-Models/least_squares_1.R) <br> [Least-squares Solution 2](/assets/pdf/teaching/2025-Statistical-Models/least_squares_2.R) |
+| Lecture 8   | [Multiple regression](/assets/pdf/teaching/2025-Statistical-Models/multiple_regression.R) <br> [R2 multiple regression](/assets/pdf/teaching/2025-Statistical-Models/R2_multiple_regression.R)|
+| Lecture 9   | [Simple regression](/assets/pdf/teaching/2025-Statistical-Models/simple_regression.R) <br> [Longley regression](/assets/pdf/teaching/2025-Statistical-Models/longley_regression.R)  |
+| Lecture 10  | [Longley selection](/assets/pdf/teaching/2025-Statistical-Models/longley_selection.R) <br> [Galileo](/assets/pdf/teaching/2025-Statistical-Models/galileo.R) <br> [Divorces](/assets/pdf/teaching/2025-Statistical-Models/divorces.R) <br> [Heteroscedasticity](/assets/pdf/teaching/2025-Statistical-Models/heteroscedasticity.R) <br> [Autocorrelation](/assets/pdf/teaching/2025-Statistical-Models/autocorrelation.R)
+| Lecture 11  | [Multicollinearity](/assets/pdf/teaching/2025-Statistical-Models/multicollinearity.R) <br> [Stepwise Regression: Longley](/assets/pdf/teaching/2025-Statistical-Models/longley_stepwise.R) <br> [Stepwise Regression: Divorces](/assets/pdf/teaching/2025-Statistical-Models/divorces_stepwise.R)  <br> [Anova](/assets/pdf/teaching/2025-Statistical-Models/anova.R) <br> [Ancova](/assets/pdf/teaching/2025-Statistical-Models/ancova.R)  |
+
+
+## Datasets
+
+- [Stock-Gold prices](/assets/pdf/teaching/2025-Statistical-Models/stock_gold.txt) 
+- [Longley](/assets/pdf/teaching/2025-Statistical-Models/longley.txt)
+- [Fridge Sales](/assets/pdf/teaching/2025-Statistical-Models/fridge_sales.txt)
+- [2008 Crisis](/assets/pdf/teaching/2025-Statistical-Models/2008_crisis.txt)
+- [Family Guy](/assets/pdf/teaching/2025-Statistical-Models/family_guy.txt)
+
+
+
+## Homework
+
+
+Homework papers must be submitted on **[Canvas](https://canvas.hull.ac.uk/courses/75082) by 14:00 on Thursday**
+
+
+
+|  **Homework #** |**Due date**   |  **Topics**                                                                                                    |
+|: --------       |:------------- |:---------                                                                                                      |
+| 1               | 6 Feb         |  Moment generating function. Poisson distribution. Poisson models for soccer.                                  |
+| 2               | 13 Feb        |  Bivariate transformations. Deriving the distribution of the t-statistic. Conditional expectation and variance.|
+| 3               | 20 Feb        |  Vectors in R. The t-test: in R and by hand.                                                                   |
+| 4               | 27 Feb        |  Variance ratio test. Two-sample t-test.                                                                       |
+| 5               | 6 Mar         |  The two-sample F-test and t-tests.                                                                            |
+| 6               | 13 Mar        |  The goodness-of-fit test. The chi-squared test of independence / no association                               |
+| 7               | 20 Mar        |  Bootstrap Confidence Intervals. Bootstrap t-test and F-test.                                                  |
+| 8               | 27 Mar        |  Simple and general linear regression                                                                          |
+| 9               | 3 Apr         |  The t-test and F-test for regression                                                                          |
+| 10              | 10 Apr        |  Model Selection and testing Regression Assumptions                                                            |
+
+
+
+
+## References
+
+
+- **Slides**: Available **[here](https://www.silviofanzon.com/2025-Statistical-Models-Slides/)**
+
+
+- **Main References**: The slides are self-contained and based on the books
+
+	* Bingham and Fry [@bingham-fry]
+	* Fry and Burke [@fry-burke]
+
+
+
+[<img align="top" src="/assets/pdf/teaching/2025-Statistical-Models/bingham_fry.png" alt="drawing" width="48%"/>](https://link.springer.com/book/10.1007/978-1-84882-969-5)
+[<img align="top" src="/assets/pdf/teaching/2025-Statistical-Models/fry_burke.png" alt="drawing" width="49%"/>](https://www.mheducation.co.uk/quantitative-methods-in-finance-using-r-9780335251261-emea-group)
+
+
+
+- **Secondary References**: In addition we recommend the following
+
+   * **Probability & Statistics Manual**: Casella and Berger [@casella-berger] 
+   * **Easier Probability & Statistics Manual**: DeGroot and Schervish [@degroot]
+   * **Concise Statistics with R**: Dalgaard [@dalgaard]
+   * **Comprehensive R manual**: Davies [@davies]

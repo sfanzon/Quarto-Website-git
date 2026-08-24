@@ -57,8 +57,8 @@ the same visible shell after the hybrid merge.
 
 1. Keep the current production build and deployment path authoritative and
    reproducible from `astro/dist` while the renderer decision is pending.
-2. Resolve broken current links that point at unproduced legacy `/blog/...`
-   course pages, while preserving the teaching summaries and audit decisions.
+2. Preserve the migrated legacy course Notes, Teaching links and `/blog/...`
+   compatibility redirects through launch validation.
 3. Complete route/resource checks for the merged Quarto project and note pages,
    including sitemap, search, shell, assets and legacy URL compatibility.
 4. Decide the six deferred inventory items with Silvio before changing or
@@ -78,26 +78,25 @@ production-ready.
 
 ### Legacy course entries → Notes migration map
 
-All twelve genuine legacy course posts are retained in the Notes publishing
-system. This map records destinations only: it does not migrate content, alter
-Teaching links or create redirects. Once each destination is live, its Teaching
-record should link to it and its former `/blog/...` URL should receive a
-compatibility redirect.
+All twelve genuine legacy course posts are retained as main-site Quarto Notes.
+Their Teaching records link to the migrated Notes and their former `/blog/...`
+URLs have compatibility redirects. Separate maintained teaching resources may
+coexist later, but they do not replace these historical Notes.
 
 | Legacy title and source | Old URL | Current Teaching record | What it contains | Proposed canonical Notes destination | Teaching link / redirect |
 |---|---|---|---|---|---|
-| Advanced Functional Analysis (2019/20) — `_posts/2019-09-22-Advanced-Functional-Analysis.md` | `/blog/2019/Advanced-Functional-Analysis/` | `2019-Functional-Analysis` | Graz MSc practical companion: topics, reading, exercise sheets, final exam and assessment. | Main-site Note: `/notes/advanced-functional-analysis-exercise-course.html` — **Advanced Functional Analysis: Exercise Course (2019/20)**. | Yes / yes. |
-| Calculus of Variations (2020/21) — `_posts/2021-02-01-Calculus-of-Variations.md` | `/blog/2021/Calculus-of-Variations/` | `2021-Calculus-Variations` | Graz MSc course: syllabus, schedule, assessment, lecture notes/videos and exercise sheets. | Main-site Note: `/notes/calculus-of-variations-course.html` — **Calculus of Variations (2020/21)**. | Yes / yes. |
-| Analysis 3 (2022/23) — `_posts/2022-09-18-Analysis-3.md` | `/blog/2022/Analysis-3/` | `2022-Analysis` | Graz BSc practical companion: class calendar, assessment rules, references and weekly exercise sheets. | Main-site Note: `/notes/analysis-3-exercise-course.html` — **Analysis 3: Exercise Course (2022/23)**. | Yes / yes. |
-| Inverse Problems (2022/23) — `_posts/2022-09-26-Inverse-Problems.md` | `/blog/2022/Inverse-Problems/` | `2022-Inverse-Problems` | Graz MSc practical companion: topics, references, assessments, exercise sheets and Matlab/Python assignments. | Main-site Note: `/notes/inverse-problems-exercise-course.html` — **Inverse Problems: Exercise Course (2022/23)**. | Yes / yes. |
-| Numbers, Sequences and Series (2023/24) — `_posts/2023-06-01-NSS.md` | `/blog/2023/NSS/` | `2023-NSS` | Hull taught edition: course information, lecture notes link, lectures diary, tutorials and homework. | Future substantial resource: `https://notes.silviofanzon.com/2023-NSS-Notes/` — **Numbers, Sequences and Series (2023/24)**. | Yes / yes. |
-| Differential Geometry (2023/24) — `_posts/2023-06-02-Differential-Geometry.md` | `/blog/2023/Differential-Geometry/` | `2023-Differential-Geometry` | Hull taught edition: course information, lecture notes link, lectures diary and homework. | Future substantial resource: `https://notes.silviofanzon.com/2023-Differential-Geometry-Notes/` — **Differential Geometry (2023/24)**. | Yes / yes. |
-| Differential Geometry (2024/25) — `_posts/2024-09-15-Differential-Geometry.md` | `/blog/2024/Differential-Geometry/` | `2024-Differential-Geometry` | Hull taught edition: course information, lecture notes link, schedule, assessment, lectures diary and homework. | Future substantial resource: `https://notes.silviofanzon.com/2024-Differential-Geometry-Notes/` — **Differential Geometry (2024/25)**. | Yes / yes. |
-| Numbers, Sequences and Series (2024/25) — `_posts/2024-09-15-NSS.md` | `/blog/2024/NSS/` | `2024-NSS` | Hull taught edition: course information, lecture notes link, schedule, tutorials, lectures diary and homework. | Future substantial resource: `https://notes.silviofanzon.com/2024-NSS-Notes/` — **Numbers, Sequences and Series (2024/25)**. | Yes / yes. |
-| Statistical Models (2023/24) — `_posts/2024-1-4-Statistical-Models.md` | `/blog/2024/Statistical-Models/` | `2024-Statistical-Models` | Hull taught edition: linear-model syllabus, slides link, lectures diary, statistical tables, R code, datasets and homework. | Future substantial resource: `https://notes.silviofanzon.com/2024-Statistical-Models-Slides/` — **Statistical Models (2023/24)**. | Yes / yes. |
-| Statistical Models (2024/25) — `_posts/2025-1-9-Statistical-Models.md` | `/blog/2025/Statistical-Models/` | `2025-Statistical-Models` | Hull taught edition: linear-model syllabus, slides link, lectures diary, statistical tables, R code, datasets and homework. | Future substantial resource: `https://notes.silviofanzon.com/2025-Statistical-Models-Slides/` — **Statistical Models (2024/25)**. | Yes / yes. |
-| Graduate Skills (2025/26) — `_posts/2026-1-1-Graduate-Skills.md` | `/blog/2026/Graduate-Skills/` | `2026-Graduate-Skills` | Hull MSc project-skills course: journal-club presentations, report work, Canvas activities, schedule and support material. | Main-site Note: `/notes/graduate-skills.html` — **Graduate Skills (2025/26)**. | Yes / yes. |
-| Statistical Models (2025/26) — `_posts/2026-1-1-Statistical-Models.md` | `/blog/2026/Statistical-Models/` | `2026-Statistical-Models` | Hull taught edition: linear-model syllabus, slides link, lectures diary, statistical tables, R code, datasets, assessment and deadlines. | Future substantial resource: `https://notes.silviofanzon.com/2026-Statistical-Models-Slides/` — **Statistical Models (2025/26)**. | Yes / yes. |
+| Advanced Functional Analysis (2019/20) — `_posts/2019-09-22-Advanced-Functional-Analysis.md` | `/blog/2019/Advanced-Functional-Analysis/` | `2019-Functional-Analysis` | Graz MSc practical companion: topics, reading, exercise sheets, final exam and assessment. | Main-site Note: `/notes/advanced-functional-analysis-2019-20.html` — **Advanced Functional Analysis**. | Yes / yes. |
+| Calculus of Variations (2020/21) — `_posts/2021-02-01-Calculus-of-Variations.md` | `/blog/2021/Calculus-of-Variations/` | `2021-Calculus-Variations` | Graz MSc course: syllabus, schedule, assessment, lecture notes/videos and exercise sheets. | Main-site Note: `/notes/calculus-of-variations-2020-21.html` — **Calculus of Variations**. | Yes / yes. |
+| Analysis 3 (2022/23) — `_posts/2022-09-18-Analysis-3.md` | `/blog/2022/Analysis-3/` | `2022-Analysis` | Graz BSc practical companion: class calendar, assessment rules, references and weekly exercise sheets. | Main-site Note: `/notes/analysis-3-2022-23.html` — **Analysis 3**. | Yes / yes. |
+| Inverse Problems (2022/23) — `_posts/2022-09-26-Inverse-Problems.md` | `/blog/2022/Inverse-Problems/` | `2022-Inverse-Problems` | Graz MSc practical companion: topics, references, assessments, exercise sheets and Matlab/Python assignments. | Main-site Note: `/notes/inverse-problems-2022-23.html` — **Inverse Problems**. | Yes / yes. |
+| Numbers, Sequences and Series (2023/24) — `_posts/2023-06-01-NSS.md` | `/blog/2023/NSS/` | `2023-NSS` | Hull taught edition: course information, lecture notes link, lectures diary, tutorials and homework. | Main-site Note: `/notes/numbers-sequences-and-series-2023-24.html` — **Numbers, Sequences and Series**. | Yes / yes. |
+| Differential Geometry (2023/24) — `_posts/2023-06-02-Differential-Geometry.md` | `/blog/2023/Differential-Geometry/` | `2023-Differential-Geometry` | Hull taught edition: course information, lecture notes link, lectures diary and homework. | Main-site Note: `/notes/differential-geometry-2023-24.html` — **Differential Geometry**. | Yes / yes. |
+| Differential Geometry (2024/25) — `_posts/2024-09-15-Differential-Geometry.md` | `/blog/2024/Differential-Geometry/` | `2024-Differential-Geometry` | Hull taught edition: course information, lecture notes link, schedule, assessment, lectures diary and homework. | Main-site Note: `/notes/differential-geometry-2024-25.html` — **Differential Geometry**. | Yes / yes. |
+| Numbers, Sequences and Series (2024/25) — `_posts/2024-09-15-NSS.md` | `/blog/2024/NSS/` | `2024-NSS` | Hull taught edition: course information, lecture notes link, schedule, tutorials, lectures diary and homework. | Main-site Note: `/notes/numbers-sequences-and-series-2024-25.html` — **Numbers, Sequences and Series**. | Yes / yes. |
+| Statistical Models (2023/24) — `_posts/2024-1-4-Statistical-Models.md` | `/blog/2024/Statistical-Models/` | `2024-Statistical-Models` | Hull taught edition: linear-model syllabus, slides link, lectures diary, statistical tables, R code, datasets and homework. | Main-site Note: `/notes/statistical-models-2023-24.html` — **Statistical Models**. | Yes / yes. |
+| Statistical Models (2024/25) — `_posts/2025-1-9-Statistical-Models.md` | `/blog/2025/Statistical-Models/` | `2025-Statistical-Models` | Hull taught edition: linear-model syllabus, slides link, lectures diary, statistical tables, R code, datasets and homework. | Main-site Note: `/notes/statistical-models-2024-25.html` — **Statistical Models**. | Yes / yes. |
+| Graduate Skills (2025/26) — `_posts/2026-1-1-Graduate-Skills.md` | `/blog/2026/Graduate-Skills/` | `2026-Graduate-Skills` | Hull MSc project-skills course followed by apparently copied Statistical Models material retained verbatim. | Main-site Note: `/notes/graduate-skills-2025-26.html` — **Graduate Skills**. | Yes / yes. |
+| Statistical Models (2025/26) — `_posts/2026-1-1-Statistical-Models.md` | `/blog/2026/Statistical-Models/` | `2026-Statistical-Models` | Hull taught edition: linear-model syllabus, slides link, lectures diary, statistical tables, R code, datasets, assessment and deadlines. | Main-site Note: `/notes/statistical-models-2025-26.html` — **Statistical Models**. | Yes / yes. |
 
 ### Priority 2 — important improvements
 
@@ -109,6 +108,9 @@ compatibility redirect.
    the final public route inventory.
 4. Remove obsolete transitional source/configuration only after production
    ownership and URL coverage are verified.
+5. Review the migrated Graduate Skills Note separately: the legacy source's
+   apparently copied Statistical Models material was preserved faithfully and
+   requires an explicit later content cleanup.
 
 ### Priority 3 — optional polish
 
@@ -126,7 +128,7 @@ compatibility redirect.
 | Research | Astro-owned `/research/` with three research themes and links into evidence pages/projects. | Editorial research overview that remains concise and points to canonical evidence. | Validate links and remove only demonstrably stale destinations. | Publications/projects ownership; no redesign. |
 | Projects | Astro `/projects/` catalogue reads `data/projects.yml`; every detail page remains Quarto in the supported hybrid. | Preserve the catalogue-to-document experience while deciding the final renderer for polished explainers through F1. | Build the full-fidelity F1 Astro POC beside Quarto; compare rendering and authoring before any broader migration. | F1 renderer gate; current hybrid build and Quarto rendering. |
 | Publications | Astro `/publications/` consumes generated publication HTML from `data/publications.bib`; resources are audited. | Complete, restrained publication archive with trustworthy PDF/external-resource actions. | Resolve only selected external-resource decisions; add link checks. | Publication audit; generated-content pipeline. |
-| Teaching | Astro `/teaching/` consumes generated `data/teaching.yml` output; summaries and selected materials survive. | Accurate teaching catalogue without dead legacy course-page actions. | Decide how to handle legacy `/blog/...` links and recover/archive selected course resources. | Teaching inventory decisions; no page rewrite required. |
+| Teaching | Astro `/teaching/` consumes generated `data/teaching.yml` output; all twelve legacy course pages now survive as Quarto Notes with redirects and recovered linked resources. | Accurate teaching catalogue linked to the historical Notes and any separate maintained resources. | Review Graduate Skills copied material later; otherwise preserve the migrated archive faithfully. | Teaching Notes and hybrid route/resource validation. |
 | Presentations | Astro `/presentations/` renders 23 BibTeX records; 11 slide/poster files remain local and 10 are absent. | Records remain complete, with deliberately chosen resources and honest links. | Decide which missing slides to recover/archive and verify Curriculum Design links. | Presentation inventory decisions. |
 | Supervision | Astro `/supervision/` renders 8 master’s/undergraduate records; the 2025 PhD record is deliberately omitted. | Public supervision page reflects the accepted scope and has no unintended student-resource exposure. | Keep the omission; verify whether any standalone student resources need a separate decision. | Supervision audit; privacy/content review. |
 | CV | Astro `/cv/` exposes the academic CV PDF; historic and Industry CV items remain deferred. | Clear academic CV route with intentional compatibility policy. | Decide the Industry CV and historic `/Silvio_Fanzon_CV.pdf` policy before implementing links/redirects. | Silvio’s future decisions; deployment URL policy. |
@@ -156,8 +158,8 @@ compatibility redirect.
    accepted shell and URL policy.
 2. Resolve the six future inventory decisions with Silvio; record any changed
    decisions in the inventory before implementation.
-3. Fix only confirmed broken Teaching links and run focused route/resource
-   checks across the existing Astro pages.
+3. Run focused route/resource checks across the existing Astro pages and
+   migrated Quarto Notes.
 4. Recover or archive only the selected historical documents/slides, placing
    them under the existing asset ownership and updating their canonical data
    links.

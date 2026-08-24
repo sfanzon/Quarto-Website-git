@@ -100,7 +100,19 @@ test("Notes canonical routes and compatibility alias are published correctly", a
     "/notes/ai-agents-practical-stack-2026-qwen9-128k-copilot-opencode-no-gemini-free.html",
     "/notes/ai-real-project-lessons.html",
     "/notes/how-i-use-ai.html",
-    "/notes/portable-ai-rules-workflow.html"
+    "/notes/portable-ai-rules-workflow.html",
+    "/notes/advanced-functional-analysis-2019-20.html",
+    "/notes/calculus-of-variations-2020-21.html",
+    "/notes/analysis-3-2022-23.html",
+    "/notes/inverse-problems-2022-23.html",
+    "/notes/numbers-sequences-and-series-2023-24.html",
+    "/notes/differential-geometry-2023-24.html",
+    "/notes/differential-geometry-2024-25.html",
+    "/notes/numbers-sequences-and-series-2024-25.html",
+    "/notes/statistical-models-2023-24.html",
+    "/notes/statistical-models-2024-25.html",
+    "/notes/graduate-skills-2025-26.html",
+    "/notes/statistical-models-2025-26.html"
   ]) {
     expect(sitemap).toContain(`https://www.silviofanzon.com${route}`);
   }
@@ -112,6 +124,26 @@ test("Notes canonical routes and compatibility alias are published correctly", a
 
   const listings = JSON.parse(fs.readFileSync(path.join(siteRoot, "listings.json"), "utf8"));
   expect(listings).toEqual([]);
+
+  for (const [legacy, target] of [
+    ["blog/2019/Advanced-Functional-Analysis/index.html", "/notes/advanced-functional-analysis-2019-20.html"],
+    ["blog/2021/Calculus-of-Variations/index.html", "/notes/calculus-of-variations-2020-21.html"],
+    ["blog/2022/Analysis-3/index.html", "/notes/analysis-3-2022-23.html"],
+    ["blog/2022/Inverse-Problems/index.html", "/notes/inverse-problems-2022-23.html"],
+    ["blog/2023/NSS/index.html", "/notes/numbers-sequences-and-series-2023-24.html"],
+    ["blog/2023/Differential-Geometry/index.html", "/notes/differential-geometry-2023-24.html"],
+    ["blog/2024/Differential-Geometry/index.html", "/notes/differential-geometry-2024-25.html"],
+    ["blog/2024/NSS/index.html", "/notes/numbers-sequences-and-series-2024-25.html"],
+    ["blog/2024/Statistical-Models/index.html", "/notes/statistical-models-2023-24.html"],
+    ["blog/2025/Statistical-Models/index.html", "/notes/statistical-models-2024-25.html"],
+    ["blog/2026/Graduate-Skills/index.html", "/notes/graduate-skills-2025-26.html"],
+    ["blog/2026/Statistical-Models/index.html", "/notes/statistical-models-2025-26.html"]
+  ]) {
+    const redirect = fs.readFileSync(path.join(siteRoot, legacy), "utf8");
+    expect(redirect).toContain(`content="0; url=${target}"`);
+    expect(redirect).toContain('<meta name="robots" content="noindex">');
+    expect(sitemap).not.toContain(`https://www.silviofanzon.com/${legacy}`);
+  }
 });
 
 test("retired component classes remain absent from the rendered site", async () => {

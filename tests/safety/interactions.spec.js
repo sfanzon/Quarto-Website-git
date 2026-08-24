@@ -264,7 +264,7 @@ test.describe("critical interactions", () => {
 
   test("Notes index and merged Quarto articles preserve their contracts", async ({ page }) => {
     await page.goto("/notes/");
-    await expect(page.locator(".notes-list .note-row")).toHaveCount(4);
+    await expect(page.locator(".notes-list .note-row")).toHaveCount(16);
     await expect(page.locator(".note-row h2").first()).toHaveText("A Portable Rule System for Working with AI");
     await expect(page.locator(".note-row").first().locator(".note-categories")).toHaveCount(0);
     await expect(page.locator(".note-row").first()).toContainText("How I moved from long, messy chats to concise, version-controlled instructions");
@@ -277,7 +277,7 @@ test.describe("critical interactions", () => {
     ]));
     expect(hrefs.every((href) => href?.endsWith(".html"))).toBe(true);
     await expect(page.locator(".note-row img")).toHaveCount(4);
-    await expect(page.locator(".note-row time")).toHaveCount(4);
+    await expect(page.locator(".note-row time")).toHaveCount(16);
 
     for (const path of ["/notes/how-i-use-ai.html", "/notes/portable-ai-rules-workflow.html"]) {
       await page.goto(path);

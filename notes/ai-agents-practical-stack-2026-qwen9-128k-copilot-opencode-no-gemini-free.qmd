@@ -1,6 +1,7 @@
 ---
 title: "From Chatbots to Agents: How I Built My AI Stack in 2026"
 description: "A practical account of how I moved from using ChatGPT as a chatbot to building a working stack around Codex, OpenCode, DeepSeek, OpenClaw and automation."
+author: Silvio Fanzon
 date: 2026-07-26
 date-modified: 2026-07-27
 categories:
