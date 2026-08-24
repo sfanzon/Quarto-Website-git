@@ -76,6 +76,29 @@ make an explicit renderer decision. This is not inherently a launch blocker:
 the site may launch with the current supported hybrid architecture when it is
 production-ready.
 
+### Legacy course entries → Notes migration map
+
+All twelve genuine legacy course posts are retained in the Notes publishing
+system. This map records destinations only: it does not migrate content, alter
+Teaching links or create redirects. Once each destination is live, its Teaching
+record should link to it and its former `/blog/...` URL should receive a
+compatibility redirect.
+
+| Legacy title and source | Old URL | Current Teaching record | What it contains | Proposed canonical Notes destination | Teaching link / redirect |
+|---|---|---|---|---|---|
+| Advanced Functional Analysis (2019/20) — `_posts/2019-09-22-Advanced-Functional-Analysis.md` | `/blog/2019/Advanced-Functional-Analysis/` | `2019-Functional-Analysis` | Graz MSc practical companion: topics, reading, exercise sheets, final exam and assessment. | Main-site Note: `/notes/advanced-functional-analysis-exercise-course.html` — **Advanced Functional Analysis: Exercise Course (2019/20)**. | Yes / yes. |
+| Calculus of Variations (2020/21) — `_posts/2021-02-01-Calculus-of-Variations.md` | `/blog/2021/Calculus-of-Variations/` | `2021-Calculus-Variations` | Graz MSc course: syllabus, schedule, assessment, lecture notes/videos and exercise sheets. | Main-site Note: `/notes/calculus-of-variations-course.html` — **Calculus of Variations (2020/21)**. | Yes / yes. |
+| Analysis 3 (2022/23) — `_posts/2022-09-18-Analysis-3.md` | `/blog/2022/Analysis-3/` | `2022-Analysis` | Graz BSc practical companion: class calendar, assessment rules, references and weekly exercise sheets. | Main-site Note: `/notes/analysis-3-exercise-course.html` — **Analysis 3: Exercise Course (2022/23)**. | Yes / yes. |
+| Inverse Problems (2022/23) — `_posts/2022-09-26-Inverse-Problems.md` | `/blog/2022/Inverse-Problems/` | `2022-Inverse-Problems` | Graz MSc practical companion: topics, references, assessments, exercise sheets and Matlab/Python assignments. | Main-site Note: `/notes/inverse-problems-exercise-course.html` — **Inverse Problems: Exercise Course (2022/23)**. | Yes / yes. |
+| Numbers, Sequences and Series (2023/24) — `_posts/2023-06-01-NSS.md` | `/blog/2023/NSS/` | `2023-NSS` | Hull taught edition: course information, lecture notes link, lectures diary, tutorials and homework. | Future substantial resource: `https://notes.silviofanzon.com/2023-NSS-Notes/` — **Numbers, Sequences and Series (2023/24)**. | Yes / yes. |
+| Differential Geometry (2023/24) — `_posts/2023-06-02-Differential-Geometry.md` | `/blog/2023/Differential-Geometry/` | `2023-Differential-Geometry` | Hull taught edition: course information, lecture notes link, lectures diary and homework. | Future substantial resource: `https://notes.silviofanzon.com/2023-Differential-Geometry-Notes/` — **Differential Geometry (2023/24)**. | Yes / yes. |
+| Differential Geometry (2024/25) — `_posts/2024-09-15-Differential-Geometry.md` | `/blog/2024/Differential-Geometry/` | `2024-Differential-Geometry` | Hull taught edition: course information, lecture notes link, schedule, assessment, lectures diary and homework. | Future substantial resource: `https://notes.silviofanzon.com/2024-Differential-Geometry-Notes/` — **Differential Geometry (2024/25)**. | Yes / yes. |
+| Numbers, Sequences and Series (2024/25) — `_posts/2024-09-15-NSS.md` | `/blog/2024/NSS/` | `2024-NSS` | Hull taught edition: course information, lecture notes link, schedule, tutorials, lectures diary and homework. | Future substantial resource: `https://notes.silviofanzon.com/2024-NSS-Notes/` — **Numbers, Sequences and Series (2024/25)**. | Yes / yes. |
+| Statistical Models (2023/24) — `_posts/2024-1-4-Statistical-Models.md` | `/blog/2024/Statistical-Models/` | `2024-Statistical-Models` | Hull taught edition: linear-model syllabus, slides link, lectures diary, statistical tables, R code, datasets and homework. | Future substantial resource: `https://notes.silviofanzon.com/2024-Statistical-Models-Slides/` — **Statistical Models (2023/24)**. | Yes / yes. |
+| Statistical Models (2024/25) — `_posts/2025-1-9-Statistical-Models.md` | `/blog/2025/Statistical-Models/` | `2025-Statistical-Models` | Hull taught edition: linear-model syllabus, slides link, lectures diary, statistical tables, R code, datasets and homework. | Future substantial resource: `https://notes.silviofanzon.com/2025-Statistical-Models-Slides/` — **Statistical Models (2024/25)**. | Yes / yes. |
+| Graduate Skills (2025/26) — `_posts/2026-1-1-Graduate-Skills.md` | `/blog/2026/Graduate-Skills/` | `2026-Graduate-Skills` | Hull MSc project-skills course: journal-club presentations, report work, Canvas activities, schedule and support material. | Main-site Note: `/notes/graduate-skills.html` — **Graduate Skills (2025/26)**. | Yes / yes. |
+| Statistical Models (2025/26) — `_posts/2026-1-1-Statistical-Models.md` | `/blog/2026/Statistical-Models/` | `2026-Statistical-Models` | Hull taught edition: linear-model syllabus, slides link, lectures diary, statistical tables, R code, datasets, assessment and deadlines. | Future substantial resource: `https://notes.silviofanzon.com/2026-Statistical-Models-Slides/` — **Statistical Models (2025/26)**. | Yes / yes. |
+
 ### Priority 2 — important improvements
 
 1. Recover only the historical PDFs/slides/resources explicitly selected after
