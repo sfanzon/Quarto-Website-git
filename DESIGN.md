@@ -419,19 +419,28 @@ Edit generated scientific figures through their source pipeline whenever possibl
 
 ## 19. Motion
 
-Motion should be subtle and functional.
+The page itself remains stable. Motion comes from meaningful elements arriving,
+responding and reacting; it should reinforce hierarchy or interaction rather
+than act as decoration.
+
+The homepage may use restrained entrance and interaction animation. Major
+showcase/project pages may use bespoke interaction selectively. Research, news
+and technical reading pages should remain predominantly static.
 
 Appropriate:
 
 - hover feedback;
 - drawer transitions;
-- active navigation state.
+- active navigation state;
+- restrained, one-time homepage or showcase-section reveals.
 
 Avoid:
 
 - parallax;
-- decorative entrance animation;
-- movement that slows reading.
+- animated backgrounds, gradients, blobs or glows;
+- scroll-jacking;
+- cursor-reactive effects;
+- gratuitous animation or movement that slows reading.
 
 Respect `prefers-reduced-motion` for any motion that does exist.
 
