@@ -432,7 +432,7 @@ Appropriate:
 - hover feedback;
 - drawer transitions;
 - active navigation state;
-- restrained, one-time homepage or showcase-section reveals.
+- restrained, one-time homepage hero entrance.
 
 Avoid:
 
@@ -440,6 +440,7 @@ Avoid:
 - animated backgrounds, gradients, blobs or glows;
 - scroll-jacking;
 - cursor-reactive effects;
+- generic repeated scroll-triggered reveal systems;
 - gratuitous animation or movement that slows reading.
 
 Respect `prefers-reduced-motion` for any motion that does exist.
