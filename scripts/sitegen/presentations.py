@@ -3,6 +3,7 @@
 import html
 
 from .bibtex import read_bibtex_entries
+from .core import is_safe_url, sanitize_html
 
 
 PRESENTATION_TYPES = (
@@ -35,9 +36,17 @@ def load_presentations(site_root):
 
 def _presentation_link(record, field, label, icon, asset=False):
     value = record.get(field)
-    if not value:
+    if not value or not isinstance(value, str):
         return ''
-    href = value if value.startswith(('http://', 'https://', '/')) else f'/assets/pdf/{value}' if asset else value
+    value = value.strip()
+    if value.startswith(('http://', 'https://', '/')):
+        href = value
+    elif asset:
+        href = f'/assets/pdf/{value}'
+    else:
+        href = value
+    if not is_safe_url(href):
+        return ''
     return (
         f'<a class="paper-action" href="{html.escape(href, quote=True)}" '
         f'role="button"><i class="fa-solid {icon}"></i> {label}</a>'
@@ -62,7 +71,7 @@ def render_presentations_archive(records):
                     _presentation_link(record, 'poster', 'Poster', 'fa-image', asset=True),
                     _presentation_link(record, 'video', 'Video', 'fa-video'),
                 ])
-                abstract = f'<div class="abstract hidden"><p>{record["abstract"]}</p></div>' if record.get('abstract') else ''
+                abstract = f'<div class="abstract hidden"><p>{sanitize_html(record["abstract"])}</p></div>' if record.get('abstract') else ''
                 entries.append(f'''<div class="row publication-entry" id="{html.escape(record['id'], quote=True)}">
   <div class="col col-sm-2 abbr"><abbr class="badge rounded w-100">{html.escape(record.get('abbr', ''))}</abbr></div>
   <div class="col-sm-8">

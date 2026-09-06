@@ -4,15 +4,15 @@
 export const SITE_TITLE = 'Silvio Fanzon';
 export const SITE_DESCRIPTION = 'Applied mathematician working across modelling, optimisation, statistics and scientific computing.';
 
-export const CV_URL = 'https://shravangoswami.com/resume.pdf';
+export const CV_URL = '/Silvio_Fanzon_Academic_CV.pdf';
 
 export const CONTACT = {
-  organization: 'Shravan Goswami',
+  organization: 'Silvio Fanzon',
   addressLines: [
-    'Creator of Astro Scholar',
+    'Applied Mathematician',
   ],
   emails: [
-    'contact@shravangoswami.com',
+    'silvio.fanzon.work@gmail.com',
   ],
 };
 
@@ -25,31 +25,31 @@ export const SOCIAL_LINKS: ReadonlyArray<{
 }> = [
   {
     label: 'GitHub',
-    href: 'https://github.com/shravanngoswamii/astro-scholar',
+    href: 'https://github.com/sfanzon',
     icon: 'github',
   },
   {
     label: 'Email',
-    href: 'mailto:contact@shravangoswami.com',
+    href: 'mailto:silvio.fanzon.work@gmail.com',
     icon: 'email',
   },
   {
     label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/shravangoswami/',
+    href: 'https://www.linkedin.com/in/fanzon',
     icon: 'linkedin',
   },
   {
-    label: 'X',
-    href: 'https://x.com/shravangoswamii',
-    icon: 'twitter',
+    label: 'Scholar',
+    href: 'https://scholar.google.com/citations?user=9yJyLsoAAAAJ',
+    icon: 'scholar',
   },
 ];
 
 export const FOOTER_CREDIT = {
-  designerName: 'Shravan Goswami',
-  designerUrl: 'https://shravangoswami.com',
-  sourceLabel: 'Open Source',
-  sourceUrl: 'https://github.com/shravanngoswamii/astro-scholar',
+  designerName: 'Silvio Fanzon',
+  designerUrl: 'https://www.silviofanzon.com',
+  sourceLabel: 'Source code',
+  sourceUrl: 'https://github.com/sfanzon',
 };
 
 // Umami analytics — configured via environment variables so no tracking ID is

@@ -9,3 +9,12 @@ playwright-report/
 test-results/
 
 /.quarto/
+
+# Environment and sensitive keys
+.env
+.env.*
+*.pem
+*.key
+
+# Build outputs
+astro/dist/

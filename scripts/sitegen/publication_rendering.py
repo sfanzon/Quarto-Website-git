@@ -3,6 +3,7 @@
 import html
 from urllib.parse import urlsplit
 
+from .core import is_safe_url
 from .publications import publication_abstract_html
 
 
@@ -154,7 +155,10 @@ def linked_authors(authors, coauthor_urls=None):
         '<span class="author-self">Silvio Fanzon</span>',
     )
     for name, url in (coauthor_urls or {}).items():
-        result = result.replace(name, f'<a class="author-link" href="{url}">{name}</a>')
+        if is_safe_url(url):
+            safe_url = html.escape(url, quote=True)
+            safe_name = html.escape(name)
+            result = result.replace(name, f'<a class="author-link" href="{safe_url}">{safe_name}</a>')
     return result
 
 
@@ -167,7 +171,8 @@ def render_publication_entry(
 ):
     authors = linked_authors(publication['authors'], coauthor_urls)
     side_meta = publication_side_meta(publication)
-    return f'''<article class="{row_classes} publication-entry" id="{html.escape(row_id, quote=True)}"><div class="home-publication-main pub-main"><h3>{publication['title']}</h3><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{publication['periodical']}</span></div><div class="paper-actions">{actions}</div><div class="abstract hidden">{publication_abstract_html(publication)}</div><div class="bibtex hidden"><pre><code>{html.escape(publication['bibtex'])}</code></pre></div></div>{side_meta}</article>'''
+    title = html.escape(publication['title'])
+    return f'''<article class="{row_classes} publication-entry" id="{html.escape(row_id, quote=True)}"><div class="home-publication-main pub-main"><h3>{title}</h3><div class="paper-meta"><span class="publication-authors">{authors}</span><span class="publication-periodical">{publication['periodical']}</span></div><div class="paper-actions">{actions}</div><div class="abstract hidden">{publication_abstract_html(publication)}</div><div class="bibtex hidden"><pre><code>{html.escape(publication['bibtex'])}</code></pre></div></div>{side_meta}</article>'''
 
 
 def render_publication_archive(publications, coauthor_urls):

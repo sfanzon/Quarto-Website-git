@@ -26,6 +26,9 @@ on:
       - 'tests/visual/**'
       - '.github/workflows/visual-tests.yml'
 
+permissions:
+  contents: read
+
 jobs:
   compare-pr:
     if: github.event_name == 'pull_request'

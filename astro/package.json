@@ -20,7 +20,6 @@
     "@astrojs/rss": "^4.0.18",
     "@resvg/resvg-js": "^2.6.2",
     "astro": "^6.4.5",
-    "bibliography": "^0.1.0",
     "js-yaml": "^4.1.1",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",

@@ -13,6 +13,9 @@ on:
         required: true
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   update-baselines:
     runs-on: ubuntu-22.04
@@ -78,10 +81,12 @@ jobs:
           retention-days: 7
 
       - name: Instructions
+        env:
+          INPUT_REASON: ${{ inputs.reason }}
         run: |
           echo "=============================================="
           echo "  Baselines regenerated."
-          echo "  Reason: ${{ inputs.reason }}"
+          printf '  Reason: %s\n' "$INPUT_REASON"
           echo ""
           echo "  Download the 'updated-visual-baselines'"
           echo "  artifact, review the screenshots, and commit"

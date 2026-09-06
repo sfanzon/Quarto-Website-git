@@ -3,7 +3,7 @@
 import html
 import re
 
-import yaml
+from .core import is_safe_url, sanitize_html
 
 
 ACADEMIC_YEAR_PATTERN = re.compile(r'^(?P<start>\d{4})/(?P<end>\d{2})$')
@@ -13,6 +13,8 @@ VALID_ROLES = {'lecturer', 'tutor'}
 
 def load_teaching(path):
     """Load and validate the single canonical teaching record source."""
+    import yaml
+
     courses = yaml.safe_load(path.read_text())
     if not isinstance(courses, list):
         raise ValueError(f'{path.name} must contain a YAML list of courses')
@@ -39,9 +41,16 @@ def load_teaching(path):
 
 
 def teaching_link(value, asset=False):
+    if not value or not isinstance(value, str):
+        return ''
+    value = value.strip()
     if value.startswith(('http://', 'https://', '/')):
-        return value
-    return f'/assets/pdf/{value}' if asset else value
+        href = value
+    elif asset:
+        href = f'/assets/pdf/{value}'
+    else:
+        href = value
+    return href if is_safe_url(href) else ''
 
 
 def teaching_actions(course):
@@ -70,6 +79,8 @@ def teaching_actions(course):
                 elif value.startswith('/'):
                     value = f'https://www.silviofanzon.com{value}'
             href = teaching_link(value, asset)
+            if not href:
+                continue
             actions.append(
                 f'<a class="teaching-action" href="{html.escape(href, quote=True)}">'
                 f'<i class="fa-solid {icon}"></i> {label}</a>'
@@ -129,7 +140,7 @@ def teaching_section(section_id, heading, courses, years):
                 if actions else ''
             )
             abstract_html = (
-                f'<div class="abstract hidden">{course["abstract"]}</div>'
+                f'<div class="abstract hidden">{sanitize_html(course["abstract"])}</div>'
                 if course.get('abstract') else ''
             )
             entries.append(f'''<article class="teaching-course publication-entry" id="{html.escape(course['id'], quote=True)}">

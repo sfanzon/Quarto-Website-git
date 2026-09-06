@@ -16,6 +16,22 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 <meta name="color-scheme" content="light dark" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://cloud.umami.is; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://cloud.umami.is; worker-src 'self' blob:; base-uri 'self'; form-action 'self';" />
+<style is:inline id="antiClickjack">body{display:none !important;}</style>
+<script is:inline>
+	if (self === top) {
+		const antiClickjack = document.getElementById("antiClickjack");
+		if (antiClickjack && antiClickjack.parentNode) {
+			antiClickjack.parentNode.removeChild(antiClickjack);
+		}
+	} else {
+		try {
+			top.location = self.location;
+		} catch {}
+	}
+</script>
+<noscript><style>body{display:block !important;}</style></noscript>
 <script is:inline>
 	(() => {
 		let theme = 'light';

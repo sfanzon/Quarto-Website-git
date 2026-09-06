@@ -4,23 +4,9 @@ import html
 import re
 from datetime import datetime
 
-from .core import DEFAULT_ROOT, read_front_matter
+from .core import DEFAULT_ROOT, is_safe_url, read_front_matter, sanitize_html
 
-
-def news_inline_html(text):
-    rendered = re.sub(r'(?<!\*)\*([^*\n]+)\*(?!\*)', r'<em>\1</em>', text)
-    for route in ('publications', 'teaching', 'research', 'about', 'expertise', 'projects'):
-        rendered = re.sub(
-            rf'href=(["\'])/{route}(?:\.html|/)?(?=#|\1)',
-            rf'href=\1/{route}/',
-            rendered,
-        )
-    rendered = re.sub(
-        r'href=(["\'])/presentations(?:\.html|/)?(?=#|\1)',
-        r'href=\1/presentations/',
-        rendered,
-    )
-    return rendered
+news_inline_html = sanitize_html
 
 
 def news_body_html(source):
