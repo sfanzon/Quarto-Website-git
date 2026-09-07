@@ -10,7 +10,7 @@ This inventory covers files directly under the old `sfanzon.github.io` repositor
 |---|---:|
 | MIGRATED | 32 |
 | DELIBERATELY REMOVE | 16 |
-| NEEDS REVIEW | 14 |
+| NEEDS REVIEW | 13 |
 
 ## Old pages
 
@@ -24,7 +24,7 @@ This inventory covers files directly under the old `sfanzon.github.io` repositor
 | `_pages/contact.md` | `/contact/` | `astro/src/pages/contact.astro` | MIGRATED | Current Contact page owns the route. |
 | `_pages/cv.md` | `/cv/` | `astro/src/pages/cv.astro` | MIGRATED | Current CV page owns the route. |
 | `_pages/cv_default.md` | `/cv_default/` | None | DELIBERATELY REMOVE | al-folio example CV (`example_pdf.pdf`). |
-| `_pages/cv_old.md` | `/Silvio_Fanzon_CV.pdf` | Current academic CV download: `/Silvio_Fanzon_Academic_CV.pdf` | NEEDS REVIEW | Historic CV filename/route needs an explicit retention or removal decision. |
+| `_pages/cv_old.md` | `/Silvio_Fanzon_CV.pdf` | Current academic CV download: `/Silvio_Fanzon_Academic_CV.pdf` | RESOLVED — IMPLEMENTATION PENDING | Keep the historic route permanently for backward compatibility; it should resolve to the current Academic CV until an explicit later decision changes that. |
 | `_pages/dropdown.md` | No explicit permalink | None | DELIBERATELY REMOVE | al-folio submenu demonstration. |
 | `_pages/news.md` | `/news/` | `astro/src/pages/news.astro` | MIGRATED | Current News archive owns the route. |
 | `_pages/presentations.md` | `/presentations/` | `astro/src/pages/presentations.astro` | MIGRATED | Current Presentations page owns the route. |
@@ -145,8 +145,8 @@ The old seminar bibliographies contain 23 presentation records: 15 talks, 4 post
 |---|---|---|---|---|
 | Presentation, talk and poster records | `_bibliography/seminars_talks.bib`, `_bibliography/seminars_posters.bib`, `_bibliography/seminars_institutional.bib` | `data/presentations_talks.bib`, `data/presentations_posters.bib`, `data/presentations_institutional.bib` → `/presentations/` | MIGRATED | All 23 substantive records, titles, dates, venues and abstracts are represented in the current Astro archive. |
 | Preserved seminar slides and posters | `assets/pdf/seminars/` | `assets/pdf/seminars/` and current presentation actions | PRESERVED | 11 legacy slide/poster files remain present, including the 2016 CMU, 2017 Levico, 2021 TraDE, 2023 Göttingen, 2024 taster, 2025 Sapienza and 2026 Hull materials. |
-| Missing seminar slides | `assets/pdf/seminars/slides/2018/2018-Graz-Slides.pdf`, `2018-Lisbon-Slides.pdf`; 2019 Berlin/Paris/Vienna; 2021 Parma; 2022 Edinburgh/Graz/Sussex; 2023 Sussex | No current local asset | NEEDS REVIEW | Retain as a future recovery/archive decision; do not delete the legacy copies from any recovery source. |
-| Curriculum Design slides and video | `slides` and `video` fields for `2024-Curriculum-Design` | External slide URL and YouTube video in the current record | NEEDS REVIEW | Retain as a future verification decision; do not remove the preserved external links now. |
+| Missing seminar slides | `assets/pdf/seminars/slides/2018/2018-Graz-Slides.pdf`, `2018-Lisbon-Slides.pdf`; 2019 Berlin/Paris/Vienna; 2021 Parma; 2022 Edinburgh/Graz/Sussex; 2023 Sussex | No current local asset | RESOLVED — LATER CONTENT WORK | Keep the presentation records; Silvio intends to recover/upload selected missing slide PDFs later. No launch action or record removal is required. |
+| Curriculum Design slides and video | `slides` and `video` fields for `2024-Curriculum-Design` | External slide URL and YouTube video in the current record | PRESERVED | Keep the existing external slide and video links; no migration or removal is required. |
 
 ## Supervision
 
@@ -166,10 +166,10 @@ The old CV page offered academic and industry downloads, while a separate legacy
 |---|---|---|---|---|
 | CV page | `_pages/cv.md` (`/cv/`) | `astro/src/pages/cv.astro` → `/cv/` | MIGRATED | The page and its Projects/Publications cross-links are preserved; the current page intentionally lists only the academic CV. |
 | Academic CV PDF | `Silvio_Fanzon_Academic_CV.pdf` linked by `_pages/cv.md` | `Silvio_Fanzon_Academic_CV.pdf` → `/Silvio_Fanzon_Academic_CV.pdf` | PRESERVED | The same named PDF exists at the repository root and is copied into the hybrid output. |
-| Industry CV download | `/Silvio_Fanzon_Industry_CV.pdf` link in `_pages/cv.md` | None found in the old repository or current site | NEEDS REVIEW | Retain as a future user decision; no historical link or document is removed now. |
-| Historic `/Silvio_Fanzon_CV.pdf` route | `_pages/cv_old.md` | None in current production | NEEDS REVIEW | Retain as a future compatibility decision; no redirect or removal is made in this audit. |
+| Industry CV download | `/Silvio_Fanzon_Industry_CV.pdf` link in `_pages/cv.md` | None found in the old repository or current site | RESOLVED — IMPLEMENTATION DEFERRED | Industry CV has priority when supplied and should appear before the Academic CV, likely in a future CV dropdown. The file does not yet exist; do not change navigation or routes now. |
+| Historic `/Silvio_Fanzon_CV.pdf` route | `_pages/cv_old.md` | None in current production | RESOLVED — IMPLEMENTATION PENDING | Keep permanently for backward compatibility by resolving it to `/Silvio_Fanzon_Academic_CV.pdf`; implementation remains a launch task. |
 | Teaching statement and PCAP case studies | `assets/pdf/news/2025/Fanzon_Teaching_Philosophy.pdf`, `assets/pdf/news/2024/Fanzon_Case_Study_{1,2}.pdf` | Matching files under `assets/pdf/news/` and current News links | PRESERVED | These meaningful professional documents remain available; they are cross-referenced by the completed News/Teaching audits. |
-| Microscopy Hull event PDF | `assets/pdf/events/2023/Microscopy_Hull.pdf` and duplicate `assets/pdf/news/2023/Microscopy_Hull.pdf` | None found in current assets or content | NEEDS REVIEW | Retain as a potentially recoverable public resource; future user decision required before recovery, archival or removal. |
+| Microscopy Hull event PDF | `assets/pdf/events/2023/Microscopy_Hull.pdf` and duplicate `assets/pdf/news/2023/Microscopy_Hull.pdf` | None found in current assets or content | DELIBERATELY OMIT | Do not expose publicly. Retain/archive source material if present; no public website action is required. |
 
 ## Remaining collections and assets
 
@@ -178,7 +178,7 @@ This slice checks the old structured data and standalone asset folders not cover
 | Collection/resource | Old source | Current destination | Status | Notes |
 |---|---|---|---|---|
 | Coauthor profile links | `_data/coauthors.yml` | `data/coauthors.yml` and rendered publication author links | MERGED | The meaningful coauthor names and profile URLs are retained through current publication data and generated records. |
-| Social/profile metadata | `_data/socials.yml` | Astro Contact/profile links | NEEDS REVIEW | LinkedIn, GitHub, Scholar, ResearchGate, ORCID and email are represented; retain the Scopus/arXiv omission as a future profile decision. |
+| Social/profile metadata | `_data/socials.yml` | Astro Contact/profile links | DELIBERATELY OMIT | LinkedIn, GitHub, Scholar, ResearchGate, ORCID and email are represented; standalone Scopus and arXiv profile links are intentionally omitted. |
 | Venue metadata | `_data/venues.yml` | Publication/presentation source records and generated links | MERGED | Journal, thesis, seminar and publisher destinations are consumed by the audited records; no separate public venue collection remains. |
 | Repository listing data | `_data/repositories.yml` | None | DELIBERATELY REMOVE | The file contains only al-folio starter repositories and placeholder GitHub users, not Silvio-specific public content. |
 | Scholar cache | `_data/scholar_cache.yml` | None | DELIBERATELY REMOVE | Cached template data (`N/A`) is implementation state, not meaningful public content. |
@@ -188,22 +188,21 @@ This slice checks the old structured data and standalone asset folders not cover
 
 ## Final reconciliation decisions
 
-These six items remain `NEEDS REVIEW` in their source rows because they are intentionally deferred to a future user decision. The PhD record is explicitly omitted below rather than left unresolved.
+The six legacy/resource decisions below are resolved. Their source rows retain the historical audit evidence while distinguishing deferred implementation or later content work from an unresolved decision. The PhD record remains explicitly omitted.
 
 | Item | Decision | Rationale | Later implementation |
 |---|---|---|---|
-| Missing Industry CV | **FUTURE USER DECISION** | The old CV page links to an Industry CV, but no corresponding file exists in the audited old repository or current site. | Later: recover/recreate and link it, or retire the historical reference after confirmation. |
-| Historic `/Silvio_Fanzon_CV.pdf` route | **FUTURE USER DECISION** | It was historically public, but its intended compatibility behaviour is not established. | Later: add a compatibility route/document or retire it; no redirect is created now. |
-| Microscopy Hull PDF | **FUTURE USER DECISION** | Two legacy copies exist without a surviving page/news reference, but the PDF may be a useful public resource. | Later: recover one copy or archive it; do not delete it now. |
-| Missing seminar slide PDFs | **FUTURE USER DECISION** | Ten slides are absent locally while their presentation records remain. | Later: recover selected files or archive them intentionally; no assets are deleted now. |
-| Curriculum Design slides/video links | **FUTURE USER DECISION** | External destinations are preserved, but continued availability and preferred hosting are unverified. | Later: verify links and optionally replace them; do not remove them now. |
+| Missing Industry CV | **RESOLVED — IMPLEMENTATION DEFERRED** | Industry CV should eventually be offered before the Academic CV, but the file has not yet been supplied. | When supplied, add it ahead of the Academic CV, likely through a CV dropdown; do not change navigation or routes now. |
+| Historic `/Silvio_Fanzon_CV.pdf` route | **RESOLVED — LAUNCH IMPLEMENTATION PENDING** | Keep the historic URL permanently for backward compatibility. | Implement it to resolve to the current Academic CV unless a later explicit decision changes that. |
+| Microscopy Hull PDF | **DELIBERATELY OMIT** | It is not to be exposed publicly now. | Retain/archive source material if present; no public website action is required. |
+| Missing seminar slide PDFs | **RESOLVED — LATER CONTENT WORK** | Presentation records remain public even where local PDFs are absent. | Recover/upload selected slide PDFs later; do not remove records for their absence. |
+| Curriculum Design slides/video links | **PRESERVED** | The existing external slide and video destinations remain intentional. | No migration or removal is required. |
 | Missing 2025 PhD supervision record | **DELIBERATELY REMOVE / OMIT** | It is not part of the current public supervision content. | No recovery or implementation work remains for this record. |
-| Scopus/arXiv profile metadata | **FUTURE USER DECISION** | Old metadata contains profile identifiers not surfaced as standalone current links. | Later: add profile links if desired, or document intentional omission. |
+| Scopus/arXiv profile metadata | **DELIBERATELY OMIT** | Scholar, ORCID, GitHub and LinkedIn remain sufficient intentional profile links. | No standalone Scopus or arXiv profile links will be added. |
 
 ## Needs review
 
 - `_pages/blog.md`: the posts audit is complete; there is no current production `/blog/` route because donor Astro blog output is explicitly removed.
-- `_pages/cv_old.md`: decide whether the historic `/Silvio_Fanzon_CV.pdf` route should remain available or be retired in favour of the academic CV download.
 - `_posts/2019-09-22-Advanced-Functional-Analysis.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
 - `_posts/2021-02-01-Calculus-of-Variations.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
 - `_posts/2022-09-18-Analysis-3.md`: migrate/archive the detailed legacy course page or remove/replace the current Teaching “Course page” link.
@@ -220,11 +219,8 @@ These six items remain `NEEDS REVIEW` in their source rows because they are inte
 - `2018-Fan-PhD`: verify or replace the legacy Sussex repository destination.
 - Teaching resources: decide which of the 166 missing detailed course files should be recovered or archived.
 - Teaching links: decide whether to migrate/archive the detailed `/blog/...` course pages or remove/replace the current Teaching links, and verify the remaining external notes/revision/course destinations.
-- Presentations: decide whether to recover or archive the ten missing seminar slide PDFs and verify the external Curriculum Design slide/video links.
 - Supervision: the missing 2025 PhD record is deliberately omitted; standalone-resource verification remains covered by the supervision audit.
-- CV/documents: decide the fate of the missing Industry CV, historic `/Silvio_Fanzon_CV.pdf` route, and old Microscopy Hull PDF.
-- Remaining collections/assets: decide whether to expose Scopus/arXiv profile links and resolve any legacy resource decisions recorded above.
 
 ## Next audit slice
 
-The substantive legacy collections and downloads have now been inventoried. Final migration/design work should wait for the six future user decisions above and the other historical-resource decisions retained in `NEEDS REVIEW`.
+The substantive legacy collections and downloads have now been inventoried, and the six legacy/resource decisions are recorded above. Final migration/design work should proceed only with their stated implementation timing and the separate historical-resource reviews retained in `NEEDS REVIEW`.

@@ -61,10 +61,10 @@ the same visible shell after the hybrid merge.
    compatibility redirects through launch validation.
 3. Complete route/resource checks for the merged Quarto project and note pages,
    including sitemap, search, shell, assets and legacy URL compatibility.
-4. Decide the six deferred inventory items with Silvio before changing or
-   deleting any disputed resource: Industry CV, historic CV route, Microscopy
-   PDF, missing seminar slides, Curriculum Design links, and Scopus/arXiv
-   profile metadata.
+4. Implement the resolved historic CV compatibility route before launch. The
+   Industry CV remains deferred until supplied; the Microscopy PDF is not
+   public; missing seminar slides are later content work; Curriculum Design
+   links are retained; and standalone Scopus/arXiv profile links are omitted.
 
 ### Project-renderer architecture gate
 
@@ -129,19 +129,19 @@ coexist later, but they do not replace these historical Notes.
 | Projects | Astro `/projects/` catalogue reads `data/projects.yml`; every detail page remains Quarto in the supported hybrid. | Preserve the catalogue-to-document experience while deciding the final renderer for polished explainers through F1. | Build the full-fidelity F1 Astro POC beside Quarto; compare rendering and authoring before any broader migration. | F1 renderer gate; current hybrid build and Quarto rendering. |
 | Publications | Astro `/publications/` consumes generated publication HTML from `data/publications.bib`; resources are audited. | Complete, restrained publication archive with trustworthy PDF/external-resource actions. | Resolve only selected external-resource decisions; add link checks. | Publication audit; generated-content pipeline. |
 | Teaching | Astro `/teaching/` consumes generated `data/teaching.yml` output; all twelve legacy course pages now survive as Quarto Notes with redirects and recovered linked resources. | Accurate teaching catalogue linked to the historical Notes and any separate maintained resources. | Review Graduate Skills copied material later; otherwise preserve the migrated archive faithfully. | Teaching Notes and hybrid route/resource validation. |
-| Presentations | Astro `/presentations/` renders 23 BibTeX records; 11 slide/poster files remain local and 10 are absent. | Records remain complete, with deliberately chosen resources and honest links. | Decide which missing slides to recover/archive and verify Curriculum Design links. | Presentation inventory decisions. |
+| Presentations | Astro `/presentations/` renders 23 BibTeX records; 11 slide/poster files remain local and 10 are absent. | Records remain complete, with deliberately chosen resources and honest links. | Keep all records and retained Curriculum Design links; recover/upload missing slides later as content work. | Later slide recovery; no launch decision blocker. |
 | Supervision | Astro `/supervision/` renders 8 master’s/undergraduate records; the 2025 PhD record is deliberately omitted. | Public supervision page reflects the accepted scope and has no unintended student-resource exposure. | Keep the omission; verify whether any standalone student resources need a separate decision. | Supervision audit; privacy/content review. |
-| CV | Astro `/cv/` exposes the academic CV PDF; historic and Industry CV items remain deferred. | Clear academic CV route with intentional compatibility policy. | Decide the Industry CV and historic `/Silvio_Fanzon_CV.pdf` policy before implementing links/redirects. | Silvio’s future decisions; deployment URL policy. |
-| About | Astro-owned `/about/` with the accepted career narrative and shared shell. | Stable personal/professional context page with intentional profile links. | Keep the accepted content; verify profile and download links during launch checks. | Profile metadata decision; shared shell. |
-| Contact | Astro-owned `/contact/` with current contact/profile actions. | Clear contact path with only intentional public profile links. | Decide whether Scopus/arXiv profile links belong on the public contact surface; otherwise retain the documented omission. | Profile metadata decision; no redesign. |
+| CV | Astro `/cv/` exposes the existing Academic CV PDF; the Industry CV file has not yet been supplied. | Offer Industry CV first and Academic CV second when both exist, likely through a CV dropdown; no route removal decision is made now. | Implement permanent `/Silvio_Fanzon_CV.pdf` compatibility to the current Academic CV. Defer Industry CV/navigation work until its file is supplied. | Historic-URL implementation; future Industry CV supply. |
+| About | Astro-owned `/about/` with the accepted career narrative and shared shell. | Stable personal/professional context page with intentional profile links. | Keep the accepted content; verify profile and download links during launch checks. | Existing intentional profile links; shared shell. |
+| Contact | Astro-owned `/contact/` with current contact/profile actions. | Clear contact path with only intentional public profile links. | Retain Scholar, ORCID, GitHub and LinkedIn; deliberately omit standalone Scopus/arXiv profile links. | No profile-metadata decision remains; no redesign. |
 
 ## 5. Explicit non-goals
 
 - Do not rebuild or preserve generic al-folio demo pages, books, repository
   listings, caches, starter media or template screenshots classified for
   deliberate removal.
-- Do not recover disputed PDFs, slide decks, CVs or profile links until the
-  decisions in the inventory handoff are made.
+- Do not recover disputed PDFs, slide decks, CVs or profile links outside the
+  resolved timing in the inventory handoff or the separate remaining audits.
 - Do not convert individual `projects/**` pages or Quarto note articles until
   the F1 renderer gate supports that decision; do not create duplicate
   implementations beyond the bounded F1 proof of concept.
@@ -156,8 +156,10 @@ coexist later, but they do not replace these historical Notes.
 
 1. Confirm the production branch/build/deployment contract and freeze the
    accepted shell and URL policy.
-2. Resolve the six future inventory decisions with Silvio; record any changed
-   decisions in the inventory before implementation.
+2. Record the six resolved legacy/resource decisions and follow their stated
+   timing: implement historic CV compatibility, defer Industry CV until
+   supplied, omit Microscopy and Scopus/arXiv, retain Curriculum Design links,
+   and recover seminar slides later as content work.
 3. Run focused route/resource checks across the existing Astro pages and
    migrated Quarto Notes.
 4. Recover or archive only the selected historical documents/slides, placing
