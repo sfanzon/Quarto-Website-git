@@ -31,38 +31,48 @@
 }
 
 .teaching-year {
-	margin-top: 2rem;
-	padding-top: .55rem;
-	border-top: 1px solid var(--global-divider-color);
+	margin-top: 2.35rem;
+	padding-top: .05rem;
 }
 
 .teaching-year > h3 {
-	margin: 0 0 1rem;
+	display: flex;
+	align-items: center;
+	gap: .75rem;
+	margin: 0 0 .95rem;
 	color: var(--global-text-color-light);
-	font-size: 1.1rem;
-	font-weight: 400;
+	font-size: .75rem;
+	font-weight: 650;
+	letter-spacing: .12em;
 	line-height: 1.3;
-	text-align: right;
+	text-transform: uppercase;
+}
+
+.teaching-year > h3::after {
+	content: '';
+	flex: 1;
+	border-top: 1px solid var(--global-divider-color);
 }
 
 .teaching-course-list {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr);
-	gap: .9rem;
 }
 
 .teaching-course {
 	min-width: 0;
-	padding: 1.1rem 0 1.6rem;
+	padding: 1rem 0 1.35rem;
 }
 
 .teaching-course + .teaching-course {
-	margin-top: .45rem;
+	border-top: 1px solid var(--global-divider-color);
 }
 
 .teaching-course h4 {
-	margin: 0 0 .35rem;
-	font-size: 1.05rem;
+	margin: 0 0 .3rem;
+	font-size: 1.12rem;
+	font-weight: 600;
+	letter-spacing: -.01em;
 	line-height: 1.3;
 }
 
@@ -106,6 +116,5 @@
 }
 
 @media (max-width: 767.98px) {
-	.teaching-course { padding: 1rem 0 1.4rem; }
-	.teaching-course + .teaching-course { margin-top: .3rem; }
+	.teaching-course { padding: .9rem 0 1.25rem; }
 }
