@@ -1,7 +1,12 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { test, expect } = require("@playwright/test");
-const { htmlPages, repositoryRoot, siteRoot } = require("./site");
+const {
+  canonicalMergedDocumentPaths,
+  htmlPages,
+  repositoryRoot,
+  siteRoot
+} = require("./site");
 
 const ignoredSchemes = /^(?:data:|mailto:|tel:|javascript:|blob:)/i;
 const optionalLocalAssets = new Set(
@@ -93,28 +98,15 @@ test("all generated HTML and CSS references resolve locally", async () => {
   expect([...missing].sort(), "missing local HTML/CSS targets").toEqual([]);
 });
 
-test("Notes canonical routes and compatibility alias are published correctly", async () => {
+test("canonical merged Quarto routes and compatibility aliases are published correctly", async () => {
   const sitemap = fs.readFileSync(path.join(siteRoot, "sitemap.xml"), "utf8");
-  for (const route of [
-    "/notes/",
-    "/notes/ai-agents-practical-stack-2026-qwen9-128k-copilot-opencode-no-gemini-free.html",
-    "/notes/ai-real-project-lessons.html",
-    "/notes/how-i-use-ai.html",
-    "/notes/portable-ai-rules-workflow.html",
-    "/notes/advanced-functional-analysis-2019-20.html",
-    "/notes/calculus-of-variations-2020-21.html",
-    "/notes/analysis-3-2022-23.html",
-    "/notes/inverse-problems-2022-23.html",
-    "/notes/numbers-sequences-and-series-2023-24.html",
-    "/notes/differential-geometry-2023-24.html",
-    "/notes/differential-geometry-2024-25.html",
-    "/notes/numbers-sequences-and-series-2024-25.html",
-    "/notes/statistical-models-2023-24.html",
-    "/notes/statistical-models-2024-25.html",
-    "/notes/graduate-skills-2025-26.html",
-    "/notes/statistical-models-2025-26.html"
-  ]) {
-    expect(sitemap).toContain(`https://www.silviofanzon.com${route}`);
+  expect(sitemap).toContain("https://www.silviofanzon.com/notes/");
+  for (const route of canonicalMergedDocumentPaths) {
+    const sitemapRoute = route.endsWith("/index.html")
+      ? route.slice(0, -"index.html".length)
+      : route;
+    expect(sitemap).toContain(`https://www.silviofanzon.com${sitemapRoute}`);
+    expect(targetFile(route.slice(1)), `missing canonical route: ${route}`).toBeTruthy();
   }
   expect(sitemap).not.toContain("https://www.silviofanzon.com/notes.html");
 
@@ -143,6 +135,18 @@ test("Notes canonical routes and compatibility alias are published correctly", a
     expect(redirect).toContain(`content="0; url=${target}"`);
     expect(redirect).toContain('<meta name="robots" content="noindex">');
     expect(sitemap).not.toContain(`https://www.silviofanzon.com/${legacy}`);
+  }
+});
+
+test("merged Quarto documents receive the Astro shell", async () => {
+  for (const route of canonicalMergedDocumentPaths) {
+    const html = fs.readFileSync(path.join(siteRoot, route.slice(1)), "utf8");
+    expect(html, route).toContain('class="site-header"');
+    expect(html, route).toContain('class="site-footer"');
+    expect(html, route).toContain('class="search-toggle"');
+    expect(html, route).toContain('class="theme-toggle"');
+    expect(html, route).toContain('class="back-to-top"');
+    expect(html, route).not.toContain('id="quarto-header"');
   }
 });
 

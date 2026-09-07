@@ -96,8 +96,11 @@ test.describe("critical interactions", () => {
     const results = page.locator(".site-search-result-list");
     await expect(results).toContainText(/Projects/i);
 
-		await input.fill("Portable Rule System");
-		await expect(results).toContainText("A Portable Rule System for Working with AI");
+\t\tawait input.fill("Portable Rule System");
+\t\tawait expect(results).toContainText("A Portable Rule System for Working with AI");
+
+    await input.fill("car-only benchmark");
+    await expect(results.locator('a[href*="/projects/f1-time-rank-duality/index.html"]')).toHaveCount(1);
   });
 
   test("publication details and citation copy work", async ({
