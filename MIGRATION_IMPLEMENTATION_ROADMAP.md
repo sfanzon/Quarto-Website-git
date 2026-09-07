@@ -61,7 +61,7 @@ the same visible shell after the hybrid merge.
    compatibility redirects through launch validation.
 3. Complete route/resource checks for the merged Quarto project and note pages,
    including sitemap, search, shell, assets and legacy URL compatibility.
-4. Implement the resolved historic CV compatibility route before launch. The
+4. Validate the resolved historic CV compatibility route before launch. The
    Industry CV remains deferred until supplied; the Microscopy PDF is not
    public; missing seminar slides are later content work; Curriculum Design
    links are retained; and standalone Scopus/arXiv profile links are omitted.
@@ -131,7 +131,7 @@ coexist later, but they do not replace these historical Notes.
 | Teaching | Astro `/teaching/` consumes generated `data/teaching.yml` output; all twelve legacy course pages now survive as Quarto Notes with redirects and recovered linked resources. | Accurate teaching catalogue linked to the historical Notes and any separate maintained resources. | Review Graduate Skills copied material later; otherwise preserve the migrated archive faithfully. | Teaching Notes and hybrid route/resource validation. |
 | Presentations | Astro `/presentations/` renders 23 BibTeX records; 11 slide/poster files remain local and 10 are absent. | Records remain complete, with deliberately chosen resources and honest links. | Keep all records and retained Curriculum Design links; recover/upload missing slides later as content work. | Later slide recovery; no launch decision blocker. |
 | Supervision | Astro `/supervision/` renders 8 master’s/undergraduate records; the 2025 PhD record is deliberately omitted. | Public supervision page reflects the accepted scope and has no unintended student-resource exposure. | Keep the omission; verify whether any standalone student resources need a separate decision. | Supervision audit; privacy/content review. |
-| CV | Astro `/cv/` exposes the existing Academic CV PDF; the Industry CV file has not yet been supplied. | Offer Industry CV first and Academic CV second when both exist, likely through a CV dropdown; no route removal decision is made now. | Implement permanent `/Silvio_Fanzon_CV.pdf` compatibility to the current Academic CV. Defer Industry CV/navigation work until its file is supplied. | Historic-URL implementation; future Industry CV supply. |
+| CV | Astro `/cv/` exposes the existing Academic CV PDF; the Industry CV file has not yet been supplied. | Offer Industry CV first and Academic CV second when both exist, likely through a CV dropdown; no route removal decision is made now. | Keep permanent `/Silvio_Fanzon_CV.pdf` compatibility with the current Academic CV. Defer Industry CV/navigation work until its file is supplied. | Historic-URL validation; future Industry CV supply. |
 | About | Astro-owned `/about/` with the accepted career narrative and shared shell. | Stable personal/professional context page with intentional profile links. | Keep the accepted content; verify profile and download links during launch checks. | Existing intentional profile links; shared shell. |
 | Contact | Astro-owned `/contact/` with current contact/profile actions. | Clear contact path with only intentional public profile links. | Retain Scholar, ORCID, GitHub and LinkedIn; deliberately omit standalone Scopus/arXiv profile links. | No profile-metadata decision remains; no redesign. |
 
@@ -157,7 +157,7 @@ coexist later, but they do not replace these historical Notes.
 1. Confirm the production branch/build/deployment contract and freeze the
    accepted shell and URL policy.
 2. Record the six resolved legacy/resource decisions and follow their stated
-   timing: implement historic CV compatibility, defer Industry CV until
+   timing: validate historic CV compatibility, defer Industry CV until
    supplied, omit Microscopy and Scopus/arXiv, retain Curriculum Design links,
    and recover seminar slides later as content work.
 3. Run focused route/resource checks across the existing Astro pages and

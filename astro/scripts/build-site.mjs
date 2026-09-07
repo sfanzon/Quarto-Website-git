@@ -222,6 +222,7 @@ try {
 	cpSync(sharedImagesRoot, join(distRoot, 'assets', 'img'), { recursive: true });
 	cpSync(sharedPdfRoot, join(distRoot, 'assets', 'pdf'), { recursive: true });
 	cpSync(academicCv, join(distRoot, 'Silvio_Fanzon_Academic_CV.pdf'));
+	cpSync(academicCv, join(distRoot, 'Silvio_Fanzon_CV.pdf'));
 	for (const output of donorOutput) rmSync(output, { recursive: true, force: true });
 	writeCompatibilityRedirects();
 	writeSitemap();

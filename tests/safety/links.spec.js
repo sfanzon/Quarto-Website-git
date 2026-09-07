@@ -98,6 +98,14 @@ test("all generated HTML and CSS references resolve locally", async () => {
   expect([...missing].sort(), "missing local HTML/CSS targets").toEqual([]);
 });
 
+test("historic CV compatibility PDF matches the Academic CV", async () => {
+  const academicCv = path.join(siteRoot, "Silvio_Fanzon_Academic_CV.pdf");
+  const historicCv = path.join(siteRoot, "Silvio_Fanzon_CV.pdf");
+
+  expect(fs.existsSync(historicCv)).toBe(true);
+  expect(fs.readFileSync(historicCv)).toEqual(fs.readFileSync(academicCv));
+});
+
 test("canonical merged Quarto routes and compatibility aliases are published correctly", async () => {
   const sitemap = fs.readFileSync(path.join(siteRoot, "sitemap.xml"), "utf8");
   expect(sitemap).toContain("https://www.silviofanzon.com/notes/");
