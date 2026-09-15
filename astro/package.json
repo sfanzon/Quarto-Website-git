@@ -10,6 +10,7 @@
     "build:astro": "npm run generate:content && astro build",
     "build:site": "node scripts/build-site.mjs",
     "build:qa": "node scripts/build-site.mjs --include-dev-tools",
+    "build:qa:incremental": "node scripts/build-site.mjs --include-dev-tools --incremental-quarto",
     "build:hybrid": "npm run build:site",
     "postbuild": "pagefind --site dist",
     "preview": "astro preview",

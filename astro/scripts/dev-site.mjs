@@ -65,7 +65,7 @@ async function build() {
 	buildRunning = true;
 	console.log('\nRebuilding hybrid development site…');
 	try {
-		await run('npm', ['run', 'build:qa']);
+		await run('npm', ['run', 'build:qa:incremental']);
 		console.log('Hybrid development site ready. Reload the browser to see the update.');
 		return true;
 	} catch (error) {

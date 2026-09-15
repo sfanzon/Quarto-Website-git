@@ -31,7 +31,7 @@ renderer gate is resolved and a migration task moves the canonical sources.
 | `astro/src/pages/site-shell/footer.astro` | Build-only footer fragment for Quarto documents; removed from the final site after merge |
 | `astro/src/pages/site-shell/site.css.ts` | Explicit emitted stylesheet artifact for Quarto documents |
 | `astro/scripts/build-site.mjs` | Builds Astro, renders Quarto project and note documents in isolation, merges them into `astro/dist/`, then writes the final sitemap and Pagefind index |
-| `astro/scripts/dev-site.mjs` | Local hybrid development watcher: invokes the QA merge, serves `astro/dist/`, and watches canonical Astro/Quarto project and note inputs for rebuilds |
+| `astro/scripts/dev-site.mjs` | Local hybrid development watcher: invokes the incremental QA merge, serves `astro/dist/`, and watches canonical Astro/Quarto project and note inputs for rebuilds |
 | `astro/src/pages/index.astro` | Direct production owner for the homepage; consumes `includes/home-news.html` |
 | `astro/src/styles/home.css` | Production homepage composition and static hero gradient styling |
 | `astro/src/pages/notes.astro` | Production owner for `/notes/`; reads front matter directly from canonical `notes/*.qmd` sources |

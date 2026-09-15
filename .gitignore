@@ -18,3 +18,4 @@ test-results/
 
 # Build outputs
 astro/dist/
+astro/.cache/

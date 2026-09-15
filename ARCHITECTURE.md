@@ -119,10 +119,14 @@ five ordinary data-backed areas plus the project metadata JSON used by the
 Quarto filter. `npm run build:hybrid` remains a compatibility
 alias while the POC branch is active.
 
-For local hybrid development, `npm run dev:hybrid` performs the same QA merge
-once, serves `astro/dist/`, and watches the Astro sources plus the canonical
-Quarto project and note inputs. It rebuilds after a change without an explicit build
-command; reload the browser after the terminal reports the completed rebuild.
+For local hybrid development, `npm run dev:hybrid` performs the QA merge once,
+serves `astro/dist/`, and watches the Astro sources plus the canonical Quarto
+project and note inputs. It keeps rendered Quarto documents in the ignored
+`astro/.cache/hybrid-quarto/` directory. Later starts and Astro-only changes
+reuse valid document renders; a changed note or project invalidates its render,
+while shared Quarto styles, metadata, citations or filters invalidate every
+affected document. Production and ordinary QA builds always render the full
+document set. Reload the browser after the terminal reports the completed rebuild.
 `npm run dev` remains the faster Astro-only server for ordinary Astro routes.
 
 ## Complexity budget

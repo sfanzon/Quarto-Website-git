@@ -14,12 +14,21 @@ const sharedPdfRoot = join(repoRoot, 'assets', 'pdf');
 const academicCv = join(repoRoot, 'Silvio_Fanzon_Academic_CV.pdf');
 const quartoKitchenSink = join(repoRoot, 'dev', 'quarto-kitchen-sink.qmd');
 const distRoot = join(astroRoot, 'dist');
-const stageRoot = mkdtempSync(join(tmpdir(), 'astro-quarto-documents-'));
+const incrementalQuarto = process.argv.includes('--incremental-quarto');
+const stageRoot = incrementalQuarto
+	? join(astroRoot, '.cache', 'hybrid-quarto')
+	: mkdtempSync(join(tmpdir(), 'astro-quarto-documents-'));
+const cacheManifestPath = join(stageRoot, 'manifest.json');
+const quartoCacheVersion = 1;
 const shellRoot = join(distRoot, 'site-shell');
 const devRoot = join(distRoot, 'dev');
-const stagedDevRoot = join(stageRoot, 'dev');
+const stagedDevRoot = incrementalQuarto ? join(stageRoot, 'astro-dev') : join(stageRoot, 'dev');
 const siteUrl = 'https://www.silviofanzon.com';
 const includeDevTools = process.argv.includes('--include-dev-tools');
+const quartoDependencyExtensions = new Set([
+	'.bib', '.csl', '.css', '.gif', '.html', '.jpeg', '.jpg', '.js', '.json',
+	'.lua', '.md', '.png', '.qmd', '.scss', '.svg', '.webp', '.yaml', '.yml',
+]);
 const donorOutput = [
 	join(distRoot, 'archive'),
 	join(distRoot, 'blog'),
@@ -63,6 +72,54 @@ function findQuartoSources(directory) {
 		if (entry.isDirectory()) return findQuartoSources(path);
 		return entry.isFile() && entry.name.endsWith('.qmd') ? [path] : [];
 	});
+}
+
+function findQuartoDependencies(path) {
+	if (!existsSync(path)) return [];
+	const stats = statSync(path);
+	if (stats.isFile()) return quartoDependencyExtensions.has(extname(path).toLowerCase()) ? [path] : [];
+	return readdirSync(path, { withFileTypes: true }).flatMap((entry) => {
+		if (entry.name.startsWith('.')) return [];
+		return findQuartoDependencies(join(path, entry.name));
+	});
+}
+
+function dependencySignature(source) {
+	const sourceRoot = source.startsWith(`${projectsRoot}/`) ? dirname(source) : source;
+	const shared = [
+		join(repoRoot, 'includes', 'after-body.html'),
+		join(repoRoot, 'includes', 'mermaid-svg-ids.html'),
+		join(repoRoot, 'includes', 'project-navigation.html'),
+		join(repoRoot, 'includes', 'scroll-restoration-head.html'),
+		join(repoRoot, 'includes', 'site-footer.html'),
+		join(repoRoot, '_quarto.yml'),
+		join(repoRoot, source.startsWith(`${projectsRoot}/`) ? 'projects' : 'notes', '_metadata.yml'),
+		join(repoRoot, 'data', 'citations'),
+		join(repoRoot, 'data', 'projects.yml'),
+		join(repoRoot, 'filters', 'project-components.lua'),
+		join(repoRoot, 'styles', 'main.scss'),
+		join(repoRoot, 'styles', 'main'),
+		join(repoRoot, 'styles', 'components'),
+	];
+	if (source.startsWith(`${projectsRoot}/`)) {
+		shared.push(join(repoRoot, 'styles', 'project.scss'), join(repoRoot, 'styles', 'project'));
+	}
+	return [`cache-version:${quartoCacheVersion}`, ...[...new Set([sourceRoot, ...shared].flatMap(findQuartoDependencies))]
+		.sort()
+		.map((path) => {
+			const stats = statSync(path);
+			return `${relative(repoRoot, path)}:${stats.size}:${stats.mtimeMs}`;
+		})]
+		.join('\n');
+}
+
+function readCacheManifest() {
+	if (!incrementalQuarto || !existsSync(cacheManifestPath)) return {};
+	try {
+		return JSON.parse(readFileSync(cacheManifestPath, 'utf8'));
+	} catch {
+		return {};
+	}
 }
 
 function outputPath(source) {
@@ -193,7 +250,22 @@ try {
 	writeCompatibilityAliases();
 	rmSync(join(shellRoot, 'header'), { recursive: true, force: true });
 	rmSync(join(shellRoot, 'footer'), { recursive: true, force: true });
-	execFileSync('quarto', ['render', ...sources, '--output-dir', stageRoot], { cwd: repoRoot, stdio: 'inherit' });
+	mkdirSync(stageRoot, { recursive: true });
+	const cacheManifest = readCacheManifest();
+	const signatures = Object.fromEntries(sources.map((source) => [relative(repoRoot, source), dependencySignature(source)]));
+	const sourcesToRender = incrementalQuarto
+		? sources.filter((source) => {
+			const key = relative(repoRoot, source);
+			return cacheManifest[key] !== signatures[key] || !existsSync(join(stageRoot, renderedPath(source)));
+		})
+		: sources;
+	if (incrementalQuarto) {
+		console.log(`Quarto development cache: rendering ${sourcesToRender.length}, reusing ${sources.length - sourcesToRender.length}.`);
+	}
+	if (sourcesToRender.length) {
+		execFileSync('quarto', ['render', ...sourcesToRender, '--output-dir', stageRoot], { cwd: repoRoot, stdio: 'inherit' });
+	}
+	if (incrementalQuarto) writeFileSync(cacheManifestPath, `${JSON.stringify(signatures, null, 2)}\n`);
 
 	const copied = new Set();
 	for (const source of sources) {
@@ -230,5 +302,5 @@ try {
 	if (includeDevTools) cpSync(stagedDevRoot, devRoot, { recursive: true });
 	console.log(`${includeDevTools ? 'QA' : 'Production'} site build complete: ${sources.length} Quarto document pages merged into dist/`);
 } finally {
-	rmSync(stageRoot, { recursive: true, force: true });
+	if (!incrementalQuarto) rmSync(stageRoot, { recursive: true, force: true });
 }
